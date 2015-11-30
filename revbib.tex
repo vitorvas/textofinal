@@ -1,0 +1,263 @@
+% ----------------------------------------------------------
+% Revisão Bibliográfica
+% ----------------------------------------------------------
+\chapter*[Revisão Bibliográfica]{Revisão Bibliográfica}
+\label{chap:rev}
+\addcontentsline{toc}{chapter}{Revisão Bibliográfica}
+
+
+%O acoplamento CFD-neutrônica. Motivação. Vantagens e desvantagens. 
+%Nesse capítulo vão todas as referências importantes com explicações 
+%de cada uma. 
+%\section*{OpenFOAM}
+%Por que usá-lo? Vantagens e desvantagens.
+
+Antes de passar à descrição do problema de acoplamento, é importante contextualizar sua 
+aplicação e as razões que tornam o problema de acoplamento fundamental na simulação completa 
+de um reator nuclear .
+
+O crescimento na capacidade de cálculo dos computadores pessoais permitiu não só o uso 
+de técnicas mais elaboradas de cálculos termo-hidráulicos bem como seu uso em conjunto 
+com códigos de cálculo neutrônico. Um dos primeiros trabalhos diretamente focados no 
+acoplamento termo-hidráulico foi apresentado por \cite{Barber98} em 1998. Esse trabalho 
+é essencialmente um relatório técnico, no qual o foco está na construção de uma interface 
+genérica de acoplamento do código PARCS com códigos de termo-hidráulica. Apesar de não 
+gerar resultados de simulações, esse documento evidencia a importância e o interesse 
+no procedimento de acoplamento, além de fornecer preciosas informações acerca da 
+implementação de estruturas de dados, manipulação de entrada e saída, troca de mensagens, 
+uso de biblioteca de troca de mensagens PVM \cite{Geist94}, dentre outros pontos cruciais
+da implementação de software. Cabe ressaltar que esta interface, 
+chamada \textit{General Interface} é ainda usada pelo código PARCS nas suas versões mais 
+recentes. 
+
+Como mencionado no parágrafo anterior, o crescimento na capacidade de processamento
+computacional 
+fez com que os pesados cálculos de CFD passassem a ser atraentes 
+para a Engenharia Nuclear. Mais do que isso, o uso desses códigos passou a ser razão 
+de preocupação no sentido de garantir a validade dos seus resultados. O relatório 
+da Comissão Regulatória Nuclear (NRC) dos Estados Unidos de 2010 \cite[p.69]{NUREG2010}, 
+ao sugerir as melhores práticas e métodos para a atividade de regulação, é bastante claro 
+ao apontar a necessidade de tirar proveito da capacidade oferecida por códigos de CFD, 
+fornecendo inclusive sugestões de parceria com a indústria e universidades objetivando 
+desenvolver simulações multidimensionais devidademente acompanhadas de validação e
+verificação. O conteúdo desse relatório é, por si só, prova de que a utilização de 
+códigos CFD é, em definitivo, parte do processo de 
+pesquisa e desenvolvimento de reatores nucleares. 
+
+Um exemplo desse uso é a utilização de CFD - nesse caso um código proprietário: 
+\textit{ANSYS-CFX} - para modelar o fenômeno de ebulição subresfriada para o 
+desenvolvimento de combustíveis nucleares \cite{Krepper2007}. Devido à capacidade 
+dos códigos CFD de simular detalhes do escoamento de acordo com a granularidade com que se
+divide o domínio de simulação, nesse trabalho esta técnica é utilizada para avaliar 
+o fenômeno de fluxo de calor crítico em um elemento combustível. As informações 
+fornecidas pelo código CFD em relação a fenômenos como rotação, \textit{cross flow} entre 
+regiões adjacentes e concentração de bolhas (no caso em que se simule duas fases)
+permitem identificar \textit{hot spots}, ou seja, regiões de especial interesse.
+Essas simulações permitem avaliar o comportamento
+de diferentes projetos de grades espaçadoras de elementos combustíveis quanto ao aspecto 
+de segurança.
+
+Um trabalho em conjunto entre pesquisadores do ISYRIM, UFMG e CDTN foi conduzido
+com o objetivo de investigar o comportamento do reator TRIGA IPR-R1 por um código do tipo CFD \cite{Martinez2012}. 
+Nesse caso não houve tentativa de acoplamento, mas apenas a simulação simplificada 
+do reator utilizando-se o \textit{ANSYS-CFX}. Um fluxo de calor 
+foi fornecido para as paredes do combustível obedencendo à uma distribuição axial 
+característica do combustível. Na análise quantitativa dos resultados, os autores 
+informam que os resultados da simulação numérica apresentam boa concordância com 
+dados experimentais coletados durante a operação do reator.
+
+%O acoplamento propriamente dito é feito muitas vezes com um código neutrônico não-determinístico. 
+%Esses códigos são baseados no método de Monte Carlo(\cite{mc}) e simulam o comportamento 
+%do núcleo do reator através da simulação das histórias dos nêutrons. Isso consiste, basicamente, 
+%em cálculos de probabilidades de absorção, choque, escape, etc. de um conjunto de nêutrons. 
+%Um exemplo de trabalho de simulação do reator TRIGA IPR-R1 pelo método de Monte Carlo está em \cite{Silva2011}.
+%Nesse caso, apenas a neutrônica é simulada.
+
+Entretanto, para obter resultados o mais realistas possível, é necessário simular 
+tanto os fenômenos termo-hidráulicos quanto neutrônicos. Isso 
+se deve ao fato de que os principais fatores que influeciam na distribuição do fluxo de 
+nêutrons no núcleo de um reator nuclear são as propriedades do moderador e refrigerante. No caso do 
+reator TRIGA, a água exerce ambos os papéis, sendo também usada grafita para 
+a moderação. Pequenas variações na temperatura, densidade e composição 
+da água podem mudar consideravelmente o fator de multiplicação neutrônico ($k_{eff}$). Daí a importância e 
+a necessidade de acoplar os cálculos termo-hidráulicos - as variações da água - com as variações 
+no fluxo neutrônico.
+
+O acoplamento das simulações de diferentes fenômenos físicos tem sido também chamado de \textbf{multifísica}. 
+Uma definição prática para multifísica ou física-acoplada é dada por \cite{Lethbridge2005}, definindo que 
+a multifísica é, em essência, a análise de fenômenos físicos distintos de forma combinada. Nesse texto, 
+por conveniência, a palavra acoplamento será usada tanto em referência ao processo de análise dos fenômenos físicos conjuntamente 
+quanto em referência à implementação do software para essa tarefa. Nos casos em que possa haver ambiguidade, 
+a definição será explicada afim de não deixar margens a dúvidas.
+
+Vale ressaltar, já que nos referimos à implementação do acoplamento em software, que uma aplicação multifísica 
+pode levar entre 4 e 6 anos para ser efetivamente útil, podendo chegar a uma vida útil de várias décadas 
+\cite{Graham2004}. Isto posto, é possível concluir que o esforço em construir o acoplamento é compensado 
+pela possibilidade de uso do código durante vários anos.
+
+% Citar os trabalhos do IVANOV aqui...
+Uma vez definido o significado do acoplamento no contexto desse trabalho, serão apresentados os mais importantes 
+trabalhos sobre o tema. Talvez o mais importante trabalho relacionado ao acoplamento 
+neutrônico/termo-hidráulico seja o de \cite{Ivanov2007}. Nele são análisados e classificados diferentes tipos de 
+acoplamento, seus componentes e suas aplicações. Os diversos parâmetros do acoplamento são esquematicamente dividos em: 
+\begin{enumerate}
+\item Forma de acoplamento: externo quando o código neutrônico é combinado com parte do código termo-hidráulico, 
+geralmente na forma de condições de contorno, e então acoplado ao sistema termo-hidráulico completo. O acoplamento 
+é definido como interno quando a neutrônica é integrada ao modelo de transferência de calor do sistema termo-hidráulico. 
+Em outras palavras, o acoplamento interno é uma implementação multifísica.
+\item Abordagens de acoplamento: integração em série ou processamento em paralelo. Na integração em série o algoritmo 
+para cálculo neutrônico é integrado como uma rotina ao sistema termo-hidráulico e então executado sequencialmente 
+após os cálculos termo-hidráulicos. Na abordagem de processamento em paralelo, geralmente a troca de dados é 
+intermediada por um sistema de troca de mensagens como PVM \cite{Geist94} ou MPI \cite{Quinn2004}. Nesse caso, os 
+módulos de neutrônica e termo-hidráulica têm capacidade separada de execução e resposta, o que permite uma execução 
+mais eficiente do ponto de vista computacional.
+\item Sobreposição espacial de malhas: pode ser fixo, quando um canal termo-hidráulico representa um canal neutrônico, 
+ou flexível, quando são usados ou especificados esquemas de mapeamento. Um esquema avançado de mapeamento 
+e interpolação de malhas \cite{Beaudoin2008} é implementado em alguns dos modernos códigos cd CFD. As diversas implicações 
+do mapeamento de malhas para a simulação serão apresentadas oportunamente.
+\item Algoritmos de controle de \textit{time-step}: os transientes neutrônicos são geralmente muito mais rápidos que 
+os transientes termo-hidráulicos. A utilização de um único \textit{time-step} longo pode levar à não detecção de transientes 
+rápidos e no caso oposto ao desperdício de recursos computacionais ao se simular eventos indistinguíveis repetidamente.
+\item Acoplamento numérico: o autor se refere nesta classificação ao tempo de troca de informações entre o modelo 
+neutrônico e termo-hidráulico. Pode ser explícito, semi-explícito e implícito, dependendo da forma como cada esquema 
+realiza o cálculo das variáveis do \textit{time-step} atual baseado em variáveis do \textit{time-step} atual ou 
+anterior.
+\item Esquemas de convergência do acoplamento: definidos de acordo com a forma com que a simulação é considerada 
+finalizada. Se há apenas uma estimativa para a convergência de ambos os códigos, o esquema é considerado fracamento 
+acoplado, por exemplo.
+\end{enumerate}
+
+O autor ainda comenta a importância da geração de seções de choque adequadas aos transientes esperados na 
+simulação acoplada e sua interdependência. A geração de seções de choque não é escopo desta tese, mas uma 
+breve explicação de como seções de choque para poucos grupos podem ser geradas pode ser encontrada 
+em \cite{Friedman2013}.
+
+Um recente trabalho de simulação envolvendo neutrônica e termo-hidráulica com uso de CFD propõe 
+a simulação de reatores avançados refrigerados a gás \cite{Hossain2011}. O modelo utilizado 
+para a simulação neutrônica foi o de cinética pontual devido à sua simplicidade. No modelo 
+de cinética pontual assume-se que a forma do perfil do fluxo de nêutrons durante um transiente 
+não varia, mas apenas os valores do fluxo variam com o tempo. A variação no fluxo é dada 
+pelo balanço entre nêutrons produzidos e perdidos, considerando 6 classes de precursores 
+para nêutrons atrasados. O desenvolvimento matemático leva a um sistema 7 equações diferenciais 
+ordinárias, conhecidas como equações de cinética pontual. A implementação da solução desse sistema 
+é, nesse caso, feito dentro do código termo-hidráulico utilizado (\textit{TH3D}).
+
+Recentemente \cite{Yan2011} simulou o comportamento do escoamento em um feixe de elementos 
+combustíveis e espaçadores utilizando-se de CFD acoplado à neutrônica. A neutrônica 
+simulada é baseada no \textit{method of characteristic}, que evita a necessidade de geração 
+de constantes para poucos grupos \textit{a priori}. A abordagem usada no 
+acoplamento é do tipo externa, com o código neutrônico DeCART e o código termo-hidráulico 
+STAR-CCM+ executando sequencialmente e escrevendo e lendo arquivos em disco em um 
+diretório comum. São dois critérios para finalizar a simulãção: o código DeCART se baseia 
+na convergência da fonte de fissão, enquanto o código STAR-CCM+ no resíduo da energia. No que toca à 
+discretização espacial (sobreposição espacial de malhas), é usado um mapeamento entres as malhas 
+utilizadas nos dois códigos. Apesar de diferenças nas malhas, as fronteiras materiais, ou seja, geometria, 
+fronteira e posição de diferentes materias são equivalentes em ambos os modelos.
+
+As conclusões apresentadas reiteram a importância da técnica cd CFD na indústria nuclear. Em particular, 
+a capacidade de verificar os efeitos da grade misturadora na temperatura e densidade do refrigerante 
+levando-se em consideração os efeitos neutrônicos. Nas palavras do autor, esse acoplamento 
+``permite um melhor entendimento da margem de DNB (Departure Nuclear Boiling) e a formação de particulado 
+na vareta de combustível''. O autor finaliza apontando o interesse em incrementar a simulação 
+agregando outros aspectos físicos, como um modelo de corrosão, um modelo de geração do particulado, 
+um modelo de interação revestimento/pastilha e outros. Percebe-se aqui que as diversas aplicações 
+de multifísica já são esperadas e inevitáveis, e num futuro mais do que próximo.
+
+Talvez o mais completo trabalho relativo ao acoplamento neutrônico-termo-hidráulico com uso do 
+CFD \textit{OpenFOAM} seja \cite{Jareteg2012}. Nesta tese, o acoplamento é feito usando o mesmo 
+software para a simulação termo-hidráulica e neutrônica. A metodolgia utilizada pode ser brevemente 
+resumida em alguns passos principais: 1) criação de uma malha adequada, 2) discretização das 
+equações descrevendo o problema, 3) definição das condições de contorno, 4) geração dos 
+parâmetros neutrônicos (por exemplo, seções de choque macroscópicas) e 5) solução do 
+problema neutrônico e termo-hidráulico de forma acoplada. O autor usa um dos modelos de solução presentes no 
+software de CFD \textit{OpenFOAM} \cite{OpenFOAM2013} e 
+altera esse modelo que simula um escoamento turbulento de um fluido compressível com transferência de por radiação 
+térmica (\texttt{buoyantSimpleRadiationSolver}) adicionando uma implementação da equação de difusão multi-grupos 
+ao modelo. Isto é feito utilizando a capacidade geral de discretização e solução de equações bem como os algorimos 
+para solução numérica já presentes no \textit{OpenFOAM}. Dentre suas conclusões, estão que o acoplamento iterativo 
+utilizado é funcional e estável, a solução para a neutrônica necessitou de menos iterações para convergir 
+do que que a solução pressão-velocidade e que a termo-hidráulica precisa de malhas mais refinadas do que a solução 
+neutrônica. A qualidade desse trabalho e muitas das soluções adotadas servem como referências às implementações 
+e simulações a serem feitas nesta tese.
+
+
+%o acoplamento é interno ao mesmo software, 
+%tendo sido a neutrônica simulada pela solução da equação de Difusão. Nesse caso o acoplamento 
+%tem por objetivo simular um reator de potência do tipo PWR.
+
+Uma das razões do uso do acoplamento, cujo objetivo é obter dados mais precisos e realistas, é na 
+análise de segurança de reatores. Em projetos de reatores inovadores já são feitos cálculos de multifísica para 
+análise de acidentes. No trabalho de \cite{Lazaro2013}, um reator de IV geração refrigerado a sódio 
+é simulado de forma acoplada. Códigos já usados na análise de reatores resfriados a água leve são adaptados 
+para o uso em reatores de nêutrons rápidos resfriados a sódio. Um ponto-chave, segundo o autor, é ser capaz 
+de simular os fenômenos presentes na operação de reatores em três dimensões. Isso se justifica, ainda nas 
+palavras do autor, devido a possíveis componentes assimétricos em transientes hipotéticos e que 
+a modelagem unidimensional com cinética pontual não é capaz de reproduzir. Assim como em vários trabalhos 
+sobre o tema de acoplamento, o código usado para a geração de seções de choque homogeneizadas 
+foi o \textit{Serpent} \cite{Serpent2013}. Nesse trabalho, o código \textit{Serpent} foi ainda usado 
+para cálculo neutrônico do núcleo e validação do código PARCS \cite{PARCS2006}. Sua conclusão nesse trabalho 
+é de que as adaptações feitas nos códigos levaram a resultados consistentes, mas que ainda há trabalho 
+a ser feito para a simulação tridimensional completa desse tipo de reator.
+
+Nesse capítulo foram apresentados alguns trabalhos sobre o tema do acoplamento neutrônico/termo-hidráulico 
+com diversas aplicações. Alguns desses trabalhos, são referências no trabalho que está sendo desenvolvido 
+nesta tese e cuja proposta será apresentada com detalhes no próximo cápítulo.
+
+%Tesse de referências usando o \textsf{abntex2} e o 
+%pacote \textsf{abntex2cite}itando\cite{Larsson2012}. 
+%O próximo é o Janosy \cite{Janosy2011}. Depois vem o artigo 
+%do finlandês \cite{Leppanen2012} e mais um capítulo de 
+%livro \cite{Faghihi2011}. E o autor do Openfoam \cite{Jasak2007}. 
+%Um artigo sobre as novas perspectivas do desenvolvimento de 
+%reatores em \cite{Baglietto2011}. Condições de contorno pra acoplamento 
+%no OpenFOAM em \cite{Beaudoin2008}. Sobre TRIGA tem o trabalho do 
+%\cite{Khan2011}. O turco fez benchmarks sobre o TRIGA dele em 
+%\cite{Turkmen2013}. Artigo mais matemático, acoplamento totalmente 
+%implícito pelo \cite{Pope2008}. O fodão da área é o \cite{Ivanov2007}.
+%Os caras da Westinghouse mexem na grade do André \cite{Yan2011} 
+%enquanto os iranianos trabalham com o cálculo de parâmetros 
+%cinéticos em \cite{Jahanbin2012}. É importante lembrar que um dos 
+%autores de \cite{Barber98} é autor de outro dos trabalhos citados. 
+%O nome dele é \textit{Downar}. Artigo sobre modelagem CFD do TRIGA IPR-R1 
+%em \cite{Martinez2012}. Outro paper que descreve o uso de códigos diversos 
+%para modelagem e estudo do núcleo de um PWR é: \cite{Huda2011}. 
+%\cite{Ragusa2009} é um dos trabalhos com maior detalhamento do 
+%acoplamento, focando em controle do \textit{time-step}. Os chineses 
+%fizeram um acoplamento e falaram da geometria e usaram fluxograma 
+%em \cite{Yang2011}. Um acoplamento entre o MCNPX e o COBRA foi 
+%feito em \cite{Vazquez2012}. Um dos poucos trabalhos em que 
+%é feita a análise da propagação de erros em processos de software 
+%é: \cite{Sarshar2011}. Um trabalho focado na matemática das 
+%equações diferenciais da termo-hidráulica é o \cite{Mousseau2007}.
+%Vários autores citados em outros trabalhos nesta tese estão juntos 
+%em \cite{Barber99} descrevendo os primeiros acoplamentos entre 
+%PARCS, RELAP5 e TRAC-M. Uma parte do relatório da comissão regulatória 
+%norte-america \cite{NUREG2010} aponta a importância de investir 
+%tempo em termo-hidráulica e neutrônica, o papel do regulador nisso 
+%e dá justificativas para o tema dessa tese. \cite{Aumiller2001} propõe 
+%um acoplamento explícito RELAP/CFD e conclui que o CFD é capaz de 
+%calcular a multifísica. A história do código WIMS e a descrição 
+%da sua versão 9 estão em \cite{Newton2002}. Nesse trabalho seus 
+%resultados são comparados com um código de Monte Carlo. Um paper 
+%muito difícil (conteúdo matemático pesado) mas também muito importante 
+%é o do \cite{Demaziere2011}. Nele é proposto um código neutrônico 
+%multi-propósito, para uso em pesquisa e educação. O trabalho 
+%de \cite{Pourgol-Mohamad2011} é focado no tratamento estruturado 
+%do modelo de incerteza em códigos neutrônicos e termo-hidráulicos. 
+%Citando os livros, o primeiro é o livro base para uso de CFD: 
+%\cite{Versteeg2007}, no qual são dadas as bases da técnica.
+%Outro livro sobre CFD, com uma abordagem básica da matemática 
+%é o \cite{Anderson95}. Um referência importante no trabalho 
+%com o MPI é o livro do \cite{Quinn2004}. E a base para o trabalho 
+%de neutrônica está em \cite{Hebert2009}.
+
+%Na elaboração da tese são usados diversos softwares. As informações são 
+%geralmente obtidas dos manuais. O código de Monte Carlo com potencial 
+%de ser usado é o \cite{Serpent2013}. O código mais importante de 
+%acordo com o projeto de tese é o PARCS. Seu manual está divido em 
+%manual do usuário \cite{PARCS2006}, manual do programador \cite{PARCS2004} 
+%e o manual de teoria \cite{PARCS2004b}. O OpenFOAM é o outro principal 
+%software utilizado nesta tese. São também três os manuais usados, sendo 
+%o primeiro \cite{OpenFOAM2013} o do usuário, o segundo o guia do 
+%programador \cite{OpenFOAM2013b} e a documentação do código 
+%em formato eletrônico \cite{OpenFOAM2013c}.

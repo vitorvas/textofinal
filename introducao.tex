@@ -1,0 +1,101 @@
+% ----------------------------------------------------------
+% Introdução
+% ----------------------------------------------------------
+\chapter*[Introdução]{Introdução}
+\addcontentsline{toc}{chapter}{Introdução}
+\label{chap:introducao}
+
+\emph{``Over a 20-year period, the (nuclear) industry will move from 
+the application of conventional methods that rely on 
+experimental correlations to using CFD (...)''.} \cite[p.~655]{Baglietto2011}.
+
+A frase acima é um exemplo de ganho de importância da técnica de dinâmica dos fluidos 
+computacional (CFD) na indústria nuclear nos últimos anos e da perspectiva da sua aplicação 
+nos próximos.  
+
+Este trabalho de tese consiste no desenvolvimento de um sistema acoplado de cálculos
+termo-hidráulicos e neutrônicos. Apesar de desenvolvidos separadamente - inclusive
+em linguagens de programação diferentes - ambos fazem uso do método de volumes
+finitos\cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
+Cabe ressaltar que, neste primeiro momento, apenas cálculos em estado estacionário
+são previstos.
+
+Os códigos utilizados são abertos, o que significa pleno acesso ao seu código-fonte.
+Esta é condição básica o desenvolvimento do sistema acoplado. Grosso modo, o acoplamento
+dos dois códigos nada mais é do que alterações e adições em ambos os códigos-fonte de modo
+que estes sejam capazes de se comunicar e trocar dados para realizar seus cálculos.
+Este processo, desde sua metodologia até fundamentos de sua execução, será
+oportunamente - e detalhadamente - apresentado, já que trata-se da principal
+contribuição desta tese.
+
+O acoplamento entre neutrônica e termo-hidráulica já ocorre de diferentes formas. Na simulação 
+termo-hidráulica são usados códigos de sistemas e códigos de subcanal. Os códigos de sistemas 
+funcionam modelando os sistemas do reator unidimensionalmente e aplicando as equações básicas 
+para continuidade, momento e energia. O resultado obtido simula o
+comportamento médio dos componentes do reator.
+Estes códigos são normalmente usados em análises de transientes e segurança do reator. 
+Já os códigos de subcanal são mais detalhados e além
+de modelar múltiplos componentes do sistema 
+do reator são capazes de simular em geometrias tridimensionais \cite{Faghihi2011}. Os códigos 
+CFD substituem o domínio contínuo por um domínio discreto e finito. Neste contexto os equações 
+que governam o escoamento são integradas sobre todos os elementos que formam o domínio (finito), 
+as integrais obtidas são então discretizadas na forma de um sistema de equações algébricas 
+e, por fim, este sistema é resolvido por métodos interativos \cite{Versteeg2007}.
+
+No contexto da neutrônica, é possível classificar os códigos em três tipos:
+1) Códigos de difusão ou de transporte, 
+2) Códigos de ordenadas-discretas e 3) Códigos Monte Carlo. Os dois primeiros são determinísticos 
+e o terceiro estocástico. 
+
+Os códigos de difusão aplicam simplificações e homogeneizações no núcleo do reator (ou no combustível nuclear, 
+de acordo com o contexto) para que as aproximações de difusão sejam válidas. Um dos códigos de difusão 
+mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estando inclusive já acoplado 
+com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
+O código usado neste trabalho para o acoplamento é o código Milonga\cite{ThelerXXX}. O Milonga
+utiliza o método de volumes finitos na discretização do domínio e resolve utiliza-se a
+aproximação pela equação da difusão para o cáculo neutrônico. Suas características e seu
+funcionamente serão apresentados oportunamente.
+
+Os códigos de ordenadas discretas resolvem 
+a equação de transporte de Boltzmann para o comportamento médio das partículas para calcular o 
+fluxo de nêutrons. Nesses códigos, o espaço é divido em muitas pequenas caixas e as partículas 
+são movidas entre as caixas. Para geometrias complexas com variações de parâmetros, a preparação de 
+seções de choque exige grande esforço. Os códigos de Monte Carlo funcionam simulando as partículas 
+individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacinal 
+dos cálculos pelo método de Monte Carlo, seu uso em acoplamento é ainda tímido. Entretanto, dada a capacidade de detalhamento dos fenômenos neutrônicos, a possibilidade do acoplamento CFD com Monte Carlo começa a despertar interesse \cite{Leppanen2012}.
+
+Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
+e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos.
+
+%------------------------------------------------------------------------------------
+%A simulação computacional de fenômenos 
+%físicos não é por si só algo novo na indústria nuclear. Entretanto, com o regular 
+%crescimento da capacidade computacional, técnicas mais exigentes em termos computacionais 
+%passaram a fazer parte do dia-a-dia de projetistas, desenvolvedores e pesquisadores. Neste 
+%contexto está a técnica de CFD.
+%
+%Neste trabalho, propõe-se um passo além do uso desta ferramenta: seu uso para a simulação 
+%termo-hidráulica de uma vareta combustível de um reator do tipo PWR acoplada ao seu respectivo cálculo neutrônico. Cabe ressaltar que neste primeiro momento, os cálculos se restringem a
+%um estado estacionário, tanto termo-hidráulico quanto neutrônico. Além disso, 
+%é de fundamental importância enfatizar que os problemas de termo-hidráulica e neutrônica 
+%estão essencialmente ligados. Isso se dá em razão da influência da potência gerada na 
+%temperatura e densidade dos materiais constiuintes da vareta combustível, bem como
+%do material refrigerante e moderador. Por sua vez, estas variações nas propriedades
+%dos materiais influenciam na reprodução de nêutrons, o que faz variar a potência e assim
+%por diante.
+
+\section*{Motivação}
+
+Apesar da existência na literatura de vários trabalhos de acoplamento neutrônico-termo-hidráulico \cite{Faghihi2011}, 
+a utilização de códigos do tipo CFD para a realização dos cálculos 
+termo-hidráulicos ainda é tímida. Isso pode ser explicado pela alta demanda
+computacional, dificultando sua utilização para sistemas da complexidade de um
+reator nuclear. Além disso, até o presente momento, não há
+informações sobre o uso do \textit{OpenFOAM} - 
+um CFD aberto e gratuito \cite{Jasak2007} - acoplado a códigos de neutrônica. 
+
+Além da originalidade do uso do 
+\textit{OpenFOAM} e sua aplicação para o caso simples de uma vareta combustível, uma vez validada pelos dados experimentais de \textit{benchmarks} de reatores
+do tipo PWR\cite{benchmarksPWR}, a metodologia desenvolvida nesta tese poderá ser usada para simulações reatores completos. São eles o reator multipropósito brasileiro, com previsão de operação para 2020 e reatores de potência tipo PWR em operação no Brasil (Angra I e II). 
+
+E a aplicação não se restringe à simulação do reator, podendo ser, no futuro, adicionados elementos como queima de combustível, envenenamento por xenônio e outros fatores que permitam não só a simulação de um estado transiente curto, como também da evolução da utilização do reator no tempo.
