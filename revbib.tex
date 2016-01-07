@@ -14,7 +14,7 @@
 
 Antes de passar à descrição do problema de acoplamento, é importante contextualizar sua 
 aplicação e as razões que tornam o problema de acoplamento fundamental na simulação completa 
-de um reator nuclear .
+de um reator nuclear.
 
 O crescimento na capacidade de cálculo dos computadores pessoais permitiu não só o uso 
 de técnicas mais elaboradas de cálculos termo-hidráulicos bem como seu uso em conjunto 
@@ -73,19 +73,21 @@ dados experimentais coletados durante a operação do reator.
 %Um exemplo de trabalho de simulação do reator TRIGA IPR-R1 pelo método de Monte Carlo está em \cite{Silva2011}.
 %Nesse caso, apenas a neutrônica é simulada.
 
-Entretanto, para obter resultados o mais realistas possível, é necessário simular 
+Entretanto, para obter resultados os mais realistas possível, é necessário simular 
 tanto os fenômenos termo-hidráulicos quanto neutrônicos. Isso 
 se deve ao fato de que os principais fatores que influeciam na distribuição do fluxo de 
-nêutrons no núcleo de um reator nuclear são as propriedades do moderador e refrigerante. No caso do 
-reator TRIGA, a água exerce ambos os papéis, sendo também usada grafita para 
+nêutrons no núcleo de um reator nuclear são as propriedades do moderador e refrigerante. No caso de um
+reator do tipo PWR, a água exerce ambos os papéis, sendo também usada grafita para 
 a moderação. Pequenas variações na temperatura, densidade e composição 
-da água podem mudar consideravelmente o fator de multiplicação neutrônico ($k_{eff}$). Daí a importância e 
-a necessidade de acoplar os cálculos termo-hidráulicos - as variações da água - com as variações 
+da água podem mudar consideravelmente o fator de multiplicação de nêutrons ($k_{eff}$). Daí a importância e 
+a necessidade de acoplar os cálculos termo-hidráulicos - as variações nas propriedades da água - com as variações 
 no fluxo neutrônico.
 
 O acoplamento das simulações de diferentes fenômenos físicos tem sido também chamado de \textbf{multifísica}. 
-Uma definição prática para multifísica ou física-acoplada é dada por \cite{Lethbridge2005}, definindo que 
-a multifísica é, em essência, a análise de fenômenos físicos distintos de forma combinada. Nesse texto, 
+Uma definição prática para multifísica ou física-acoplada é dada por Paul Lethbridge \cite{Lethbridge2005}, definindo que 
+a multifísica é, em essência, a análise de fenômenos físicos distintos de forma combinada.
+
+No texto desta tese, 
 por conveniência, a palavra acoplamento será usada tanto em referência ao processo de análise dos fenômenos físicos conjuntamente 
 quanto em referência à implementação do software para essa tarefa. Nos casos em que possa haver ambiguidade, 
 a definição será explicada afim de não deixar margens a dúvidas.
@@ -95,54 +97,66 @@ pode levar entre 4 e 6 anos para ser efetivamente útil, podendo chegar a uma vi
 \cite{Graham2004}. Isto posto, é possível concluir que o esforço em construir o acoplamento é compensado 
 pela possibilidade de uso do código durante vários anos.
 
+Ainda sobre a importância recente dos cálculos neutrônicos e termo-hidráulicos acoplados, foi iniciado em 2012
+no Centro de Pesquisas Técnicas VTT (Finlância) o projeto \textit{Numerical Multi-Physics (NUMPS)} \cite{Leppanen2015}.
+Dentre seus objetivos, estão o desenvolvimento do código de física de reatores Serpent, que utiliza o método de
+Monte Carlo e do código PORFLO, do tipo CFD. Esse desenvolvimento, oferece oportunidades para a educação das novas
+gerações de especialistas, não apenas com compreensão de teoria e métodos, mas também com entendimento ao nível de
+código-fonte das ferramentas de cálculo.
+
 % Citar os trabalhos do IVANOV aqui...
 Uma vez definido o significado do acoplamento no contexto desse trabalho, serão apresentados os mais importantes 
 trabalhos sobre o tema. Talvez o mais importante trabalho relacionado ao acoplamento 
-neutrônico/termo-hidráulico seja o de \cite{Ivanov2007}. Nele são análisados e classificados diferentes tipos de 
+neutrônico/termo-hidráulico seja o de Ivanov \cite{Ivanov2007}. Nele são analisados e classificados diferentes tipos de 
 acoplamento, seus componentes e suas aplicações. Os diversos parâmetros do acoplamento são esquematicamente dividos em: 
 \begin{enumerate}
-\item Forma de acoplamento: externo quando o código neutrônico é combinado com parte do código termo-hidráulico, 
+\item \textbf{Forma de acoplamento}: externo, quando o código neutrônico é combinado com parte do código termo-hidráulico, 
 geralmente na forma de condições de contorno, e então acoplado ao sistema termo-hidráulico completo. O acoplamento 
 é definido como interno quando a neutrônica é integrada ao modelo de transferência de calor do sistema termo-hidráulico. 
-Em outras palavras, o acoplamento interno é uma implementação multifísica.
-\item Abordagens de acoplamento: integração em série ou processamento em paralelo. Na integração em série o algoritmo 
+Em outras palavras, o acoplamento interno é uma implementação multifísica. Deve-se dizer que não há, na literatura, uma
+concordância completa sobre a nomeclatura para a forma de acoplamento. 
+\item \textbf{Abordagens de acoplamento}: integração em série ou processamento em paralelo. Na integração em série o algoritmo 
 para cálculo neutrônico é integrado como uma rotina ao sistema termo-hidráulico e então executado sequencialmente 
 após os cálculos termo-hidráulicos. Na abordagem de processamento em paralelo, geralmente a troca de dados é 
 intermediada por um sistema de troca de mensagens como PVM \cite{Geist94} ou MPI \cite{Quinn2004}. Nesse caso, os 
 módulos de neutrônica e termo-hidráulica têm capacidade separada de execução e resposta, o que permite uma execução 
 mais eficiente do ponto de vista computacional.
-\item Sobreposição espacial de malhas: pode ser fixo, quando um canal termo-hidráulico representa um canal neutrônico, 
+\item \textbf{Sobreposição espacial de malhas}: pode ser fixo, quando um canal termo-hidráulico representa um canal neutrônico, 
 ou flexível, quando são usados ou especificados esquemas de mapeamento. Um esquema avançado de mapeamento 
-e interpolação de malhas \cite{Beaudoin2008} é implementado em alguns dos modernos códigos cd CFD. As diversas implicações 
+e interpolação de malhas \cite{Beaudoin2008} é implementado em alguns dos modernos códigos de CFD. As diversas implicações 
 do mapeamento de malhas para a simulação serão apresentadas oportunamente.
-\item Algoritmos de controle de \textit{time-step}: os transientes neutrônicos são geralmente muito mais rápidos que 
+\item \textbf{Algoritmos de controle de \textit{time-step}}: os transientes neutrônicos são geralmente muito mais rápidos que 
 os transientes termo-hidráulicos. A utilização de um único \textit{time-step} longo pode levar à não detecção de transientes 
 rápidos e no caso oposto ao desperdício de recursos computacionais ao se simular eventos indistinguíveis repetidamente.
-\item Acoplamento numérico: o autor se refere nesta classificação ao tempo de troca de informações entre o modelo 
+\item \textbf{Acoplamento numérico}: o autor se refere nesta classificação ao tempo de troca de informações entre o modelo 
 neutrônico e termo-hidráulico. Pode ser explícito, semi-explícito e implícito, dependendo da forma como cada esquema 
 realiza o cálculo das variáveis do \textit{time-step} atual baseado em variáveis do \textit{time-step} atual ou 
 anterior.
-\item Esquemas de convergência do acoplamento: definidos de acordo com a forma com que a simulação é considerada 
+\item \textbf{Esquemas de convergência do acoplamento}: definidos de acordo com a forma com que a simulação é considerada 
 finalizada. Se há apenas uma estimativa para a convergência de ambos os códigos, o esquema é considerado fracamento 
 acoplado, por exemplo.
 \end{enumerate}
 
 O autor ainda comenta a importância da geração de seções de choque adequadas aos transientes esperados na 
-simulação acoplada e sua interdependência. A geração de seções de choque não é escopo desta tese, mas uma 
-breve explicação de como seções de choque para poucos grupos podem ser geradas pode ser encontrada 
-em \cite{Friedman2013}.
+simulação acoplada e sua interdependência. A geração de seções de choque, apesar de não ser escopo desta tese,
+foi realizada para a obtenção dos coeficientes para a solução da equação de difusão para dois grupos de nêutrons.
+Uma breve explicação de como seções de choque para poucos grupos podem ser geradas pode ser encontrada no
+artigo de Friedman \cite{Friedman2013}. Cabe ressaltar que um grande número de trabalhos encontrados
+na literatura tem utilizado repetidamente o código \textit{Serpent} \cite{Serpent2013} para
+a geração de seções de choque, tanto para cálculos determinísticos quanto estocásticos \cite{Jareteg2014, Dorval2015}.
 
-Um recente trabalho de simulação envolvendo neutrônica e termo-hidráulica com uso de CFD propõe 
-a simulação de reatores avançados refrigerados a gás \cite{Hossain2011}. O modelo utilizado 
+Confirmando o atual interesse em cálcuos CFD no domínio nuclear, um trabalho de simulação envolvendo
+neutrônica e termo-hidráulica com uso de CFD propõe a simulação de reatores avançados refrigerados
+a gás \cite{Hossain2011}. O modelo utilizado 
 para a simulação neutrônica foi o de cinética pontual devido à sua simplicidade. No modelo 
 de cinética pontual assume-se que a forma do perfil do fluxo de nêutrons durante um transiente 
 não varia, mas apenas os valores do fluxo variam com o tempo. A variação no fluxo é dada 
-pelo balanço entre nêutrons produzidos e perdidos, considerando 6 classes de precursores 
-para nêutrons atrasados. O desenvolvimento matemático leva a um sistema 7 equações diferenciais 
+pelo balanço entre nêutrons produzidos e perdidos, considerando seis classes de precursores 
+para nêutrons atrasados. O desenvolvimento matemático leva a um sistema de sete equações diferenciais 
 ordinárias, conhecidas como equações de cinética pontual. A implementação da solução desse sistema 
 é, nesse caso, feito dentro do código termo-hidráulico utilizado (\textit{TH3D}).
 
-Recentemente \cite{Yan2011} simulou o comportamento do escoamento em um feixe de elementos 
+Em outro trabalho que se utilizou de CFD \cite{Yan2011}, foi simulado o comportamento do escoamento em um feixe de elementos 
 combustíveis e espaçadores utilizando-se de CFD acoplado à neutrônica. A neutrônica 
 simulada é baseada no \textit{method of characteristic}, que evita a necessidade de geração 
 de constantes para poucos grupos \textit{a priori}. A abordagem usada no 
@@ -157,22 +171,22 @@ fronteira e posição de diferentes materias são equivalentes em ambos os model
 As conclusões apresentadas reiteram a importância da técnica cd CFD na indústria nuclear. Em particular, 
 a capacidade de verificar os efeitos da grade misturadora na temperatura e densidade do refrigerante 
 levando-se em consideração os efeitos neutrônicos. Nas palavras do autor, esse acoplamento 
-``permite um melhor entendimento da margem de DNB (Departure Nuclear Boiling) e a formação de particulado 
-na vareta de combustível''. O autor finaliza apontando o interesse em incrementar a simulação 
+``permite um melhor entendimento da margem de DNB (Departure from Nucleate Boiling)''.
+O autor finaliza apontando o interesse em incrementar a simulação 
 agregando outros aspectos físicos, como um modelo de corrosão, um modelo de geração do particulado, 
 um modelo de interação revestimento/pastilha e outros. Percebe-se aqui que as diversas aplicações 
 de multifísica já são esperadas e inevitáveis, e num futuro mais do que próximo.
 
 Talvez o mais completo trabalho relativo ao acoplamento neutrônico-termo-hidráulico com uso do 
-CFD \textit{OpenFOAM} seja \cite{Jareteg2012}. Nesta tese, o acoplamento é feito usando o mesmo 
+CFD \textit{OpenFOAM} seja a tese de Klas Jareteg \cite{Jareteg2012}. Nela, o acoplamento é feito usando o mesmo 
 software para a simulação termo-hidráulica e neutrônica. A metodolgia utilizada pode ser brevemente 
 resumida em alguns passos principais: 1) criação de uma malha adequada, 2) discretização das 
 equações descrevendo o problema, 3) definição das condições de contorno, 4) geração dos 
 parâmetros neutrônicos (por exemplo, seções de choque macroscópicas) e 5) solução do 
 problema neutrônico e termo-hidráulico de forma acoplada. O autor usa um dos modelos de solução presentes no 
 software de CFD \textit{OpenFOAM} \cite{OpenFOAM2013} e 
-altera esse modelo que simula um escoamento turbulento de um fluido compressível com transferência de por radiação 
-térmica (\texttt{buoyantSimpleRadiationSolver}) adicionando uma implementação da equação de difusão multi-grupos 
+altera esse modelo que simula um escoamento turbulento de um fluido compressível com transferência de energia
+por radiação térmica (\texttt{buoyantSimpleRadiationSolver}) adicionando uma implementação da equação de difusão multi-grupos 
 ao modelo. Isto é feito utilizando a capacidade geral de discretização e solução de equações bem como os algorimos 
 para solução numérica já presentes no \textit{OpenFOAM}. Dentre suas conclusões, estão que o acoplamento iterativo 
 utilizado é funcional e estável, a solução para a neutrônica necessitou de menos iterações para convergir 
@@ -204,6 +218,33 @@ com diversas aplicações. Alguns desses trabalhos, são referências no trabalh
 nesta tese e cuja proposta será apresentada com detalhes no próximo capítulo.
 
 Teste de algumas referências como \cite{Fiorina2015}.
+
+%Teste de listagem de programa.
+%\lstinputlisting[language=c++, firstline=127, lastline=143]{/home/vitors/workspace/thesisChtMultiRegionFoam/chtMultiRegionSimpleFoam/solid/createSolidFields.H}
+
+%Teste copiando o texto em si.
+%\lstset{customc++} ERRADO
+%\begin{lstlisting}
+%  if(Pstream::parRun())
+%  {
+%    fileName cellCorr(runTime.rootPath()+"/"+runTime.caseName()+
+%    "/constant/"+solidRegions[i].name()+"/polyMesh");
+%    
+%    // Read cellProcAddressing for each processor
+%    solidList[i][Pstream::myProcNo()] = labelIOList(IOobject
+%    (
+%        "cellProcAddressing", // Filename
+%        cellCorr,
+%        solidRegions[i],	// Registry
+%        IOobject::MUST_READ, 	// Read option
+%        IOobject::NO_WRITE 	// Write Option
+%    ));
+%    
+%    // Create a mapping from each processor to the solidListsRegions
+%  }
+%\end{lstlisting}
+  
+
 %Tesse de referências usando o \textsf{abntex2} e o 
 %pacote \textsf{abntex2cite}itando\cite{Larsson2012}. 
 %O próximo é o Janosy \cite{Janosy2011}. Depois vem o artigo 
