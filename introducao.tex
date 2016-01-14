@@ -16,12 +16,30 @@ nos próximos.
 Este trabalho de tese consiste no desenvolvimento de um sistema acoplado de cálculos
 termo-hidráulicos e neutrônicos. Apesar de desenvolvidos separadamente - inclusive
 em linguagens de programação diferentes - ambos fazem uso do método de volumes
-finitos\cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
+finitos \cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
 Cabe ressaltar que, neste primeiro momento, apenas cálculos em estado estacionário
 são previstos.
 
-Os códigos utilizados são abertos, o que significa pleno acesso ao seu código-fonte.
-Esta é condição básica o desenvolvimento do sistema acoplado. Grosso modo, o acoplamento
+Os códigos utilizados são abertos \cite[Capítulo~3]{Stallman2002}, o que significa pleno acesso ao seu código-fonte.
+Essa informação poderia passar despercebida, mas há alguns pontos a considerar antes de se
+seguir. As licenças que permitem a distribuição de código aberto impõe, via de regra, que
+o código desenvolvido a partir de outro licenciado desta forma deva permanecer aberto.
+Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite[Seção~2.6]{Androutsellis2010},
+é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, sua disseminação é crescente.
+Não apenas para tarefas básicas, mas predominantemente em serviços de rede, internet, cálculo numérico dentre
+inúmeros outros. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
+extensivamente usados em aplicações de missão crítica \cite{Norris2004}.
+
+Dada que a utilização de programas de código aberto ainda é tímida no domínio nuclear,
+esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
+aplicação neste domínio. Sendo os dois códigos usados para o acoplamento disponibilizados
+de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
+por qualquer interessado, seja ele desenvolvidor, engenheiro, pesquisador ou regulador.
+Se essa forma de desenvolvimento de sistemas de \textit{software} é adequada para as especificidades
+e restrições dos sistemas nucleares, não é possível dizer. Não ainda, não antes de que esse debate
+seja iniciado.
+
+A disponibilidade do código-fonte é condição básica para o desenvolvimento do sistema acoplado. Grosso modo, o acoplamento
 dos dois códigos nada mais é do que alterações e adições em ambos os códigos-fonte de modo
 que estes sejam capazes de se comunicar e trocar dados para realizar seus cálculos.
 Este processo, desde sua metodologia até fundamentos de sua execução, será
@@ -51,7 +69,7 @@ Os códigos de difusão aplicam simplificações e homogeneizações no núcleo 
 de acordo com o contexto) para que as aproximações de difusão sejam válidas. Um dos códigos de difusão 
 mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estando inclusive já acoplado 
 com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
-O código usado neste trabalho para o acoplamento é o código Milonga\cite{ThelerXXX}. O Milonga
+O código usado neste trabalho para o acoplamento é o código milonga (grafa-se sem letra maiúscula). O milonga \cite{Theler2015}
 utiliza o método de volumes finitos na discretização do domínio e resolve utiliza-se a
 aproximação pela equação da difusão para o cáculo neutrônico. Suas características e seu
 funcionamente serão apresentados oportunamente.
@@ -90,12 +108,18 @@ Apesar da existência na literatura de vários trabalhos de acoplamento neutrôn
 a utilização de códigos do tipo CFD para a realização dos cálculos 
 termo-hidráulicos ainda é tímida. Isso pode ser explicado pela alta demanda
 computacional, dificultando sua utilização para sistemas da complexidade de um
-reator nuclear. Além disso, até o presente momento, não há
-informações sobre o uso do \textit{OpenFOAM} - 
-um CFD aberto e gratuito \cite{Jasak2007} - acoplado a códigos de neutrônica. 
+reator nuclear. Além disso, até o presente momento, não
+foram encontrados trabalhos
+sobre o uso do \textit{OpenFOAM} - 
+um CFD aberto e gratuito \cite{Jasak2007} - acoplado a códigos de neutrônica.
 
-Além da originalidade do uso do 
-\textit{OpenFOAM} e sua aplicação para o caso simples de uma vareta combustível, uma vez validada pelos dados experimentais de \textit{benchmarks} de reatores
-do tipo PWR\cite{benchmarksPWR}, a metodologia desenvolvida nesta tese poderá ser usada para simulações reatores completos. São eles o reator multipropósito brasileiro, com previsão de operação para 2020 e reatores de potência tipo PWR em operação no Brasil (Angra I e II). 
+%Os mais recentes trabalhos utilizando \textit{OpenFOAM} para cálculos acoplados
+%não se utilizavam de códigos neutrônicos externos. O capítulo \nameref{chap:rev} apresenta
+%uma revisão dos principais trabalhos no tema de acoplamento.
 
-E a aplicação não se restringe à simulação do reator, podendo ser, no futuro, adicionados elementos como queima de combustível, envenenamento por xenônio e outros fatores que permitam não só a simulação de um estado transiente curto, como também da evolução da utilização do reator no tempo.
+
+%Além da originalidade do uso do 
+%\textit{OpenFOAM} e sua aplicação para o caso simples de uma vareta combustível, uma vez validada pelos dados experimentais de \textit{benchmarks} de reatores
+%do tipo PWR\cite{benchmarksPWR}, a metodologia desenvolvida nesta tese poderá ser usada para simulações reatores completos. São eles o reator multipropósito brasileiro, com %previsão de operação para 2020 e reatores de potência tipo PWR em operação no Brasil (Angra I e II). 
+
+%E a aplicação não se restringe à simulação do reator, podendo ser, no futuro, adicionados elementos como queima de combustível, envenenamento por xenônio e outros fatores que permitam não só a simulação de um estado transiente curto, como também da evolução da utilização do reator no tempo.
