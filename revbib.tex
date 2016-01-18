@@ -83,7 +83,8 @@ da água podem mudar consideravelmente o fator de multiplicação de nêutrons (
 a necessidade de acoplar os cálculos termo-hidráulicos - as variações nas propriedades da água - com as variações 
 no fluxo neutrônico.
 
-O acoplamento das simulações de diferentes fenômenos físicos tem sido também chamado de \textbf{multifísica}. 
+O acoplamento das simulações de diferentes fenômenos físicos tem sido também chamado de
+\textbf{multifísica}. 
 Uma definição prática para multifísica ou física-acoplada é dada por Paul Lethbridge \cite{Lethbridge2005}, definindo que 
 a multifísica é, em essência, a análise de fenômenos físicos distintos de forma combinada.
 
@@ -143,7 +144,11 @@ foi realizada para a obtenção dos coeficientes para a solução da equação d
 Uma breve explicação de como seções de choque para poucos grupos podem ser geradas pode ser encontrada no
 artigo de Friedman \cite{Friedman2013}. Cabe ressaltar que um grande número de trabalhos encontrados
 na literatura tem utilizado repetidamente o código \textit{Serpent} \cite{Serpent2013} para
-a geração de seções de choque, tanto para cálculos determinísticos quanto estocásticos \cite{Jareteg2014, Dorval2015}.
+a geração de seções de choque, tanto para cálculos determinísticos quanto estocásticos \cite{Jareteg2014}. Em breve resumo, o trabalho de Dorval \cite{Dorval2015} investiga
+a geração de seções de choque para poucos grupos a partir do código \textit{Serpent} para
+o cálculo neutrônico de reatores rápidos refrigerados a sódio. Além dos coeficientes de
+difusão padrão gerados pelo \textit{Serpent}, é proposto um novo método para cálculo de
+coeficientes de difusão direcionais. 
 
 Confirmando o atual interesse em cálcuos CFD no domínio nuclear, um trabalho de simulação envolvendo
 neutrônica e termo-hidráulica com uso de CFD propõe a simulação de reatores avançados refrigerados
@@ -168,7 +173,7 @@ discretização espacial (sobreposição espacial de malhas), é usado um mapeam
 utilizadas nos dois códigos. Apesar de diferenças nas malhas, as fronteiras materiais, ou seja, geometria, 
 fronteira e posição de diferentes materias são equivalentes em ambos os modelos.
 
-As conclusões apresentadas reiteram a importância da técnica cd CFD na indústria nuclear. Em particular, 
+As conclusões apresentadas reiteram a importância da técnica de CFD na indústria nuclear. Em particular, 
 a capacidade de verificar os efeitos da grade misturadora na temperatura e densidade do refrigerante 
 levando-se em consideração os efeitos neutrônicos. Nas palavras do autor, esse acoplamento 
 ``permite um melhor entendimento da margem de DNB (Departure from Nucleate Boiling)''.
@@ -193,6 +198,20 @@ utilizado é funcional e estável, a solução para a neutrônica necessitou de 
 do que que a solução pressão-velocidade e que a termo-hidráulica precisa de malhas mais refinadas do que a solução 
 neutrônica. A qualidade desse trabalho e muitas das soluções adotadas servem como referências às implementações 
 e simulações a serem feitas nesta tese.
+
+O referido trabalho de tese deu origem a um artigo (\cite{Jarateg2014}) no qual o acoplamento
+neutrônico/termo-hidráulico é classificado como interno e é utilizada uma malha
+refinada. O objetivo deste artigo é provar que
+este acoplamento é factível e gera resultados com um nível de detalhes sem precedentes. Além
+disso, os autores apontam que cálculos com malhas menos refinadas geram discrepâncias
+de até 0,5\% na potência por vareta e várias dezenas de \textit{pcm} no fator de multiplicação.
+Os autores justificam, ainda, que apesar de a neutrônica não necessitar de uma malha
+tão detalhada quando necessita a termo-hidráulica, seu uso se justifica pela não necessidade
+de interpolações ou mapeamentos entres os elementos da malha. Além disso, como trata-se
+de um acoplamento interno, não há necessidade de transferência de dados, poupando-se
+tempo de processamento.
+Neste trabalho o problema é tratato como de regime permanente, bem como o problema escopo
+desta tes.e
 
 
 %o acoplamento é interno ao mesmo software, 
