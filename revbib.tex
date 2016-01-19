@@ -12,9 +12,34 @@
 %\section*{OpenFOAM}
 %Por que usá-lo? Vantagens e desvantagens.
 
-Antes de passar à descrição do problema de acoplamento, é importante contextualizar sua 
-aplicação e as razões que tornam o problema de acoplamento fundamental na simulação completa 
-de um reator nuclear.
+O ponto de partida deste capítulo deveria ser a descrição do problema de acoplamento,
+a contextualização de sua aplicação e as razões que tornam tal problema fundamental
+na simulação completa de um reator nuclear. Entretanto, no contexto dessa tese, é impossível
+iniciar as discussões técnicas sem uma exposição, ainda que breve, da expressão que
+aparece no título deste trabalho: \textit{software} livre.
+
+A primeira utilização do termo \textit{software} livre (do inglês \textit{free software})
+foi feita por Richard Stallmann. Não se sabe precisar quando o termo foi utilizado pela
+primeira vez, mas tornou-se usual no início da década de 80 do século passado.
+Apesar do significa ambíguo na língua inglesa - o próprio Stallmann faz questão
+de explicar seu significado \cite{Stallman2002} - \textit{software} livre não deve
+ser confundido com preço ou custo. Em definição do criador do termo, um \textit{software}
+é livre para um usuário em particular se:
+\begin{itemize}
+\item O usuário tem liberdade de executar o programa, para qualquer propósito.
+\item O usuário tem liberdade de modificar o programa para atender às suas necessidades.
+  (Para tornar-se efetiva na prática, o usuário deve ter acesso ao código-fonte).
+\item O usuário tem liberdade de restribuir cópias, gratuitamente ou não.
+\item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
+  que a comunidade possa beneficiar-se das melhorias.
+\end{itemize}
+
+Defino o que é \textit{software} livre, são necessárias algumas observações no que diz
+respeitos às possibilidades de sua distribuição. Alguns aspectos da distribuição
+
+%Antes de passar à descrição do problema de acoplamento, é importante contextualizar sua 
+%aplicação e as razões que tornam o problema de acoplamento fundamental na simulação completa 
+%de um reator nuclear.
 
 O crescimento na capacidade de cálculo dos computadores pessoais permitiu não só o uso 
 de técnicas mais elaboradas de cálculos termo-hidráulicos bem como seu uso em conjunto 
@@ -106,8 +131,8 @@ gerações de especialistas, não apenas com compreensão de teoria e métodos, 
 código-fonte das ferramentas de cálculo.
 
 % Citar os trabalhos do IVANOV aqui...
-Uma vez definido o significado do acoplamento no contexto desse trabalho, serão apresentados os mais importantes 
-trabalhos sobre o tema. Talvez o mais importante trabalho relacionado ao acoplamento 
+Uma vez apresentados o que são os códigos CFD e algumas de suas aplicações no domínio nuclear e definido o significado do acoplamento no contexto desse trabalho de tese, serão apresentados os mais importantes 
+trabalhos sobre o acoplamento. Talvez o mais importante trabalho relacionado ao acoplamento 
 neutrônico/termo-hidráulico seja o de Ivanov \cite{Ivanov2007}. Nele são analisados e classificados diferentes tipos de 
 acoplamento, seus componentes e suas aplicações. Os diversos parâmetros do acoplamento são esquematicamente dividos em: 
 \begin{enumerate}
@@ -135,8 +160,19 @@ realiza o cálculo das variáveis do \textit{time-step} atual baseado em variáv
 anterior.
 \item \textbf{Esquemas de convergência do acoplamento}: definidos de acordo com a forma com que a simulação é considerada 
 finalizada. Se há apenas uma estimativa para a convergência de ambos os códigos, o esquema é considerado fracamento 
-acoplado, por exemplo.
+acoplado, por exemplo.  
 \end{enumerate}
+
+Em relação ao último item, poucos autores se dedicam a uma análise sistemática da forma como se
+dá a convergência nos cálculos acoplados. Usualmente são apenas apresentados os esquemas
+de convergência e o foco das análises se concentra nos resultados dos cálculos acoplados.
+Zerkak \cite{Zerkak2015}, por sua vez, faz uma revisão dos métodos de acoplamento com
+foco em como melhorar a convergência das atuais técnicas de acoplamento. O autor faz uma
+análise pormenorizada da técnica de \textit{operator splitting} e várias de suas melhorias,
+dentre vários outros esquemas numéricos de solução de \textit{PDE's}. Sua análise visa
+uma avaliação de vantagens e desvantagens dos métodos númericos em relação à eficiência
+computacional, convergência e esforço de implementação e modularidade, sempre com vistas
+à análise de reatores nucleares.
 
 O autor ainda comenta a importância da geração de seções de choque adequadas aos transientes esperados na 
 simulação acoplada e sua interdependência. A geração de seções de choque, apesar de não ser escopo desta tese,
@@ -144,7 +180,9 @@ foi realizada para a obtenção dos coeficientes para a solução da equação d
 Uma breve explicação de como seções de choque para poucos grupos podem ser geradas pode ser encontrada no
 artigo de Friedman \cite{Friedman2013}. Cabe ressaltar que um grande número de trabalhos encontrados
 na literatura tem utilizado repetidamente o código \textit{Serpent} \cite{Serpent2013} para
-a geração de seções de choque, tanto para cálculos determinísticos quanto estocásticos \cite{Jareteg2014}. Em breve resumo, o trabalho de Dorval \cite{Dorval2015} investiga
+a geração de seções de choque, tanto para cálculos estocásticos quanto determinísticos \cite{Jareteg2014}.
+
+Em breve resumo, o trabalho de Dorval \cite{Dorval2015} investiga
 a geração de seções de choque para poucos grupos a partir do código \textit{Serpent} para
 o cálculo neutrônico de reatores rápidos refrigerados a sódio. Além dos coeficientes de
 difusão padrão gerados pelo \textit{Serpent}, é proposto um novo método para cálculo de
@@ -199,7 +237,7 @@ do que que a solução pressão-velocidade e que a termo-hidráulica precisa de 
 neutrônica. A qualidade desse trabalho e muitas das soluções adotadas servem como referências às implementações 
 e simulações a serem feitas nesta tese.
 
-O referido trabalho de tese deu origem a um artigo (\cite{Jarateg2014}) no qual o acoplamento
+O referido trabalho de tese deu origem a um artigo \cite{Jareteg2014} no qual o acoplamento
 neutrônico/termo-hidráulico é classificado como interno e é utilizada uma malha
 refinada. O objetivo deste artigo é provar que
 este acoplamento é factível e gera resultados com um nível de detalhes sem precedentes. Além
@@ -211,7 +249,7 @@ de interpolações ou mapeamentos entres os elementos da malha. Além disso, com
 de um acoplamento interno, não há necessidade de transferência de dados, poupando-se
 tempo de processamento.
 Neste trabalho o problema é tratato como de regime permanente, bem como o problema escopo
-desta tes.e
+desta tese.
 
 
 %o acoplamento é interno ao mesmo software, 
@@ -238,11 +276,12 @@ nesta tese e cuja proposta será apresentada com detalhes no próximo capítulo.
 
 Teste de algumas referências como \cite{Fiorina2015}.
 
+
 %Teste de listagem de programa.
 %\lstinputlisting[language=c++, firstline=127, lastline=143]{/home/vitors/workspace/thesisChtMultiRegionFoam/chtMultiRegionSimpleFoam/solid/createSolidFields.H}
 
 %Teste copiando o texto em si.
-%\lstset{customc++} ERRADO
+%\lstset{customc++}
 %\begin{lstlisting}
 %  if(Pstream::parRun())
 %  {
@@ -262,16 +301,19 @@ Teste de algumas referências como \cite{Fiorina2015}.
 %    // Create a mapping from each processor to the solidListsRegions
 %  }
 %\end{lstlisting}
-  
+
 
 %Tesse de referências usando o \textsf{abntex2} e o 
-%pacote \textsf{abntex2cite}itando\cite{Larsson2012}. 
-%O próximo é o Janosy \cite{Janosy2011}. Depois vem o artigo 
-%do finlandês \cite{Leppanen2012} e mais um capítulo de 
-%livro \cite{Faghihi2011}. E o autor do Openfoam \cite{Jasak2007}. 
-%Um artigo sobre as novas perspectivas do desenvolvimento de 
-%reatores em \cite{Baglietto2011}. Condições de contorno pra acoplamento 
-%no OpenFOAM em \cite{Beaudoin2008}. Sobre TRIGA tem o trabalho do 
+%pacote \textsf{abntex2cite}itando
+\cite{Larsson2012}.
+\cite{Janosy2011}.
+\cite{Leppanen2012}.
+\cite{Faghihi2011}.
+\cite{Jasak2007}. 
+\cite{Baglietto2011}.
+
+%\cite{Beaudoin2008}. CITADO
+% Sobre TRIGA tem o trabalho do 
 %\cite{Khan2011}. O turco fez benchmarks sobre o TRIGA dele em 
 %\cite{Turkmen2013}. Artigo mais matemático, acoplamento totalmente 
 %implícito pelo \cite{Pope2008}. O fodão da área é o \cite{Ivanov2007}.
