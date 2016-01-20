@@ -21,7 +21,7 @@ aparece no título deste trabalho: \textit{software} livre.
 A primeira utilização do termo \textit{software} livre (do inglês \textit{free software})
 foi feita por Richard Stallmann. Não se sabe precisar quando o termo foi utilizado pela
 primeira vez, mas tornou-se usual no início da década de 80 do século passado.
-Apesar do significa ambíguo na língua inglesa - o próprio Stallmann faz questão
+Apesar do significado ambíguo na língua inglesa - o próprio Stallmann faz questão
 de explicar seu significado \cite{Stallman2002} - \textit{software} livre não deve
 ser confundido com preço ou custo. Em definição do criador do termo, um \textit{software}
 é livre para um usuário em particular se:
@@ -34,12 +34,62 @@ ser confundido com preço ou custo. Em definição do criador do termo, um \text
   que a comunidade possa beneficiar-se das melhorias.
 \end{itemize}
 
-Defino o que é \textit{software} livre, são necessárias algumas observações no que diz
-respeitos às possibilidades de sua distribuição. Alguns aspectos da distribuição
+Uma vez definido o significado da expresão \textit{software} livre, cabe ressaltar que, do ponto de
+vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
+Eventualmente, um determinado \textit{software} definido como livre pode distribuído sem
+restrições a ser utilizado em sistemas
+fechados. Desse modo, assim passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
 
-%Antes de passar à descrição do problema de acoplamento, é importante contextualizar sua 
-%aplicação e as razões que tornam o problema de acoplamento fundamental na simulação completa 
-%de um reator nuclear.
+Com isto em conta, faz-se necessária uma breve explicação do que são as licenças
+de \textit{software} e como estas licenças definem as formas como devem se dar a utilização, distribuição, cópia, seção, etc. de determinado \textit{software}. Sendo assim,
+já no escopo do projeto GNU \cite{Stallman1985} foi pensada a primeira forma
+de licenciamento de \textit{software}
+GNU. Esta licença é chamada GPL.
+
+A licença GPL é apenas uma dentre várias, seja de \textit{software} livre ou
+não. O objetivo da licença GPL é, ao mesmo tempo permitir liberdade do ponto de vista
+do usuário do \textit{software}, mas impedir que o código-fonte seja usado em sistemas proprietários. Isso se dá obrigando sistemas que utilizem código
+distribuído sob a licença GPL a ser distribuído sob a mesma licença.
+
+Cabe ressaltar que um \textit{software} distribuído sob licença GPL é mais restritivo do
+que um \textit{software} de domínio público, já que este último pode ser incorporado
+a sistemas proprietários fechados, por exemplo. O \textit{software} GPL, por sua vez,
+deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos sobre
+os diversos aspectos do \textit{software} de código aberto encontrarão sólidas informações
+na referência \cite{Androutsellis2010}.
+
+Mais de trinta anos depois do surgimento do movimento \textit{software} livre,
+sua penetração no mundo da computação é completa. A maior parte tráfego de correio
+eletrônico no planeta é feita por \textit{software} livre, por exemplo.  A título
+de ilustração, em 2015, eram mais de 1 bilhão e 800 milhões de \textit{smartphones}
+sendo utilizados no mundo. Destes, 82\% rodando um sistema operacional livre.
+
+Era de se esperar que a penetração do \textit{software} livre chegaria também a outras
+áreas, incluindo aplicações de missão crítica. A agência espacial norte-americana
+utilizou \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
+de exploração espacial \cite{Norris2004}.
+
+Entretanto, a utilização de \textit{software} livre na indústria nuclear ainda é tímida.
+Uma das razões é facilmente compreensível: o impacto de uma falha de \textit{software}
+em uma aplicação nuclear pode ter resultados devastadores. Desse modo, o processo de
+verificação e validação de sistemas de \textit{software} nessa indústria é extremamente
+conservador. Somado-se a isso, o custo de verificação e validação de um novo \textit{software}
+não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \textit{software}
+livre na área nuclear seja mais lenta que em outras áreas.
+
+Essas dificultades, porém, são inferiores aos possíveis ganhos na utilização de
+\textit{software} livre. Um grande exemplo dessa afirmativa é a ampla adoção
+do \textit{software Serpent} \cite{Serpent2013}. Trata-se de um \textit{software}
+de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
+de ter sua distribuição controlada, é distribuído com código-fonte. Em janeiro
+de 2016, o \textit{Serpent} já era usado por mais de 460 usuários em 142 universidades
+e centros de pesquisa em 36 países. Outra ferramenta, esta ainda pouco difundida,
+desenvolvida tendo em vista as aplicações nucleares é o código milonga \cite{Theler2015}.
+O milonga é um código do tipo volumes finitos e elementos finitos que resolve as equações
+de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
+desenvolvimento, apresenta resultados promissores \cite{Theler2014b}, tendo sido
+utilizado em cálculos de transientes da central nuclear de Atucha I.
+
 
 O crescimento na capacidade de cálculo dos computadores pessoais permitiu não só o uso 
 de técnicas mais elaboradas de cálculos termo-hidráulicos bem como seu uso em conjunto 
