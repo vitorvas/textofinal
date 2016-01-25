@@ -55,6 +55,15 @@
 \usepackage{multirow}           % Para uso de tabelas complexas
 \usepackage[table]{xcolor}      % Para uso de cores nas tabelas
 \usepackage{listings}           % Permite uso de controle de listagem de código e algoritmos
+
+% Configura o listings
+\lstset{
+  basicstyle=\ttfamily,
+  columns=fixed,
+  fontadjust=true,
+  basewidth=0.5em
+}
+
 %\usepackage[brazilian]{babel}   % Para colocar as datas em português - ESTAVA DANDO WARNING
                                  % clash com package babel
 % ---
@@ -436,9 +445,11 @@ abordagem com \textit{software} livre}
   \item[MPI] \textit{Message Passing Interface}
   \item[FVM] \textit{Finite Volumes Method}
   \item[PWR] \textit{Pressurized Water Reactor}
+  \item[LWR] \textit{Light Water Reactor}
   \item[PDE] \textit{Partial Differential Equation}
   \item[GNU] \textit{GNU's Not Unix}
   \item[GPL] \textit{GNU Public License}
+  \item[RANS] \textit{Reynolds Averaged Navier-Stokes}
 \end{siglas}
 % ---
 
