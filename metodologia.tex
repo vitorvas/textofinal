@@ -18,7 +18,22 @@ será divida em seções, da seguinte forma:
 
 Como todos os elementos do desenvolvimento estão relacionados entre si, sempre que
 julgado oportuno para a clareza do entendimento, os conceitos desenvolvidos em cada
-seção poderão ser apresentados conjuntamente.
+seção poderão ser apresentados conjuntamente. De fato, uma vez que o problema multifísica
+(ou acoplamento) nada mais é do que a solução conjunta de dois problemas que são,
+usualmente, resolvidos separadamente, é natural como definir, modelar e resolver os
+dois problemas separadamente.
+
+De acordo com as definições de problemas acoplados apresentadas
+no capítulo \ref{chap:rev}, ao resolver os problemas neutrônico e termo-hidráulico
+separadamente, o acoplamento ainda pode ser considerado implícito de acordo com, já que a troca de informações entre os problemas ocorre ao nível de termos completos,
+e não em condições de contorno. É importante dizer que essa nomeclatura para as formas
+de acoplamento não é unânime na literatura \cite{Ivanov2007}.
+
+Deve estar claro que a metodologia a ser descrita, trata do ciclo de desenvolvimento
+do \textit{software} acoplado. Apesar de ser possível considerar as simulações e
+os processos de pré-processamento e pós-processamento, tanto termo-hidráulicos quanto
+neutrônicos, optou-se por tratar destas etapas exclusivamente na seção de validação e,
+quando pertinente, nos resultados obtidos.
 
 \section{Termo-hidráulica}
 \label{sec:th}
