@@ -12,9 +12,10 @@ será divida em seções, da seguinte forma:
 \begin{enumerate}
 \item Termo-hidráulica;
 \item Neutrônica;
+  \subitem Geração de seções de choque
 \item Acoplamento;
-  \item Validação.
-  \end{enumerate}
+\item Validação.
+\end{enumerate}
 
 Como todos os elementos do desenvolvimento estão relacionados entre si, sempre que
 julgado oportuno para a clareza do entendimento, os conceitos desenvolvidos em cada
@@ -29,7 +30,7 @@ separadamente, o acoplamento ainda pode ser considerado implícito de acordo com
 e não em condições de contorno. É importante dizer que essa nomeclatura para as formas
 de acoplamento não é unânime na literatura \cite{Ivanov2007}.
 
-Deve estar claro que a metodologia a ser descrita, trata do ciclo de desenvolvimento
+Deve estar claro que a metodologia a ser descrita trata do ciclo de desenvolvimento
 do \textit{software} acoplado. Apesar de ser possível considerar as simulações e
 os processos de pré-processamento e pós-processamento, tanto termo-hidráulicos quanto
 neutrônicos, optou-se por tratar destas etapas exclusivamente na seção de validação e,
@@ -51,3 +52,7 @@ do sistema acoplado.
 
 Para a realização dos cálculos termo-hidráulicos, é usado o \textit{software OpenFOAM},
 um sistema de \textit{CFD}.
+
+\subsection{Geração de Seções de Choque}
+\label{sub:xs}
+
