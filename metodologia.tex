@@ -11,8 +11,23 @@ de desenvolvimento dos vários elementos de software utilizados. Para isso, a me
 será divida em seções, da seguinte forma:
 \begin{enumerate}
 \item Termo-hidráulica;
+  - Para o gap usar as resistências de contato do Amir (Figura 4.33 + equação abaixo).
+  - 4 simulações distintas para o \textit{OpenFoam} para cada potência.
+  \subitem Malha;
+  - Avaliar a qualidade da malha (ortogonalidade, \textit{skewness},
+  suavidade e razão de aspecto).
 \item Neutrônica;
+
+  Verificação do milonga com as seções de choque geradas.
+  
+  \begin{itemize}
+  \item Gerar as seções de choque com o Serpent para as condições da tabela 4.35 (a tabela 4.6 é mais consistente) da tese do Amir;
+  \item Rodar direto no milonga pra ver o que vai dar (em termos de \textit{$k_{eff}$}).
+  \item Rodar a simulação no milonga com os dados interpoláveis artificialmente inseridos para verificar que o esquema consegue interpolar (comparar os \textit{$k_{eff}$}).
+  \end{itemize}
+
   \subitem Geração de seções de choque
+
 \item Acoplamento;
 \item Validação.
 \end{enumerate}
