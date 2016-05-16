@@ -28,6 +28,17 @@ será divida em seções, da seguinte forma:
 
   \subitem Geração de seções de choque
 
+  Modelada uma geometria idêntica à representada na malha utilizada pelo \textit{OpenFOAM},
+  foram feitas simulações da neutrônica pelo Serpent com objetivo de obter as seções
+  de choque em dois grupos a serem usadas na solução da aproximação por difusão dos nêutrons
+  pelo \textit{milonga}.
+
+  Na saída do Serpent são dados constantes de groups homogeneizadas (neste caso, com espectro
+  corrigido para fugas pelo método B1 \textbf{CITAR}) e outros parâmetros de interesse para
+  a modelagem por difusão como, por exemplo, os coeficientes de difusão para cada grupo já
+  calculados.
+
+  
 \item Acoplamento;
 \item Validação.
 \end{enumerate}
@@ -69,6 +80,25 @@ do sistema acoplado.
 Para a realização dos cálculos termo-hidráulicos, é usado o \textit{software OpenFOAM},
 um sistema de \textit{CFD}.
 
+\begin{itemize}
+  \item Citar o \textit{perf} como avaliador de desempenho do acoplamento. (citar).
+\end{itemize}
+
 \subsection{Geração de Seções de Choque}
 \label{sub:xs}
+
+As seções de choque e os parâmetros delas derivados para os cálculos neutrônicos
+determinísticos (como o coeficiente de difusão, por exemplo) são gerados pelo
+código \textit{Serpent}.
+Para isso, foi modelado um quarto de combustível tipo TRIGA.\ref{mini-triga}.
+
+\begin{figure}[htb]
+  \caption{Núcleo para geração de seções de choque.}
+  \centering\includegraphics[scale=0.7]{figuras/triga-like.png}
+  \label{mini-triga}
+  \legend{Fonte: autor}
+\end{figure}
+
+
+
 

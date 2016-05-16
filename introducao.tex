@@ -33,7 +33,7 @@ Dada que a utilização de programas de código aberto ainda é tímida no domí
 esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
 aplicação neste domínio. Sendo os dois códigos usados para o acoplamento disponibilizados
 de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
-por qualquer interessado, seja ele desenvolvidor, engenheiro, pesquisador ou regulador.
+por qualquer interessado, seja ele desenvolvedor, engenheiro, pesquisador ou regulador.
 Se essa forma de desenvolvimento de sistemas de \textit{software} é adequada para as especificidades
 e restrições dos sistemas nucleares, não é possível dizer. Não ainda, não antes de que esse debate
 seja iniciado.
@@ -46,12 +46,12 @@ oportunamente - e detalhadamente - apresentado, já que trata-se da principal
 contribuição desta tese.
 
 O acoplamento entre neutrônica e termo-hidráulica já ocorre de diferentes formas. Na simulação 
-termo-hidráulica são usados códigos de sistemas e códigos de subcanal. Os códigos de sistemas 
+termo-hidráulica são usados códigos de sistemas e códigos de sub-canal. Os códigos de sistemas 
 funcionam modelando os sistemas do reator unidimensionalmente e aplicando as equações básicas 
 para continuidade, momento e energia. O resultado obtido simula o
 comportamento médio dos componentes do reator.
 Estes códigos são normalmente usados em análises de transientes e segurança do reator. 
-Já os códigos de subcanal são mais detalhados e além
+Já os códigos de sub-canal são mais detalhados e além
 de modelar múltiplos componentes do sistema 
 do reator são capazes de simular em geometrias tridimensionais \cite{Faghihi2011}. Os códigos 
 CFD substituem o domínio contínuo por um domínio discreto e finito. Neste contexto os equações 
@@ -70,15 +70,15 @@ mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estand
 com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
 O código usado neste trabalho para o acoplamento é o código milonga (grafa-se sem letra maiúscula). O milonga \cite{Theler2015}
 utiliza o método de volumes finitos na discretização do domínio e resolve utiliza-se a
-aproximação pela equação da difusão para o cáculo neutrônico. Suas características e seu
-funcionamente serão apresentados oportunamente.
+aproximação pela equação da difusão para o cálculo neutrônico. Suas características e seu
+funcionamento serão apresentados oportunamente.
 
 Os códigos de ordenadas discretas resolvem 
 a equação de transporte de Boltzmann para o comportamento médio das partículas para calcular o 
 fluxo de nêutrons. Nesses códigos, o espaço é divido em muitas pequenas caixas e as partículas 
 são movidas entre as caixas. Para geometrias complexas com variações de parâmetros, a preparação de 
 seções de choque exige grande esforço. Os códigos de Monte Carlo funcionam simulando as partículas 
-individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacinal 
+individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacional 
 dos cálculos pelo método de Monte Carlo, seu uso em acoplamento é ainda tímido. Entretanto, dada a capacidade de detalhamento dos fenômenos neutrônicos, a possibilidade do acoplamento CFD com Monte Carlo começa a despertar interesse \cite{Leppanen2012}.
 
 Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
