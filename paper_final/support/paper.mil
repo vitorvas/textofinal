@@ -1,0 +1,24 @@
+# milonga input example for two groups and two materials
+
+# Read mesh file
+MESH NAME fuelmesh FILE_PATH fuel.msh
+
+# Define the problem formulation and characteristics
+MILONGA_PROBLEM FORMULATION diffusion SCHEME volumes DIMENSIONS 3 GROUPS 2
+
+# Define material characteristics for material 'mat1' for two groups
+MATERIAL mat1 {
+  D1           1.110700e+00	SigmaT1      6.976520e-01	nuSigmaF1    3.668170e-03
+  SigmaS1.1    6.659240e-01	SigmaS1.2    2.721750e-02
+
+  D2           3.003750e-01	SigmaT2      1.999550e+00	nuSigmaF2    7.997020e-02
+  SigmaS2.1    1.962140e-04	SigmaS2.2    1.945410e+00
+}
+
+# Define boundary conditions accordingly to the mesh
+PHYSICAL_ENTITY NAME top    	BC vacuum
+PHYSICAL_ENTITY NAME bottom    	BC vacuum
+PHYSICAL_ENTITY NAME wall   	BC mirror
+
+# Call the solver
+MILONGA_STEP
