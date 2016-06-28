@@ -55,7 +55,7 @@ ax.errorbar(xfuel, b1d_mat1_g1, b1d_mat1_g1_error, fmt='-or')
 ax.axis([290, 610, b1d_mat1_g1[0]*0.99, b1d_mat1_g1[-1]*1.01])
 ax.set_xticks(np.arange(300, 700, 100))
 
-ax.set_ylabel('barns ($\sigma$)')
+ax.set_ylabel(r'$10^{24} cm$')
 ax.ticklabel_format(useOffset=False)
 ax.set_title('Diffusion coeff. group 1')
 ax.annotate("Fuel", xy=(0.1,0.88),xycoords='axes fraction', fontsize=14)
@@ -69,7 +69,7 @@ ax.errorbar(xcladding, b1d_mat2_g1, b1d_mat2_g1_error, fmt='-og')
 # set axis to be 1% bigger in y and x
 ax.axis([xcladding[0]*0.99, xcladding[-1]*1.01, b1d_mat2_g1[0]*0.99, b1d_mat2_g1[-1]*1.01])
 ax.set_xticks(np.arange(300, 450, 30))
-ax.set_ylabel('barns ($\sigma$)')
+ax.set_ylabel(r'$10^{24} cm$')
 ax.ticklabel_format(useOffset=False)
 
 ax.annotate("Cladding", xy=(0.1,0.85),xycoords='axes fraction', fontsize=14)
@@ -81,7 +81,7 @@ ax.errorbar(xcoolant, b1d_mat3_g1, b1d_mat3_g1_error, fmt='-ob')
 
 # set axis to be 1% bigger in y and x
 ax.axis([xcoolant[0]*0.99, xcoolant[-1]*1.01, b1d_mat3_g1[0]*0.99, b1d_mat3_g1[-1]*1.01])
-ax.set_ylabel('barns ($\sigma$)')
+ax.set_ylabel(r'$10^{24} cm$')
 ax.ticklabel_format(useOffset=False)
 
 ax.annotate("Coolant", xy=(0.1,0.85),xycoords='axes fraction', fontsize=14)
@@ -97,7 +97,7 @@ ax.errorbar(xfuel, b1d_mat1_g2, b1d_mat1_g2_error, fmt='-sr')
 ax.axis([290, 610, b1d_mat1_g2[0]*0.99, b1d_mat1_g2[-1]*1.01])
 ax.set_xticks(np.arange(300, 700, 100))
 
-#ax.set_ylabel('barns ($\sigma$)')
+#ax.set_ylabel(r'$10^{24} cm ($\sigma$)')
 ax.ticklabel_format(useOffset=False)
 ax.set_title('Diffusion coeff. group 2')
 ax.annotate("Fuel", xy=(0.1,0.88),xycoords='axes fraction', fontsize=14)
@@ -110,7 +110,7 @@ ax.errorbar(xcladding, b1d_mat2_g2, b1d_mat2_g2_error, fmt='-sg')
 
 # set axis to be 1% bigger in y and x
 ax.axis([xcladding[0]*0.99, xcladding[-1]*1.01, b1d_mat2_g2[0]*0.99, b1d_mat2_g2[-1]*1.01])
-#ax.set_ylabel('barns ($\sigma$)')
+#ax.set_ylabel(r'$10^{24} cm ($\sigma$)')
 ax.set_xticks(np.arange(300, 450, 30))
 ax.ticklabel_format(useOffset=False)
 

@@ -56,7 +56,7 @@ ax.grid(True)
 ax.errorbar(xfuel, b1s0_mat1_g1, b1s0_mat1_g1_error, fmt='-or')
 
 # set axis to be 1% bigger in y and x
-ax.axis([290, 610, b1s0_mat1_g1[0]*0.99, b1s0_mat1_g1[-1]*1.01])
+ax.axis([290, 610, -0.02, 0.02])
 ax.set_xticks(np.arange(300, 700, 100))
 ax.set_ylabel('barns ($\sigma$)')
 ax.ticklabel_format(useOffset=False)
@@ -70,7 +70,7 @@ ax.grid(True)
 ax.errorbar(xcladding, b1s0_mat2_g1, b1s0_mat2_g1_error, fmt='-og')
 
 # set axis to be 1% bigger in y and x
-ax.axis([xcladding[0]*0.99, xcladding[-1]*1.01, b1s0_mat2_g1[0]*0.99, b1s0_mat2_g1[-1]*1.01])
+ax.axis([290, 420, -0.05, 0.05])
 ax.set_xticks(np.arange(300, 450, 30))
 ax.set_ylabel('barns ($\sigma$)')
 ax.ticklabel_format(useOffset=False)
@@ -83,7 +83,8 @@ ax.grid(True)
 ax.errorbar(xcoolant, b1s0_mat3_g1, b1s0_mat3_g1_error, fmt='-ob')
 
 # set axis to be 1% bigger in y and x
-ax.axis([xcoolant[0]*0.99, xcoolant[-1]*1.01, b1s0_mat3_g1[0]*0.99, b1s0_mat3_g1[-1]*1.01])
+ax.axis([295, 345, -0.05, 0.05])
+ax.set_xticks(np.arange(300, 350, 10))
 ax.set_ylabel('barns ($\sigma$)')
 ax.ticklabel_format(useOffset=False)
 #ax.set_title('Total Cross Sections: coolant (group 1)')
@@ -98,7 +99,7 @@ ax.errorbar(xfuel, b1s0_mat1_g2, b1s0_mat1_g2_error, fmt='-sr')
 
 # set axis to be 1% bigger in y and x
 
-ax.axis([290, 610, b1s0_mat1_g2[0]*0.99, b1s0_mat1_g2[-1]*1.01])
+ax.axis([290, 610, 1.910, 1.940])
 ax.set_xticks(np.arange(300, 700, 100))
 #ax.set_ylabel('barns ($\sigma$)')
 ax.ticklabel_format(useOffset=False)
@@ -112,7 +113,7 @@ ax.grid(True)
 ax.errorbar(xcladding, b1s0_mat2_g2, b1s0_mat2_g2_error, fmt='-sg')
 
 # set axis to be 1% bigger in y and x
-#ax.axis([xcladding[0]*0.99, xcladding[-1]*1.01, b1s0_mat2_g2[0]*0.9, b1s0_mat2_g2[-1]*1.1])
+ax.axis([290, 420, 0.089, 0.085])
 #ax.set_ylabel('barns ($\sigma$)')
 ax.set_xticks(np.arange(300, 450, 30))
 ax.ticklabel_format(useOffset=False)
