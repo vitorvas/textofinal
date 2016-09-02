@@ -36,7 +36,6 @@
          id="stop5843" />
     </linearGradient>
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient5827"
        osb:paint="gradient">
       <stop
@@ -154,7 +153,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -174,7 +173,7 @@
            x="20.967741"
            y="21.717043"
            style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:25px;font-family:'Century Schoolbook L';-inkscape-font-specification:'Century Schoolbook L Medium'" /></flowRegion><flowPara
-         id="flowPara4142"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4142" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4144"
        style="font-style:normal;font-weight:normal;font-size:20px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -185,7 +184,7 @@
            x="16.129032"
            y="18.491238"
            style="font-size:20px" /></flowRegion><flowPara
-         id="flowPara4150"></flowPara></flowRoot>    <flowRoot
+         id="flowPara4150" /></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot4152"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;line-height:125%;font-family:monospace;-inkscape-font-specification:monospace;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"><flowRegion
@@ -196,7 +195,7 @@
            x="4.8387098"
            y="15.26543"
            style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25px;font-family:monospace;-inkscape-font-specification:monospace" /></flowRegion><flowPara
-         id="flowPara4158"></flowPara></flowRoot>    <text
+         id="flowPara4158" /></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:25px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="77.419357"
@@ -292,7 +291,7 @@
          x="35.483871"
          y="460.18478"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#8d0044;fill-opacity:1"
-         id="tspan4257">    </tspan><tspan
+         id="tspan4257" /><tspan
          sodipodi:role="line"
          x="35.483871"
          y="491.43478"
@@ -346,7 +345,7 @@
          x="35.483871"
          y="772.68481"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#000000;fill-opacity:1"
-         id="tspan8989">            assing = sigma scatter ag[t]</tspan><tspan
+         id="tspan8989">            assign = sigma scatter ag[t]</tspan><tspan
          sodipodi:role="line"
          x="35.483871"
          y="803.93481"
@@ -366,12 +365,12 @@
          x="35.483871"
          y="897.68481"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#8d0044;fill-opacity:1"
-         id="tspan9007">     </tspan><tspan
+         id="tspan9007" /><tspan
          sodipodi:role="line"
          x="35.483871"
          y="928.93481"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#000061;fill-opacity:1"
-         id="tspan9025">     </tspan><tspan
+         id="tspan9025" /><tspan
          sodipodi:role="line"
          x="35.483871"
          y="960.18481"
@@ -390,7 +389,7 @@
          x="35.483871"
          y="1022.6848"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;fill:#000061;fill-opacity:1"
-         id="tspan8953"> </tspan><tspan
+         id="tspan8953" /><tspan
          sodipodi:role="line"
          x="35.483871"
          y="1053.9348"
@@ -466,7 +465,7 @@
            y="33.843685"
            style="fill:none;fill-opacity:1;stroke:url(#radialGradient9127);stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></flowRegion><flowPara
          id="flowPara5825"
-         style="fill:none;fill-opacity:1;stroke:url(#radialGradient9133);stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"></flowPara></flowRoot>    <rect
+         style="fill:none;fill-opacity:1;stroke:url(#radialGradient9133);stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></flowRoot>    <rect
        style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3.75;stroke-opacity:1"
        id="rect5849"
        width="725.92603"
@@ -484,7 +483,7 @@
            x="7.4074073"
            y="283.84369"
            style="stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none" /></flowRegion><flowPara
-         id="flowPara5857"></flowPara></flowRoot>    <rect
+         id="flowPara5857" /></flowRoot>    <rect
        style="opacity:1;fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:3;stroke-linecap:butt;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:3.75;stroke-opacity:1"
        id="rect5859"
        width="724.07404"
@@ -537,7 +536,7 @@
            height="496.2963"
            x="-29.629629"
            y="359.76962" /></flowRegion><flowPara
-         id="flowPara6155"></flowPara></flowRoot>    <text
+         id="flowPara6155" /></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:25px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        x="109.25926"
