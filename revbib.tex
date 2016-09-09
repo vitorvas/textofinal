@@ -12,7 +12,7 @@
 
 O ponto de partida deste capítulo deveria ser a descrição do problema de acoplamento,
 a contextualização de sua aplicação e as razões que tornam tal problema fundamental
-na simulação completa de um reator nuclear. Entretanto, no contexto dessa tese, é impossível
+na simulação de um reator nuclear ou de suas partes. Entretanto, no contexto dessa tese, é impossível
 iniciar as discussões técnicas sem uma exposição, ainda que breve, da expressão que
 aparece no título deste trabalho: \textit{software} livre.
 
@@ -25,8 +25,8 @@ ser confundido com preço ou custo. Em definição do criador do termo, um \text
 é livre para um usuário em particular se:
 \begin{itemize}
 \item O usuário tem liberdade de executar o programa, para qualquer propósito.
-\item O usuário tem liberdade de modificar o programa para atender às suas necessidades.
-  (Para tornar-se efetiva na prática, o usuário deve ter acesso ao código-fonte).
+\item O usuário tem liberdade de modificar o programa para atender às suas necessidades
+  (que para tornar-se efetiva, deve contar com o código-fonte disponível).
 \item O usuário tem liberdade de restribuir cópias, gratuitamente ou não.
 \item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
   que a comunidade possa beneficiar-se das melhorias.
@@ -34,7 +34,7 @@ ser confundido com preço ou custo. Em definição do criador do termo, um \text
 
 Uma vez definido o significado da expresão \textit{software} livre, cabe ressaltar que, do ponto de
 vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
-Eventualmente, um determinado \textit{software} definido como livre pode distribuído sem
+Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
 restrições a ser utilizado em sistemas
 fechados. Desse modo, assim passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
 
@@ -52,9 +52,9 @@ distribuído sob a licença GPL a ser distribuído sob a mesma licença.
 Cabe ressaltar que um \textit{software} distribuído sob licença GPL é mais restritivo do
 que um \textit{software} de domínio público, já que este último pode ser incorporado
 a sistemas proprietários fechados, por exemplo. O \textit{software} GPL, por sua vez,
-deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos sobre
+deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos nos
 os diversos aspectos do \textit{software} de código aberto encontrarão sólidas informações
-na referência \cite{Androutsellis2010}.
+no trabalho de Androutsellis \cite{Androutsellis2010}.
 
 Mais de trinta anos depois do surgimento do movimento \textit{software} livre,
 sua penetração no mundo da computação é completa. A maior parte tráfego de correio
@@ -102,7 +102,7 @@ Essas são considerações muito breves sobre o que se convencionou chamar
 de \textit{software} livre. Este é, por si só, um tema que é assunto de estudos, pesquisas
 e controvérsias. Entretanto, o fundamental neste ponto é perceber que esta ``nova'' forma
 de desenvolvimento de software existe e, mesmo que timidamente, tem chegado à temática
-nuclear. Este é, muito provavelmente, um caminho sem volta. E apesar da abordadem
+nuclear. Este é muito provavelmente um caminho sem volta. E apesar da abordadem
 superficial ao tema, passemos agora a outro conceito fundamental neste trabalho
 de tese: o acoplamento neutrônico e termo-hidráulico.
 
@@ -145,7 +145,7 @@ regiões adjacentes e concentração de bolhas (no caso em que se simule duas fa
 permitem identificar \textit{hot spots}, ou seja, regiões de especial interesse.
 Essas simulações permitem avaliar o comportamento
 de diferentes projetos de grades espaçadoras de elementos combustíveis quanto ao aspecto 
-de segurança.
+de segurança, por exemplo.
 
 Um trabalho em conjunto entre pesquisadores do ISYRIM, UFMG e CDTN foi conduzido
 com o objetivo de investigar o comportamento do reator TRIGA IPR-R1 por um código do tipo \textit{CFD} \cite{Martinez2012}. 
@@ -171,7 +171,7 @@ O autor ressalta, ainda, que para diferentes problemas, diferentes formas de dis
 e soluções numéricas são necessárias. Além das suas críticas às dificuldades de uso e
 não-flexibilidade dos códigos fechados, propôs uma solução: uma biblioteca
 orientada a objetos para simulações numéricas escrita em linguagem C++ e, mais do que tudo,
-licenciada com \textit{software} livre \cite{Jasak2007} chamada \textit{OpenFOAM}.
+licenciada como \textit{software} livre \cite{Jasak2007} chamada \textit{OpenFOAM}.
 Neste trabalho o autor também desfaz as polêmicas sobre o desempenho de códigos escritos
 em C++ e demonstra como as equações são modeladas dentro do \textit{OpenFOAM}. Um
 exemplo é a equação da energia cinética turbulenta no modelo RANS
@@ -239,9 +239,9 @@ pode levar entre 4 e 6 anos para ser efetivamente útil, podendo chegar a uma vi
 pela possibilidade de uso do código durante vários anos.
 
 Ainda sobre a importância recente dos cálculos neutrônicos e termo-hidráulicos acoplados, foi iniciado em 2012
-no Centro de Pesquisas Técnicas VTT (Finlância) o projeto \textit{Numerical Multi-Physics (NUMPS)} \cite{Leppanen2015}.
+no Centro de Pesquisas Técnicas VTT (Finlândia) o projeto \textit{Numerical Multi-Physics (NUMPS)} \cite{Leppanen2015}.
 Dentre seus objetivos, estão o desenvolvimento do código de física de reatores Serpent, que utiliza o método de
-Monte Carlo e do código PORFLO, do tipo \textit{CFD}. Esse desenvolvimentooferece oportunidades para a educação das novas
+Monte Carlo e do código PORFLO, do tipo \textit{CFD}. Esse desenvolvimento oferece oportunidades para a educação das novas
 gerações de especialistas, não apenas com compreensão de teoria e métodos, mas também com entendimento ao nível de
 código-fonte das ferramentas de cálculo.
 
