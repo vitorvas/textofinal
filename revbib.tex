@@ -82,10 +82,10 @@ de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
 de ter sua distribuição controlada, é distribuído com código-fonte. Em janeiro
 de 2016, o \textit{Serpent} já era usado por mais de 460 usuários em 142 universidades
 e centros de pesquisa em 36 países. Outra ferramenta, esta ainda pouco difundida,
-desenvolvida tendo em vista as aplicações nucleares é o código milonga \cite{Theler2015}.
+desenvolvida tendo em vista as aplicações nucleares é o código milonga \cite{Theler2014b}.
 O milonga é um código do tipo volumes finitos e elementos finitos que resolve as equações
 de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
-desenvolvimento, apresenta resultados promissores \cite{Theler2014b}, tendo sido
+desenvolvimento, apresenta resultados promissores \cite{Theler2014}, tendo sido
 utilizado em cálculos de transientes da central nuclear de Atucha I.
 
 Outra aplicação do \textit{software} livre na área nuclear é na educação. Seguindo na
@@ -197,8 +197,7 @@ a objetos em C++ é capaz de entender por alto o trecho apresentado - da modelag
 de equações diferenciais no \textit{OpenFOAM}.
 
 Vale ressaltar que, devido ao custo computacional dos cálculos \textit{CFD}, seu uso na indústria
-é, se comparada a outros métodos de simulação termo-hidráulica, bastante recente.
-Como não poderia ser diferente, o mesmo ocorre na indústria nuclear. Um artigo que
+nuclear é, se comparado a outros métodos de simulação termo-hidráulica, bastante recente. Um artigo que
 veio de forma definitiva atestar a importância dos cálculos \textit{CFD} na indústria nuclear
 foi apresentado por Emilio Baglietto \cite{Baglietto2011}. Neste artigo, o autor afirma
 que o uso de \textit{CFD}, usado só ou combinado com códigos neutrônicos e ferramentas
@@ -289,9 +288,9 @@ uma avaliação de vantagens e desvantagens dos métodos númericos em relação
 computacional, convergência e esforço de implementação e modularidade, sempre com vistas
 à análise de reatores nucleares.
 
-O autor ainda comenta a importância da geração de seções de choque adequadas aos transientes esperados na 
-simulação acoplada e sua interdependência. A geração de seções de choque, apesar de não ser escopo desta tese,
-foi realizada para a obtenção dos coeficientes para a solução da equação de difusão para dois grupos de nêutrons.
+O autor ainda comenta sobre a importância da geração de seções de choque adequadas aos transientes esperados na 
+simulação acoplada e sua interdependência. Na presente tese foram geradas seções de choque para a obtenção dos
+coeficientes para a solução da equação de difusão para dois grupos de nêutrons.
 Uma breve explicação de como seções de choque para poucos grupos podem ser geradas pode ser encontrada no
 artigo de Friedman \cite{Friedman2013}. Cabe ressaltar que um grande número de trabalhos encontrados
 na literatura tem utilizado repetidamente o código \textit{Serpent} \cite{Serpent2013} para
@@ -317,7 +316,7 @@ ordinárias, conhecidas como equações de cinética pontual. A implementação 
 
 Em outro trabalho que se utilizou de \textit{CFD} \cite{Yan2011}, foi simulado o comportamento do escoamento em um feixe de elementos 
 combustíveis e espaçadores utilizando-se de \textit{CFD} acoplado à neutrônica. A neutrônica 
-simulada é baseada no \textit{method of characteristic}, que evita a necessidade de geração 
+simulada é baseada no \textit{method of characteristics (MOC)}, que evita a necessidade de geração 
 de constantes para poucos grupos \textit{a priori}. A abordagem usada no 
 acoplamento é do tipo externa, com o código neutrônico DeCART e o código termo-hidráulico 
 STAR-CCM+ executando sequencialmente e escrevendo e lendo arquivos em disco em um 
@@ -334,14 +333,14 @@ levando-se em consideração os efeitos neutrônicos. Nas palavras do autor, ess
 O autor finaliza apontando o interesse em incrementar a simulação 
 agregando outros aspectos físicos, como um modelo de corrosão, um modelo de geração do particulado, 
 um modelo de interação revestimento/pastilha e outros. Percebe-se aqui que as diversas aplicações 
-de multifísica já são esperadas e inevitáveis, e num futuro mais do que próximo.
+de multifísica já são uma realidade, e não mais uma aposta ou uma perspectiva futura.
 
 Corroborando com a ideia da importância dos cálculos acoplados, Faghihi faz uma análise
 dos diversos tipos de códigos usados para cálculos termo-hidráulicos no que se refere à
 forma como os sistemas são modelados (códigos de sistemas, códigos de sub-canais e códigos
 do tipo \textit{CFD}) e, de forma semelhante, para os códigos neutrônicos \cite{Faghihi2011}. Neste
 trabalho o autor é mais ousado e, além de descrever alguns conceitos de acoplamento
-neutrônico e termo-hidráulico, propõe o uso de redes neuronais treinadas sob dados de
+neutrônico e termo-hidráulico, propõe o uso de redes neuronais treinadas com dados de
 outras simulações para a solução do fluxo neutrônico em reatores do tipo LWR.
 
 Talvez o mais completo trabalho relativo ao acoplamento neutrônico-termo-hidráulico com uso do 
@@ -374,6 +373,7 @@ de um acoplamento interno, não há necessidade de transferência de dados, poup
 tempo de processamento.
 Neste trabalho o problema é tratato como de regime permanente, bem como o problema escopo
 desta tese.
+
 
 O \textit{OpenFOAM} também foi a ferramenta escolhida por pesquisadores do Paul Sherrer
 Institut para reduzir os esforços de desenvolvimento ao prover rotinas de discretização
@@ -423,6 +423,21 @@ RELAP e PARCS acoplados bem como com o \textit{CFD} comercial Fluent. É importa
 estas simulações foram feitas para um modelo tridimensional e para cada nó em cada canal,
 ou seja, um acoplamento um-para-um entre neutrônica e termo-hidráulica.
 
+Ainda na mesma linha da utilização do \textit{OpenFOAM} como plataforma única para neutrônica e
+termo-hidráulica, Klaus Jareteg extendeu seu trabalho à simulação de elementos combustíveis de
+reatores do tipo PWR \cite{Jareteg2015}. Neste trabalho, é proposto um mapeamento entre os valores
+calculados de seções de choque - mais uma vez utilizando-se do \textit{software Serpent2} - gerados
+para uma região geométrica para células da malha. Isso se dá pelo uso de um \textit{script} em
+linguagem \textit{Python} que faz o mapeamento uma única vez na inicialização do problema e
+a partir daí utiliza os dados armazenados. Este sistema acoplado utiliza-se de forma elegante da
+capacidade fornecida pelo próprio \textit{OpenFOAM} para decomposição de malhas e execução em paralelo.
+Com isso, o sistema pode ser escalado de acordo com o poder computacional disponível de forma
+absolutamente transparente. Pode-se dizer que este sistema é a evolução quase natural do trabalho
+apresentado pelo autor na sua tese de doutorado \cite{Jareteg2012}. Cabe também ressaltar que os trabalhos
+do grupo da Universidade de Gotemburgo focam no uso de uma malha fina de modo a resolver o sistema
+acoplado com detalhes, assim como o sistema sem mapeamento proposto nesta tese.
+
+
 A importância dada aos cálculos de neutrônica e termo-hidráulica acoplados
 é ratificada no trabalho de Jaakko Leppänen sobre o código de Monte Carlo
 Serpent \cite{Leppanen2012}. Até pouco tempo atrás, a exigência computacional dos códigos
@@ -433,6 +448,26 @@ o autor optou por oferecer uma interface acoplável por padrão neste \textit{so
 No trabalho em questão, é implementada uma interface multifísica para acoplamento com um
 código termo-hidráulico externo. Atualmente, o Serpent2 conta com uma interface para utilizaçao
 de malhas não-estruturadas no formato \textit{OpenFOAM}.
+
+A variedade de formas de acoplamento parece não parar de crescer. Miriam Vazquez
+\cite{Vazquez2012} propõe
+um sistema acoplado utilizando também o método de Monte Carlo, neste caso com o
+\textit{software} MCNPX, juntamente com o código de sub-canais COBRA-IV. Nessa primeira
+abordagem, os autores fazem algumas simplificações, como média no sub-canal para a
+densidade do moderador, por exemplo. O intercâmbio de dados é feito na forma de arquivos
+texto, um método rudimentar mas funcional. Seções de choque são usadas de três formas
+diferentes, permitindo estimar alargamento \textit{Doppler}. Este trabalho tem foco na simulação
+de um reator rápido a sódio, o que reforça o argumento do uso de cálculos acoplados no projeto
+de reatores inovadores.
+
+Um trabalho que merece a atenção trata do acoplamento de neutrônica e termo-hidráulica com o objetivo
+de calculas transientes rápidos num reator conceitual que é uma variação de um reator do tipo CANDU
+\cite{Hummel2016}. Apesar de não trazer inovação na forma como se dá o acoplamento - uso de arquivos
+texto para leitura e escrita de dados intercambiados com cálculos separados de cada \textit{software} -
+este trabalho amplia o uso de sistemas de cálculos em estado estacionário para investigar situações
+de transientes rápidos no sistema conceitual.
+
+
 
 Os exemplos de tempo investido em sistemas de cálculos acoplados não cessam. O grupo
 de métodos multifísica do \textit{Idaho National Laboratory} desenvolveu o sistema
@@ -456,7 +491,7 @@ De carona na plataforma \textit{MOOSE}, não tardaram a aparecer aplicações pa
 este \textit{framework}. Uma aplicação para a solução da equação de transporte
 de nêutrons em elementos finitos tridimensional, chamada \textit{RATTLES$_{N}$AKE},
 foi implementada. Para a queima de combustível nuclear, nos mesmos moldes e
-também utilizando elementos finitos tridimensional, foi criada a aplicação
+também utilizando elementos finitos em malha tridimensional, foi criada a aplicação
 \textit{BISON}. Esta aplicação resolve implicitamente as equações termo-mecânicas
 acopladas, oferecendo modelos para inchaço e densificação do combustível, dentre outros.
 Sendo ambas as aplicações desenvolvidas sobre a plataforma \textit{MOOSE}, o acoplamento
@@ -469,6 +504,18 @@ Apesar de não ser um sistema \textit{CFD}, mas de elementos finitos, a razão d
 apresentar tanto a plataforma \textit{MOOSE} quanto um exemplo de suas aplicações
 acopladas é o de atestar que a solução de problemas do domínio nuclear de forma
 acoplada não é hoje uma possibilidade, mas efetivamente uma realidade.
+
+Vindo a reforçar esta ideia, o trabalho de Rodney Schmidt \cite{Schmidt2015} apresenta o acoplamento
+de forma ainda mais ambiciosa. Neste trabalho, patrocinado pelo Departamento de Energia dos Estados
+Unidos (DOE), é proposto um ambiente virtual para aplicações em reatores. O usuário é capaz de definir
+seu fluxo de trabalho obedecendo a regras simples e, a partir disto, realizar simulações do início ao
+fim usando uma variedade de aplicações distintas que se comunicam fazendo o cálculo multifísica. Algumas
+das aplicações são de neutrônicca, termo-hidráulica, avaliação de desempenho de combustíveis e química
+dos reatores. Este é, até a presente data, um dos trabalhos de acoplamento com um objetivo mais amplo
+em termos de variedade de aplicações a serem usadas.
+
+
+
 
 Nesse capítulo tentou-se dar uma visão geral sobre o que é \textit{software} livre e do
 seu uso nas diversas áreas do conhecimento humano, inclusive em situações de aplicações
