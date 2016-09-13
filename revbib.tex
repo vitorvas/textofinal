@@ -514,13 +514,75 @@ das aplicações são de neutrônicca, termo-hidráulica, avaliação de desempe
 dos reatores. Este é, até a presente data, um dos trabalhos de acoplamento com um objetivo mais amplo
 em termos de variedade de aplicações a serem usadas.
 
+Recentemente foi apresentada uma metodologia de mapeamento orientada a objetos chamada
+SMITHERS \cite{Richard2015}. Consiste num sistema acoplado que faz mapeamento \textit{on-the-fly}
+da distribuição de potência nos materiais num sistema de transportes de neutrons baseado
+em MCNP para um outro código responsável pelos cálculos termo-hidráulicos. É uma metodologia
+complexa, que envolve cálculo de potência, queima, e utiliza um mapeamento robusto entre
+a representação nodal da maioria dos programas de cálculo termo-hidráulico e a geometria
+do código MCNP. Também faz uso de scripts em linguagem \textit{Python} para
+tratamento do mapeamento além de estruturas de dados próprias dessa linguagem de programação
+para conseguir inserções e remoções em memórias a custo $O(1)$ \cite[Seção~9.2]{Graham1994}.
+% Talvez eu devesse citar o livro do Cormen nessa citação big O
+Os primeiros testes do uso do SMITHERS foram feitos para reatores do tipo BWR e
+PWR.
 
+Alguns dos trabalhos apresentados na literatura, apresentam o que se poderia dizer,
+não sem certa pretensão, uma segunda ``geração'' de sistemas acoplados. Em especial os trabalhos
+envolvendo a plataforma \textit{MOOSE} (e as aplicações feitas para serem usadas em seu
+\textit{framework}) e, em uma escala um pouco menor mais ainda acima de acoplamentos específicos,
+a metodologia SMITHERS. Entretanto, há especificamente três trabalhos que se destacam por razões específicas que
+merecem mensões não apenas pela forma como estão relacionados com o trabalho desenvolvido nesta tese, mas pela
+potencial em caminhos de desenvolvimento de sistemas acoplados.
 
+Desta lista mencionada, o primeiro trabalho consiste em um sistema neutrônico e termo-hidráulico
+acoplado \cite{Bennett2016}. Dois de seus autores são os mesmos do trabalho considerado referência em termos
+de acoplamento neutrônico e termo-hidráulico \cite{Ivanov2007}. Neste acoplamento, são usados um código
+de Monte Carlo (MCNP6) para os cálculos neutrônicos e um código de sub-canais (CTF). Apesar de não apresentarem
+inovações grandes em relações a acoplamentos anteriores, há duas coisas para as quais deve ser chamada a atenção.
+O MCNP6 é capaz de gerar seções de choque \textit{on-the-fly}, uma característica desenvolvida com objetivo
+de oferecer suporte ao acoplamento termo-hidráulico. Há alguns anos, o uso de códigos de Monte Carlo para
+acoplamento era impensável. Entretanto, nove anos depois do trabalho referência em acoplamento, não só temos
+diversos exemplos do uso de códigos de Monte Carlo acoplados, como dois dos principais deles (MCNP e Serpent)
+já possuem por definição de projeto, formas de serem acoplados. A segunda razão que vale mencionar neste
+trabalho, pode passar despercebida: como já mencionado, são nove anos entre dois trabalhos no mesmo tempo.
+Isso serve como um bom exemplo do que é hoje a execução de cálculos acoplados e a insistência em
+investigar formas de fazê-la cada vez mais robusta. A multifísica é hoje uma realidade.
 
-Nesse capítulo tentou-se dar uma visão geral sobre o que é \textit{software} livre e do
+Outro trabalho que merece uma atenção especial é o de Bryan Herman \cite{Herman2015}. Neste caso, novamente
+é usada um código de Monte Carlo para o acoplamento com a termo-hidráulica. A razão de apresentar este trabalho
+não reside na tentativa de demonstrar a importância dos cálculos multifísica - espera-se que, neste ponto,
+o leitor já esteja convencido. O trabalho consiste principalmente em formas da aceleração da
+convergência das fontes de fissão, de modo a acelerar a obtenção do resultado final enquanto
+diminui-se o gasto de memória. Apesar da inovação na forma de acelerar os cálculos, a razão para uma menção
+especial deste trabalho não está no conteúdo técnico, mas no \textit{software} de Monte Carlo em si.
+Neste trabalho é usado o código \textit{OpenMC} \cite{Romano2013}. Desenvolvido no \textit{Massachusetts
+  Institute of Technology} (MIT), é um código aberto. Oferecido com uma licença específica do próprio
+MIT, é garantido, sem custo, a qualquer pessoa a obter o código-fonte desse \textit{software} e sua
+documentação associada, o usá-lo sem restrição e a permitir que as pessoas a quem seja fornecida
+copia, os mesmos direitos. E é este o ponto a que se deseja dar ênfase: diferentemente da maioria
+dos \textit{softwares} usados e disponíveis na indústria nuclear - leia-se indústria também englobando
+as pesquisas científicas - este é completamente aberto e livre. Um sinal de que a mudança de paradigmas na
+forma como se produz e utiliza \textit{software} também chegou à área nuclear.
+
+Feita a apresentação anterior, o terceiro trabalho que merece ênfase, já não pode ser considerado
+especificamente um sistema acoplado. O sistema \textit{Cyclus} \cite{Huff2016} é certamente muito mais
+do que isso. Este sistema é um \textit{framework} completo de simulação do ciclo do combustível nuclear.
+Seu desenvolvimento não aplica do desenvolvimento de \textit{software} aberto de forma incidental, pelo
+contrário, o seu objetivo é ser um sistema aberto, flexível, robusto e de uso geral, ao contrário das
+soluções existentes baseadas em sistemas fechados definidos para conjuntos de reatores específicos.
+No paper citado, os autores explicam os conceitos do projeto e desenvolvimento do \textit{Cyclus}, com
+foco no uso de ferramentas abertas e desenvolvimento colaborativo e comunitário. Nesse sentido, um sistema
+como o \textit{Cyclus} é, no mínimo, uma inspiração para o desenvolvimento de outros sistemas ou códigos
+com o mesmo objetivo: de desenvolvimento aberto, comunitário e colaborativo. É este um dos objetivos
+desta tese: trazer as técnicas de desenvolvimento aberto, mas também oferecer o resultado obtido -
+um sistema acoplado de cálculos de reatores - a todos e quaisquer interessados em aprender, melhorar
+e contribuir com seu desenvolvimento.
+
+Concluindo, nesse capítulo tentou-se dar uma visão geral sobre o que é \textit{software} livre e do
 seu uso nas diversas áreas do conhecimento humano, inclusive em situações de aplicações
-críticas. Chamou-se atenção para a importância que vêm ganhando as técnicas \textit{CFD} na
-indústria nuclear e, sobretudo, seu recente uso na termo-hidráulica acoplada aos cálculos
+críticas e na indústria nuclear. Chamou-se atenção para a importância que vêm ganhando as
+técnicas \textit{CFD} na indústria nuclear e, sobretudo, seu recente uso na termo-hidráulica acoplada aos cálculos
 neutrônicos. A lista de aplicações citadas é certamente não-exaustiva e há razões para
 acreditar o uso de \textit{CFD} continuará a crescer, limitado apenas pela criatividade
 das suas aplicações. E não há razão para acreditar que essa última encontrará barreiras
