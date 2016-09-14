@@ -27,12 +27,12 @@ ser confundido com preço ou custo. Em definição do criador do termo, um \text
 \item O usuário tem liberdade de executar o programa, para qualquer propósito.
 \item O usuário tem liberdade de modificar o programa para atender às suas necessidades
   (que para tornar-se efetiva, deve contar com o código-fonte disponível).
-\item O usuário tem liberdade de restribuir cópias, gratuitamente ou não.
+\item O usuário tem liberdade de redistribuir cópias, gratuitamente ou não.
 \item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
   que a comunidade possa beneficiar-se das melhorias.
 \end{itemize}
 
-Uma vez definido o significado da expresão \textit{software} livre, cabe ressaltar que, do ponto de
+Uma vez definido o significado da expressão \textit{software} livre, cabe ressaltar que, do ponto de
 vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
 Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
 restrições a ser utilizado em sistemas
@@ -75,7 +75,7 @@ conservador. Somado-se a isso, o custo de verificação e validação de um novo
 não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \textit{software}
 livre na área nuclear seja mais lenta que em outras áreas.
 
-Essas dificultades, porém, são inferiores aos possíveis ganhos na utilização de
+Essas dificuldades, porém, são inferiores aos possíveis ganhos na utilização de
 \textit{software} livre. Um grande exemplo dessa afirmativa é a ampla adoção
 do \textit{software Serpent} \cite{Serpent2013}. Trata-se de um \textit{software}
 de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
@@ -102,7 +102,7 @@ Essas são considerações muito breves sobre o que se convencionou chamar
 de \textit{software} livre. Este é, por si só, um tema que é assunto de estudos, pesquisas
 e controvérsias. Entretanto, o fundamental neste ponto é perceber que esta ``nova'' forma
 de desenvolvimento de software existe e, mesmo que timidamente, tem chegado à temática
-nuclear. Este é muito provavelmente um caminho sem volta. E apesar da abordadem
+nuclear. Este é muito provavelmente um caminho sem volta. E apesar da abordagem
 superficial ao tema, passemos agora a outro conceito fundamental neste trabalho
 de tese: o acoplamento neutrônico e termo-hidráulico.
 
@@ -129,13 +129,13 @@ da Comissão Regulatória Nuclear (NRC) dos Estados Unidos de 2010 \cite[p.69]{N
 ao sugerir as melhores práticas e métodos para a atividade de regulação, é bastante claro 
 ao apontar a necessidade de tirar proveito da capacidade oferecida por códigos de \textit{CFD}, 
 fornecendo inclusive sugestões de parceria com a indústria e universidades objetivando 
-desenvolver simulações multidimensionais devidademente acompanhadas de validação e
+desenvolver simulações multidimensionais devidamente acompanhadas de validação e
 verificação. O conteúdo desse relatório é, por si só, prova de que a utilização de 
 códigos \textit{CFD} é, em definitivo, parte do processo de 
 pesquisa e desenvolvimento de reatores nucleares. 
 
 Um exemplo desse uso é a utilização de \textit{CFD} - nesse caso um código proprietário: 
-\textit{ANSYS-CFX} - para modelar o fenômeno de ebulição subresfriada para o 
+\textit{ANSYS-CFX} - para modelar o fenômeno de ebulição sub-resfriada para o 
 desenvolvimento de combustíveis nucleares \cite{Krepper2007}. Devido à capacidade 
 dos códigos \textit{CFD} de simular detalhes do escoamento de acordo com a granularidade com que se
 divide o domínio de simulação, nesse trabalho esta técnica é utilizada para avaliar 
@@ -151,7 +151,7 @@ Um trabalho em conjunto entre pesquisadores do ISYRIM, UFMG e CDTN foi conduzido
 com o objetivo de investigar o comportamento do reator TRIGA IPR-R1 por um código do tipo \textit{CFD} \cite{Martinez2012}. 
 Nesse caso não houve tentativa de acoplamento, mas apenas a simulação simplificada 
 do reator utilizando-se o \textit{ANSYS-CFX}. Um fluxo de calor 
-foi fornecido para as paredes do combustível obedencendo à uma distribuição axial 
+foi fornecido para as paredes do combustível obedecendo à uma distribuição axial 
 característica do combustível. Na análise quantitativa dos resultados, os autores 
 informam que os resultados da simulação numérica apresentam boa concordância com 
 dados experimentais coletados durante a operação do reator.
@@ -214,7 +214,7 @@ e análise de uma planta completa''.
 
 Entretanto, para obter resultados os mais realistas possível, é necessário simular 
 tanto os fenômenos termo-hidráulicos quanto neutrônicos. Isso 
-se deve ao fato de que os principais fatores que influeciam na distribuição do fluxo de 
+se deve ao fato de que os principais fatores que influenciam na distribuição do fluxo de 
 nêutrons no núcleo de um reator nuclear são as propriedades do moderador e refrigerante. No caso de um
 reator do tipo PWR, a água exerce ambos os papéis, sendo também usada grafita para 
 a moderação. Pequenas variações na temperatura, densidade e composição 
@@ -223,16 +223,16 @@ a necessidade de acoplar os cálculos termo-hidráulicos - as variações nas pr
 no fluxo neutrônico.
 
 O acoplamento das simulações de diferentes fenômenos físicos tem sido também chamado de
-\textbf{multifísica}. 
-Uma definição prática para multifísica ou física-acoplada é dada por Paul Lethbridge \cite{Lethbridge2005}, definindo que 
-a multifísica é, em essência, a análise de fenômenos físicos distintos de forma combinada.
+\textbf{multi-física}. 
+Uma definição prática para multi-física ou física-acoplada é dada por Paul Lethbridge \cite{Lethbridge2005}, definindo que 
+a multi-física é, em essência, a análise de fenômenos físicos distintos de forma combinada.
 
 No texto desta tese, 
 por conveniência, a palavra acoplamento será usada tanto em referência ao processo de análise dos fenômenos físicos conjuntamente 
 quanto em referência à implementação do software para essa tarefa. Nos casos em que possa haver ambiguidade, 
 a definição será explicada de modo a não deixar margens a dúvidas.
 
-Vale ressaltar, já que nos referimos à implementação do acoplamento em software, que uma aplicação multifísica 
+Vale ressaltar, já que nos referimos à implementação do acoplamento em software, que uma aplicação multi-física 
 pode levar entre 4 e 6 anos para ser efetivamente útil, podendo chegar a uma vida útil de várias décadas 
 \cite{Graham2004}. Isto posto, é possível concluir que o esforço em construir o acoplamento é compensado 
 pela possibilidade de uso do código durante vários anos.
@@ -248,13 +248,13 @@ código-fonte das ferramentas de cálculo.
 Uma vez apresentados o que são os códigos \textit{CFD} e algumas de suas aplicações no domínio nuclear e definido o significado do acoplamento no contexto desse trabalho de tese, serão apresentados os mais importantes 
 trabalhos sobre o acoplamento. Talvez o mais importante trabalho relacionado ao acoplamento 
 neutrônico/termo-hidráulico seja o de Ivanov \cite{Ivanov2007}. Nele são analisados e classificados diferentes tipos de 
-acoplamento, seus componentes e suas aplicações. Os diversos parâmetros do acoplamento são esquematicamente dividos em: 
+acoplamento, seus componentes e suas aplicações. Os diversos parâmetros do acoplamento são esquematicamente divididos em: 
 \begin{enumerate}
 \item \textbf{Forma de acoplamento}: externo, quando o código neutrônico é combinado com parte do código termo-hidráulico, 
 geralmente na forma de condições de contorno, e então acoplado ao sistema termo-hidráulico completo. O acoplamento 
 é definido como interno quando a neutrônica é integrada ao modelo de transferência de calor do sistema termo-hidráulico. 
-Em outras palavras, o acoplamento interno é uma implementação multifísica. Deve-se dizer que não há, na literatura, uma
-concordância completa sobre a nomeclatura para a forma de acoplamento. 
+Em outras palavras, o acoplamento interno é uma implementação multi-física. Deve-se dizer que não há, na literatura, uma
+concordância completa sobre a nomenclatura para a forma de acoplamento. 
 \item \textbf{Abordagens de acoplamento}: integração em série ou processamento em paralelo. Na integração em série o algoritmo 
 para cálculo neutrônico é integrado como uma rotina ao sistema termo-hidráulico e então executado sequencialmente 
 após os cálculos termo-hidráulicos. Na abordagem de processamento em paralelo, geralmente a troca de dados é 
@@ -284,7 +284,7 @@ Zerkak \cite{Zerkak2015}, por sua vez, faz uma revisão dos métodos de acoplame
 foco em como melhorar a convergência das atuais técnicas de acoplamento. O autor faz uma
 análise pormenorizada da técnica de \textit{operator splitting} e várias de suas melhorias,
 dentre vários outros esquemas numéricos de solução de \textit{PDE's}. Sua análise visa
-uma avaliação de vantagens e desvantagens dos métodos númericos em relação à eficiência
+uma avaliação de vantagens e desvantagens dos métodos numéricos em relação à eficiência
 computacional, convergência e esforço de implementação e modularidade, sempre com vistas
 à análise de reatores nucleares.
 
@@ -324,7 +324,7 @@ diretório comum. São dois critérios para finalizar a simulação: o código D
 na convergência da fonte de fissão, enquanto o código STAR-CCM+ no resíduo da energia. No que toca à 
 discretização espacial (sobreposição espacial de malhas), é usado um mapeamento entres as malhas 
 utilizadas nos dois códigos. Apesar de diferenças nas malhas, as fronteiras materiais, ou seja, geometria, 
-fronteira e posição de diferentes materias são equivalentes em ambos os modelos.
+fronteira e posição de diferentes materiais são equivalentes em ambos os modelos.
 
 As conclusões apresentadas reiteram a importância da técnica de \textit{CFD} na indústria nuclear. Em particular, 
 a capacidade de verificar os efeitos da grade misturadora na temperatura e densidade do refrigerante 
@@ -333,7 +333,7 @@ levando-se em consideração os efeitos neutrônicos. Nas palavras do autor, ess
 O autor finaliza apontando o interesse em incrementar a simulação 
 agregando outros aspectos físicos, como um modelo de corrosão, um modelo de geração do particulado, 
 um modelo de interação revestimento/pastilha e outros. Percebe-se aqui que as diversas aplicações 
-de multifísica já são uma realidade, e não mais uma aposta ou uma perspectiva futura.
+de multi-física já são uma realidade, e não mais uma aposta ou uma perspectiva futura.
 
 Corroborando com a ideia da importância dos cálculos acoplados, Faghihi faz uma análise
 dos diversos tipos de códigos usados para cálculos termo-hidráulicos no que se refere à
@@ -343,9 +343,9 @@ trabalho o autor é mais ousado e, além de descrever alguns conceitos de acopla
 neutrônico e termo-hidráulico, propõe o uso de redes neuronais treinadas com dados de
 outras simulações para a solução do fluxo neutrônico em reatores do tipo LWR.
 
-Talvez o mais completo trabalho relativo ao acoplamento neutrônico-termo-hidráulico com uso do 
+Talvez o mais completo trabalho relativo ao acoplamento neutrônico e termo-hidráulico com uso do 
 \textit{CFD} \textit{OpenFOAM} seja a tese de Klas Jareteg \cite{Jareteg2012}. Nela, o acoplamento é feito usando o mesmo 
-software para a simulação termo-hidráulica e neutrônica. A metodolgia utilizada pode ser brevemente 
+software para a simulação termo-hidráulica e neutrônica. A metodologia utilizada pode ser brevemente 
 resumida em alguns passos principais: 1) criação de uma malha adequada, 2) discretização das 
 equações descrevendo o problema, 3) definição das condições de contorno, 4) geração dos 
 parâmetros neutrônicos (por exemplo, seções de choque macroscópicas) e 5) solução do 
@@ -353,7 +353,7 @@ problema neutrônico e termo-hidráulico de forma acoplada. O autor usa um dos m
 software de \textit{CFD} \textit{OpenFOAM} \cite{OpenFOAM2013} e 
 altera esse modelo que simula um escoamento turbulento de um fluido compressível com transferência de energia
 por radiação térmica (\texttt{buoyantSimpleRadiationSolver}) adicionando uma implementação da equação de difusão multi-grupos 
-ao modelo. Isto é feito utilizando a capacidade geral de discretização e solução de equações bem como os algorimos 
+ao modelo. Isto é feito utilizando a capacidade geral de discretização e solução de equações bem como os algoritmos 
 para solução numérica já presentes no \textit{OpenFOAM}. Dentre suas conclusões, estão que o acoplamento iterativo 
 utilizado é funcional e estável, a solução para a neutrônica necessitou de menos iterações para convergir 
 do que que a solução pressão-velocidade e que a termo-hidráulica precisa de malhas mais refinadas do que a solução 
@@ -371,7 +371,7 @@ tão detalhada quando necessita a termo-hidráulica, seu uso se justifica pela n
 de interpolações ou mapeamentos entres os elementos da malha. Além disso, como trata-se
 de um acoplamento interno, não há necessidade de transferência de dados, poupando-se
 tempo de processamento.
-Neste trabalho o problema é tratato como de regime permanente, bem como o problema escopo
+Neste trabalho o problema é tratado como de regime permanente, bem como o problema escopo
 desta tese.
 
 
@@ -379,18 +379,18 @@ O \textit{OpenFOAM} também foi a ferramenta escolhida por pesquisadores do Paul
 Institut para reduzir os esforços de desenvolvimento ao prover rotinas de discretização
 e capacidade de execução em paralelo de soluções de equações diferenciais. A partir
 de \textit{solvers} disponíveis no \textit{OpenFOAM} foi implementado um \textit{solver}
-multifísica batizado \textit{General Nuclear Foam - GeN-Foam} \cite{Fiorina2015}.
+multi-física batizado \textit{General Nuclear Foam - GeN-Foam} \cite{Fiorina2015}.
 Este \textit{solver}
 possui a capacidade de resolver escoamentos compressíveis ou incompressíveis baseados
 no modelo de turbulência padrão $\kappa-\epsilon$, sendo também capaz de resolver
 problemas em malhas menos refinadas utilizando o modelo de meios porosos. Tem, ainda,
-implementado um \textit{sub-solver} de termo-mecânica e outro \textit{sub-solver} para
+implementado um \textit{sub-solver} de termomecânica e outro \textit{sub-solver} para
 a solução da equação de difusão para multi-grupos. Este último, provê ainda a capacidade
 de resolver problemas com malhas móveis e tem implementados métodos de leitura de seções
 de choque geradas pelo código Serpent \cite{Serpent2013}. Os autores classificam
 o acoplamento implementado como semi-implícito e como são usadas malhas diferentes para
-os modelos termo-hidráulico, termo-mecânico e de difusão de nêutrons, é feito um mapeamento
-consistente entre as três malhas através do uso de um algoritmo de peso-célula-volume
+os modelos termo-hidráulico, termomecânicos e de difusão de nêutrons, é feito um mapeamento
+consistente entre as três malhas através do uso de um algoritmo de peso, célula e volume
 implementado pelo próprio \textit{OpenFOAM} \cite{OpenFOAM2015}. A aplicação inicial deste
 \textit{solver} foi na simulação do reator rápido a sódio europeu (ESFR). Mesmo com as
 simplificações no modelo, as respostas numéricas para as simulações de dois transientes
@@ -398,7 +398,7 @@ testados ficaram próximas das obtidas pelas simulações de referências feitas
 código TRACE.
 
 Uma das razões do uso do acoplamento, cujo objetivo é obter dados mais precisos e realistas, é na 
-análise de segurança de reatores. Em projetos de reatores inovadores já são feitos cálculos de multifísica para 
+análise de segurança de reatores. Em projetos de reatores inovadores já são feitos cálculos de multi-física para 
 análise de acidentes. No trabalho de \cite{Lazaro2013}, um reator de IV geração refrigerado a sódio 
 é simulado de forma acoplada. Códigos já usados na análise de reatores resfriados a água leve são adaptados 
 para o uso em reatores de nêutrons rápidos resfriados a sódio. Um ponto-chave, segundo o autor, é ser capaz 
@@ -421,10 +421,10 @@ essenciais do funcionamento do reator e, então, encontrar eventuais anomalias. 
 foi feita com dados de um reator PWR comercial e simulações feitas com os códigos
 RELAP e PARCS acoplados bem como com o \textit{CFD} comercial Fluent. É importante ressaltar que
 estas simulações foram feitas para um modelo tridimensional e para cada nó em cada canal,
-ou seja, um acoplamento um-para-um entre neutrônica e termo-hidráulica.
+ou seja, um acoplamento um para um entre neutrônica e termo-hidráulica.
 
 Ainda na mesma linha da utilização do \textit{OpenFOAM} como plataforma única para neutrônica e
-termo-hidráulica, Klaus Jareteg extendeu seu trabalho à simulação de elementos combustíveis de
+termo-hidráulica, Klaus Jareteg estendeu seu trabalho à simulação de elementos combustíveis de
 reatores do tipo PWR \cite{Jareteg2015}. Neste trabalho, é proposto um mapeamento entre os valores
 calculados de seções de choque - mais uma vez utilizando-se do \textit{software Serpent2} - gerados
 para uma região geométrica para células da malha. Isso se dá pelo uso de um \textit{script} em
@@ -445,8 +445,8 @@ de Monte Carlo impossibilitavam seu uso em cálculos acoplados e iterativos. O a
 quase exponencial na capacidade computacional jogou por terra tais restrições.
 Com os códigos de Monte Carlo executando mais rapidamente - em especial o código Serpent2 -
 o autor optou por oferecer uma interface acoplável por padrão neste \textit{software}.
-No trabalho em questão, é implementada uma interface multifísica para acoplamento com um
-código termo-hidráulico externo. Atualmente, o Serpent2 conta com uma interface para utilizaçao
+No trabalho em questão, é implementada uma interface multi-física para acoplamento com um
+código termo-hidráulico externo. Atualmente, o Serpent2 conta com uma interface para utilização
 de malhas não-estruturadas no formato \textit{OpenFOAM}.
 
 A variedade de formas de acoplamento parece não parar de crescer. Miriam Vazquez
@@ -470,7 +470,7 @@ de transientes rápidos no sistema conceitual.
 
 
 Os exemplos de tempo investido em sistemas de cálculos acoplados não cessam. O grupo
-de métodos multifísica do \textit{Idaho National Laboratory} desenvolveu o sistema
+de métodos multi-física do \textit{Idaho National Laboratory} desenvolveu o sistema
 \textit{MOOSE: Multiphysics Object Oriented Simulation Environment}. Este sistema objetiva
 a solução de problemas fortemente acoplados ao mesmo tempo em que fornece suporte para
 o desenvolvimento de, segundo o autor, ``engenharia de aplicações de análise''
@@ -483,7 +483,7 @@ o desenvolvimento de, segundo o autor, ``engenharia de aplicações de análise'
 \item As aplicações devem obedecer rigorosas especificações de verificação e validação,
   implicando no mesmo tipo de rigor para o próprio sistema.
 \end{itemize}
-Estas características tornam o \textit{MOOSE} a plataforma de computação multifísica
+Estas características tornam o \textit{MOOSE} a plataforma de computação multi-física
 de base do \textit{Idaho National Laboratory}, oferecendo suporte ao desenvolvimento
 de projetos e códigos de análise paralelos e multidimensionais.
 
@@ -492,7 +492,7 @@ este \textit{framework}. Uma aplicação para a solução da equação de transp
 de nêutrons em elementos finitos tridimensional, chamada \textit{RATTLES$_{N}$AKE},
 foi implementada. Para a queima de combustível nuclear, nos mesmos moldes e
 também utilizando elementos finitos em malha tridimensional, foi criada a aplicação
-\textit{BISON}. Esta aplicação resolve implicitamente as equações termo-mecânicas
+\textit{BISON}. Esta aplicação resolve implicitamente as equações termomecânicas
 acopladas, oferecendo modelos para inchaço e densificação do combustível, dentre outros.
 Sendo ambas as aplicações desenvolvidas sobre a plataforma \textit{MOOSE}, o acoplamento
 entre ambas foi direto \cite{Gleicher2014}.
@@ -509,18 +509,18 @@ Vindo a reforçar esta ideia, o trabalho de Rodney Schmidt \cite{Schmidt2015} ap
 de forma ainda mais ambiciosa. Neste trabalho, patrocinado pelo Departamento de Energia dos Estados
 Unidos (DOE), é proposto um ambiente virtual para aplicações em reatores. O usuário é capaz de definir
 seu fluxo de trabalho obedecendo a regras simples e, a partir disto, realizar simulações do início ao
-fim usando uma variedade de aplicações distintas que se comunicam fazendo o cálculo multifísica. Algumas
-das aplicações são de neutrônicca, termo-hidráulica, avaliação de desempenho de combustíveis e química
+fim usando uma variedade de aplicações distintas que se comunicam fazendo o cálculo multi-física. Algumas
+das aplicações são de neutrônica, termo-hidráulica, avaliação de desempenho de combustíveis e química
 dos reatores. Este é, até a presente data, um dos trabalhos de acoplamento com um objetivo mais amplo
 em termos de variedade de aplicações a serem usadas.
 
 Recentemente foi apresentada uma metodologia de mapeamento orientada a objetos chamada
 SMITHERS \cite{Richard2015}. Consiste num sistema acoplado que faz mapeamento \textit{on-the-fly}
-da distribuição de potência nos materiais num sistema de transportes de neutrons baseado
+da distribuição de potência nos materiais num sistema de transportes de nêutrons baseado
 em MCNP para um outro código responsável pelos cálculos termo-hidráulicos. É uma metodologia
 complexa, que envolve cálculo de potência, queima, e utiliza um mapeamento robusto entre
 a representação nodal da maioria dos programas de cálculo termo-hidráulico e a geometria
-do código MCNP. Também faz uso de scripts em linguagem \textit{Python} para
+do código MCNP. Também faz uso de \textit{scripts} em linguagem \textit{Python} para
 tratamento do mapeamento além de estruturas de dados próprias dessa linguagem de programação
 para conseguir inserções e remoções em memórias a custo $O(1)$ \cite[Seção~9.2]{Graham1994}.
 % Talvez eu devesse citar o livro do Cormen nessa citação big O
@@ -532,7 +532,7 @@ não sem certa pretensão, uma segunda ``geração'' de sistemas acoplados. Em e
 envolvendo a plataforma \textit{MOOSE} (e as aplicações feitas para serem usadas em seu
 \textit{framework}) e, em uma escala um pouco menor mais ainda acima de acoplamentos específicos,
 a metodologia SMITHERS. Entretanto, há especificamente três trabalhos que se destacam por razões específicas que
-merecem mensões não apenas pela forma como estão relacionados com o trabalho desenvolvido nesta tese, mas pela
+merecem menções não apenas pela forma como estão relacionados com o trabalho desenvolvido nesta tese, mas pela
 potencial em caminhos de desenvolvimento de sistemas acoplados.
 
 Desta lista mencionada, o primeiro trabalho consiste em um sistema neutrônico e termo-hidráulico
@@ -547,11 +547,11 @@ diversos exemplos do uso de códigos de Monte Carlo acoplados, como dois dos pri
 já possuem por definição de projeto, formas de serem acoplados. A segunda razão que vale mencionar neste
 trabalho, pode passar despercebida: como já mencionado, são nove anos entre dois trabalhos no mesmo tempo.
 Isso serve como um bom exemplo do que é hoje a execução de cálculos acoplados e a insistência em
-investigar formas de fazê-la cada vez mais robusta. A multifísica é hoje uma realidade.
+investigar formas de fazê-la cada vez mais robusta. A multi-física é hoje uma realidade.
 
 Outro trabalho que merece uma atenção especial é o de Bryan Herman \cite{Herman2015}. Neste caso, novamente
 é usada um código de Monte Carlo para o acoplamento com a termo-hidráulica. A razão de apresentar este trabalho
-não reside na tentativa de demonstrar a importância dos cálculos multifísica - espera-se que, neste ponto,
+não reside na tentativa de demonstrar a importância dos cálculos multi física - espera-se que, neste ponto,
 o leitor já esteja convencido. O trabalho consiste principalmente em formas da aceleração da
 convergência das fontes de fissão, de modo a acelerar a obtenção do resultado final enquanto
 diminui-se o gasto de memória. Apesar da inovação na forma de acelerar os cálculos, a razão para uma menção
@@ -571,7 +571,7 @@ do que isso. Este sistema é um \textit{framework} completo de simulação do ci
 Seu desenvolvimento não aplica do desenvolvimento de \textit{software} aberto de forma incidental, pelo
 contrário, o seu objetivo é ser um sistema aberto, flexível, robusto e de uso geral, ao contrário das
 soluções existentes baseadas em sistemas fechados definidos para conjuntos de reatores específicos.
-No paper citado, os autores explicam os conceitos do projeto e desenvolvimento do \textit{Cyclus}, com
+No \textit{paper} citado, os autores explicam os conceitos do projeto e desenvolvimento do \textit{Cyclus}, com
 foco no uso de ferramentas abertas e desenvolvimento colaborativo e comunitário. Nesse sentido, um sistema
 como o \textit{Cyclus} é, no mínimo, uma inspiração para o desenvolvimento de outros sistemas ou códigos
 com o mesmo objetivo: de desenvolvimento aberto, comunitário e colaborativo. É este um dos objetivos
