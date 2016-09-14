@@ -4,41 +4,20 @@
 \chapter{Introdução}
 \label{chap:introducao}
 
+\section{Contextualização}
+
 \emph{``Over a 20-year period, the (nuclear) industry will move from 
 the application of conventional methods that rely on 
 experimental correlations to using CFD (...)''.} \cite[p.~655]{Baglietto2011}.
 
 A frase acima é um exemplo de ganho de importância da técnica de dinâmica dos fluidos 
 computacional (CFD) na indústria nuclear nos últimos anos e da perspectiva da sua aplicação 
-nos próximos.  
-
-Este trabalho de tese consiste no desenvolvimento de um sistema acoplado de cálculos
-termo-hidráulicos e neutrônicos. Apesar de desenvolvidos separadamente - inclusive
-em linguagens de programação diferentes - ambos fazem uso do método de volumes
-finitos \cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
-Cabe ressaltar que, neste primeiro momento, apenas cálculos em estado estacionário
-são previstos.
-
-Os códigos utilizados são abertos \cite[Capítulo~3]{Stallman2002}, o que significa pleno acesso ao seu código-fonte.
-Essa informação poderia passar despercebida, mas há alguns pontos a considerar antes de se
-seguir. As licenças que permitem a distribuição de código aberto impõe, via de regra, que
-o código desenvolvido a partir de outro licenciado desta forma deva permanecer aberto.
-Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite[Seção~2.6]{Androutsellis2010},
-é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, sua disseminação é crescente.
-Não apenas para tarefas básicas, mas predominantemente em serviços de rede, internet, cálculo numérico dentre
-inúmeros outros. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
-extensivamente usados em aplicações de missão crítica \cite{Norris2004}.
-
-Dada que a utilização de programas de código aberto ainda é relativamente tímida no domínio nuclear
-- e a expressão relativamente talvez seja inapropriada, pois são vários projetos de instituições
-renomadas utilizando código aberto \cite{Romano2013, Boyd2014, Huff2016} -
-esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
-aplicação neste domínio. Sendo os dois códigos usados para o acoplamento no âmbito desta tese disponibilizados
-de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
-por qualquer interessado, seja ele desenvolvedor, engenheiro, pesquisador ou regulador.
-Se essa forma de desenvolvimento de sistemas de \textit{software} é adequada para as especificidades
-e restrições dos sistemas nucleares, não é possível dizer. Não ainda, não antes de que esse debate
-seja iniciado.
+nos próximos. Uma das aplicações em que o uso de CFD tem se estendido é no cálculo termo-hidráulico
+de combustíveis e de elementos combustíveis nucleares. Em boa parte dos trabalhos seminais (CITAR), dentre
+as condições iniciais e de contorno do problema termo-hidráulico, se define um valor de potência inicial,
+ou mesmo variável, à qual está submetido o sistema. Apesar de extremamente útil, essa forma de prescrever a
+potência é uma forma de simplificação. Isso é devido às particularidades do forma de geração de energia nuclear:
+a cinética dos nêutrons, ou neutrônica.
 
 A disponibilidade do código-fonte é condição básica para o desenvolvimento do sistema acoplado. Grosso modo, o acoplamento
 dos dois códigos nada mais é do que alterações e adições em ambos os códigos-fonte de modo
@@ -95,6 +74,36 @@ inclusive com o uso de CFD \cite{Leppanen2012}.
 Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
 e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos.
 
+\section{Descrição do trabalho}
+
+Este trabalho de tese consiste no desenvolvimento de um sistema acoplado de cálculos
+termo-hidráulicos e neutrônicos. Apesar de desenvolvidos separadamente - inclusive
+em linguagens de programação diferentes - ambos fazem uso do método de volumes
+finitos \cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
+Cabe ressaltar que, neste primeiro momento, apenas cálculos em estado estacionário
+são previstos.
+
+Os códigos utilizados são abertos \cite[Capítulo~3]{Stallman2002}, o que significa pleno acesso ao seu código-fonte.
+Essa informação poderia passar despercebida, mas há alguns pontos a considerar antes de se
+seguir. As licenças que permitem a distribuição de código aberto impõe, via de regra, que
+o código desenvolvido a partir de outro licenciado desta forma deva permanecer aberto.
+Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite[Seção~2.6]{Androutsellis2010},
+é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, sua disseminação é crescente.
+Não apenas para tarefas básicas, mas predominantemente em serviços de rede, internet, cálculo numérico dentre
+inúmeros outros. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
+extensivamente usados em aplicações de missão crítica \cite{Norris2004}.
+
+Dada que a utilização de programas de código aberto ainda é relativamente tímida no domínio nuclear
+- e a expressão relativamente talvez seja inapropriada, pois são vários projetos de instituições
+renomadas utilizando código aberto \cite{Romano2013, Boyd2014, Huff2016} -
+esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
+aplicação neste domínio. Sendo os dois códigos usados para o acoplamento no âmbito desta tese disponibilizados
+de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
+por qualquer interessado, seja ele desenvolvedor, engenheiro, pesquisador ou regulador.
+Se essa forma de desenvolvimento de sistemas de \textit{software} é adequada para as especificidades
+e restrições dos sistemas nucleares, não é possível dizer. Não ainda, não antes de que esse debate
+seja iniciado.
+
 %------------------------------------------------------------------------------------
 %A simulação computacional de fenômenos 
 %físicos não é por si só algo novo na indústria nuclear. Entretanto, com o regular 
@@ -111,11 +120,6 @@ e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos
 %do material refrigerante e moderador. Por sua vez, estas variações nas propriedades
 %dos materiais influenciam na reprodução de nêutrons, o que faz variar a potência e assim
 %por diante.
-
-\section{Objetivo}
-
-O objetivo deste trabalho é blábláblá.
-
 
 \section{Motivação}
 
