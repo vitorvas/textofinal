@@ -13,89 +13,111 @@ experimental correlations to using CFD (...)''.} \cite[p.~655]{Baglietto2011}.
 A frase acima é um exemplo de ganho de importância da técnica de dinâmica dos fluidos 
 computacional (CFD) na indústria nuclear nos últimos anos e da perspectiva da sua aplicação 
 nos próximos. Uma das aplicações em que o uso de CFD tem se estendido é no cálculo termo-hidráulico
-de combustíveis e de elementos combustíveis nucleares. Em boa parte dos trabalhos seminais (CITAR), dentre
-as condições iniciais e de contorno do problema termo-hidráulico, se define um valor de potência inicial,
-ou mesmo variável, à qual está submetido o sistema. Apesar de extremamente útil, essa forma de prescrever a
-potência é uma forma de simplificação. Isso é devido às particularidades do forma de geração de energia nuclear:
-a cinética dos nêutrons, ou neutrônica.
+de combustíveis e de elementos combustíveis nucleares. Em boa parte dos trabalhos envolvendo CFD, dentre
+as condições iniciais do problema termo-hidráulico, se define um valor de potência inicial,
+ou mesmo variável, à qual está submetido o sistema \cite{Ustinenko2008}. Apesar de extremamente útil, essa forma de prescrever a
+potência é uma forma de simplificação. De forma a obter uma potência o mais realista possível, é necessário
+ter em conta um fenômeno particular de um sistema nuclear: a cinética dos nêutrons, ou neutrônica.
 
-A disponibilidade do código-fonte é condição básica para o desenvolvimento do sistema acoplado. Grosso modo, o acoplamento
-dos dois códigos nada mais é do que alterações e adições em ambos os códigos-fonte de modo
-que estes sejam capazes de se comunicar e trocar dados para realizar seus cálculos.
-Este processo, desde sua metodologia até fundamentos de sua execução, será
-oportunamente - e detalhadamente - apresentado, já que trata-se da principal
-contribuição desta tese.
+O aumento do poder computacional que tem permitido a ampliação do uso de CFD na indústria nuclear chamou a
+atenção para um aspecto, até então pouco explorado, dos cálculos termo-hidráulicos: a possibilidade de
+realizar cálculos termo-hidráulicos de forma acoplada com os cálculos neutrônicos Estes últimos, fundamentais para
+uma variedade de aspectos do funcionamento de reatores e combustíveis nucleares. Os cálculos neutrônicos e termo-hidráulicos
+acoplados, são também chamados de multi-física \cite{Leppanen2012}. 
 
-O acoplamento entre neutrônica e termo-hidráulica já ocorre de diferentes formas. Na simulação 
-termo-hidráulica são usados códigos de sistemas e códigos de sub-canal. Os códigos de sistemas 
-funcionam modelando os sistemas do reator unidimensionalmente e aplicando as equações básicas 
-para continuidade, momento e energia. O resultado obtido simula o
-comportamento médio dos componentes do reator.
-Estes códigos são normalmente usados em análises de transientes e segurança de reatores. 
-Já os códigos de sub-canal são mais detalhados e, além
-de modelar múltiplos componentes do sistema 
-do reator, são capazes de simular em geometrias tridimensionais \cite{Faghihi2011}. Os códigos 
-CFD substituem o domínio contínuo por um domínio discreto e finito. Neste contexto, as equações 
-que governam o escoamento são integradas sobre todos os elementos que formam o domínio (finito). 
-As integrais obtidas são então discretizadas na forma de um sistema de equações algébricas 
-e, por fim, este sistema é resolvido por métodos interativos \cite{Versteeg2007}.
+Há diversas formas de se acoplar sistemas de cálculo neutrônico e termo-hidráulico. Entretanto, é necessário que tais
+sistemas ofereçam formas de escrever seus resultados e, principalmente, de ler resultados de outros sistemas. Caso contrário,
+resta somente a possibilidade de modificar tais sistemas de modo que sejam capazes de alguma forma de comunicação com o
+exterior. Nestes casos, a disponibilidade do código-fonte é condição básica para o desenvolvimento do sistema acoplado.
+Grosso modo, o acoplamento dos dois códigos nada mais é do que fazer com que dois códigos sejam capazes de se comunicar e
+trocar dados para realizar seus cálculos.
 
-No contexto da neutrônica, é possível classificar os códigos em três tipos:
-1) Códigos de difusão ou de transporte, 
-2) Códigos de ordenadas-discretas e 3) Códigos Monte Carlo. Os dois primeiros são determinísticos 
-e o terceiro estocástico. 
 
-Os códigos de difusão resolvem a equação de difusão de nêutrons. A equação de difusão de nêutrons nada mais é do
-que uma simplificação na modelagem do comportamento dos nêutrons. Uma delas, por exemplo, é a consideração de um
-coeficiente de difusão único representando as direções possíveis dos nêutrons. Em suma, a equação de difusão
-em estado estacionário é obtida de uma relação entre a corrente de nêutrons e o gradiente do fluxo neutrônico,
-representando o fato de que os nêutrons têm uma tendência a migrar de regiões onde são mais numerosos para
-regiões onde são menos numerosos \cite{Hebert2009}. Um dos códigos de difusão 
-mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estando inclusive já acoplado 
-com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
-O código usado neste trabalho para o acoplamento é o código milonga
-(grafa-se sem letra maiúscula). O milonga \cite{Theler2014b}
-utiliza o método de volumes finitos na discretização do domínio e disponibiliza a solução
-do cálculo neutrônico pela equação de difusão ou pelo método de ordenadas discretas. Suas características e seu
-funcionamento serão apresentados oportunamente.
 
-Os códigos de ordenadas discretas resolvem 
-a equação de transporte de \textit{Boltzmann} para o comportamento médio das partículas para então calcular o 
-fluxo de nêutrons. Nesses códigos, o espaço é divido em muitas pequenas caixas e as partículas 
-são movidas entre as caixas. Para geometrias complexas com variações de parâmetros, a preparação de 
-seções de choque exige grande esforço.
+% Introdução anterior. Isso não cabe aqui, não é revisão bibliográfica.
+%
+% -----------------------------------------------------------------------------------------------------------------
 
-Os códigos de Monte Carlo funcionam simulando as partículas 
-individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacional dos cálculos
-pelo método de Monte Carlo, tardaram a ser usados em cálculos acoplados em comparação a métodos determinísticos.
-Entretanto, nos últimos anos seu uso em sistemas acoplados aumentou consideravelmente \cite{Herman2015, Richard2015, Bennett2016},
-inclusive com o uso de CFD \cite{Leppanen2012}.
+%Este processo, desde sua metodologia até fundamentos de sua execução, será
+%oportunamente - e detalhadamente - apresentado, já que trata-se da principal
+%contribuição desta tese.
 
-Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
-e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos.
+%O acoplamento entre neutrônica e termo-hidráulica já ocorre de diferentes formas. Na simulação 
+%termo-hidráulica são usados códigos de sistemas e códigos de sub-canal. Os códigos de sistemas 
+%funcionam modelando os sistemas do reator unidimensionalmente e aplicando as equações básicas 
+%para continuidade, momento e energia. O resultado obtido simula o
+%comportamento médio dos componentes do reator.
+%Estes códigos são normalmente usados em análises de transientes e segurança de reatores. 
+%Já os códigos de sub-canal são mais detalhados e, além
+%de modelar múltiplos componentes do sistema 
+%do reator, são capazes de simular em geometrias tridimensionais \cite{Faghihi2011}. Os códigos 
+%CFD substituem o domínio contínuo por um domínio discreto e finito. Neste contexto, as equações 
+%que governam o escoamento são integradas sobre todos os elementos que formam o domínio (finito). 
+%As integrais obtidas são então discretizadas na forma de um sistema de equações algébricas 
+%e, por fim, este sistema é resolvido por métodos interativos \cite{Versteeg2007}.
 
-\section{Descrição do trabalho}
+%No contexto da neutrônica, é possível classificar os códigos em três tipos:
+%1) Códigos de difusão ou de transporte, 
+%2) Códigos de ordenadas-discretas e 3) Códigos Monte Carlo. Os dois primeiros são determinísticos 
+%e o terceiro estocástico. 
 
-Este trabalho de tese consiste no desenvolvimento de um sistema acoplado de cálculos
-termo-hidráulicos e neutrônicos. Apesar de desenvolvidos separadamente - inclusive
-em linguagens de programação diferentes - ambos fazem uso do método de volumes
+%Os códigos de difusão resolvem a equação de difusão de nêutrons. A equação de difusão de nêutrons nada mais é do
+%que uma simplificação na modelagem do comportamento dos nêutrons. Uma delas, por exemplo, é a consideração de um
+%coeficiente de difusão único representando as direções possíveis dos nêutrons. Em suma, a equação de difusão
+%em estado estacionário é obtida de uma relação entre a corrente de nêutrons e o gradiente do fluxo neutrônico,
+%representando o fato de que os nêutrons têm uma tendência a migrar de regiões onde são mais numerosos para
+%regiões onde são menos numerosos \cite{Hebert2009}. Um dos códigos de difusão 
+%mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estando inclusive já acoplado 
+%com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
+%O código usado neste trabalho para o acoplamento é o código milonga
+%(grafa-se sem letra maiúscula). O milonga \cite{Theler2014b}
+%utiliza o método de volumes finitos na discretização do domínio e disponibiliza a solução
+%do cálculo neutrônico pela equação de difusão ou pelo método de ordenadas discretas. Suas características e seu
+%funcionamento serão apresentados oportunamente.
+
+%Os códigos de ordenadas discretas resolvem 
+%a equação de transporte de \textit{Boltzmann} para o comportamento médio das partículas para então calcular o 
+%fluxo de nêutrons. Nesses códigos, o espaço é divido em muitas pequenas caixas e as partículas 
+%são movidas entre as caixas. Para geometrias complexas com variações de parâmetros, a preparação de 
+%seções de choque exige grande esforço.
+
+%Os códigos de Monte Carlo funcionam simulando as partículas 
+%individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacional dos cálculos
+%pelo método de Monte Carlo, tardaram a ser usados em cálculos acoplados em comparação a métodos determinísticos.
+%Entretanto, nos últimos anos seu uso em sistemas acoplados aumentou consideravelmente \cite{Herman2015, Richard2015, Bennett2016},
+%inclusive com o uso de CFD \cite{Leppanen2012}.
+
+%Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
+%e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos.
+% -----------------------------------------------------------------------------------------------------------------
+
+\section{Objetivo}
+
+O objetivo deste trabalho de tese é o desenvolvimento de um sistema acoplado de cálculos
+termo-hidráulicos e neutrônicos aberto e gratuito baseado em CFD e volumes finitos utilizando
+o mesmo domínio de solução. Este sistema é construído utilizando-se de dois códigos independentes, também
+abertos e gratuitos, para os cálculos termo-hidráulicos e neutrônicos. 
+
+Apesar de desenvolvidos separadamente - inclusive
+em linguagens de programação diferentes - ambos os códigos usados fazem uso do método de volumes
 finitos \cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
 Cabe ressaltar que, neste primeiro momento, apenas cálculos em estado estacionário
 são previstos.
 
-Os códigos utilizados são abertos \cite[Capítulo~3]{Stallman2002}, o que significa pleno acesso ao seu código-fonte.
-Essa informação poderia passar despercebida, mas há alguns pontos a considerar antes de se
-seguir. As licenças que permitem a distribuição de código aberto impõe, via de regra, que
+Entenda-se como abertos \cite[Capítulo~3]{Stallman2002}, e com perdão da simplificação, programas, códigos ou sistemas
+que oferecem pleno acesso ao seu código-fonte. Essa informação poderia passar despercebida,
+mas há alguns pontos a considerar antes de se
+seguir. As licenças que permitem a distribuição de código aberto impõe, geralmente, que
 o código desenvolvido a partir de outro licenciado desta forma deva permanecer aberto.
 Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite[Seção~2.6]{Androutsellis2010},
-é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, sua disseminação é crescente.
+é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, a disseminação de programas de forma aberta é crescente.
 Não apenas para tarefas básicas, mas predominantemente em serviços de rede, internet, cálculo numérico dentre
-inúmeros outros. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
+inúmeras outras aplicações intensas. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
 extensivamente usados em aplicações de missão crítica \cite{Norris2004}.
 
 Dada que a utilização de programas de código aberto ainda é relativamente tímida no domínio nuclear
 - e a expressão relativamente talvez seja inapropriada, pois são vários projetos de instituições
-renomadas utilizando código aberto \cite{Romano2013, Boyd2014, Huff2016} -
+renomadas utilizando código aberto recentemente \cite{Romano2013, Boyd2014, Huff2016} -
 esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
 aplicação neste domínio. Sendo os dois códigos usados para o acoplamento no âmbito desta tese disponibilizados
 de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
@@ -121,9 +143,9 @@ seja iniciado.
 %dos materiais influenciam na reprodução de nêutrons, o que faz variar a potência e assim
 %por diante.
 
-\section{Motivação}
+\section{Justificativa}
 
-Pode-se dizer que há duas grandes motivações para a realização deste trabalho. A primeira, de ordem principalmente
+Pode-se dizer que há duas grandes justificativas para a realização deste trabalho. A primeira, de ordem principalmente
 técnica, é o uso de um código do tipo CFD acoplado para cálculo multi-física. O CFD permite o cálculo detalhado do
 comportamento do escoamento em um reator, subcanal ou ao redor de um elemento. Tal nível de detalhes, permite a
 investigação de fenômenos físicos não modeláveis de outras formas - no nível de todo o sistema, por exemplo. Além disso,
@@ -134,7 +156,7 @@ a utilização de métodos outrora considerados uma ousadia. Isto posto, é poss
 acoplados já são uma realidade e não se pode abrir mão de conhecer os novos aspectos técnicos, numéricos e teóricos
 envolvidos nesta nova forma de investigar a física de reatores.
 
-A segunda grande motivação no desenvolvimento deste trabalho, vai além dos aspectos puramente técnicos.
+A segunda justificativa, que pode também ser considerada uma motivação, vai além dos aspectos puramente técnicos.
 O chamado \textit{software livre} consiste em códigos desenvolvidos dentro de uma filosofia de liberdade e de uso
 comunitário. Essa ideia, que remonta ao início dos anos 80, advoga que um programa ou \textit{software} deve fornecer
 o código-fonte aos usuários. Os usuários têm direito de modificá-lo, melhorá-lo e até mesmo vendê-lo, desde que o novo
@@ -144,7 +166,7 @@ grande parte do \textit{software} em uso para certos tipos de aplicações hoje 
 \cite{Androutsellis2010}. Não seria de se esperar outra coisa que esta filosofia de desenvolvimento comunitário de
 \textit{software} alcançasse a engenharia nuclear. As discussões sobre quão efetiva será a adoção deste modelo
 para uma área de missão crítica, como boa parte das aplicações em física de reatores, é, por si só, assunto para uma
-tese exclusiva sobre o tema. Neste trabalho, a motivação está na possibilidade de junção de forças entre grupos com
+tese exclusiva sobre o tema. No presente trabalho, a motivação está na possibilidade de junção de forças entre grupos com
 diferentes \textit{backgrounds}, estruturas de pesquisa e investimentos com um objetivo comum: o desenvolvimento
 de sistemas úteis para todo o grupo, revisado por pares - e com isso uma mais ampla rede de detecção de erros
 de implementação - e possíveis de serem modificados e alterados de acordo com as necessidades.

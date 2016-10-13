@@ -4,11 +4,22 @@
 \chapter{Metodologia}
 \label{chap:metodologia}
 
-O trabalho de tese em questão trata-se, essencialmente, do desenvolvimento e testes
-de um sistema de \textit{software}. Desse modo, parece desejável, do ponto de vista de
-clareza, descrever a metodologia utilizada no trabalho de forma a acompanhar o ciclo
-de desenvolvimento dos vários elementos de software utilizados para obter o sistema
-acoplado.
+O trabalho de tese em questão trata-se do desenvolvimento e teste
+de um sistema de \textit{software}. Desse modo, a metodologia utilizada na construção
+deste sistema e, portanto, na solução do problema proposto e alcance ao objetivo,
+é construída com base nos seguintes aspectos:
+
+\begin{itemize}
+\item Adequação das ferramentas utilizadas para alcançar o objetivo de um sistema de cálculos acoplados;
+\item As restrições impostas pelas ferramentas escolhidas devido à sua estrutura intrínseca.
+\end{itemize}
+
+Desse modo, é desejável, do ponto de vista de clareza, descrever a metodologia utilizada no trabalho
+apresentando as características das ferramentas utilizadas, suas limitações e seus possíveis impactos
+no resultado final para então descrever a solução acoplada. Por sua vez, na descrição da solução
+acoplada, são apresentadas as modificações implementadas nas ferramentas e as formas de utilização
+de dois programas de computador independentes de forma conjunta.
+
 
 \section{Visão Geral}
 
@@ -22,7 +33,7 @@ acoplado desenvolvido.
 
 \begin{figure}[htb]
   \caption{Metodologia: o sistema acoplado.}
-  \centering\includegraphics[scale=0.7]{figuras/metodologia1.png}
+  \centering\includegraphics[scale=0.7]{figuras/metodologia1_wims.png}
   \label{metodoetapas}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -31,9 +42,6 @@ Como apresentado no capítulo \ref{chap:rev}, o acoplamento, no contexto desta d
 de cálculos termo-hidráulicos utilizando a potência obtida pelo código de neutrônica que, por sua vez,
 utiliza as temperaturas dos materiais calculadas pela termo-hidráulica para re-calcular seções de choque
 e outros parâmetros neutrônicos de modo a calcular o fluxo de nêutrons e potência no combustível.
-
-O sistema acoplado desenvolvido
-
 
 As características não-usuais desse sistema são listadas abaixo:
 
@@ -50,6 +58,9 @@ permitiram o desenvolvimento de um sistema multi-física.
 
 \section{Ferramentas}
 \label{sec:ferr}
+
+Com base nas características 
+
 
 O sistema acoplado desenvolvido nesta tese, utiliza dois diferentes programas de computador. Cada um deles
 realiza um conjunto de cálculos separadamente e compartilham os dados necessários aos cálculos do outro.
@@ -116,16 +127,16 @@ suas linguagens de programação para ler, escrever e se comunicar através do u
 
 
 
-\section{Malha}
+%\section{Malha}
 
-\begin{figure}[htb]
-  \caption{Malha e regiões, vista superior.}
-  \centering\includegraphics[scale=0.5]{figuras/regions_neutronica_malha_e_sem.png}
-  \label{regions_malha}
-  \legend{Fonte: autor}
-\end{figure}
+%\begin{figure}[htb]
+%  \caption{Malha e regiões, vista superior.}
+%  \centering\includegraphics[scale=0.5]{figuras/regions_neutronica_malha_e_sem.png}
+%  \label{regions_malha}
+%  \legend{Fonte: autor}
+%\end{figure}
 
-\section{Condições de contorno}
+%\section{Condições de contorno}
 
 
 \section{Acoplamento} % Algoritmos
