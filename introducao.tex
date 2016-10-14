@@ -34,62 +34,6 @@ trocar dados para realizar seus cálculos.
 
 
 
-% Introdução anterior. Isso não cabe aqui, não é revisão bibliográfica.
-%
-% -----------------------------------------------------------------------------------------------------------------
-
-%Este processo, desde sua metodologia até fundamentos de sua execução, será
-%oportunamente - e detalhadamente - apresentado, já que trata-se da principal
-%contribuição desta tese.
-
-%O acoplamento entre neutrônica e termo-hidráulica já ocorre de diferentes formas. Na simulação 
-%termo-hidráulica são usados códigos de sistemas e códigos de sub-canal. Os códigos de sistemas 
-%funcionam modelando os sistemas do reator unidimensionalmente e aplicando as equações básicas 
-%para continuidade, momento e energia. O resultado obtido simula o
-%comportamento médio dos componentes do reator.
-%Estes códigos são normalmente usados em análises de transientes e segurança de reatores. 
-%Já os códigos de sub-canal são mais detalhados e, além
-%de modelar múltiplos componentes do sistema 
-%do reator, são capazes de simular em geometrias tridimensionais \cite{Faghihi2011}. Os códigos 
-%CFD substituem o domínio contínuo por um domínio discreto e finito. Neste contexto, as equações 
-%que governam o escoamento são integradas sobre todos os elementos que formam o domínio (finito). 
-%As integrais obtidas são então discretizadas na forma de um sistema de equações algébricas 
-%e, por fim, este sistema é resolvido por métodos interativos \cite{Versteeg2007}.
-
-%No contexto da neutrônica, é possível classificar os códigos em três tipos:
-%1) Códigos de difusão ou de transporte, 
-%2) Códigos de ordenadas-discretas e 3) Códigos Monte Carlo. Os dois primeiros são determinísticos 
-%e o terceiro estocástico. 
-
-%Os códigos de difusão resolvem a equação de difusão de nêutrons. A equação de difusão de nêutrons nada mais é do
-%que uma simplificação na modelagem do comportamento dos nêutrons. Uma delas, por exemplo, é a consideração de um
-%coeficiente de difusão único representando as direções possíveis dos nêutrons. Em suma, a equação de difusão
-%em estado estacionário é obtida de uma relação entre a corrente de nêutrons e o gradiente do fluxo neutrônico,
-%representando o fato de que os nêutrons têm uma tendência a migrar de regiões onde são mais numerosos para
-%regiões onde são menos numerosos \cite{Hebert2009}. Um dos códigos de difusão 
-%mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estando inclusive já acoplado 
-%com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
-%O código usado neste trabalho para o acoplamento é o código milonga
-%(grafa-se sem letra maiúscula). O milonga \cite{Theler2014b}
-%utiliza o método de volumes finitos na discretização do domínio e disponibiliza a solução
-%do cálculo neutrônico pela equação de difusão ou pelo método de ordenadas discretas. Suas características e seu
-%funcionamento serão apresentados oportunamente.
-
-%Os códigos de ordenadas discretas resolvem 
-%a equação de transporte de \textit{Boltzmann} para o comportamento médio das partículas para então calcular o 
-%fluxo de nêutrons. Nesses códigos, o espaço é divido em muitas pequenas caixas e as partículas 
-%são movidas entre as caixas. Para geometrias complexas com variações de parâmetros, a preparação de 
-%seções de choque exige grande esforço.
-
-%Os códigos de Monte Carlo funcionam simulando as partículas 
-%individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacional dos cálculos
-%pelo método de Monte Carlo, tardaram a ser usados em cálculos acoplados em comparação a métodos determinísticos.
-%Entretanto, nos últimos anos seu uso em sistemas acoplados aumentou consideravelmente \cite{Herman2015, Richard2015, Bennett2016},
-%inclusive com o uso de CFD \cite{Leppanen2012}.
-
-%Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
-%e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos.
-% -----------------------------------------------------------------------------------------------------------------
 
 \section{Objetivo}
 
@@ -198,3 +142,106 @@ já começou nos centros de ponta espalhados pelo planeta \cite{Romano2013, Boyd
 %do tipo PWR\cite{benchmarksPWR}, a metodologia desenvolvida nesta tese poderá ser usada para simulações reatores completos. São eles o reator multipropósito brasileiro, com %previsão de operação para 2020 e reatores de potência tipo PWR em operação no Brasil (Angra I e II). 
 
 %E a aplicação não se restringe à simulação do reator, podendo ser, no futuro, adicionados elementos como queima de combustível, envenenamento por xenônio e outros fatores que permitam não só a simulação de um estado transiente curto, como também da evolução da utilização do reator no tempo.
+
+\section{\textit{Software} livre: algumas palavras}
+
+Usualmente, o termo \textit{software} livre aparece apenas incidentalmente nos trabalhos
+técnicos envolvendo códigos, programas ou sistemas computacionais. Nesta tese, entretanto,
+o \textit{software} livre (ou aberto) não é apenas a ferramenta principal para atingir o objetivo
+mas também parte da razão pelo qual é possível atingi-lo. Com isso em mente, nesta seção é
+feita uma breve exposição do que é de como se deu a evolução desta forma de criar e pensar
+\textit{software}.
+
+A primeira utilização do termo \textit{software} livre (do inglês \textit{free software})
+foi feita por Richard Stallmann. Não se sabe precisar quando o termo foi utilizado pela
+primeira vez, mas tornou-se usual no início da década de 80 do século passado.
+Apesar do significado ambíguo na língua inglesa - o próprio Stallmann faz questão
+de explicar seu significado \cite{Stallman2002} - \textit{software} livre não deve
+ser confundido com preço ou custo. Em definição do criador do termo, um \textit{software}
+é livre para um usuário em particular se:
+\begin{itemize}
+\item O usuário tem liberdade de executar o programa, para qualquer propósito.
+\item O usuário tem liberdade de modificar o programa para atender às suas necessidades
+  (que para tornar-se efetiva, deve contar com o código-fonte disponível).
+\item O usuário tem liberdade de redistribuir cópias, gratuitamente ou não.
+\item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
+  que a comunidade possa beneficiar-se das melhorias.
+\end{itemize}
+
+Uma vez definido o significado da expressão \textit{software} livre, cabe ressaltar que, do ponto de
+vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
+Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
+restrições a ser utilizado em sistemas
+fechados. Desse modo, assim passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
+
+Com isto em conta, faz-se necessária uma breve explicação do que são as licenças
+de \textit{software} e como estas licenças definem as formas como devem se dar a utilização, distribuição, cópia, seção, etc. de determinado \textit{software}. Sendo assim,
+já no escopo do projeto GNU \cite{Stallman1985} foi pensada a primeira forma
+de licenciamento de \textit{software}
+GNU. Esta licença é chamada GPL.
+
+A licença GPL é apenas uma dentre várias, seja de \textit{software} livre ou
+não. O objetivo da licença GPL é, ao mesmo tempo permitir liberdade do ponto de vista
+do usuário do \textit{software}, mas impedir que o código-fonte seja usado em sistemas proprietários. Isso se dá obrigando sistemas que utilizem código
+distribuído sob a licença GPL a serem distribuídos sob a mesma licença.
+
+Cabe ressaltar que um \textit{software} distribuído sob licença GPL é mais restritivo do
+que um \textit{software} de domínio público, já que este último pode ser incorporado
+a sistemas proprietários fechados, por exemplo. O \textit{software} GPL, por sua vez,
+deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos nos
+os diversos aspectos do \textit{software} de código aberto encontrarão sólidas informações
+no trabalho de Androutsellis \cite{Androutsellis2010}.
+
+Mais de trinta anos depois do surgimento do movimento \textit{software} livre,
+sua penetração no mundo da computação é completa. A maior parte tráfego de correio
+eletrônico no planeta é feita por \textit{software} livre, por exemplo.  A título
+de ilustração, em 2015, eram mais de 1 bilhão e 800 milhões de \textit{smartphones}
+sendo utilizados no mundo. Destes, 82\% rodando um sistema operacional livre.
+
+Era de se esperar que a penetração do \textit{software} livre chegaria também a outras
+áreas, incluindo aplicações de missão crítica. A agência espacial norte-americana
+utilizou \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
+de exploração espacial \cite{Norris2004}.
+
+Entretanto, a utilização de \textit{software} livre na indústria nuclear ainda é tímida.
+Uma das razões é facilmente compreensível: o impacto de uma falha de \textit{software}
+em uma aplicação nuclear pode ter resultados devastadores. Desse modo, o processo de
+verificação e validação de sistemas de \textit{software} nessa indústria é extremamente
+conservador. Somado-se a isso, o custo de verificação e validação de um novo \textit{software}
+não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \textit{software}
+livre na área nuclear seja mais lenta que em outras áreas.
+
+Essas dificuldades, porém, parecem ser inferiores aos possíveis ganhos na utilização de
+\textit{software} livre. Um exemplo dessa afirmativa é a ampla adoção
+do \textit{software} Monte Carlo para cálculo de física de reatores \textit{Serpent} \cite{Serpent2013}
+desde a sua disponibilização para a comunidade. Trata-se de um \textit{software}
+de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
+de ter sua distribuição controlada - a aqui cabe dizer que, por isso, não pode ser
+classificado como \textit{software} livre - é distribuído com código-fonte. Em setembro
+de 2016, o \textit{Serpent} já era usado por mais de 560 usuários em 162 universidades
+e centros de pesquisa em 37 países. Outra ferramenta, esta ainda pouco difundida,
+desenvolvida tendo em vista as aplicações nucleares é o código \textit{milonga} \cite{Theler2014b}.
+O \textit{milonga} é um código do tipo volumes finitos e elementos finitos que resolve as equações
+de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
+desenvolvimento, apresenta resultados promissores \cite{Theler2014}, tendo sido
+utilizado em cálculos de transientes da central nuclear de Atucha I, na Argentina.
+
+Outra aplicação do \textit{software} livre na área nuclear é na educação. Seguindo na
+mesma linha da afirmação de Jaakko Leppänen, da importância do desenvolvimento de
+códigos na formação dos próximos especialistas na área nuclear \cite{Leppanen2015}, Benoit
+Forget, do MIT, em uma avaliação da evolução do ensino física de reatores na sua instituição \cite{Forget2014}, é explícito ao observar os aspectos didáticos da
+utilização de \textit{software} livre na educação. Dois dos códigos utilizados
+no ensino de física de reatores no MIT após reformulação do currículo são o \textit{OpenMC}
+\cite{Romano2013}, para cálculo de transporte de partículas pelo método de Monte Carlo e
+o código \textit{OpenMOC}, que faz cálculos de transporte em 2D baseado
+no método de características \cite{Boyd2014}.
+
+Essas são considerações muito breves sobre o que se convencionou chamar
+de \textit{software} livre. Este é, por si só, um tema que é assunto de estudos, pesquisas
+e controvérsias. Entretanto, o fundamental neste ponto é perceber que esta ``nova'' forma
+de desenvolvimento de software existe e, mesmo que timidamente, tem chegado à temática
+nuclear. Este é muito provavelmente um caminho sem volta.
+
+%E apesar da abordagem
+%superficial ao tema, passemos agora a outro conceito fundamental neste trabalho
+%de tese: o acoplamento neutrônico e termo-hidráulico.

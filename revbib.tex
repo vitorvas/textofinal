@@ -4,123 +4,88 @@
 \chapter{Revisão Bibliográfica}
 \label{chap:rev}
 
+Este capítulo apresenta um histórico, não necessariamente em ordem
+cronológica, dos principais trabalhos envolvendo
+o uso de CFD em aplicações nucleares. Além disso, são também apresentados
+os trabalhos mais relevantes envolvendo acoplamento neutrônico e
+termo-hidráulico utilizando diferentes técnicas, tanto para o cálculo neutrônico
+quanto termo-hidráulico.
+
+% Introdução anterior. Isso não cabe aqui, não é revisão bibliográfica.
+%
+% -----------------------------------------------------------------------------------------------------------------
+
+%Este processo, desde sua metodologia até fundamentos de sua execução, será
+%oportunamente - e detalhadamente - apresentado, já que trata-se da principal
+%contribuição desta tese.
+
+%O acoplamento entre neutrônica e termo-hidráulica já ocorre de diferentes formas. Na simulação 
+%termo-hidráulica são usados códigos de sistemas e códigos de sub-canal. Os códigos de sistemas 
+%funcionam modelando os sistemas do reator unidimensionalmente e aplicando as equações básicas 
+%para continuidade, momento e energia. O resultado obtido simula o
+%comportamento médio dos componentes do reator.
+%Estes códigos são normalmente usados em análises de transientes e segurança de reatores. 
+%Já os códigos de sub-canal são mais detalhados e, além
+%de modelar múltiplos componentes do sistema 
+%do reator, são capazes de simular em geometrias tridimensionais \cite{Faghihi2011}. Os códigos 
+%CFD substituem o domínio contínuo por um domínio discreto e finito. Neste contexto, as equações 
+%que governam o escoamento são integradas sobre todos os elementos que formam o domínio (finito). 
+%As integrais obtidas são então discretizadas na forma de um sistema de equações algébricas 
+%e, por fim, este sistema é resolvido por métodos interativos \cite{Versteeg2007}.
+
+%No contexto da neutrônica, é possível classificar os códigos em três tipos:
+%1) Códigos de difusão ou de transporte, 
+%2) Códigos de ordenadas-discretas e 3) Códigos Monte Carlo. Os dois primeiros são determinísticos 
+%e o terceiro estocástico. 
+
+%Os códigos de difusão resolvem a equação de difusão de nêutrons. A equação de difusão de nêutrons nada mais é do
+%que uma simplificação na modelagem do comportamento dos nêutrons. Uma delas, por exemplo, é a consideração de um
+%coeficiente de difusão único representando as direções possíveis dos nêutrons. Em suma, a equação de difusão
+%em estado estacionário é obtida de uma relação entre a corrente de nêutrons e o gradiente do fluxo neutrônico,
+%representando o fato de que os nêutrons têm uma tendência a migrar de regiões onde são mais numerosos para
+%regiões onde são menos numerosos \cite{Hebert2009}. Um dos códigos de difusão 
+%mais usados é o PARCS (\textit{Purdue Advanced Reactor Core Simulator}), estando inclusive já acoplado 
+%com códigos de termo-hidráulica de sistemas \cite{Xu2006,Barber98}.
+%O código usado neste trabalho para o acoplamento é o código milonga
+%(grafa-se sem letra maiúscula). O milonga \cite{Theler2014b}
+%utiliza o método de volumes finitos na discretização do domínio e disponibiliza a solução
+%do cálculo neutrônico pela equação de difusão ou pelo método de ordenadas discretas. Suas características e seu
+%funcionamento serão apresentados oportunamente.
+
+%Os códigos de ordenadas discretas resolvem 
+%a equação de transporte de \textit{Boltzmann} para o comportamento médio das partículas para então calcular o 
+%fluxo de nêutrons. Nesses códigos, o espaço é divido em muitas pequenas caixas e as partículas 
+%são movidas entre as caixas. Para geometrias complexas com variações de parâmetros, a preparação de 
+%seções de choque exige grande esforço.
+
+%Os códigos de Monte Carlo funcionam simulando as partículas 
+%individualmente e gravando aspectos do seu comportamento médio. Devido ao alto custo computacional dos cálculos
+%pelo método de Monte Carlo, tardaram a ser usados em cálculos acoplados em comparação a métodos determinísticos.
+%Entretanto, nos últimos anos seu uso em sistemas acoplados aumentou consideravelmente \cite{Herman2015, Richard2015, Bennett2016},
+%inclusive com o uso de CFD \cite{Leppanen2012}.
+
+%Uma vez apresentados os tipos de códigos mais utilizados para simulações termo-hidráulicas
+%e neutrônicas, o próximo passo é entender o porquê de acoplar estes códigos.
+% -----------------------------------------------------------------------------------------------------------------
 %O acoplamento CFD-neutrônica. Motivação. Vantagens e desvantagens. 
 %Nesse capítulo vão todas as referências importantes com explicações 
 %de cada uma. 
 %\section*{OpenFOAM}
 %Por que usá-lo? Vantagens e desvantagens.
 
-O ponto de partida deste capítulo deveria ser a descrição do problema de acoplamento,
-a contextualização de sua aplicação e as razões que tornam tal problema fundamental
-na simulação de um reator nuclear ou de suas partes. Entretanto, no contexto dessa tese, é impossível
-iniciar as discussões técnicas sem uma exposição, ainda que breve, da expressão que
-aparece no título deste trabalho: \textit{software} livre.
+%O ponto de partida deste capítulo deveria ser a descrição do problema de acoplamento,
+%a contextualização de sua aplicação e as razões que tornam tal problema fundamental
+%na simulação de um reator nuclear ou de suas partes. Entretanto, no contexto dessa tese, é impossível
+%iniciar as discussões técnicas sem uma exposição, ainda que breve, da expressão que
+%aparece no título deste trabalho: \textit{software} livre.
 
-A primeira utilização do termo \textit{software} livre (do inglês \textit{free software})
-foi feita por Richard Stallmann. Não se sabe precisar quando o termo foi utilizado pela
-primeira vez, mas tornou-se usual no início da década de 80 do século passado.
-Apesar do significado ambíguo na língua inglesa - o próprio Stallmann faz questão
-de explicar seu significado \cite{Stallman2002} - \textit{software} livre não deve
-ser confundido com preço ou custo. Em definição do criador do termo, um \textit{software}
-é livre para um usuário em particular se:
-\begin{itemize}
-\item O usuário tem liberdade de executar o programa, para qualquer propósito.
-\item O usuário tem liberdade de modificar o programa para atender às suas necessidades
-  (que para tornar-se efetiva, deve contar com o código-fonte disponível).
-\item O usuário tem liberdade de redistribuir cópias, gratuitamente ou não.
-\item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
-  que a comunidade possa beneficiar-se das melhorias.
-\end{itemize}
 
-Uma vez definido o significado da expressão \textit{software} livre, cabe ressaltar que, do ponto de
-vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
-Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
-restrições a ser utilizado em sistemas
-fechados. Desse modo, assim passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
 
-Com isto em conta, faz-se necessária uma breve explicação do que são as licenças
-de \textit{software} e como estas licenças definem as formas como devem se dar a utilização, distribuição, cópia, seção, etc. de determinado \textit{software}. Sendo assim,
-já no escopo do projeto GNU \cite{Stallman1985} foi pensada a primeira forma
-de licenciamento de \textit{software}
-GNU. Esta licença é chamada GPL.
 
-A licença GPL é apenas uma dentre várias, seja de \textit{software} livre ou
-não. O objetivo da licença GPL é, ao mesmo tempo permitir liberdade do ponto de vista
-do usuário do \textit{software}, mas impedir que o código-fonte seja usado em sistemas proprietários. Isso se dá obrigando sistemas que utilizem código
-distribuído sob a licença GPL a ser distribuído sob a mesma licença.
+% Revisão propriamente dita.
 
-Cabe ressaltar que um \textit{software} distribuído sob licença GPL é mais restritivo do
-que um \textit{software} de domínio público, já que este último pode ser incorporado
-a sistemas proprietários fechados, por exemplo. O \textit{software} GPL, por sua vez,
-deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos nos
-os diversos aspectos do \textit{software} de código aberto encontrarão sólidas informações
-no trabalho de Androutsellis \cite{Androutsellis2010}.
 
-Mais de trinta anos depois do surgimento do movimento \textit{software} livre,
-sua penetração no mundo da computação é completa. A maior parte tráfego de correio
-eletrônico no planeta é feita por \textit{software} livre, por exemplo.  A título
-de ilustração, em 2015, eram mais de 1 bilhão e 800 milhões de \textit{smartphones}
-sendo utilizados no mundo. Destes, 82\% rodando um sistema operacional livre.
-
-Era de se esperar que a penetração do \textit{software} livre chegaria também a outras
-áreas, incluindo aplicações de missão crítica. A agência espacial norte-americana
-utilizou \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
-de exploração espacial \cite{Norris2004}.
-
-Entretanto, a utilização de \textit{software} livre na indústria nuclear ainda é tímida.
-Uma das razões é facilmente compreensível: o impacto de uma falha de \textit{software}
-em uma aplicação nuclear pode ter resultados devastadores. Desse modo, o processo de
-verificação e validação de sistemas de \textit{software} nessa indústria é extremamente
-conservador. Somado-se a isso, o custo de verificação e validação de um novo \textit{software}
-não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \textit{software}
-livre na área nuclear seja mais lenta que em outras áreas.
-
-Essas dificuldades, porém, são inferiores aos possíveis ganhos na utilização de
-\textit{software} livre. Um grande exemplo dessa afirmativa é a ampla adoção
-do \textit{software Serpent} \cite{Serpent2013}. Trata-se de um \textit{software}
-de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
-de ter sua distribuição controlada, é distribuído com código-fonte. Em janeiro
-de 2016, o \textit{Serpent} já era usado por mais de 460 usuários em 142 universidades
-e centros de pesquisa em 36 países. Outra ferramenta, esta ainda pouco difundida,
-desenvolvida tendo em vista as aplicações nucleares é o código milonga \cite{Theler2014b}.
-O milonga é um código do tipo volumes finitos e elementos finitos que resolve as equações
-de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
-desenvolvimento, apresenta resultados promissores \cite{Theler2014}, tendo sido
-utilizado em cálculos de transientes da central nuclear de Atucha I.
-
-Outra aplicação do \textit{software} livre na área nuclear é na educação. Seguindo na
-mesma linha da afirmação de Jaakko Leppänen, da importância do desenvolvimento de
-códigos na formação dos próximos especialistas na área nuclear \cite{Leppanen2015}, Benoit
-Forget, do MIT, em uma avaliação da evolução do ensino física de reatores na sua instituição \cite{Forget2014}, é explícito ao observar os aspectos didáticos da
-utilização de \textit{software} livre na educação. Dois dos códigos utilizados
-no ensino de física de reatores no MIT após reformulação do currículo são o \textit{OpenMC}
-\cite{Romano2013}, para cálculo de transporte de partículas pelo método de Monte Carlo e
-o código \textit{OpenMOC}, que faz cálculos de transporte em 2D baseado
-no método de características \cite{Boyd2014}.
-
-Essas são considerações muito breves sobre o que se convencionou chamar
-de \textit{software} livre. Este é, por si só, um tema que é assunto de estudos, pesquisas
-e controvérsias. Entretanto, o fundamental neste ponto é perceber que esta ``nova'' forma
-de desenvolvimento de software existe e, mesmo que timidamente, tem chegado à temática
-nuclear. Este é muito provavelmente um caminho sem volta. E apesar da abordagem
-superficial ao tema, passemos agora a outro conceito fundamental neste trabalho
-de tese: o acoplamento neutrônico e termo-hidráulico.
-
-O crescimento na capacidade de cálculo dos computadores pessoais permitiu não só o uso 
-de técnicas mais elaboradas de cálculos termo-hidráulicos bem como seu uso em conjunto 
-com códigos de cálculo neutrônico. Um dos primeiros trabalhos diretamente focados no 
-acoplamento termo-hidráulico foi apresentado por \cite{Barber98}. Esse trabalho 
-é essencialmente um relatório técnico, no qual o foco está na construção de uma interface 
-genérica de acoplamento do código PARCS com códigos de termo-hidráulica. Apesar de não 
-gerar resultados de simulações, esse documento evidencia a importância e o interesse 
-no procedimento de acoplamento, além de fornecer preciosas informações acerca da 
-implementação de estruturas de dados, manipulação de entrada e saída, troca de mensagens, 
-uso de biblioteca de troca de mensagens PVM \cite{Geist94}, dentre outros pontos cruciais
-da implementação de software. Cabe ressaltar que esta interface, 
-chamada \textit{General Interface} é ainda usada pelo código PARCS nas suas versões mais 
-recentes. 
-
-Como mencionado no parágrafo anterior, o crescimento na capacidade de processamento
+O crescimento na capacidade de processamento
 computacional 
 fez com que os pesados cálculos de \textit{CFD} passassem a ser atraentes 
 para a Engenharia Nuclear. Mais do que isso, o uso desses códigos passou a ser razão 
@@ -144,8 +109,7 @@ fornecidas pelo código \textit{CFD} em relação a fenômenos como rotação, \
 regiões adjacentes e concentração de bolhas (no caso em que se simule duas fases)
 permitem identificar \textit{hot spots}, ou seja, regiões de especial interesse.
 Essas simulações permitem avaliar o comportamento
-de diferentes projetos de grades espaçadoras de elementos combustíveis quanto ao aspecto 
-de segurança, por exemplo.
+de diferentes projetos de grades espaçadoras de elementos combustíveis \cite{Navarro2011}, por exemplo.
 
 Um trabalho em conjunto entre pesquisadores do ISYRIM, UFMG e CDTN foi conduzido
 com o objetivo de investigar o comportamento do reator TRIGA IPR-R1 por um código do tipo \textit{CFD} \cite{Martinez2012}. 
@@ -172,7 +136,7 @@ e soluções numéricas são necessárias. Além das suas críticas às dificuld
 não-flexibilidade dos códigos fechados, propôs uma solução: uma biblioteca
 orientada a objetos para simulações numéricas escrita em linguagem C++ e, mais do que tudo,
 licenciada como \textit{software} livre \cite{Jasak2007} chamada \textit{OpenFOAM}.
-Neste trabalho o autor também desfaz as polêmicas sobre o desempenho de códigos escritos
+Nesse trabalho o autor também desfaz as polêmicas sobre o desempenho de códigos escritos
 em C++ e demonstra como as equações são modeladas dentro do \textit{OpenFOAM}. Um
 exemplo é a equação da energia cinética turbulenta no modelo RANS
 \begin{equation}
@@ -199,12 +163,12 @@ de equações diferenciais no \textit{OpenFOAM}.
 Vale ressaltar que, devido ao custo computacional dos cálculos \textit{CFD}, seu uso na indústria
 nuclear é, se comparado a outros métodos de simulação termo-hidráulica, bastante recente. Um artigo que
 veio de forma definitiva atestar a importância dos cálculos \textit{CFD} na indústria nuclear
-foi apresentado por Emilio Baglietto \cite{Baglietto2011}. Neste artigo, o autor afirma
-que o uso de \textit{CFD}, usado só ou combinado com códigos neutrônicos e ferramentas
+foi apresentado por Emilio Baglietto \cite{Baglietto2011}. Nesse artigo, o autor afirma
+que o uso de \textit{CFD}, só ou combinado com códigos neutrônicos e ferramentas
 de análise, aumentou a capacidade e disponibilidade dos reatores nucleares
 atualmente em operação. Ele afirma,
 ainda, que tal tecnologia de análise está ajudando no desenvolvimento dos reatores
-de quarta geração, especialmente neste caso, em que dados experimentais e operacionais
+de quarta geração, especialmente nesse caso, em que dados experimentais e operacionais
 estão menos disponíveis. Vendedores e operadores de reatores utilizarão muito mais
 modelagem, simulação e computação para determinar como reatores e seus componentes
 irão se portar quando em operação. O autor é categórico ao afirmar que ``em um
@@ -221,6 +185,22 @@ a moderação. Pequenas variações na temperatura, densidade e composição
 da água podem mudar consideravelmente o fator de multiplicação de nêutrons ($k_{eff}$). Daí a importância e 
 a necessidade de acoplar os cálculos termo-hidráulicos - as variações nas propriedades da água - com as variações 
 no fluxo neutrônico.
+
+%O já mencionado crescimento na capacidade de cálculo dos computadores pessoais permitiu não só o uso 
+%de técnicas mais elaboradas de cálculos termo-hidráulicos bem como seu uso em conjunto 
+%com códigos de cálculo neutrônico.
+
+Um dos primeiros trabalhos diretamente focados no 
+acoplamento termo-hidráulico foi apresentado por \cite{Barber98}. Esse trabalho 
+é essencialmente um relatório técnico, no qual o foco está na construção de uma interface 
+genérica de acoplamento do código PARCS com códigos de termo-hidráulica. Apesar de não 
+gerar resultados de simulações, esse documento evidencia a importância e o interesse 
+no procedimento de acoplamento, além de fornecer preciosas informações acerca da 
+implementação de estruturas de dados, manipulação de entrada e saída, troca de mensagens, 
+uso de biblioteca de troca de mensagens PVM \cite{Geist94}, dentre outros pontos cruciais
+da implementação de software. Cabe ressaltar que esta interface, 
+chamada \textit{General Interface} é ainda usada pelo código PARCS nas suas versões mais 
+recentes. 
 
 O acoplamento das simulações de diferentes fenômenos físicos tem sido também chamado de
 \textbf{multi-física}. 
@@ -239,15 +219,14 @@ pela possibilidade de uso do código durante vários anos.
 
 Ainda sobre a importância recente dos cálculos neutrônicos e termo-hidráulicos acoplados, foi iniciado em 2012
 no Centro de Pesquisas Técnicas VTT (Finlândia) o projeto \textit{Numerical Multi-Physics (NUMPS)} \cite{Leppanen2015}.
-Dentre seus objetivos, estão o desenvolvimento do código de física de reatores Serpent, que utiliza o método de
+Dentre seus objetivos, estão o desenvolvimento do código de física de reatores \textit{Serpent}, que utiliza o método de
 Monte Carlo e do código PORFLO, do tipo \textit{CFD}. Esse desenvolvimento oferece oportunidades para a educação das novas
 gerações de especialistas, não apenas com compreensão de teoria e métodos, mas também com entendimento ao nível de
 código-fonte das ferramentas de cálculo.
 
 % Citar os trabalhos do IVANOV aqui...
-Uma vez apresentados o que são os códigos \textit{CFD} e algumas de suas aplicações no domínio nuclear e definido o significado do acoplamento no contexto desse trabalho de tese, serão apresentados os mais importantes 
-trabalhos sobre o acoplamento. Talvez o mais importante trabalho relacionado ao acoplamento 
-neutrônico/termo-hidráulico seja o de Ivanov \cite{Ivanov2007}. Nele são analisados e classificados diferentes tipos de 
+Talvez o mais importante trabalho relacionado ao acoplamento 
+neutrônico e termo-hidráulico seja o de Kostadin Ivanov \cite{Ivanov2007}. Nele são analisados e classificados diferentes tipos de 
 acoplamento, seus componentes e suas aplicações. Os diversos parâmetros do acoplamento são esquematicamente divididos em: 
 \begin{enumerate}
 \item \textbf{Forma de acoplamento}: externo, quando o código neutrônico é combinado com parte do código termo-hidráulico, 
@@ -263,8 +242,10 @@ módulos de neutrônica e termo-hidráulica têm capacidade separada de execuç�
 mais eficiente do ponto de vista computacional.
 \item \textbf{Sobreposição espacial de malhas}: pode ser fixo, quando um canal termo-hidráulico representa um canal neutrônico, 
 ou flexível, quando são usados ou especificados esquemas de mapeamento. Um esquema avançado de mapeamento 
-e interpolação de malhas \cite{Beaudoin2008} é implementado em alguns dos modernos códigos de \textit{CFD}. As diversas implicações 
-do mapeamento de malhas para a simulação serão apresentadas oportunamente.
+e interpolação de malhas \cite{Beaudoin2008} é implementado em alguns dos modernos códigos de \textit{CFD}.
+O uso de esquemas de mapeamento de malhas trazem implicações, tais como arredondamento e truncamentos no pareamento
+entre céluas, além de custo computacional relativo a percorrer as malhas ou armazenamento de estruturas de mapeamento
+em memória.
 \item \textbf{Algoritmos de controle de \textit{time-step}}: os transientes neutrônicos são geralmente muito mais rápidos que 
 os transientes termo-hidráulicos. A utilização de um único \textit{time-step} longo pode levar à não detecção de transientes 
 rápidos e no caso oposto ao desperdício de recursos computacionais ao se simular eventos indistinguíveis repetidamente.
@@ -283,7 +264,7 @@ de convergência e o foco das análises se concentra nos resultados dos cálculo
 Zerkak \cite{Zerkak2015}, por sua vez, faz uma revisão dos métodos de acoplamento com
 foco em como melhorar a convergência das atuais técnicas de acoplamento. O autor faz uma
 análise pormenorizada da técnica de \textit{operator splitting} e várias de suas melhorias,
-dentre vários outros esquemas numéricos de solução de \textit{PDE's}. Sua análise visa
+além de analisar vários outros esquemas numéricos de solução de \textit{PDE's}. Sua análise visa
 uma avaliação de vantagens e desvantagens dos métodos numéricos em relação à eficiência
 computacional, convergência e esforço de implementação e modularidade, sempre com vistas
 à análise de reatores nucleares.
@@ -297,7 +278,7 @@ na literatura tem utilizado repetidamente o código \textit{Serpent} \cite{Serpe
 a geração de seções de choque, tanto para cálculos estocásticos quanto determinísticos \cite{Jareteg2014}. O leitor interessado nos detalhes dos métodos utilizados no \textit{Serpent} na
 preparação de seções de choque para os cálculos de transporte de nêutrons pode encontrar mais informações no trabalho de Leppänen \cite{Leppanen2009}.
 
-Em breve resumo, o trabalho de Dorval \cite{Dorval2015} investiga
+Dorval \cite{Dorval2015} investiga
 a geração de seções de choque para poucos grupos a partir do código \textit{Serpent} para
 o cálculo neutrônico de reatores rápidos refrigerados a sódio. Além dos coeficientes de
 difusão padrão gerados pelo \textit{Serpent}, é proposto um novo método para cálculo de
@@ -324,9 +305,8 @@ diretório comum. São dois critérios para finalizar a simulação: o código D
 na convergência da fonte de fissão, enquanto o código STAR-CCM+ no resíduo da energia. No que toca à 
 discretização espacial (sobreposição espacial de malhas), é usado um mapeamento entres as malhas 
 utilizadas nos dois códigos. Apesar de diferenças nas malhas, as fronteiras materiais, ou seja, geometria, 
-fronteira e posição de diferentes materiais são equivalentes em ambos os modelos.
-
-As conclusões apresentadas reiteram a importância da técnica de \textit{CFD} na indústria nuclear. Em particular, 
+fronteira e posição de diferentes materiais são equivalentes em ambos os modelos, simplificando
+o esquema de mapeamento. Suas conclusões reiteram a importância da técnica de \textit{CFD} na indústria nuclear. Em particular, 
 a capacidade de verificar os efeitos da grade misturadora na temperatura e densidade do refrigerante 
 levando-se em consideração os efeitos neutrônicos. Nas palavras do autor, esse acoplamento 
 ``permite um melhor entendimento da margem de DNB (\textit{Departure from Nucleate Boiling})''.
@@ -338,9 +318,9 @@ de multi-física já são uma realidade, e não mais uma aposta ou uma perspecti
 Corroborando com a ideia da importância dos cálculos acoplados, Faghihi faz uma análise
 dos diversos tipos de códigos usados para cálculos termo-hidráulicos no que se refere à
 forma como os sistemas são modelados (códigos de sistemas, códigos de sub-canais e códigos
-do tipo \textit{CFD}) e, de forma semelhante, para os códigos neutrônicos \cite{Faghihi2011}. Neste
-trabalho o autor é mais ousado e, além de descrever alguns conceitos de acoplamento
-neutrônico e termo-hidráulico, propõe o uso de redes neuronais treinadas com dados de
+do tipo \textit{CFD}) e outra análise semelhante para os códigos neutrônicos \cite{Faghihi2011}. Entretanto, seu
+foco está além da descrição de conceitos de acoplamento
+neutrônico e termo-hidráulico. O autor propõe o uso de redes neuronais treinadas com dados de
 outras simulações para a solução do fluxo neutrônico em reatores do tipo LWR.
 
 Talvez o mais completo trabalho relativo ao acoplamento neutrônico e termo-hidráulico com uso do 
@@ -361,9 +341,9 @@ neutrônica. A qualidade desse trabalho e muitas das soluções adotadas servem 
 e simulações a serem feitas nesta tese.
 
 O referido trabalho de tese deu origem a um artigo \cite{Jareteg2014} no qual o acoplamento
-neutrônico/termo-hidráulico é classificado como interno e é utilizada uma malha
-refinada. O objetivo deste artigo é provar que
-este acoplamento é factível e gera resultados com um nível de detalhes sem precedentes. Além
+neutrônico e termo-hidráulico é classificado como interno e é utilizada uma malha
+refinada. O objetivo desse artigo é provar que
+tal acoplamento é factível e gera resultados com um nível de detalhes sem precedentes. Além
 disso, os autores apontam que cálculos com malhas menos refinadas geram discrepâncias
 de até 0,5\% na potência por vareta e várias dezenas de \textit{pcm} no fator de multiplicação.
 Os autores justificam, ainda, que apesar de a neutrônica não necessitar de uma malha
@@ -371,7 +351,7 @@ tão detalhada quando necessita a termo-hidráulica, seu uso se justifica pela n
 de interpolações ou mapeamentos entres os elementos da malha. Além disso, como trata-se
 de um acoplamento interno, não há necessidade de transferência de dados, poupando-se
 tempo de processamento.
-Neste trabalho o problema é tratado como de regime permanente, bem como o problema escopo
+Nesse trabalho o problema é tratado como de regime permanente, bem como o problema escopo
 desta tese.
 
 
@@ -380,9 +360,9 @@ Institut para reduzir os esforços de desenvolvimento ao prover rotinas de discr
 e capacidade de execução em paralelo de soluções de equações diferenciais. A partir
 de \textit{solvers} disponíveis no \textit{OpenFOAM} foi implementado um \textit{solver}
 multi-física batizado \textit{General Nuclear Foam - GeN-Foam} \cite{Fiorina2015}.
-Este \textit{solver}
+Esse \textit{solver}
 possui a capacidade de resolver escoamentos compressíveis ou incompressíveis baseados
-no modelo de turbulência padrão $\kappa-\epsilon$, sendo também capaz de resolver
+no modelo de turbulência $\kappa-\epsilon$, sendo também capaz de resolver
 problemas em malhas menos refinadas utilizando o modelo de meios porosos. Tem, ainda,
 implementado um \textit{sub-solver} de termomecânica e outro \textit{sub-solver} para
 a solução da equação de difusão para multi-grupos. Este último, provê ainda a capacidade
@@ -391,7 +371,7 @@ de choque geradas pelo código Serpent \cite{Serpent2013}. Os autores classifica
 o acoplamento implementado como semi-implícito e como são usadas malhas diferentes para
 os modelos termo-hidráulico, termomecânicos e de difusão de nêutrons, é feito um mapeamento
 consistente entre as três malhas através do uso de um algoritmo de peso, célula e volume
-implementado pelo próprio \textit{OpenFOAM} \cite{OpenFOAM2015}. A aplicação inicial deste
+implementado pelo próprio \textit{OpenFOAM} \cite{OpenFOAM2015}. A aplicação inicial desse
 \textit{solver} foi na simulação do reator rápido a sódio europeu (ESFR). Mesmo com as
 simplificações no modelo, as respostas numéricas para as simulações de dois transientes
 testados ficaram próximas das obtidas pelas simulações de referências feitas com o
@@ -399,7 +379,7 @@ código TRACE.
 
 Uma das razões do uso do acoplamento, cujo objetivo é obter dados mais precisos e realistas, é na 
 análise de segurança de reatores. Em projetos de reatores inovadores já são feitos cálculos de multi-física para 
-análise de acidentes. No trabalho de \cite{Lazaro2013}, um reator de IV geração refrigerado a sódio 
+análise de acidentes. No trabalho de Lázaro \cite{Lazaro2013}, um reator de IV geração refrigerado a sódio 
 é simulado de forma acoplada. Códigos já usados na análise de reatores resfriados a água leve são adaptados 
 para o uso em reatores de nêutrons rápidos resfriados a sódio. Um ponto-chave, segundo o autor, é ser capaz 
 de simular os fenômenos presentes na operação de reatores em três dimensões. Isso se justifica, ainda nas 
@@ -419,34 +399,36 @@ do combustível, densidade do moderador e velocidade do escoamento em um reator 
 \cite{Larsson2012}. Este tipo de ferramenta visa captar as flutuações em parâmetros
 essenciais do funcionamento do reator e, então, encontrar eventuais anomalias. A validação
 foi feita com dados de um reator PWR comercial e simulações feitas com os códigos
-RELAP e PARCS acoplados bem como com o \textit{CFD} comercial Fluent. É importante ressaltar que
-estas simulações foram feitas para um modelo tridimensional e para cada nó em cada canal,
-ou seja, um acoplamento um para um entre neutrônica e termo-hidráulica.
+RELAP e PARCS acoplados bem com o \textit{CFD} comercial \textit{Fluent}. Estas simulações
+foram feitas para um modelo tridimensional sem mapeamento, ou seja, ambos os códigos
+utilizaram malhas idênticas, num acoplamento um para um entre neutrônica e termo-hidráulica.
 
 Ainda na mesma linha da utilização do \textit{OpenFOAM} como plataforma única para neutrônica e
 termo-hidráulica, Klaus Jareteg estendeu seu trabalho à simulação de elementos combustíveis de
 reatores do tipo PWR \cite{Jareteg2015}. Neste trabalho, é proposto um mapeamento entre os valores
-calculados de seções de choque - mais uma vez utilizando-se do \textit{software Serpent2} - gerados
+calculados de seções de choque - mais uma vez utilizando-se do \textit{software Serpent} - gerados
 para uma região geométrica para células da malha. Isso se dá pelo uso de um \textit{script} em
 linguagem \textit{Python} que faz o mapeamento uma única vez na inicialização do problema e
 a partir daí utiliza os dados armazenados. Este sistema acoplado utiliza-se de forma elegante da
 capacidade fornecida pelo próprio \textit{OpenFOAM} para decomposição de malhas e execução em paralelo.
 Com isso, o sistema pode ser escalado de acordo com o poder computacional disponível de forma
 absolutamente transparente. Pode-se dizer que este sistema é a evolução quase natural do trabalho
-apresentado pelo autor na sua tese de doutorado \cite{Jareteg2012}. Cabe também ressaltar que os trabalhos
-do grupo da Universidade de Gotemburgo focam no uso de uma malha fina de modo a resolver o sistema
-acoplado com detalhes, assim como o sistema sem mapeamento proposto nesta tese.
+apresentado pelo autor na sua tese de doutorado \cite{Jareteg2012}.
+
+%Cabe também ressaltar que os trabalhos
+%do grupo da Universidade de Gotemburgo focam no uso de uma malha fina de modo a resolver o sistema
+%acoplado com detalhes, assim como o sistema sem mapeamento proposto nesta tese.
 
 
 A importância dada aos cálculos de neutrônica e termo-hidráulica acoplados
 é ratificada no trabalho de Jaakko Leppänen sobre o código de Monte Carlo
-Serpent \cite{Leppanen2012}. Até pouco tempo atrás, a exigência computacional dos códigos
+\textit{Serpent} \cite{Leppanen2012}. Até pouco tempo, a exigência computacional dos códigos
 de Monte Carlo impossibilitavam seu uso em cálculos acoplados e iterativos. O aumento
 quase exponencial na capacidade computacional jogou por terra tais restrições.
-Com os códigos de Monte Carlo executando mais rapidamente - em especial o código Serpent2 -
+Com os códigos de Monte Carlo executando mais rapidamente - em especial o código \textit{Serpent-2} -
 o autor optou por oferecer uma interface acoplável por padrão neste \textit{software}.
 No trabalho em questão, é implementada uma interface multi-física para acoplamento com um
-código termo-hidráulico externo. Atualmente, o Serpent2 conta com uma interface para utilização
+código termo-hidráulico externo. Atualmente, o \textit{Serpent-2} conta com uma interface para utilização
 de malhas não-estruturadas no formato \textit{OpenFOAM}.
 
 A variedade de formas de acoplamento parece não parar de crescer. Miriam Vazquez
@@ -522,7 +504,9 @@ complexa, que envolve cálculo de potência, queima, e utiliza um mapeamento rob
 a representação nodal da maioria dos programas de cálculo termo-hidráulico e a geometria
 do código MCNP. Também faz uso de \textit{scripts} em linguagem \textit{Python} para
 tratamento do mapeamento além de estruturas de dados próprias dessa linguagem de programação
-para conseguir inserções e remoções em memórias a custo $O(1)$ \cite[Seção~9.2]{Graham1994}.
+para conseguir inserções e remoções em memórias a custo $O(1)$
+\footnote{Sobre a notação $O(n)$, amplamente utilizada em Ciência da Computação, uma
+  referência é o livro Concrete Mathematics \cite[Seção~9.2]{Graham1994}}.
 % Talvez eu devesse citar o livro do Cormen nessa citação big O
 Os primeiros testes do uso do SMITHERS foram feitos para reatores do tipo BWR e
 PWR.
@@ -536,17 +520,16 @@ merecem menções não apenas pela forma como estão relacionados com o trabalho
 potencial em caminhos de desenvolvimento de sistemas acoplados.
 
 Desta lista mencionada, o primeiro trabalho consiste em um sistema neutrônico e termo-hidráulico
-acoplado \cite{Bennett2016}. Dois de seus autores são os mesmos do trabalho considerado referência em termos
-de acoplamento neutrônico e termo-hidráulico \cite{Ivanov2007}. Neste acoplamento, são usados um código
-de Monte Carlo (MCNP6) para os cálculos neutrônicos e um código de sub-canais (CTF). Apesar de não apresentarem
+acoplado \cite{Bennett2016}. Neste acoplamento, são usados um código
+de Monte Carlo (\textit{MCNP6}) para os cálculos neutrônicos e um código de sub-canais (\textit{CTF}). Apesar de não apresentarem
 inovações grandes em relações a acoplamentos anteriores, há duas coisas para as quais deve ser chamada a atenção.
-O MCNP6 é capaz de gerar seções de choque \textit{on-the-fly}, uma característica desenvolvida com objetivo
+O \textit{MCNP6} é capaz de gerar seções de choque \textit{on-the-fly}, uma característica desenvolvida com objetivo
 de oferecer suporte ao acoplamento termo-hidráulico. Há alguns anos, o uso de códigos de Monte Carlo para
-acoplamento era impensável. Entretanto, nove anos depois do trabalho referência em acoplamento, não só temos
-diversos exemplos do uso de códigos de Monte Carlo acoplados, como dois dos principais deles (MCNP e Serpent)
+acoplamento era impensável. Entretanto, nove anos depois do principal trabalho referência em acoplamento \cite{Ivanov2007}, não só temos
+diversos exemplos do uso de códigos de Monte Carlo acoplados, como dois dos principais deles (\textit{MCNP} e \textit{Serpent})
 já possuem por definição de projeto, formas de serem acoplados. A segunda razão que vale mencionar neste
-trabalho, pode passar despercebida: como já mencionado, são nove anos entre dois trabalhos no mesmo tempo.
-Isso serve como um bom exemplo do que é hoje a execução de cálculos acoplados e a insistência em
+trabalho, pode passar despercebida: como já mencionado, são nove anos entre dois trabalhos no mesmo tema.
+Isso serve como exemplo do que é hoje a execução de cálculos acoplados e a insistência em
 investigar formas de fazê-la cada vez mais robusta. A multi-física é hoje uma realidade.
 
 Outro trabalho que merece uma atenção especial é o de Bryan Herman \cite{Herman2015}. Neste caso, novamente
@@ -557,20 +540,20 @@ convergência das fontes de fissão, de modo a acelerar a obtenção do resultad
 diminui-se o gasto de memória. Apesar da inovação na forma de acelerar os cálculos, a razão para uma menção
 especial deste trabalho não está no conteúdo técnico, mas no \textit{software} de Monte Carlo em si.
 Neste trabalho é usado o código \textit{OpenMC} \cite{Romano2013}. Desenvolvido no \textit{Massachusetts
-  Institute of Technology} (MIT), é um código aberto. Oferecido com uma licença específica do próprio
-MIT, é garantido, sem custo, a qualquer pessoa a obter o código-fonte desse \textit{software} e sua
-documentação associada, o usá-lo sem restrição e a permitir que as pessoas a quem seja fornecida
-copia, os mesmos direitos. E é este o ponto a que se deseja dar ênfase: diferentemente da maioria
-dos \textit{softwares} usados e disponíveis na indústria nuclear - leia-se indústria também englobando
-as pesquisas científicas - este é completamente aberto e livre. Um sinal de que a mudança de paradigmas na
+  Institute of Technology} (MIT), é um código aberto oferecido com uma licença específica do próprio MIT.
+Esta licença garante a qualquer pessoa obter o código-fonte desse \textit{software} e sua
+documentação associada sem custo. É também garantido o direito de usá-lo sem restrição.
+E é este o ponto em que se deseja dar ênfase: diferentemente da maioria
+dos \textit{softwares} usados e disponíveis na indústria nuclear (leia-se indústria também englobando a academia)
+este é completamente aberto e livre. Um sinal de que a mudança de paradigmas na
 forma como se produz e utiliza \textit{software} também chegou à área nuclear.
 
 Feita a apresentação anterior, o terceiro trabalho que merece ênfase, já não pode ser considerado
 especificamente um sistema acoplado. O sistema \textit{Cyclus} \cite{Huff2016} é certamente muito mais
 do que isso. Este sistema é um \textit{framework} completo de simulação do ciclo do combustível nuclear.
-Seu desenvolvimento não aplica do desenvolvimento de \textit{software} aberto de forma incidental, pelo
-contrário, o seu objetivo é ser um sistema aberto, flexível, robusto e de uso geral, ao contrário das
-soluções existentes baseadas em sistemas fechados definidos para conjuntos de reatores específicos.
+Seu desenvolvimento é, desde o projeto inicial, feito em forma de \textit{software} livre. Seu objetivo é ser um sistema aberto,
+flexível, robusto e de uso geral, ao contrário das soluções existentes baseadas em sistemas fechados
+definidos para conjuntos de reatores específicos.
 No \textit{paper} citado, os autores explicam os conceitos do projeto e desenvolvimento do \textit{Cyclus}, com
 foco no uso de ferramentas abertas e desenvolvimento colaborativo e comunitário. Nesse sentido, um sistema
 como o \textit{Cyclus} é, no mínimo, uma inspiração para o desenvolvimento de outros sistemas ou códigos
@@ -579,7 +562,7 @@ desta tese: trazer as técnicas de desenvolvimento aberto, mas também oferecer 
 um sistema acoplado de cálculos de reatores - a todos e quaisquer interessados em aprender, melhorar
 e contribuir com seu desenvolvimento.
 
-Concluindo, nesse capítulo tentou-se dar uma visão geral sobre o que é \textit{software} livre e do
+Concluindo, nesse capítulo tentou-se dar uma visão geral do que é \textit{software} livre e do
 seu uso nas diversas áreas do conhecimento humano, inclusive em situações de aplicações
 críticas e na indústria nuclear. Chamou-se atenção para a importância que vêm ganhando as
 técnicas \textit{CFD} na indústria nuclear e, sobretudo, seu recente uso na termo-hidráulica acoplada aos cálculos
