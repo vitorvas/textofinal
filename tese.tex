@@ -55,14 +55,31 @@
 \usepackage{multirow}           % Para uso de tabelas complexas
 \usepackage[table]{xcolor}      % Para uso de cores nas tabelas
 \usepackage{listings}           % Permite uso de controle de listagem de código e algoritmos
+
+\renewcommand{\lstlistingname}{Listagem} % Modifica para escrever listagem em português
+
 \usepackage{svg}                % Permite usar imagens vetorias formato svg
+\usepackage{algorithm}          % Para incluir pseudo código
+\usepackage{algorithmicx}       % Para incluir pseudo código
+\usepackage[noend]{algpseudocode} % Não sei porque o algoritm precisa disso... 
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
 
 % Configura o listings
 \lstset{
-  basicstyle=\ttfamily,
-  columns=fixed,
-  fontadjust=true,
-  basewidth=0.5em
+  language=C++,
+  %  basicstyle=\footnotesize,\small,...\tiny
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\color{mygreen},
+  numbers=left,
+  stepnumber=1,
+  showstringspaces=false,
+  tabsize=2,
+  breaklines=true,
+  breakatwhitespace=false
+ columns=fixed,
+ fontadjust=true,
+ basewidth=0.5em
 }
 
 %\usepackage[brazilian]{babel}   % Para colocar as datas em português - ESTAVA DANDO WARNING
@@ -112,7 +129,6 @@ abordagem com \textit{software} livre}
 %\data{30 de agosto de 2013}
 \data{\today}
 \orientador{Cláubia Pereira Bezerra Lima}
-%\coorientador{Amir Zacarias Mesquita}
 \coorientador{André Augusto Campagnole dos Santos}
 \instituicao{%
   Universidade Federal de Minas Gerais -- UFMG
@@ -432,6 +448,19 @@ abordagem com \textit{software} livre}
 \listoftables*
 \cleardoublepage
 % ---
+
+
+% ---
+% inserir lista de listagens - NAO EXISTE NO ABNTEX
+% ---
+%\pdfbookmark[0]{\listlistingname}{lof}
+%\listoflistings*
+%\cleardoublepage
+% ---
+
+
+
+
 
 % ---
 % inserir lista de abreviaturas e siglas

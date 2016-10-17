@@ -4,7 +4,6 @@
 \chapter{Aplicação}
 \label{chap:aplicacao}
 
-
 \section{Modelo}
 
 %\begin{figure}[htb]
@@ -22,7 +21,10 @@ Descrever o trabalho da Patrícia citando \cite{Reis2015}.
 % Usa o package {multirow}
 
 % Tabela para os valores
-\begin{tabular}{ l | c | r}
+\begin{table}[htb]
+  \caption[Coeficientes da Equação de Difusão.]{Coeficientes da Equação de Difusão.}
+  \label{tab-coeff-dif}
+  \begin{tabular}{ l | c | r}
   \hline
   \multicolumn{3}{ c }{Coeficientes Mnemônicos} \\
   \hline
@@ -36,9 +38,12 @@ Descrever o trabalho da Patrícia citando \cite{Reis2015}.
 & Neutrons per fission * Fission cross-section & $\nu \Sigma F2$ \\
 \hline
 \end{tabular}
+\end{table}
 
-
-\begin{tabular}{r l l l l}
+\begin{table}[htb]
+  \caption[Temperaturas para combustível.]{Temperaturas para o combustível}.
+  \label{tab-temp-fuel}
+  \begin{tabular}{r l l l l}
   \multicolumn{5}{c}{Fuel} \\
   \hline
   Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
@@ -53,35 +58,44 @@ Descrever o trabalho da Patrícia citando \cite{Reis2015}.
   $\nu \Sigma F2$ & & & & \\
   \hline
 \end{tabular}
+\end{table}
 
-\begin{tabular}{r l l l l}
-  \multicolumn{5}{c}{Cladding} \\
-  \hline
-  Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
-  \hline
-  $D1$ & & & & \\
-  $\Sigma A1$ & & & & \\
-  $\Sigma S1.2$ & & & & \\
-  $\nu \Sigma F1$ & & & & \\
-  \hline
-  $D2$ & & & & \\
-  $\Sigma A2$ & & & & \\
-  $\nu \Sigma F2$ & & & & \\
-  \hline
-\end{tabular}
+\begin{table}[htb]
+  \caption[Temperaturas para o revestimento.]{Temperaturas para o revestimento}.
+  \label{tab-temp-cladding}
+  \begin{tabular}{r l l l l}
+    \multicolumn{5}{c}{Cladding} \\
+    \hline
+    Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
+    \hline
+    $D1$ & & & & \\
+    $\Sigma A1$ & & & & \\
+    $\Sigma S1.2$ & & & & \\
+    $\nu \Sigma F1$ & & & & \\
+    \hline
+    $D2$ & & & & \\
+    $\Sigma A2$ & & & & \\
+    $\nu \Sigma F2$ & & & & \\
+    \hline
+  \end{tabular}
+\end{table}
 
-\begin{tabular}{r l l l l}
-  \multicolumn{5}{c}{Coolant} \\
-  \hline
-  Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
-  \hline
-  $D1$ & & & & \\
-  $\Sigma A1$ & & & & \\
-  $\Sigma S1.2$ & & & & \\
-  $\nu \Sigma F1$ & & & & \\
-  \hline
-  $D2$ & & & & \\
-  $\Sigma A2$ & & & & \\
-  $\nu \Sigma F2$ & & & & \\
-  \hline
-\end{tabular}
+\begin{table}[htb]
+  \caption[Temperaturas para o refrigerante.]{Temperaturas para o refrigerante}.
+  \label{tab-temp-coolant}
+  \begin{tabular}{r l l l l}
+    \multicolumn{5}{c}{Coolant} \\
+    \hline
+    Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
+    \hline
+    $D1$ & & & & \\
+    $\Sigma A1$ & & & & \\
+    $\Sigma S1.2$ & & & & \\
+    $\nu \Sigma F1$ & & & & \\
+    \hline
+    $D2$ & & & & \\
+    $\Sigma A2$ & & & & \\
+    $\nu \Sigma F2$ & & & & \\
+    \hline
+  \end{tabular}
+\end{table}
