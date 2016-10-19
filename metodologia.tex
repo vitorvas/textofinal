@@ -357,6 +357,7 @@ forma acoplada.
 
 
 \section{Acoplamento}
+\label{sec:acoplamento}
 
 Sabe-se, neste ponto, que os dois programas, \textit{milonga} e \textit{OpenFOAM} funcionam
 independentemente e utilizam uma parte da memória do computador de forma compartilhada.
@@ -366,7 +367,7 @@ termo-hidráulica.
 Como funcionam separadamente, é necessário estabelecer, além dos dados a serem compartilhados
 como ambos os códigos irão se comportar. A opção utilizada - e aqui cabe um comentário: há diversas
 formas de definir as bases de execução dos dois programas. Neste trabalho, optou-se por utilizar,
-dentre as propostas, a mais simples. Esta solução consiste em executar o milonga, que aguarda
+dentre as propostas, a mais simples. Esta solução consiste em executar o \textit{milonga}, que aguarda
 o a inicialização do \textit{OpenFOAM}. Os programas podem ser lançados em diferentes janelas ou
 na mesma janela em \textit{background}, já que o funcionamento da memória compartilhada é independente,
 inclusive, do usuário que lançou o programa.
@@ -387,16 +388,41 @@ serão descritos por meio de pseudo-código.
 A figura \ref{fig:algo_th} apresenta o algoritmo de acoplamento para o \textit{OpenFOAM}. Nela é
 possível notar três principais divisões:
 
-\begin{itemize}
-  \item \textbf{Inicialização:} 
-  \end{itemize}
-
 \begin{figure}[htb]
-  \caption{Algoritmo termo-hidráulica.}
+  \caption{Algoritmo termo-hidráulica. As expressões em azul escuro mostram as instruções relativas
+    ao uso de memória compartilhada, enquanto em vermelho estão as instruções relativas ao
+  controle de acesso aos dados (semáforos).}
   \centering\includegraphics[scale=0.5]{figuras/algoritmo_openfoam.png}
   \label{fig:algo_th}
 %  \legend{Fonte: autor}
 \end{figure}
+
+\begin{itemize}
+\item \textbf{Inicialização:} Na inicialização do \textit{OpenFOAM}, é lido o valor inicial da potência para
+  a simulação caso o arquivo de definição de potência esteja disponível. Caso contrário, a potência é inicializado
+  com zero. Os espaços em memória compartilhada são verificados. Caso não estejam corretamente alocados, o sistema
+  assume que o sistema executará de forma não-acoplada. Cabe lembrar, como dito no início da seção \ref{sec:acoplamento},
+  o \textit{milonga} é iniciado antes do \textit{OpenFOAM} e, conforme será descrito no algoritmo da neutrônica, é
+  ele o encarregado da alocação da memória compartilhada.
+
+\item \textbf{Laço original:} Este é o laço do \textit{solver} original na sua execução do algoritmo SIMPLE. Este
+  trecho não foi alterado em relação ao original e nesta etapa são resolvidas as respectivas equações
+  para as regiões fluidas e sólidas. Ao fim
+  deste laço, os valores de temperatura de cada célula de cada região estão calculados e disponíveis.
+
+\item \textbf{Acoplamento com a neutrônica:} Caso seja o momento de troca de dados (a implementação atual
+  executa uma chamada acoplada para cada 100 iterações da termo-hidráulica), para as regiões fluidas são copiados os valores
+  de temperaturas para a memória compartilhada nas posições relativas às células das regiões fluidas. Em seguida, o mesmo
+  é feito para as regiões sólidas. Com os valores calculados disponíveis na memória compartilhada, o \textit{OpenFOAM}
+  avisa (post) no semáforo relativo à termo-hidráulica (th) que a memória compartilhada está liberada para uso. No próximo
+  passo o \textit{OpenFOAM} lê o semáforo da neutrônica que, neste instante, indica que o \textit{OpenFOAM} aguarde. Quando
+  receber o aviso (post) de liberação, o \textit{OpenFOAM} continua e, apenas para a região nomeada como combustível (fuel),
+  lê os dados de potência disponíveis na memória compartilhada para sua estrutura de dados local, um campo escalar volumétrico
+  de potências.
+\end{itemize}
+
+Ao fim da execução da etapa relativa ao acoplamento, o controle de execução volta ao laço original. A inicialização é
+feita uma única vez para todos os passos de simulação.
 
 \subsection{Algoritmo neutrônica}
 
@@ -407,6 +433,11 @@ possível notar três principais divisões:
 %  \legend{Fonte: autor}
 \end{figure}
 
+
+
+
+
+% -------------------------------------------------------------------------------------------------------
 \subsection{Implementação: uma olhada no código-fonte.}
 \label{subsec:detth}
 Na seção \ref{sec:th} foram apresentadas as bases teóricas do problema termo-hidráulico.
