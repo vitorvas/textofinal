@@ -247,11 +247,14 @@ intermediada por um sistema de troca de mensagens como PVM \cite{Geist94} ou MPI
 módulos de neutrônica e termo-hidráulica têm capacidade separada de execução e resposta, o que permite uma execução 
 mais eficiente do ponto de vista computacional.
 \item \textbf{Sobreposição espacial de malhas}: pode ser fixo, quando um canal termo-hidráulico representa um canal neutrônico, 
-ou flexível, quando são usados ou especificados esquemas de mapeamento. Um esquema avançado de mapeamento 
-e interpolação de malhas \cite{Beaudoin2008} é implementado em alguns dos modernos códigos de \textit{CFD}.
-O uso de esquemas de mapeamento de malhas trazem implicações, tais como arredondamento e truncamentos no pareamento
+  ou flexível, quando são usados ou especificados esquemas de mapeamento. Um esquema simples de mapeamento foi proposto
+  pelo autor desta tese \cite{Silva2015} apenas para malhas estruturadas. Esquemas de mais avançados de mapeamento 
+e interpolação de malhas \cite{Beaudoin2008} são implementados em alguns dos modernos códigos de \textit{CFD}.
+Há, na literatura, algumas soluções elegantes para o mapeamento entre malhas em problemas de acoplamento neutrônico
+e termo-hidráulico \cite{Jareteg2015, Richard2015, Schmidt2015}. O uso de esquemas de mapeamento de malhas trazem
+implicações, tais como arredondamento e truncamentos no pareamento
 entre céluas, além de custo computacional relativo a percorrer as malhas ou armazenamento de estruturas de mapeamento
-em memória.
+em memória. 
 \item \textbf{Algoritmos de controle de \textit{time-step}}: os transientes neutrônicos são geralmente muito mais rápidos que 
 os transientes termo-hidráulicos. A utilização de um único \textit{time-step} longo pode levar à não detecção de transientes 
 rápidos e no caso oposto ao desperdício de recursos computacionais ao se simular eventos indistinguíveis repetidamente.

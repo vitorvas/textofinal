@@ -123,6 +123,10 @@ como por exemplo, queda de desempenho dos sistemas, em especial quando há um n�
 de programas acessando a memória compartilhada. Entretanto, a análise da possível degradação
 de desempenho causada por controle de concorrência entre programas não é escopo desta tese.
 
+Mesmo com as considerações acima apresentadas, o uso de arquivos externos para acoplamento
+\cite{Hummel2016} tem tempos de acesso ordens de grandeza acima dos tempos de acesso
+através de memória compartilhada \cite{Theler2013}.
+
 \subsection{\textit{Software} livre}
 \label{subsec:sl}
 
@@ -145,7 +149,7 @@ ser controlado por um \textit{script} de execução.
 Apesar de soar rudimentar, está é a forma de acoplamento mais comumente empregada.
 Mesmo com severo comprometimento de desempenho se comparada ao compartilhamento de
 memória, técnica usada nesta tese, muitas vezes essa é a única forma de acoplamento
-quando o código-fonte não está disponível \cite{Hummel2016}.
+quando o código-fonte não está disponível \cite{Ivanov2007}.
 
 \subsection{Discretização do domínio}
 \label{subsec:dd}
@@ -375,7 +379,7 @@ inclusive, do usuário que lançou o programa.
 As próximas seções apresentam o algoritmo de acoplagem para cada código separadamente.
 
 
-
+% -------------------------------------------------------------------------------------------------------------
 \subsection{Algoritmo termo-hidráulica}
 \label{subsec:th}
 
@@ -424,18 +428,62 @@ possível notar três principais divisões:
 Ao fim da execução da etapa relativa ao acoplamento, o controle de execução volta ao laço original. A inicialização é
 feita uma única vez para todos os passos de simulação.
 
+% -------------------------------------------------------------------------------------------------------------
 \subsection{Algoritmo neutrônica}
 
+No caso da neutrônica, não há necessidade de alterações no código-fonte do \textit{milonga}. Absolutamente
+todo o controle do algoritmo de acoplamento é feito no arquivo de entrada. Na versão do
+\textit{milonga} utilizada (0.4.65) as opções de utilização iterativa ainda são limitadas. Estruturas
+de repetição utilizando condicionais não estão disponíveis. Com isso, optou-se por definir um laço com número
+de execuções fixa. A partir dessa restrição, foi desenvolvido o algoritmo de execução. A figura
+\ref{fig:algo_neutronica} mostra o algoritmo e suas etapas. Cabe ressaltar que, como mencionado anteriormente,
+o \textit{milonga} é iniciado \textbf{antes} do \textit{OpenFOAM}.
+
 \begin{figure}[htb]
-  \caption{Algoritmo neutrônica.}
+  \caption{Algoritmo neutrônica. As expressões em azul escuro mostram as instru-
+ções relativas ao uso de memória compartilhada, enquanto em vermelho estão
+as instruções relativas ao controle de acesso aos dados (semáforos)}
   \centering\includegraphics[scale=0.5]{figuras/algoritmos_milonga.png}
   \label{fig:algo_neutronica}
-%  \legend{Fonte: autor}
+  %  \legend{Fonte: autor}
 \end{figure}
 
+\begin{itemize}
+\item \textbf{Inicialização:} É definido o número de iterações a serem executadas - obrigatoriamente maior do que o número
+  de vezes que o \textit{OpenFOAM} fará chamadas ao \textit{milonga}. Caso seja o primeiro passo, o \textit{milonga}
+  lê a malha, estabelece a formulação matemática, o esquema de discretização e o número de grupos de energia, exatamente
+  como apresentado na figura \ref{fig:inputmilonga}. A seguir, através das primitivas de utilização de memória compartilhada
+  presentes no \textit{milonga}, são criadas areas em memória compartilhada para armazenar temperaturas e potência. Os tamanhos
+  destas áreas são obtidos do tamanho da malha carregada anteriormente. A inicialização, como é de se esperar, é feita uma única
+  vez durante toda a simulação acoplada.
+\end{itemize}
 
+As instruções referentes ao acoplamento em si, ou seja, acesso à memória compartilhada e semáforos
+(caixas hachuradas na figura \ref{fig:algo_neutronica}) estão localizadas dentro do laço de execução e serão
+descritas na explicação deste.
 
+\begin{itemize}
+\item \textbf{Laço de execução:}
 
+\begin{itemize}
+\item \textbf{Acoplamento termo-hidráulico:} A execução dos cálculos do neutrônicos se inicia com a leitura do semáforo da
+  termo-hidráulica, o que faz com que o \textit{milonga} pare, aguardando os resultados dos cálculos termo-hidráulicos.
+  Quando recebe a sinalização de que é possível prosseguir, o \textit{milonga} armazena em sua estrutura interna os dados
+  de temperatura provenientes da termo-hidráulica disponíveis na memória compartilhada.
+\item Cálculo neutrônico: São lidas as funções que armazenam seções de choque e todos os coeficientes previamente calculados para quatro
+  diferentes temperaturas. Assim, para todos os materiais e para todos os grupos são atribuídos os coeficientes de difusão,
+  seções de choque de absorção e seções de choque de espalhamento para cada célula, em função da temperatura da célula.
+  Em seguida, são atribuídas as condições de contorno do problema neutrônico e iniciada a solução do problema.
+\item \textbf{Acoplamento termo-hidráulico:} Antes do fim do laço, com o problema neutrônico resolvido, fluxos e potência
+  calculados, os valores de potência são escritos na memória compartilhada e então o \textit{milonga} avisa (post) no
+  semáforo relativo à neutrônica (neut) que a memória compartilhada está disponível para uso.
+
+\end{itemize}
+\end{itemize}
+
+Ao fim da simulação termo-hidráulica, o \textit{milonga} permanece parado. Para finalizá-lo deve ser enviado um sinal de
+cancelamento de execução via teclado. Todo o procedimento de acoplamento da neutrônica é feito por meio de um arquivo
+de entrada, sem necessidade de alteração do código-fonte e compilação, sempre interpretado em tempo de execução.
 
 % -------------------------------------------------------------------------------------------------------
 \subsection{Implementação: uma olhada no código-fonte.}
@@ -572,6 +620,52 @@ por memória compartilhada.
 ESCREVER
 
 ***
+
+\begin{lstlisting}[caption={Fragmento do código-fonte da criação das estruturas de memória compartilhada.}\label{lst:createshm}]
+// Three C standard arrays are created to shared data with milonga
+double *shmTarray = NULL;
+double *shmQarray = NULL;
+
+void *shmT;
+void *shmQ;
+
+int shmTfile = 0;
+int shmQfile = 0;
+
+// Posix C semaphores
+sem_t *calcOf;
+sem_t *calcMil;
+
+// Posix structures initialization
+calcOf = sem_open("calcOf", O_CREAT, 0666);
+calcMil = sem_open("calcMil", O_CREAT, 0666);
+
+if(Pstream::master())
+{
+// Semaphores and shared memory files are tested at this point.
+// If milonga is not running, OpenFOAM runs uncoupled.
+    shmTfile = shm_open("temperaturas", O_RDWR, 0666);
+    shmQfile = shm_open("potencias", O_RDWR, 0666);
+    
+    if(shmTfile == -1 || shmQfile == -1) coupling = false; // Error finding shared memory
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Fragmento do código-fonte da verificação das estruturas de memória compartilhada.}\label{lst:checkshm}]
+if(Pstream::master())
+{
+// After reading the shared memory files, they must be mapped to data
+    shmT = mmap(NULL, totalNumberOfCells*sizeof(double), PROT_WRITE, MAP_SHARED, shmTfile, 0);
+    shmQ = mmap(NULL, totalNumberOfCells*sizeof(double), PROT_WRITE, MAP_SHARED, shmQfile, 0);
+
+// Check if all files were properly mapped
+if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Error mapping shared memory
+
+// Make a C++ cast
+    shmTarray = reinterpret_cast<double*>(shmT);
+    shmQarray = reinterpret_cast<double*>(shmQ);
+}
+\end{lstlisting}
 
 % ------------------------------------------------------------------------------------------------
 
