@@ -47,11 +47,18 @@ características bem como os parâmetros utilizados nas simulações neutrônica
 % Ou coloco logo as seções de choque antes de tudo?
 
 Nesta seção é descrito o modelo físico e numérico utilizado nos testes do sistema acoplado.
+De modo a verificar o efeito das variações de temperatura calculados pela termo-hidráulica
+no fluxo neutrônico e, por consequência, no perfil de potência, é necessário ter seções
+de choque compatíveis com o problema. A Figura \ref{fig:modelo_exploded} apresenta a malha
+utilizada por ambos os códigos indicando cada região. Cada uma das regiões define um
+material diferente, no caso: combustível, revestimento e água. A próxima seção descreve
+a metodologia utilizada para geração de seções de choque. 
 
 \begin{figure}[htb]
-  \caption{Discretização do modelo: regiões e materiais.}
-  \centering\includegraphics[scale=0.5]{figuras/regioes_edges_com_legenda_ingles.png}
-  \label{fig:modelo_exploded}
+  \caption{Modelo: regiões e materiais. Em vermelho, combustível. Em amarelo, revestimento.
+  em ciano, o refrigerante/moderador}
+  \centering\includegraphics[scale=0.5]{figuras/regioes_surface2.png}
+  \label{fig:regions}
 %  \legend{Fonte: autor}
 \end{figure}
 
@@ -60,9 +67,6 @@ Nesta seção é descrito o modelo físico e numérico utilizado nos testes do s
 A fim de verificar o impacto das variações de temperatura calculadas pelo \textit{OpenFOAM} no fluxo
 neutrônico e, portanto, na potência volumétrica, foram geradas seções de choque correspondentes
 ao modelo utilizado.
-
-para um modelo bidimensional
-com propriedades equivalentes ao modelo de malha tridimensional. 
 
 % Não tem figura, ela fez anel anel anel
 %Na figura \ref{fig:modelwims}
@@ -176,4 +180,71 @@ funções de uma variável dependentes da temperatura. Como o milonga tem inform
 das células em relação à malha, a temperatura de cada célula é argumento da
 função de uma variável dependente da temperatura. Se a temperatura não está
 exatamente tabulada, o \textit{milonga} provê interpolação linear por padrão.
+
+\section{Modelo físico e numérico}
+\label{sec:mod_fis_num}
+
+O modelo escolhido, de acordo com as limitações em termos
+de \textit{software} apresentadas na início deste capítulo, representa um
+elemento combustível do reator TRIGA IPR-R1, ainda operacional, localizado
+no CDTN. O combustível do TRIGA possui uma grande sensibilidade na sua
+reatividade com a temperatura devido à presença do hidreto de zircônio
+em sua constituição. Essa característica intrínseca permite que pequenas
+variações nas suas temperaturas levem a variações perceptíveis na neutrônica,
+o que torna este modelo interessante para avaliação do acoplamento.
+
+\begin{figure}[htb]
+  \caption{Discretização do modelo: regiões e materiais.}
+  \centering\includegraphics[scale=0.5]{figuras/regioes_edges_com_legenda_ingles.png}
+  \label{fig:modelo_exploded}
+%  \legend{Fonte: autor}
+\end{figure}
+
+O modelo consiste num combustível com revestimento de alumínio sem
+o \textit{gap}, de modo que o diâmetro do combustível é mantido como no
+combustível de referência e o diâmetro do \textit{gap} é estendido para
+ocupar este espaço. Além disso, o modelo considera apenas o comprimento
+ativo do combustível, sendo como um combustível mais curto. O volume
+de água ao redor do combustível foi modelada considerando a razão entre
+material físsil e moderador do núcleo completo do reator. Nenhuma outra
+estrutura sólida, como discos de samário ou elementos estruturais, é
+respresentada no modelo, sendo este idêntico axialmente em qualquer
+altura, como observável na Figura \ref{fig:modelo_exploded}.
+
+\begin{table}[htb]
+\centering
+  \caption[Medidas do modelo.]{Medidas do modelo.}
+  \label{tab:size_model}
+  \begin{tabular}{r l}
+    Estrutura & $[cm]$ \\
+    \hline
+    Raio do combustível & 1.78 \\
+    Raio externo do revestimento & 1.865 \\
+    Arestas do refrigerante/moderador & 4.57 \\
+    \hline
+    Altura axial & 35.0 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+A malha gerada para o modelo foi construída por extrusão. Isso significa que
+Os elementos de malha foram gerados para uma superfície e a dimensão espacial
+foi dada por um valor de comprimento além do número de camadas a serem geradas.
+Foram geradas 35 camadas (cada uma com um $cm$), sendo o tamanho relativo
+mínimo para elemento de malha de 0,5 e máximo de 4.0. Esses valores constrolam
+o quanto o elemento próximo ao ponto com tal tamanho relativo crescerá durante
+a geração da malha. A razão de crescimento entre o refinamento do revestimento
+e as áreas restantes foi estabelecido em 1,2. Com isso, foi possível conseguir
+elementos suficientemente pequenos para realizar os cálculos na região
+do revestimento e ainda obter uma malha com tamanho tratável pelo \textit{milonga}.
+A malha gerada tem 346.675 elementos.
+
+As dimensões da malha do modelo geram implicações nos resultados dos cálculos, em
+especial a pequena granularidade axial (35 camadas). Entretanto, mesmo com tais
+limitações, impostas pelo \textit{milonga}, é possível utilizá-la para verificar
+as diferenças entre um sistema não acoplado e outro acoplado.
+
+
+\subsection{Condições de contorno e parâmetros numéricos da termo-hidráulica}
+\label{subsec:ccth}
 

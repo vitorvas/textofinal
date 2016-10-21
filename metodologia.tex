@@ -613,13 +613,29 @@ o termo-fonte \textbf{``Q''} (linha $9$). Estas são as principais
 modificações no código-fonte do \textit{solver} para
 acrescentar o termo-fonte à equação do calor no sólido.
 
-Outra modificação importante é a adição de estruturas de dados capazes de fazer a comunicação
-por memória compartilhada.
-***
+A segunda principal alteração no \textit{solver} original para implementação do acoplamento
+está na adição das estruturas de dados para comunicação por memória compartilhada. Para isso,
+foi criado um arquivo fonte chamado \texttt{createCoupledFiedls.H} que foi posteriormente
+incluído no sistema completo.
 
-ESCREVER
+Na listagem \ref{lst:createshm} são criadas as estruturas POSIX utilizadas para manipulação
+de memória compartilhada. Nas linhas 2 e 3 são declaradas as estruturas que serão utilizadas para
+acesso aos dados. Nas linhas 5 e 6 são declaradas as estruturas que serão utilizadas no mapeamento
+entre os dados em memória compartilhada e as estruturas de acesso aos dados. Apesar de contra-intuitiva,
+deve-se lembrar que esta é a forma definida como padrão de utilização de memória compartilhada. Nas linhas
+8 e 9 são declarados as estruturas que representam os arquivos em memória compartilhada. Há, portanto, três
+estruturas para cada arquivo em memória compartilhada, sendo um arquivo para temperaturas e outro para potências.
+Nas linhas 12-13 são declarados os já mencionados semáforos, responsáveis pelo controle de acesso aos
+dados compartilhados. Na linha 19 é feito um teste se a execução é feita pelo programa principal - como também
+mencionado, o algoritmo implementando no \textit{OpenFOAM} foi feito com vistas à execução em paralelo.
+Em sistemas paralelos, o mesmo código é executado por diferentes processos ou threads e operações
+de entrada e saída, como, por exemplo, leitura e escrita de arquivos, deve ser feita unicamente por um
+dos processos lançados. Sempre com vistas a manter a consistência. Em geral, este tipo de operação
+é feita pelo programa principal. Como é neste caso, em que no programa principal são executados
+comandos de leitura dos arquivos já presentes em memória
+compartilhada. Arquivos estes, criados pelo \textit{milonga} na sua inicialização. Caso sejam encontrados
+os arquivos, o \textit{OpenFOAM} segue em modo acoplado. Caso contrário, executará sem acoplamento.
 
-***
 
 \begin{lstlisting}[caption={Fragmento do código-fonte da criação das estruturas de memória compartilhada.}\label{lst:createshm}]
 // Three C standard arrays are created to shared data with milonga
@@ -651,6 +667,18 @@ if(Pstream::master())
 }
 \end{lstlisting}
 
+Já em referência à listagem \ref{lst:checkshm}, estão apresentadas as estruturas de verificação
+de consistência. Em outras palavras, além declarar os dados, é necessário garantir que ao tentar utilizar
+os semáforos e o conteúdo em memória compartilhada, estes estejam disponíveis e em estado consistente.
+Nas linhas 4 e 5, novamente dentro de um teste de programa principal, os arquivos em memória compartilhada
+são mapeados para as estruturas correspondentes, que guardarão referências para os dados em memória
+compartilhada (armazenados, por sua vez, em forma de arquivos). Na linha 8 são verificados os mapeamentos
+e, caso haja algum problema, o programa é interrompido. Caso contrário, segue normalmente a execução.
+Finalmente, nas linhas 11 e 12 é feita o que se convencionou chamar ``coerção'' em Ciência da Computação.
+A coerção é a mudança do tipo definido para uma variável para outro. Na presente implementação, essa coerção
+é feita para garantir que os dados utilizados para o acesso à memória compartilhada, cuja API é implementada
+em linguagem C, possa ser usada sem riscos pelo \textit{OpenFOAM}, implementado em linguagem C++.
+
 \begin{lstlisting}[caption={Fragmento do código-fonte da verificação das estruturas de memória compartilhada.}\label{lst:checkshm}]
 if(Pstream::master())
 {
@@ -672,16 +700,22 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 % codigo e explicação de shared memory.
 
 % -------------------------------------------------------------------------------------------------
-Espera-se, ao apresentar algumas das implementações feitas em fragmentos do código-fonte
-do \textit{OpenFOAM}, familiarizar o leitor com o formato interno do \textit{OpenFOAM}
-e alguns detalhes de como se deu, na prática, a parte da metodologia de acoplamento
+
+Espera-se, ao descrever algumas das implementações feitas em fragmentos do código-fonte
+do \textit{OpenFOAM}, apresentar ao leitor o formato interno do \textit{OpenFOAM}
+e detalhes de como se deu, na prática, a parte da metodologia de acoplamento
 desenvolvida nesta tese em relação às alterações no código-fonte do \textit{OpenFOAM}.
+Em uma tese em que o desenvolvimento de \textit{software} é a principal contribuição científica,
+julgou-se pertinente apresentar detalhes de como se deu parte deste desenvolvimento. Alguns exemplos
+são, por vezes, uma forma útil de fazer a conexão entre a metodologia e a ``mão na massa''
 
 Ao leitor interessado em aprofundar-se nos detalhes técnicos da implementação, fica o
 convite a examinar livremente código-fonte do \textit{solver} \texttt{thesisCoupleFoam}, disponível
 no repositório \texttt{https://github.com/vitorvas/thesisChtMultiRegionFoam}.
 
 
+% -------------------------------------------------------------------------
+%(Esse final ou talvez toda essa seção sejam irrelevantes. Preparar para apagar...)
 
 
 
