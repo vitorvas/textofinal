@@ -4,42 +4,58 @@
 \chapter{Aplicação}
 \label{chap:aplicacao}
 
-Como esta tese trata do desenvolvimento de um sistema de \textit{software}, não basta apenas
-apresentar a metodologia utilizada na sua construção, bem como seus pontos fortes e fracos. É
-imprescindível testar o sistema desenvolvido. Para isso, foi desenvolvido um modelo simplificado
-\textbf{baseado} em um sistema físico existente, no caso, o reator TRIGA IPR-R1 do CDTN.
+De modo a avaliar o sistema de \textit{software} desenvolvido com base na metodologia apresentada, 
+foi desenvolvido um modelo simplificado \textbf{baseado} em um sistema físico existente, no caso,
+o reator TRIGA IPR-R1 do CDTN. A elaboração deste modelo levou em consideração os aspectos físicos
+de um único elemento combustível do reator TRIGA empregado em condições de utilização usuais.
 
-A elaboração do modelo levou em consideração os aspectos físicos de um elemento combustível do
-reator TRIGA, bem como suas condições de utilização usuais.
+\section{Reator TRIGA IPR-R1}
+\label{sec:triga}
 
-O modelo também foi concebido de acordo com as restrições impostas pelos sistemas acoplados utilizados.
-O \textit{OpenFOAM}, por se tratar de um sistema mais maduro e com ampla rede de usuários, não impôs
-restrições ao problema em termos de tamanho do problema a ser simulado. Entretanto, a versão utilizada,
-apresentou um erro (\textit{bug}, no jargão da Ciência da Computação) na implementação da resistência
+Nesta seção, será brevemente descrito o reator TRIGA IPR-R1, utilizado como referência para a
+construção do modelo simplificado utilizado na avaliação do sistema acoplado implementado nesta
+tese.
+
+%\section{imitações conhecidas}
+%\label{sec:lim}
+
+\section{Modelo: fatores limitantes}
+\label{sec:lim}
+
+O modelo de avaliação do acoplamento foi concebido de acordo com as restrições impostas pelos sistemas
+utilizados na implementação do acoplamento. O \textit{OpenFOAM}, por se tratar de um sistema mais maduro
+e com ampla rede de usuários, não impôs
+restrições ao problema em termos de tamanho de malha a ser utilizada. Entretanto, a versão
+do \textit{OpenFOAM} utilizada,
+apresenta um erro (\textit{bug}, no jargão da Ciência da Computação) na implementação da resistência
 de contato, o que inviabilizou a simulação do \textit{gap} existente no combustível. Sendo essa a
 primeira simplificação necessária em relação ao combustível do reator TRIGA IPR-R1.
 
 No tocante ao \textit{milonga}, as restrições foram maiores. Foram duas as grandes limitações impostas
-pelo \textit{milonga} na definição de um modelo complexo. A primeira é relativa a execução de forma
-sequencial. Como o \textit{milonga} não é ainda capaz de trabalhar de forma paralela, o tamanho da malha a ser
-utilizada fica restrito à memória disponível mas, principalmente, em relação ao tempo de execução. Além disso,
-o \textit{milonga} ainda não é capaz de lidar com elementos prismáticos de forma confiável, limitando a
-geração da malha por extrusão. Essa limitação não é notável para geometrias com elementos mais homogêneos.
-Entretanto, no caso de um combustível do tipo TRIGA, o revestimento tem espessura ordens de grandeza
-menor do que o raio do combustível, o que impactou na geração de uma malha mais refinada. A segunda
-restrição imposta pelo \textit{milonga}, também em razão de um \textit{bug} está na função de mapeamento
-geométrico da malha para estruturas de dados internas. Caso uma região da malha, por exemplo o combustível,
-seja formada por células não conectadas, apenas a primeira região é encontrada. Este \textit{bug} tornou
+pelo \textit{milonga} na definição de um modelo mais complexo e computacionalmente exigente. A primeira
+é relativa a execução de forma sequencial. Como o \textit{milonga} não é ainda capaz de executar de
+forma paralela, o tamanho da malha a ser utilizada fica restrito à memória disponível.
+O tamanho da malha também implica diretamente no tempo de execução.
+Além disso, o \textit{milonga} ainda não é capaz de lidar com elementos prismáticos de forma confiável, limitando a
+geração da malha por extrusão a utilização de elementos hexahédricos.
+Como no caso de um combustível do tipo TRIGA o revestimento tem espessura ordens de grandeza
+menor do que o raio do combustível, a não-utilização de elementos prismáticos impactou na geração
+de uma malha mais refinada.
+
+A segunda restrição imposta pelo \textit{milonga}, também em razão de um \textit{bug}, está na função
+de acesso por coordenada espacial, fundamental para os cálculos de variação de seções de choque.
+Supondo uma malha para todo o núcleo do reator TRIGA, são vários as regiões definidas como combustível, por exemplo.
+uma região da malha, por exemplo o combustível,
+seja formada por células não conectadas, apenas a primeira região é encontrada pelo algoritmo de . Este \textit{bug} tornou
 inviável a simulação, dentro da metodologia proposta, de mais de um elemento combustível
 \footnote{Durante a execução desta tese, alguns \textit{bugs} encontrados no \textit{milonga} foram corrigidos e
   reportados ao seu autor. Uma das correções acabou com um vazamento em memória que impedia que o \textit{milonga}
   fosse executado mais do que alguns vezes em modo iterativo.}.
 
-Com estas limitações em mente, nas próximas seções será apresentado o modelo utilizado com todas as suas
-características bem como os parâmetros utilizados nas simulações neutrônica e termo-hidráulica.
+%Com estas limitações em mente, nas próximas seções será apresentado o modelo utilizado com todas as suas
+%características bem como os parâmetros utilizados nas simulações neutrônica e termo-hidráulica.
 
-\section{Modelo}
-
+\section{Modelo: características}
 %
 % IMPORTANTE
 %
@@ -247,4 +263,34 @@ as diferenças entre um sistema não acoplado e outro acoplado.
 
 \subsection{Condições de contorno e parâmetros numéricos da termo-hidráulica}
 \label{subsec:ccth}
+
+São quatro condições de contorno utilizadas na solução da simulação termo-hidráulica.
+As extremidades do combustível e do revestimento são definidas como adiabáticas. Nas
+extremidades da região do refrigerante, são definidos entrada (\textit{inlet}) e
+saída (\textit{outlet}) para o escoamento. As laterais do modelo são definidas
+como simétricas. Na figura \ref{fig:ccth} são mostradas as condições de contorno
+utilizadas e as regiões correspondentes. As regiões sólidas são assim representadas
+enquanto a região do modelo correspondente ao fluido é representada como malha.
+
+\begin{figure}[htb]
+  \caption{Modelo: condições de contorno da simulação termo-hidráulica e regiões
+    correspondentes. As superfícies definidas como simétricas estão em vermelho
+    enquanto em azul estão a entrada e saída de fluido. A região sólida representa
+    o combustível e revestimento, ambos com condiçoes de contorno adiabáticas nas
+  extremidades.}
+  \centering\includegraphics[scale=0.5]{figuras/inlet_paredes_extremos_wireframe2.png}
+  \label{fig:ccth}
+%  \legend{Fonte: autor}
+\end{figure}
+
+As superfícies entre regiões têm suas condições de contorno definidas automaticamente
+num dos passos da etapa de pré-processamento. Por definição, o \textit{OpenFOAM} importa
+a malha num único conjunto de elementos, armazenando as definições de regiões
+contidas na malha. Um dos utilitários disponibilizados pelo \textit{OpenFOAM} separa
+as regiões, gerando condições de contorno em cada uma das regiões que representam
+as interfaces entre regiões. Outro utilitário é utilizado em seguida para definir valores
+para os parâmetros das respectivas condições de contorno.
+
+% Colocar um exemplo aqui?
+% Ou uma figura?
 
