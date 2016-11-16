@@ -7,7 +7,9 @@
 O trabalho desenvolvido nesta tese tem como base métodos de
 solução numérica de equações diferenciais parciais. Neste capítulo, são
 apresentadas as bases teóricas da modelagem matemática
-dos problemas e dos métodos de solução utilizados.
+dos problemas e dos métodos de solução utilizados, bem como uma
+breve descrição da física por trás do funcionamento de reatores
+nucleares.
 
 
 %\begin{figure}[htb]
@@ -57,6 +59,24 @@ estacionário.
 % **********************************************
 \section{Neutrônica}
 \label{sec:neutronica}
+
+Neutrônica pode ser definida como o estudo do movimento e interações dos nêutrons
+com a matéria. O conhecimento de neutrônica é fundamental para determinar o
+comportamento de um reator nuclear ou outros elementos que utilizem nêutrons
+em feixes. A neutrônica é, em última instância, o estudo do transporte de nêutrons.
+
+A probabilidade de interação entre um nêutron incidente e um núcleo alvo é caracterizada
+pela seção de choque microscópica (unidade \textit{barn}, símbolo $\sigma$ e
+equivalente a $10^{-24} cm^2$), que depende do núcleo alvo, do tipo de interação e da
+energia do nêutron incidente. Essa dependência pode ser complicada devido a diversos fatores,
+como a ordem de grandeza das energias envolvidas, levando a variações súbitas nas probabilidades
+de interação. Estas variações são chamadas ressonâncias. A seção de choque macroscópica nada mais
+é do que a seção de choque microscópica multiplicada pela densidade nuclear. Ela dá as probabilidades
+médias de reação entre nêutrons de determinada energia com o material presente considerando a massa
+do material. Sua unidade é dada em $cm^{-1}$.
+
+No escopo desta tese, é suficiente afirmar que as seções de choque são elementos fundamentais
+na descrição e, portanto, no cálculo neutrônico. 
 
 % **********************************************
 \subsection{Dados nucleares}
