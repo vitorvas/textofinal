@@ -142,47 +142,64 @@ termo-hidráulica quanto para a neutrônica.
 A próxima seção descreve a metodologia utilizada para geração de seções de choque. 
 
 \section{Geração de seções de choque}
+\label{sec:gerxs}
 
-A fim de verificar o impacto das variações de temperatura calculadas pelo \textit{OpenFOAM} no fluxo
-neutrônico e, portanto, na potência volumétrica, foram geradas seções de choque correspondentes
-ao modelo utilizado.
+A fim de verificar o impacto das variações de temperatura obtidas nos cálculos
+termo-hidráulicos no fluxo
+neutrônico e, portanto, na potência volumétrica, é necessário utilizar seções de choque
+fisicamente compatíveis com o problema a ser resolvido. A breve introdução dada sobre
+neutrônica na seção \ref{sec:neutronica} desta tese descreve a importância das seções
+de choque no cálculo neutrônico. As seções de choque surgem no cálculo neutrônico
+pela aproximação por difusão como coeficientes dos distintos termos da equação
+diferencial que resolve o fluxo de nêutrons.
 
-% Não tem figura, ela fez anel anel anel
-%Na figura \ref{fig:modelwims}
-
-As seções de choque geradas são usadas como os coeficientes da equação de difusão, como já mencionado.
-A tabela \ref{tab:coeff-dif} apresenta o significado dos mnemônicos utilizados pelo \textit{milonga}
-bem como a divisão de grupos em energias.
+O \textit{milonga} utiliza mnemônicos específicos para cada coeficiente, de modo
+que estes possam ser representados, tanto como valores constantes, como por funções
+de temperatura, por exemplo, assim utilizados na modelagem nesta tese. Na tabela
+\ref{tab:coeff-dif} estão apresentados os mnemônicos utilizados pelo \textit{milonga}
+no modelo utilizado bem como a divisão de grupos em energias.
 
 % Tabela para os valores
 \begin{table}[htb]
+  \centering
   \caption[Coeficientes da Equação de Difusão.]{Coeficientes da Equação de Difusão.}
   \label{tab:coeff-dif}
   \begin{tabular}{ l | c | r}
   \hline
   \multicolumn{3}{ c }{Coeficientes Mnemônicos} \\
   \hline
-  \multirow{4}{*}{Grupo 1: > 0,625 MeV} & Diffusion coefficient & $D1$\\
-& Absorption cross-section & $\Sigma A1$\\
-& Scattering cross-section & $\Sigma S1.2$\\
-  & Neutrons per fission * Fission cross-section & $\nu \Sigma F1$\\
+  \multirow{4}{*}{Grupo 1: > 0,625 MeV} & Coeficiente de Difusão & $D1$\\
+& Seção de choque de absorção & $\Sigma A1$\\
+& Seção de choque de espalhamento & $\Sigma S1.2$\\
+  & Neutrons por fissão * Seção de choque de fissão & $\nu \Sigma F1$\\
   \hline
-\multirow{3}{*}{Grupo 2: < 0,625 MeV} & Diffusion coefficient & $D2$\\
-& Absorption cross-section & $\Sigma A2$\\
-& Neutrons per fission * Fission cross-section & $\nu \Sigma F2$ \\
+\multirow{3}{*}{Grupo 2: < 0,625 MeV} & Coeficiente de difusão & $D2$\\
+& Seção de choque de absorção & $\Sigma A2$\\
+& Neutrons por fissão * Seção de choque de fissão & $\nu \Sigma F2$ \\
 \hline
 \end{tabular}
 \end{table}
 
-Um modelo bidimensional com propriedades equivalentes ao modelo tridimensional a ser simulado
+Para a geração das seções de choque, um modelo bidimensional com propriedades
+equivalentes ao modelo tridimensional a ser simulado
 foi definido. Esta equivalência foi garantida mantendo-se a proporção entre material
 físsil e moderador em ambos os modelos. Com base nessa proporção,
 todos os materiais foram definidos como anéis concêntricos. Geometria definida,
-foram geradas seções de choque para quatro diferentes temperaturas, desde
-a temperatura ambiente até a temperatura próxima a máxima do combustível do TRIGA IPR-R1 em operação
-a $250 kW$ \cite{Veloso2005}. A metodologia utilizada para a geração
-das seções de choque considerou as condições do reator TRIGA IPR-R1 no
-ano de 2004, sendo utilizado o código WIMSD-5B neste processo \cite{Reis2015}.
+foram definidas quatro diferentes temperaturas cobrindo a faixa de operação
+do reator TRIGA IPR-R1. A menor temperatura sendo a temperatura ambiente até
+a temperatura próxima a máxima do combustível do TRIGA IPR-R1 em operação
+a $250 kW$ \cite{Veloso2005}, num grupo de quatro.
+
+
+A metodologia utilizada para a geração de seções de choque \cite{Reis2015}
+foi desenvolvida pelo grupo de física de reatores do DEN/UFMG. Esta metodologia
+utiliza o código WIMSD-5B para gerar seções de choque dependentes da temperatura
+para materias específicos e para variado número de grupos de energia. No presente
+trabalho, foram utilizados dois grupos de energia separados em 0,625 Mev como
+apresentado na tabela \ref{tab:coeff-dif}. A composição dos materiais utilizados,
+em especial o combustível, que contem mais isótopos, se baseou na composição
+isotópica do reator TRIGA IPR-R1 no ano de 2004.
+
 As temperaturas utilizadas na geração das seções de choque
 e as seções de choque resultantes são apresentadas nas tabelas \ref{tab:temp-fuel},
 \ref{tab:temp-cladding} e \ref{tab:temp-coolant} respectivamente para o combustível, revestimento
@@ -190,26 +207,28 @@ e moderador.
 
 
 \begin{table}[htb]
+  \centering
   \caption[Temperaturas para combustível.]{Temperaturas para o combustível}.
   \label{tab:temp-fuel}
   \begin{tabular}{r l l l l}
-  \multicolumn{5}{c}{Fuel} \\
+  \multicolumn{5}{c}{Combustível} \\
   \hline
   Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
   \hline
-  $D1$ & 0.0108349 & 0.0108521 & 0.0108489 & 0.010846\\
-  $\Sigma A1$ & 0.771135 & 0.783626 & 0.795686 & 0.806567\\
-  $\Sigma S1.2$ & 3.3991 & 3.4329 & 3.4264 & 3.4206\\
-  $\nu \Sigma F1$ & 0.500982 & 0.500304 & 0.500377 & 0.500441\\
+  $D1$ & 0,0108349 & 0,0108521 & 0,0108489 & 0,010846\\
+  $\Sigma A1$ & 0,771135 & 0,783626 & 0,795686 & 0,806567\\
+  $\Sigma S1.2$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+  $\nu \Sigma F1$ & 0,500982 & 0,500304 & 0,500377 & 0,500441\\
   \hline
-  $D2$ & 0.00314942 & 0.0031682 & 0. 0032163 & 0.0032743 \\
-  $\Sigma A2$ & 11.0389 & 10.8142 & 10.4004 & 9.90199\\
-  $\nu \Sigma F2$ & 20.1943 & 19.7703 & 18.9898 & 18.0499\\
+  $D2$ & 0,00314942 & 0,0031682 & 0, 0032163 & 0,0032743 \\
+  $\Sigma A2$ & 11,0389 & 10,8142 & 10,4004 & 9,90199\\
+  $\nu \Sigma F2$ & 20,1943 & 19,7703 & 18,9898 & 18,0499\\
   \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[htb]
+  \centering
   \caption[Temperaturas para o revestimento.]{Temperaturas para o revestimento}.
   \label{tab:temp-cladding}
   \begin{tabular}{r l l l l}
@@ -217,39 +236,40 @@ e moderador.
     \hline
     Parâmetro & $300K$ & $396K$ & $403K$ & $410K$ \\
     \hline
-    $D1$ & 0.0299644 & 0.0299699 & 0.0299678 & 0.0299659 \\
-    $\Sigma A1$ & 0.0288617 & 0.028926 & 0.0289199 & 0.0289143 \\
-    $\Sigma S1.2$ & 3.3991 & 3.4329 & 3.4264 & 3.4206\\
+    $D1$ & 0,0299644 & 0,0299699 & 0,0299678 & 0,0299659 \\
+    $\Sigma A1$ & 0,0288617 & 0,028926 & 0,0289199 & 0,0289143 \\
+    $\Sigma S1.2$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
     \hline
-    $D2$ & 0.0376276 & 0.0376721 & 0.0377696 & 0.0379140\\
-    $\Sigma A2$ & 0.874322 & 0.865956 & 0.846858 & 0.818690\\
+    $D2$ & 0,0376276 & 0,0376721 & 0,0377696 & 0,0379140\\
+    $\Sigma A2$ & 0,874322 & 0,865956 & 0,846858 & 0,818690\\
     \hline
   \end{tabular}
 \end{table}
 
 \begin{table}[htb]
+  \centering
   \caption[Temperaturas para o refrigerante.]{Temperaturas para o refrigerante}.
   \label{tab:temp-coolant}
   \begin{tabular}{r l l l l}
     \multicolumn{5}{c}{Moderador} \\
     \hline
-    Parâmetro & $300K$ & $308.5K$ & $317K$ & $341K$ \\
+    Parâmetro & $300K$ & $308,5K$ & $317K$ & $341K$ \\
     \hline
-    $D1$ & 0.0126587 & 0.0126685 & 0.0126696 & 0.0126705\\
-    $\Sigma A1$ & 0.0290925 & 0.0292130 & 0.0292018 & 0.0291917\\
-    $\Sigma S1.2$ & 3.3991 & 3.4329 & 3.4264 & 3.4206\\
+    $D1$ & 0,0126587 & 0,0126685 & 0,0126696 & 0,0126705\\
+    $\Sigma A1$ & 0,0290925 & 0,0292130 & 0,0292018 & 0,0291917\\
+    $\Sigma S1.2$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
     \hline
-    $D2$ & 0.00213616 & 0.0021262 & 0021368 & 0021589\\
-    $\Sigma A2$ & 1.42651 & 1.41891 & 1.39505 & 1.35409\\
+    $D2$ & 0,00213616 & 0,0021262 & 0021368 & 0021589\\
+    $\Sigma A2$ & 1,42651 & 1,41891 & 1,39505 & 1,35409\\
     \hline
   \end{tabular}
 \end{table}
 
-Uma limitação do código WIMSD-5B está na geração de seções de choque de espalhamento
-para cada material separadamente. Devido a esta restrição, as seções de choque de
+
+Devido a uma limitação do código WIMSD-5B na geração de seções de choque de espalhamento
+para cada material separadamente, as seções de choque de
 espalhamento foram geradas para uma homogeneização dos materiais em uma única célula,
 sendo esta a razão dos valores serem os mesmos para todos os materiais.
-
 
 %
 % IMPORTANTE: Talvez este próximo parágrafo não deva ficar aqui, mas no modelo da neutrônica.
@@ -259,6 +279,10 @@ funções de uma variável dependentes da temperatura. Como o milonga tem inform
 das células em relação à malha, a temperatura de cada célula é argumento da
 função de uma variável dependente da temperatura. Se a temperatura não está
 exatamente tabulada, o \textit{milonga} provê interpolação linear por padrão.
+
+É exatamente esta característica do \textit{milonga} que permite o cálculo neutrônico
+independente por elemento de volume, sendo possível obter variações detalhadas
+de acordo com a granularidade da malha utilizada pelo modelo.
 
 \section{Modelo físico e numérico}
 \label{sec:mod_fis_num}
