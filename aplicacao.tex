@@ -63,9 +63,21 @@ presente tese. A divisão original em sub-canais pode ser vista na Figura \ref{f
 ressaltar que na modelagem simplificada foram utilizadas as características do escoamento do
 sub-canal número $6$, mas a geometria foi modelada como um único pino cercado por água.
 
+\section{Modelo}
+%
+% IMPORTANTE
+%
+% Separo th de neutronica em seções para colocar as seções de choque antes da neutrônica?
+% Ou coloco logo as seções de choque antes de tudo?
 
-\section{Modelo: fatores limitantes}
-\label{sec:lim}
+Nesta seção é descrito o modelo físico e numérico utilizado nos testes do sistema acoplado.
+O desenvolvimento deste modelo se deu de modo a balancear as características termo-hidráulicas
+e neutrônicas desejáveis para um sistema de prova de conceito de cálculos acoplados
+e as limitações técnicas impostas, tanto em relação à capacidade computacional disponível quanto
+às limitações intrínsecas dos sistemas de \textit{software} utilizados.
+
+\subsection{Fatores limitantes}
+\label{ssec:lim}
 
 O modelo de avaliação do acoplamento foi concebido de acordo com as restrições impostas pelos sistemas
 utilizados na implementação do acoplamento. O \textit{OpenFOAM}, por se tratar de um sistema mais maduro
@@ -102,7 +114,7 @@ este \textit{bug} limitou o modelo a ser utilizado a um modelo com uma única re
 combustível\footnote{Durante a execução desta tese, alguns \textit{bugs} encontrados
   no \textit{milonga} foram corrigidos e
   reportados ao seu autor. Uma das correções acabou com um vazamento em memória que impedia que o \textit{milonga}
-  fosse executado mais do que alguns vezes em modo iterativo.}.
+  fosse executado mais do que algumas vezes em modo iterativo.}.
 
 
 
@@ -116,20 +128,21 @@ combustível\footnote{Durante a execução desta tese, alguns \textit{bugs} enco
 %Com estas limitações em mente, nas próximas seções será apresentado o modelo utilizado com todas as suas
 %características bem como os parâmetros utilizados nas simulações neutrônica e termo-hidráulica.
 
-\section{Modelo: características}
-%
-% IMPORTANTE
-%
-% Separo th de neutronica em seções para colocar as seções de choque antes da neutrônica?
-% Ou coloco logo as seções de choque antes de tudo?
 
-Nesta seção é descrito o modelo físico e numérico utilizado nos testes do sistema acoplado.
-De modo a verificar o efeito das variações de temperatura calculados pela termo-hidráulica
-no fluxo neutrônico e, por consequência, no perfil de potência, é necessário ter seções
-de choque compatíveis com o problema. A Figura \ref{fig:regions} apresenta as três distintas
-regiões presentes no modelo simplificado. Cada uma delas é formada por um material com
-propriedades físicas diferentes, tanto para a
-termo-hidráulica quanto para a neutrônica.
+
+\subsection{Modelo físico e numérico}
+\label{ssec:mod_fis_num}
+
+O modelo escolhido, de acordo com as limitações impostas já descritas,
+representa um elemento combustível (elemento B6) do reator TRIGA IPR-R1, brevemente
+apresentado na seção \ref{sec:triga}. Os combustíveis dos reatores do tipo TRIGA
+possuem uma grande sensibilidade na sua
+reatividade com a temperatura devido à já citada presença do hidreto de zircônio
+em sua constituição. Essa característica intrínseca permite que pequenas
+variações nas suas temperaturas levem a variações perceptíveis na neutrônica,
+o que torna este modelo interessante para avaliação do acoplamento.
+
+% Colocar figura do modelo completo
 
 \begin{figure}[htb]
   \caption{Modelo: regiões e materiais. Em vermelho, combustível. Em amarelo, revestimento.
@@ -139,8 +152,220 @@ termo-hidráulica quanto para a neutrônica.
 %  \legend{Fonte: autor}
 \end{figure}
 
-A próxima seção descreve a metodologia utilizada para geração de seções de choque. 
+\begin{figure}[htb]
+  \caption{Vista isométrica do modelo completo.}
+  \centering\includegraphics[scale=0.6]{figuras/all_regions_isometric.png}
+  \label{fig:region_isometric}
+%  \legend{Fonte: autor}
+\end{figure}
 
+\begin{figure}[htb]
+  \caption{Discretização do modelo: regiões e materiais.}
+  \centering\includegraphics[scale=0.5]{figuras/regioes_edges_com_legenda_ingles.png}
+  \label{fig:modelo_exploded}
+%  \legend{Fonte: autor}
+\end{figure}
+
+O modelo consiste num combustível com revestimento de alumínio sem
+o \textit{gap}, de modo que o diâmetro do combustível é mantido como no
+combustível de referência e o diâmetro do \textit{gap} é estendido para
+ocupar este espaço. Além disso, o modelo considera apenas o comprimento
+ativo do combustível, sendo como um combustível mais curto. O volume
+de água ao redor do combustível foi modelado considerando a razão entre
+material físsil e moderador do núcleo completo do reator. Nenhuma outra
+estrutura sólida, como discos de samário ou elementos estruturais, é
+respresentada no modelo, sendo este idêntico axialmente em qualquer
+altura, como observável nas Figuras \ref{fig:regions} e  e \ref{fig:region_isometric}.
+
+\begin{table}[htb]
+\centering
+  \caption[Medidas do modelo.]{Medidas do modelo.}
+  \label{tab:size_model}
+  \begin{tabular}{r l}
+    Estrutura & $[cm]$ \\
+    \hline
+    Raio do combustível & 1.78 \\
+    Raio externo do revestimento & 1.865 \\
+    Arestas do refrigerante/moderador & 4.57 \\
+    \hline
+    Altura & 35.0 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+A malha gerada para o modelo foi construída por extrusão. Isso significa que
+os elementos de malha foram gerados para uma superfície e a dimensão espacial
+foi dada por um valor de comprimento e um número de camadas a serem geradas.
+Foram geradas 35 camadas (cada uma com um $cm$), sendo o tamanho relativo
+mínimo para elemento de malha de 0,5 e máximo de 4.0. Esses valores constrolam
+o quanto o elemento próximo ao ponto com tal tamanho relativo crescerá durante
+a geração da malha. A razão de crescimento entre o refinamento do revestimento
+e as áreas restantes foi estabelecido em 1,2. Com isso, foi possível conseguir
+elementos suficientemente pequenos para realizar os cálculos na região
+do revestimento e ainda obter uma malha com tamanho tratável pelo \textit{milonga}.
+A malha gerada tem 346.675 elementos.
+
+As dimensões da malha do modelo geram implicações nos resultados dos cálculos, em
+especial a pequena granularidade axial (35 camadas). Esta granularidade
+pode ser observada na Figura \ref{fig:modelo_exploded},
+na qual é possível notar
+o refinamento entre as diversas regiões e, em contraste, o tamanho dos elementos logitudinalmente.
+Entretanto, mesmo com tais
+limitações impostas pelo \textit{milonga} na sua capacidade de lidar
+com malhas de muitos elementos, é possível utilizar a malha gerada para verificar
+as diferenças nos resultados dos cálculos entre um sistema não acoplado e outro acoplado.
+
+
+\subsection{Condições de contorno e parâmetros numéricos: termo-hidráulica}
+\label{subsec:ccth}
+
+
+São quatro condições de contorno utilizadas na solução da simulação termo-hidráulica
+nas superfícies que limitam o domínio. As extremidades do combustível e do revestimento
+são definidas como adiabáticas. Nas
+extremidades da região do refrigerante (água), são definidos entrada (\textit{inlet}) e
+saída (\textit{outlet}) para o escoamento. As laterais do modelo são definidas
+como simétricas. Na figura \ref{fig:ccth} são mostradas as condições de contorno
+utilizadas e as regiões correspondentes. As superfícies definidas como simétricas
+estão em vermelho
+enquanto em azul estão a entrada e saída de fluido. A região sólida representa o
+combustível e revestimento, ambos com condiçoes de contorno adiabáticas nas extremidades.
+
+\begin{figure}[htb]
+  \caption{Modelo: condições de contorno da simulação termo-hidráulica e regiões
+    correspondentes.}
+  \centering\includegraphics[scale=0.5]{figuras/inlet_paredes_extremos_wireframe2.png}
+  \label{fig:ccth}
+%  \legend{Fonte: autor}
+\end{figure}
+
+As superfícies entre regiões têm suas condições de contorno definidas automaticamente
+num dos passos da etapa de pré-processamento. Por definição, o \textit{OpenFOAM} importa
+a malha num único conjunto de elementos, armazenando as definições de regiões
+contidas na malha. Um dos utilitários disponibilizados pelo \textit{OpenFOAM} separa
+as regiões, gerando condições de contorno em cada uma das regiões que representam
+as interfaces entre regiões. Outro utilitário é utilizado em seguida para definir valores
+para os parâmetros das respectivas condições de contorno. Como resultado do pré-processamento
+entre regiões, são obtidas condições de contorno que implementam a troca
+conjugada de calor entre as distintas regiões.
+
+Na tabela \ref{tab:cc-superf} são apresentadas as condições de contorno utilizadas
+nas superfícies entre regiões para a temperatura. É possível perceber que todas as superfícies,
+tanto para campos sólidos e fluidos, utilizam a mesma condição de contorno:
+\begin{itemize}
+\item \texttt{compressible::turbulentCoupledBaffleMixed}.
+\end{itemize}
+
+Esta condição de contorno utiliza as
+propriedades termofísicas dos respectivos materiais previamente definidas para o cálculo
+em tempo de simulação, do fluxo de calor entre as regiões. As propriedades termofísicas
+dos materiais são dadas na tabela \ref{tab:termofisica}.
+
+\begin{table}[]
+\centering
+\caption{Propriedades termofísicas dos materiais}
+\label{tab:termofisica}
+\begin{tabular}{lllll}
+Material     & \begin{tabular}[c]{@{}l@{}}Densidade\\ {[}$kg/m^3${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Calor específico\\ {[}$kJ/kg.K${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Condutividade\\ {[}$W/m.K${]}\end{tabular}      & \begin{tabular}[c]{@{}l@{}}Viscosidade\\ {[}$\mu Pa.s${]}\end{tabular} \\
+\hline
+Combustível  & 6280                                                               & \begin{tabular}[c]{@{}l@{}}0.892+\\ 4.44361x10\end{tabular}              & \begin{tabular}[c]{@{}l@{}}22.872-\\ 4.3131e-3\end{tabular}              & -                                                                     \\
+\hline
+    Revestimento & 2705                                                               & \begin{tabular}[c]{@{}l@{}}0.294+\\ 6.196e-4\end{tabular}                & \begin{tabular}[c]{@{}l@{}}223.7+\\ 4.756e-3+\\ 555+\\ 4444\end{tabular} & -                                                                     \\
+\hline
+        Refrigerante & 995                                                                & 4.18                                                                       & 0.62                                                                       & 797                                                                  
+\end{tabular}
+\end{table}
+
+
+
+\begin{table}[]
+\centering
+\caption{Condições de contorno entre superfícies internas (pré-processamento)}
+\label{tab:cc-superf}
+\begin{tabular}{llll}
+  \textbf{Região}                   & Superfície    & Condição de Contorno                  & Campo                  \\
+  \hline
+  \textbf{Combustível}                   & \textit{fuel\_to\_cladding}    & compressible::turbulentCoupledBaffleMixed                  & T                  \\
+  \hline
+  \multirow{2}{*}{\textbf{Revestimento}} & \textit{cladding\_to\_fuel}    & \multirow{2}{*}{compressible::turbulentCoupledBaffleMixed} & \multirow{2}{*}{T} \\
+  & \textit{cladding\_to\_coolant} &                                                            &                    \\
+  \hline
+  \textbf{Refrigerante}                  & \textit{coolant\_to\_cladding} & compressible::turbulentCoupledBaffleMixed                  & T                 
+\end{tabular}
+\end{table}
+
+As condições de contorno devem ser estabelecidas para todas as grandezas sendo calculadas. Algumas
+destas grandezas, como a potência ($Q$), por exemplo, são automaticamente calculadas nas superfícies a partir
+dos campos internos. Entretanto, isto não desobrigado o usuário de explicitamente definí-las como \textit{calculated}.
+
+As principais condições de contorno e iniciais do problema apresentado estão definidas na tabela \ref{tab:cc-init}.
+Estas condições descrevem as características iniciais do problema sendo resolvido. Alguns comentários sobre sobre
+a tabela \ref{tab:cc-init}: o velocidade na entrada do sistema se baseia na velocidade média do escoamento na
+entrada do núcleo do reator \cite{Veloso2005}. A região do revestimento, por ser sólida, herda a implementação
+do termo-fonte. Entretanto, este é mantido nulo já que não há geração de energia no revestimento. A campo
+interno inicial de potência é \textbf{não-uniforme} e definido como variável. A campo não-uniforme permite estabelecer
+uma condição inicial de campo heterogêneo, tal como uma distribuição volumétrica de potência. O valor para este
+campo é definido como \textbf{variável}, já que esta distribuição de potências varia para cada diferente simulação.
+
+Vale ressaltar que a potência, tal qual implementada no \textit{solver}, é dada em $W$ por $m^3$.
+
+\begin{table}[]
+\centering
+\caption{Condições de contorno iniciais para a termo-hidráulica}
+\label{tab:cc-init}
+\begin{tabular}{llllc}
+Region                    & Field                   & Boundary      & Type         & Value                 \\
+\hline
+\multirow{6}{*}{coolant}  & \multirow{2}{*}{T}      & inlet         & fixedValue   & $300K$                  \\
+                          &                         & outlet        & zeroGradient & -                     \\
+                          & \multirow{2}{*}{U}      & inlet         & fixedValue   & 0.1 {[}$m/s${]}         \\
+                          &                         & outlet        & zeroGradient & -                     \\
+                          & \multirow{2}{*}{p\_rgh} & inlet         & zeroGradient & -                     \\
+                          &                         & outlet        & fixedValue   & 0 {[}$kg/m.s^2 = Pa${]}  \\
+\hline
+\multirow{3}{*}{cladding} & T                       & wall          & zeroGradient & -                     \\
+                          & \multirow{2}{*}{Q}      & wall          & calculated   & -                     \\
+                          &                         & internalField & uniform      & 0 {[}$W/m^3${]}          \\
+\hline
+\multirow{3}{*}{fuel}     & T                       & wall          & zeroGradient & -                     \\
+                          & \multirow{2}{*}{Q}      & wall          & calculated   & -                     \\
+                          &                         & internalField & non-uniform  & (variable) {[}$W/m^3${]}
+\end{tabular}
+\end{table}
+
+O escoamento do fluido no modelo é considerado turbulento, baseado nas condições usuais de operação
+do reator TRIGA IPR-R1 \cite{Veloso2005}. A turbulência foi modelada utilizando-se o modelo
+$\kappa-\epsilon$ \cite{Launder1974}, que assume que a viscosidade turbulenta está relacionada
+à energia cinética ($\kappa$) e dissipação ($\epsilon$).
+
+Uma vez definidas as características físicas do modelo e as condições iniciais e de contorno, é
+possível dizer que o problema está fechado e é possível iniciar os cálculos propriamente ditos.
+Entretanto, de modo a iniciar os cálculos, são necessárias, além das configurações relativas
+ao problema físico, as definições relativas aos esquemas de discretização utilizados e aos
+algoritmos numéricos usados. Complementando a breve introdução ao método de volumes finitos
+dada no capítulo \ref{chap:teoria} desta tese, são apresentados na tabela \ref{tab:discretizacao}
+os esquemas de discretização
+utilizados nos cálculos acoplados e não acoplados.
+
+\begin{table}[]
+\centering
+\caption{Esquemas de discretização utilizados nos cálculos de volumes finitos}
+\label{tab:discretizacao}
+\begin{tabular}{cccccc}
+\multicolumn{1}{l}{} & \multicolumn{5}{c}{\textbf{Termo da equação}}                                                                                                                                                                                                                                                   \\ \cline{2-6} 
+\textbf{Região}      & gradiente                                                   & divergente                                                              & laplaciano                                                           & interpolação & \begin{tabular}[c]{@{}c@{}}normal à\\ face da célula\end{tabular} \\ \hline
+Combustível          & Gauss linear                                                & -                                                                       & \begin{tabular}[c]{@{}c@{}}Gauss linear\\ não-corrigido\end{tabular} & linear       & não-corrigido                                                     \\ \hline
+Revestimento         & Gauss linear                                                &                                                                         & \begin{tabular}[c]{@{}c@{}}Gauss linear\\ não-corrigido\end{tabular} & linear       & não-corrigido                                                     \\ \hline
+Refrigerante         & \begin{tabular}[c]{@{}c@{}}Mínimos\\ quadrados\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}Bounded\\ Gauss upwind\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Gauss linear \\ limitado 1.0\end{tabular} & linear       & limitada 1.0                                                     
+\end{tabular}
+\end{table}
+\subsection{Condições de contorno e parâmetros numéricos: neutrônica}
+\label{ssec:neutro}
+
+% Colocar um exemplo aqui?
+% Ou uma figura?
+
+% --------------------------------- SECOES DE CHOQUE -----------------------------------------%
 \section{Geração de seções de choque}
 \label{sec:gerxs}
 
@@ -188,12 +413,25 @@ todos os materiais foram definidos como anéis concêntricos. Geometria definida
 foram definidas quatro diferentes temperaturas cobrindo a faixa de operação
 do reator TRIGA IPR-R1. A menor temperatura sendo a temperatura ambiente até
 a temperatura próxima a máxima do combustível do TRIGA IPR-R1 em operação
-a $250 kW$ \cite{Veloso2005}, num grupo de quatro.
+a $250 kW$ \cite{Veloso2005}, num grupo de quatro, apresentado na tabela
+\ref{tab:temp}.
 
+\begin{table}[]
+\centering
+\caption{Temperaturas de referência para os materiais.}
+\label{tab:temp}
+\begin{tabular}{lrrrr}
+\multicolumn{5}{c}{Temperaturas dos materiais}                                                                                                       \\ \hline
+             & \multicolumn{1}{l}{$T_1${[}K{]}} & \multicolumn{1}{l}{$T_2${[}K{]}} & \multicolumn{1}{l}{$T_3${[}K{]}} & \multicolumn{1}{l}{$T_4${[}K{]}}      \\ \hline
+Combustível  & 300                             & 400                             & 500                             & 600                             \\ \hline
+Revestimento & 300                             & 396                             & 403                             & 410                             \\ \hline
+Refrigerante & 300                             & 308,5                           & 317                             & 341                            
+\end{tabular}
+\end{table}
 
 A metodologia utilizada para a geração de seções de choque \cite{Reis2015}
 foi desenvolvida pelo grupo de física de reatores do DEN/UFMG. Esta metodologia
-utiliza o código WIMSD-5B para gerar seções de choque dependentes da temperatura
+utiliza o código WIMSD-5B \cite{Halsall1986} para gerar seções de choque dependentes da temperatura
 para materias específicos e para variado número de grupos de energia. No presente
 trabalho, foram utilizados dois grupos de energia separados em 0,625 Mev como
 apresentado na tabela \ref{tab:coeff-dif}. A composição dos materiais utilizados,
@@ -210,7 +448,7 @@ e moderador.
   \centering
   \caption[Temperaturas para combustível.]{Temperaturas para o combustível}.
   \label{tab:temp-fuel}
-  \begin{tabular}{r l l l l}
+  \begin{tabular}{r r r r r}
   \multicolumn{5}{c}{Combustível} \\
   \hline
   Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
@@ -231,7 +469,7 @@ e moderador.
   \centering
   \caption[Temperaturas para o revestimento.]{Temperaturas para o revestimento}.
   \label{tab:temp-cladding}
-  \begin{tabular}{r l l l l}
+  \begin{tabular}{r r r r r}
     \multicolumn{5}{c}{Revestimento} \\
     \hline
     Parâmetro & $300K$ & $396K$ & $403K$ & $410K$ \\
@@ -250,7 +488,7 @@ e moderador.
   \centering
   \caption[Temperaturas para o refrigerante.]{Temperaturas para o refrigerante}.
   \label{tab:temp-coolant}
-  \begin{tabular}{r l l l l}
+  \begin{tabular}{r r r r r}
     \multicolumn{5}{c}{Moderador} \\
     \hline
     Parâmetro & $300K$ & $308,5K$ & $317K$ & $341K$ \\
@@ -283,101 +521,3 @@ exatamente tabulada, o \textit{milonga} provê interpolação linear por padrão
 É exatamente esta característica do \textit{milonga} que permite o cálculo neutrônico
 independente por elemento de volume, sendo possível obter variações detalhadas
 de acordo com a granularidade da malha utilizada pelo modelo.
-
-\section{Modelo físico e numérico}
-\label{sec:mod_fis_num}
-
-O modelo escolhido, de acordo com as limitações em termos
-de \textit{software} apresentadas na início deste capítulo, representa um
-elemento combustível do reator TRIGA IPR-R1, ainda operacional, localizado
-no CDTN. O combustível do TRIGA possui uma grande sensibilidade na sua
-reatividade com a temperatura devido à presença do hidreto de zircônio
-em sua constituição. Essa característica intrínseca permite que pequenas
-variações nas suas temperaturas levem a variações perceptíveis na neutrônica,
-o que torna este modelo interessante para avaliação do acoplamento.
-
-\begin{figure}[htb]
-  \caption{Discretização do modelo: regiões e materiais.}
-  \centering\includegraphics[scale=0.5]{figuras/regioes_edges_com_legenda_ingles.png}
-  \label{fig:modelo_exploded}
-%  \legend{Fonte: autor}
-\end{figure}
-
-O modelo consiste num combustível com revestimento de alumínio sem
-o \textit{gap}, de modo que o diâmetro do combustível é mantido como no
-combustível de referência e o diâmetro do \textit{gap} é estendido para
-ocupar este espaço. Além disso, o modelo considera apenas o comprimento
-ativo do combustível, sendo como um combustível mais curto. O volume
-de água ao redor do combustível foi modelada considerando a razão entre
-material físsil e moderador do núcleo completo do reator. Nenhuma outra
-estrutura sólida, como discos de samário ou elementos estruturais, é
-respresentada no modelo, sendo este idêntico axialmente em qualquer
-altura, como observável na Figura \ref{fig:modelo_exploded}.
-
-\begin{table}[htb]
-\centering
-  \caption[Medidas do modelo.]{Medidas do modelo.}
-  \label{tab:size_model}
-  \begin{tabular}{r l}
-    Estrutura & $[cm]$ \\
-    \hline
-    Raio do combustível & 1.78 \\
-    Raio externo do revestimento & 1.865 \\
-    Arestas do refrigerante/moderador & 4.57 \\
-    \hline
-    Altura axial & 35.0 \\
-    \hline
-  \end{tabular}
-\end{table}
-
-A malha gerada para o modelo foi construída por extrusão. Isso significa que
-Os elementos de malha foram gerados para uma superfície e a dimensão espacial
-foi dada por um valor de comprimento além do número de camadas a serem geradas.
-Foram geradas 35 camadas (cada uma com um $cm$), sendo o tamanho relativo
-mínimo para elemento de malha de 0,5 e máximo de 4.0. Esses valores constrolam
-o quanto o elemento próximo ao ponto com tal tamanho relativo crescerá durante
-a geração da malha. A razão de crescimento entre o refinamento do revestimento
-e as áreas restantes foi estabelecido em 1,2. Com isso, foi possível conseguir
-elementos suficientemente pequenos para realizar os cálculos na região
-do revestimento e ainda obter uma malha com tamanho tratável pelo \textit{milonga}.
-A malha gerada tem 346.675 elementos.
-
-As dimensões da malha do modelo geram implicações nos resultados dos cálculos, em
-especial a pequena granularidade axial (35 camadas). Entretanto, mesmo com tais
-limitações, impostas pelo \textit{milonga}, é possível utilizá-la para verificar
-as diferenças entre um sistema não acoplado e outro acoplado.
-
-
-\subsection{Condições de contorno e parâmetros numéricos da termo-hidráulica}
-\label{subsec:ccth}
-
-São quatro condições de contorno utilizadas na solução da simulação termo-hidráulica.
-As extremidades do combustível e do revestimento são definidas como adiabáticas. Nas
-extremidades da região do refrigerante, são definidos entrada (\textit{inlet}) e
-saída (\textit{outlet}) para o escoamento. As laterais do modelo são definidas
-como simétricas. Na figura \ref{fig:ccth} são mostradas as condições de contorno
-utilizadas e as regiões correspondentes. As regiões sólidas são assim representadas
-enquanto a região do modelo correspondente ao fluido é representada como malha.
-
-\begin{figure}[htb]
-  \caption{Modelo: condições de contorno da simulação termo-hidráulica e regiões
-    correspondentes. As superfícies definidas como simétricas estão em vermelho
-    enquanto em azul estão a entrada e saída de fluido. A região sólida representa
-    o combustível e revestimento, ambos com condiçoes de contorno adiabáticas nas
-    extremidades.}
-  \centering\includegraphics[scale=0.5]{figuras/inlet_paredes_extremos_wireframe2.png}
-  \label{fig:ccth}
-%  \legend{Fonte: autor}
-\end{figure}
-
-As superfícies entre regiões têm suas condições de contorno definidas automaticamente
-num dos passos da etapa de pré-processamento. Por definição, o \textit{OpenFOAM} importa
-a malha num único conjunto de elementos, armazenando as definições de regiões
-contidas na malha. Um dos utilitários disponibilizados pelo \textit{OpenFOAM} separa
-as regiões, gerando condições de contorno em cada uma das regiões que representam
-as interfaces entre regiões. Outro utilitário é utilizado em seguida para definir valores
-para os parâmetros das respectivas condições de contorno.
-
-% Colocar um exemplo aqui?
-% Ou uma figura?
-
