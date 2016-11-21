@@ -318,13 +318,14 @@ abordagem com \textit{software} livre}
    \end{center}
     
 %   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
-   \imprimirlocal, 31 de julho de 2016:
+   \imprimirlocal, 19 de dezembro de 2016:
 
    \assinatura{\textbf{Orientadora}\\\imprimirorientador}
    \assinatura{\textbf{Coorientador}\\\imprimircoorientador} 
    \assinatura{\textbf{Professora} \\ Antonella Lombardi Costa}
    \assinatura{\textbf{Pesquisador} \\ Hugo César Rezende}
    \assinatura{\textbf{Pesquisador} \\ Marcelo Antônio Veloso}
+      \assinatura{\textbf{Pesquisador} \\ Quem mais}
       
    \begin{center}
     \vspace*{0.5cm}
@@ -377,8 +378,25 @@ abordagem com \textit{software} livre}
 % ---
 
 % resumo em português
-%\begin{resumo}
-% Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
+\begin{resumo}
+
+  Nesta tese é apresentado o desenvolvimento de um sistema de cálculos
+  neutrônicos e termo-hidráulicos acoplado que utiliza malhas finas não-estruturadas
+  como domínio de solução e totalmente baseado em \textit{software} livre.
+  As constribuições propostas seguem em dois diferentes eixos: uma é o foco na utilização
+  da forma de desenvolvimento de sistemas de computação abertos, um conceito amplamente
+  utilizado em diversas áreas do conhecimento mas raramente explorado no campo de Engenharia Nuclear;
+  o segundo é o uso de memória compartilhada do sistema operacional como uma área de armazenamento
+  de dados de confiável e rápido acesso para acoplar o sistema de dinâmica dos fluidos computacional
+  (CFD) \textit{OpenFOAM} e o gratuito e flexível código de análise de reatores \textit{milonga}.
+  Este conceito foi aplicado na simulação do comportamento de um modelo simplificado com um combustível
+  do reator TRIGA IPR-R1 em estado estacionário. As seções de choque macroscópicas utilizadas pelo
+  modelo, um conjunto para dois grupos de energia, foram geradas utilizando o código WIMSD-5B.
+  Os resultados mostram que esta inovadora forma de acoplamento neutrônico e termo-hidráulico leva
+  a resultados consistentes,
+  encorajando o futuro desenvolvimento deste sistema e seu uso na simulação de um reator completo.
+
+%  Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
 % objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
 % destes itens dependem do tipo de resumo (informativo ou indicativo) e do
 % tratamento que cada item recebe no documento original. O resumo deve ser
@@ -386,24 +404,30 @@ abordagem com \textit{software} livre}
 % próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
 % resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
 % ponto e finalizadas também por ponto.
-%
-% \vspace{\onelineskip}
-%    
-% \noindent
-% \textbf{Palavras-chaves}: latex. abntex. editoração de texto.
-%\end{resumo}
+
+ \vspace{\onelineskip}
+    
+ \noindent
+ \textbf{Palavras-chaves}: neutrônica. termo-hidráulica. acoplamento. \textit{OpenFOAM}. \textit{milonga}. volumes finitos. \textit{free software}.
+\end{resumo}
 
 % resumo em inglês
-%\begin{resumo}[Abstract]
-% \begin{otherlanguage*}{english}
-%   This is the english abstract.
-%
-%   \vspace{\onelineskip}
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+   The development of a fine mesh coupled neutronics/thermal-hydraulics framework mainly using open source software is presented.
+   The contributions proposed go in two different directions: one, is the focus on the open software approach development, a concept
+   widely spread in many fields of knowledge but rarely explored in the nuclear engineering field; the second, is the use operating
+   system shared memory as a fast and reliable storage area to couple the computational fluid dynamics (CFD) software OpenFOAM to the
+   free and flexible reactor core analysis code milonga. This concept was applied to simulate the the behavior of a TRIGA-IPR-R1 reactor
+   fuel pin in steady-state mode. The macroscopic cross-sections for the model, a set of two-group cross-sections data, were generated using WIMSD-5B code.
+   The results show that this innovative coupled system gives consistent results, encouraging system further development and its use for full core simulation.
+   
+   \vspace{\onelineskip}
 % 
-%   \noindent 
-%   \textbf{Key-words}: latex. abntex. text editoration.
-% \end{otherlanguage*}
-%\end{resumo}
+   \noindent 
+   \textbf{Key-words}: neutronics. thermal-hydraulics. coupling. OpenFOAM. milonga. finite volumes. free software.
+ \end{otherlanguage*}
+\end{resumo}
 
 % resumo em francês 
 %\begin{resumo}[Résumé]

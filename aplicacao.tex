@@ -178,18 +178,15 @@ respresentada no modelo, sendo este idêntico axialmente em qualquer
 altura, como observável nas Figuras \ref{fig:regions} e  e \ref{fig:region_isometric}.
 
 \begin{table}[htb]
-\centering
+  \centering
   \caption[Medidas do modelo.]{Medidas do modelo.}
   \label{tab:size_model}
-  \begin{tabular}{r l}
-    Estrutura & $[cm]$ \\
-    \hline
-    Raio do combustível & 1.78 \\
-    Raio externo do revestimento & 1.865 \\
-    Arestas do refrigerante/moderador & 4.57 \\
-    \hline
-    Altura & 35.0 \\
-    \hline
+  \begin{tabular}{lr}
+    Estrutura                         & {[}cm{]} \\ \hline
+    Raio do combustível               & 1,78     \\
+    Raio externo do revestimento      & 1,865    \\
+    Arestas da região do refrigerante & 4,57     \\ \hline
+    Altura do modelo do combustível   & 35,0    
   \end{tabular}
 \end{table}
 
@@ -226,7 +223,7 @@ são definidas como adiabáticas. Nas
 extremidades da região do refrigerante (água), são definidos entrada (\textit{inlet}) e
 saída (\textit{outlet}) para o escoamento. As laterais do modelo são definidas
 como simétricas. Na figura \ref{fig:ccth} são mostradas as condições de contorno
-utilizadas e as regiões correspondentes. As superfícies definidas como simétricas
+utilizadas e as regiões correspondentes. As superfícies definidas como simétricas (\textit{symmetry})
 estão em vermelho
 enquanto em azul estão a entrada e saída de fluido. A região sólida representa o
 combustível e revestimento, ambos com condiçoes de contorno adiabáticas nas extremidades.
@@ -245,58 +242,58 @@ a malha num único conjunto de elementos, armazenando as definições de regiõe
 contidas na malha. Um dos utilitários disponibilizados pelo \textit{OpenFOAM} separa
 as regiões, gerando condições de contorno em cada uma das regiões que representam
 as interfaces entre regiões. Outro utilitário é utilizado em seguida para definir valores
-para os parâmetros das respectivas condições de contorno. Como resultado do pré-processamento
+para os parâmetros das respectivas condições de contorno, de acordo com as definições
+previamente feitas pelo usuário. Como resultado do pré-processamento
 entre regiões, são obtidas condições de contorno que implementam a troca
-conjugada de calor entre as distintas regiões.
-
-Na tabela \ref{tab:cc-superf} são apresentadas as condições de contorno utilizadas
-nas superfícies entre regiões para a temperatura. É possível perceber que todas as superfícies,
+conjugada de calor entre as distintas regiões. Na tabela \ref{tab:cc-superf} são
+apresentadas as condições de contorno utilizadas nas superfícies entre regiões para a temperatura.
+É possível perceber que todas as superfícies,
 tanto para campos sólidos e fluidos, utilizam a mesma condição de contorno:
-\begin{itemize}
-\item \texttt{compressible::turbulentCoupledBaffleMixed}.
-\end{itemize}
+\texttt{compressible::turbulentCoupledBaffleMixed}.
+%\begin{itemize}
+%\item \texttt{compressible::turbulentCoupledBaffleMixed}.
+%\end{itemize}
+
+\begin{table}[htb]
+\centering
+\caption{Condições de contorno entre superfícies internas (pré-processamento)}
+\label{tab:cc-superf}
+\begin{tabular}{llcc}
+\multicolumn{1}{c}{Região}    & \multicolumn{1}{c}{Superfície} & \begin{tabular}[c]{@{}c@{}}Condição\\ de contorno\end{tabular}                                        & Campo              \\ \hline
+Combustível                   & \textit{fuel\_to\_cladding}    & \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}compressible::\\ turbulentCoupledBaffleMixed\end{tabular}} & \multirow{4}{*}{T} \\ \cline{1-2}
+\multirow{2}{*}{Revestimento} & \textit{cladding\_to\_fuel}    &                                                                                                       &                    \\
+                              & \textit{cladding\_to\_coolant} &                                                                                                       &                    \\ \cline{1-2}
+Refrigerante                  & \textit{coolant\_to\_cladding} &                                                                                                       &                   
+\end{tabular}
+\end{table}
+As condições de contorno devem ser estabelecidas para todas as grandezas sendo calculadas. Algumas
+destas grandezas, como a potência ($Q$), por exemplo, são automaticamente calculadas nas superfícies a partir
+dos campos internos. Entretanto, isto não desobriga o usuário de explicitamente definí-las como \textit{calculated}.
 
 Esta condição de contorno utiliza as
-propriedades termofísicas dos respectivos materiais previamente definidas para o cálculo
-em tempo de simulação, do fluxo de calor entre as regiões. As propriedades termofísicas
-dos materiais são dadas na tabela \ref{tab:termofisica}.
+propriedades termofísicas dos respectivos materiais, que são previamente definidas na
+modelagem do problema, para o cálculo do fluxo de calor entre as regiões. As propriedades termofísicas
+dos materiais utilizados por este modelo são dadas na tabela \ref{tab:termofisica}.
 
-\begin{table}[]
+
+
+\begin{table}[htb]
 \centering
-\caption{Propriedades termofísicas dos materiais}
+\caption{Propriedades termofísicas dos materiais em função da temperatura ($T$)}
 \label{tab:termofisica}
 \begin{tabular}{lllll}
 Material     & \begin{tabular}[c]{@{}l@{}}Densidade\\ {[}$kg/m^3${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Calor específico\\ {[}$kJ/kg.K${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Condutividade\\ {[}$W/m.K${]}\end{tabular}      & \begin{tabular}[c]{@{}l@{}}Viscosidade\\ {[}$\mu Pa.s${]}\end{tabular} \\
 \hline
-Combustível  & 6280                                                               & \begin{tabular}[c]{@{}l@{}}0.892+\\ 4.44361x10\end{tabular}              & \begin{tabular}[c]{@{}l@{}}22.872-\\ 4.3131e-3\end{tabular}              & -                                                                     \\
+Combustível  & 6280                                                               & \begin{tabular}[c]{@{}l@{}}$0,294$+\\ 6.,196 x $10^{-4} T-$\\2,748 x $10^{-9} T^2+$\\1,354 x $10^{-11} T^3$\end{tabular}              & \begin{tabular}[c]{@{}l@{}}22,872-\\ 4,3131 x $10^{-2} T +$ \\1,124 x $10^{-4} T^2-$\\1,0039 x $10^{-11} T^3$\end{tabular}              & -                                                                     \\
 \hline
-    Revestimento & 2705                                                               & \begin{tabular}[c]{@{}l@{}}0.294+\\ 6.196e-4\end{tabular}                & \begin{tabular}[c]{@{}l@{}}223.7+\\ 4.756e-3+\\ 555+\\ 4444\end{tabular} & -                                                                     \\
+Revestimento & 2705                                                               & \begin{tabular}[c]{@{}l@{}}$0,892$+\\4,44361 x $10^{-4} T+$\\3,632 x $10^{-8} T^2$\end{tabular}                & \begin{tabular}[c]{@{}l@{}}223,7+\\ 4.756 x $10^{-2}T+$\\ 1,0215 x $10^{-5} T^2-$\\ 1,8887 x $10^{-11} T^3$
+  \end{tabular} & -                                                                     \\
 \hline
-        Refrigerante & 995                                                                & 4.18                                                                       & 0.62                                                                       & 797                                                                  
+        Refrigerante & 995                                                                & 4,18                                                                       & 0,62                                                                       & 797                                                                  
 \end{tabular}
 \end{table}
 
 
-
-\begin{table}[]
-\centering
-\caption{Condições de contorno entre superfícies internas (pré-processamento)}
-\label{tab:cc-superf}
-\begin{tabular}{llll}
-  \textbf{Região}                   & Superfície    & Condição de Contorno                  & Campo                  \\
-  \hline
-  \textbf{Combustível}                   & \textit{fuel\_to\_cladding}    & compressible::turbulentCoupledBaffleMixed                  & T                  \\
-  \hline
-  \multirow{2}{*}{\textbf{Revestimento}} & \textit{cladding\_to\_fuel}    & \multirow{2}{*}{compressible::turbulentCoupledBaffleMixed} & \multirow{2}{*}{T} \\
-  & \textit{cladding\_to\_coolant} &                                                            &                    \\
-  \hline
-  \textbf{Refrigerante}                  & \textit{coolant\_to\_cladding} & compressible::turbulentCoupledBaffleMixed                  & T                 
-\end{tabular}
-\end{table}
-
-As condições de contorno devem ser estabelecidas para todas as grandezas sendo calculadas. Algumas
-destas grandezas, como a potência ($Q$), por exemplo, são automaticamente calculadas nas superfícies a partir
-dos campos internos. Entretanto, isto não desobrigado o usuário de explicitamente definí-las como \textit{calculated}.
 
 As principais condições de contorno e iniciais do problema apresentado estão definidas na tabela \ref{tab:cc-init}.
 Estas condições descrevem as características iniciais do problema sendo resolvido. Alguns comentários sobre sobre
@@ -309,7 +306,7 @@ campo é definido como \textbf{variável}, já que esta distribuição de potên
 
 Vale ressaltar que a potência, tal qual implementada no \textit{solver}, é dada em $W$ por $m^3$.
 
-\begin{table}[]
+\begin{table}[htb]
 \centering
 \caption{Condições de contorno iniciais para a termo-hidráulica}
 \label{tab:cc-init}
@@ -338,30 +335,59 @@ do reator TRIGA IPR-R1 \cite{Veloso2005}. A turbulência foi modelada utilizando
 $\kappa-\epsilon$ \cite{Launder1974}, que assume que a viscosidade turbulenta está relacionada
 à energia cinética ($\kappa$) e dissipação ($\epsilon$).
 
-Uma vez definidas as características físicas do modelo e as condições iniciais e de contorno, é
-possível dizer que o problema está fechado e é possível iniciar os cálculos propriamente ditos.
-Entretanto, de modo a iniciar os cálculos, são necessárias, além das configurações relativas
-ao problema físico, as definições relativas aos esquemas de discretização utilizados e aos
-algoritmos numéricos usados. Complementando a breve introdução ao método de volumes finitos
-dada no capítulo \ref{chap:teoria} desta tese, são apresentados na tabela \ref{tab:discretizacao}
-os esquemas de discretização
-utilizados nos cálculos acoplados e não acoplados.
+Uma vez definidas as características físicas do modelo e as condições iniciais e de contorno,
+o problema está fechado e é possível iniciar os cálculos propriamente ditos.
 
-\begin{table}[]
+Entretanto, para isso, são necessárias, além das configurações relativas
+ao problema físico, as definições relativas aos esquemas de discretização a serem utilizados e aos
+algoritmos numéricos a serem utilizados. Entenda-se por esquemas de discretização, 
+
+Complementando a breve introdução ao método de volumes finitos
+dada no capítulo \ref{chap:teoria} desta tese, são apresentados na tabela \ref{tab:discretizacao}
+os esquemas de discretização utilizados nos cálculos acoplados e não acoplados. O manual
+do programadar do \textit{OpenFOAM} \cite[Seção 2.4]{OpenFOAM2015b} descreve com detalhes alguns
+dos métodos de discretização de equações disponíveis na ferramenta.
+
+
+\begin{table}[htb]
 \centering
 \caption{Esquemas de discretização utilizados nos cálculos de volumes finitos}
 \label{tab:discretizacao}
 \begin{tabular}{cccccc}
 \multicolumn{1}{l}{} & \multicolumn{5}{c}{\textbf{Termo da equação}}                                                                                                                                                                                                                                                   \\ \cline{2-6} 
-\textbf{Região}      & gradiente                                                   & divergente                                                              & laplaciano                                                           & interpolação & \begin{tabular}[c]{@{}c@{}}normal à\\ face da célula\end{tabular} \\ \hline
+\textbf{Região}      & $\nabla \phi$                                                   & $\nabla . \phi$                                                              & $\nabla^2 . \phi$                                                           & interpolação & \begin{tabular}[c]{@{}c@{}}normal à\\ face da célula\end{tabular} \\ \hline
 Combustível          & Gauss linear                                                & -                                                                       & \begin{tabular}[c]{@{}c@{}}Gauss linear\\ não-corrigido\end{tabular} & linear       & não-corrigido                                                     \\ \hline
 Revestimento         & Gauss linear                                                &                                                                         & \begin{tabular}[c]{@{}c@{}}Gauss linear\\ não-corrigido\end{tabular} & linear       & não-corrigido                                                     \\ \hline
 Refrigerante         & \begin{tabular}[c]{@{}c@{}}Mínimos\\ quadrados\end{tabular} & \textit{\begin{tabular}[c]{@{}c@{}}Bounded\\ Gauss upwind\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Gauss linear \\ limitado 1.0\end{tabular} & linear       & limitada 1.0                                                     
 \end{tabular}
 \end{table}
+
+Os esquemas utilizados na solução do problema apresentado foram escolhidos na tentativa de manter
+um compromisso entre o tempo de execução e qualidade da solução (em termos de erros inerentes
+aos métodos de discretização). Por se tratar de um problema conceitual, como extensamente mencionado,
+a ideia por detrás da escolha dos métodos de discretização foi de interferir o mínimo possível com
+os valores padrão do \textit{solver} utilizado e, ao mesmo tempo, garantir que o termo-fonte
+adicionado não impactasse negativamente o processo de obtenção da solução numérica.
+
+
+
+
+% --------------------------------- NEUTRONICA -----------------------------------------%
 \subsection{Condições de contorno e parâmetros numéricos: neutrônica}
 \label{ssec:neutro}
 
+
+\begin{table}[htb]
+\caption{Condições de contorno da neutrônica}
+\label{tab:cc-neut}
+\begin{tabular}{ccc}
+Fronteira         & Tipo                             & Região correspondente         \\ \hline
+\textit{inlet}    & \multirow{2}{*}{\textit{Vacuum}} & \multirow{2}{*}{Refrigerante} \\
+\textit{outlet}   &                                  &                               \\ \cline{1-1}
+\textit{extremes} & \textit{Vacuum}                  & Revestimento e combustível    \\ \hline
+\textit{walls}    & \textit{Mirror}                  & Refrigerante                 
+\end{tabular}
+\end{table}
 % Colocar um exemplo aqui?
 % Ou uma figura?
 
@@ -409,14 +435,16 @@ Para a geração das seções de choque, um modelo bidimensional com propriedade
 equivalentes ao modelo tridimensional a ser simulado
 foi definido. Esta equivalência foi garantida mantendo-se a proporção entre material
 físsil e moderador em ambos os modelos. Com base nessa proporção,
-todos os materiais foram definidos como anéis concêntricos. Geometria definida,
+todos os materiais foram definidos como anéis concêntricos. 
+
+Uma vez definida a geometria,
 foram definidas quatro diferentes temperaturas cobrindo a faixa de operação
 do reator TRIGA IPR-R1. A menor temperatura sendo a temperatura ambiente até
 a temperatura próxima a máxima do combustível do TRIGA IPR-R1 em operação
 a $250 kW$ \cite{Veloso2005}, num grupo de quatro, apresentado na tabela
 \ref{tab:temp}.
 
-\begin{table}[]
+\begin{table}[htb]
 \centering
 \caption{Temperaturas de referência para os materiais.}
 \label{tab:temp}
@@ -436,7 +464,27 @@ para materias específicos e para variado número de grupos de energia. No prese
 trabalho, foram utilizados dois grupos de energia separados em 0,625 Mev como
 apresentado na tabela \ref{tab:coeff-dif}. A composição dos materiais utilizados,
 em especial o combustível, que contem mais isótopos, se baseou na composição
-isotópica do reator TRIGA IPR-R1 no ano de 2004.
+isotópica do reator TRIGA IPR-R1 no ano de 2004. Estas composições, massa e código
+de material utilizados na geração de seções
+de choque pelo WIMSD-5B estão na Tabela \ref{tab:composicao}.
+
+
+\begin{table}[htb]
+  \centering
+  \caption{Composição dos materiais para geração de seções de choque com o WIMSD-5B \cite{Halsall1986, Reis2015}}
+  \label{tab:composicao}
+\begin{tabular}{rlcr}
+                              & \multicolumn{1}{c}{Material}                                         & Código & \multicolumn{1}{c}{Massa} \\ \cline{2-4} 
+\multirow{4}{*}{Combustível}  & \begin{tabular}[c]{@{}l@{}}H (no hidreto\\ de zircônio)\end{tabular} & 5001   & $3,7525e^{-02}$           \\
+                              & Zr                                                                   & 91     & $3,7727e^{-02}$           \\
+                              & U$^{235}$                                            & 2235   & $2,5744e^{-04}$           \\
+                              & U$^{238}$                                            & 8238   & $1,0167e^{-03}$           \\ \hline
+Revestimento                  & Al                                                                   & 27     & $6,0261e^{-02}$           \\ \hline
+\multirow{2}{*}{Refrigerante} & H                                                                    & 3001   & $6,6653e^{-02}$           \\
+                              & O                                                                    & 6016   & $3,3327e^{-02}$          
+\end{tabular}
+\end{table}
+
 
 As temperaturas utilizadas na geração das seções de choque
 e as seções de choque resultantes são apresentadas nas tabelas \ref{tab:temp-fuel},
