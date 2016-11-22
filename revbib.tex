@@ -400,6 +400,25 @@ para cálculo neutrônico do núcleo e validação do código PARCS \cite{PARCS2
 é de que as adaptações feitas nos códigos levaram a resultados consistentes, mas que ainda há trabalho 
 a ser feito para a simulação tridimensional completa desse tipo de reator.
 
+Uma das mais utilizadas ferramentas para estudo de segurança de reatores nucleares é o
+código de sistemas thermo-hidráulicos RELAP \cite{Relap2003}. Sua utilização para simulação
+de cenários de transientes severos e acidentes é ampla, podendo ser considerado a
+ferramenta \textit{de facto} para análise de acidentes termo-hidráulicos em centrais nucleares.
+Como consequência de seu alcance em número de usuários, não é de se espantar que esta ferramenta
+tenha também sido empregada em cálculos acoplados com neutrônica. Um exemplo que merece citação
+é o trabalho de Reis \cite{Reis2015}, em que o RELAP foi utilizado de forma acoplada com
+o código PARCS para simulação do reator TRIGA IPR-R1, do Centro de Desenvolvimento de
+Tecnologia Nuclear, reator também utilizado como referência nesta tese. Há, entretanto, um
+trabalho que utiliza o RELAP para cálculos acoplados que deve obrigatoriamente ser
+mencionado nesta tese. Maciel \cite{Maciel2011} utilizou o código RELAP acoplado com
+com um código local baseado no código DYNETZ para gerar uma biblioteca genérica de
+acoplamento. Apesar da limitação a uma única plataforma, esta biblioteca é o único trabalho
+encontrado na literatura - dentro do máximo conhecimento do autor desta tese - que utiliza
+memória compartilhada, base do desenvolvimento do acoplamento desta tese, para troca
+de dados entre códigos acoplados. Para isso, foi necessário alterar sensivelmente
+o código fonte do RELAP de modo a permitir que variáveis internas pudessem ser utilizadas
+de forma acoplada. 
+
 O pioneirismo do grupo da universidade de Chalmers, em Gotemburgo - Suécia, encabeçado
 por Christophe Demazière, além dos já citados trabalhos \cite{Jareteg2012, Jareteg2014},
 também se refletiu em outras formas de acoplamento. Desta vez, sem o uso do \textit{OpenFOAM},

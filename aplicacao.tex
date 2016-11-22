@@ -370,14 +370,18 @@ os valores padrão do \textit{solver} utilizado e, ao mesmo tempo, garantir que 
 adicionado não impactasse negativamente o processo de obtenção da solução numérica.
 
 
-
-
 % --------------------------------- NEUTRONICA -----------------------------------------%
 \subsection{Condições de contorno e parâmetros numéricos: neutrônica}
 \label{ssec:neutro}
 
+O \textit{milonga} convenientemente trata internamento as condições de contorno
+entre as diferentes regiões, ou materiais, do ponto de vista dos cálculos neutrônicos,
+poupando o usuário de certa quantidade de trabalho extra e evitando introdução
+de erros de modelagem. Desse modo, é suficiente definir as condições de contorno
+para as superfícies externas do domínio.
 
 \begin{table}[htb]
+  \centering
 \caption{Condições de contorno da neutrônica}
 \label{tab:cc-neut}
 \begin{tabular}{ccc}
@@ -388,6 +392,29 @@ Fronteira         & Tipo                             & Região correspondente   
 \textit{walls}    & \textit{Mirror}                  & Refrigerante                 
 \end{tabular}
 \end{table}
+
+As condições de contorno que podem ser usadas são de um fluxo imposto (Dirichlet),
+uma corrente imposta (Neumann) ou uma combinação linear destas (Robin). A condição de
+fluxo se limita a fluxo zero na fronteira. Esta condição é aplicada utilizando-se
+a palavra-chave \textit{vacuum} dentro do \textit{milonga}, enquanto a condição
+de corrente deve ter derivada zero na direção da normal à fronteira e é utilizada
+pela palavra-chave \textit{mirror}. Caso se deseje utilizar a condição mixta, deve
+ser utilizada a palavra-chave \textit{robin} seguida do um argumento de ponto
+flutuante entre zero e um.
+
+As condições de contorno utilizadas no modelo utilizado estão listadas na Tabela
+\ref{tab:cc-neut}. Na figura \ref{fig:cc-neut} podem ser vistas na metade à esquerda
+a malha e as condições de contorno utilizadas enquanto na metade direita as
+regiões correspondentes a cada material.
+
+\begin{figure}[htb]
+  \caption{Vista superior do modelo de combustível apresentando as distintas regiões e condições de contorno
+    sobre a malha bidimensional.}
+  \centering\includegraphics[scale=0.52]{figuras/regions_neutronica_malha_e_sem.png}
+  \label{fig:cc-neut}
+%  \legend{Fonte: \cite{Veloso2005}}
+\end{figure}
+
 % Colocar um exemplo aqui?
 % Ou uma figura?
 
