@@ -323,23 +323,89 @@ para $G$ grupos:
 
 (Inserir a tabela de grandezas)
 
+% -----------------------------------------------------
+% Adicionado depois da conversa com a Cláubia dia 24/11
+% -----------------------------------------------------
+Nessa formulação, espera-se que as seções de choque macroscópicas e os coeficientes de difusão sejam
+previamente computador por códigos de \textit{lattice} para serem usados na formulação por difusão.
 A dependência das seções de choque da temperatura pode ser considerada linear uma vez que
 os coeficientes são mantidos constantes durantes cada passo do cálculo iterativo utilizado
-pelo \textit{milonga}
+pelo \textit{milonga}.
+
+A equação \ref{eq:difusao} assume que todos os coeficientes de difusão utilizados são
+contínuos no espaço. Na formulação de volumes finitos,
+o fluxo escalar é definido em cada célula. Quando células vizinhas são formadas
+pelo mesmo material, é possível estimar o módulo do gradiente do fluxo
+utilizando o teorema do valor médio \cite{Theler2013b}.
+
+Caso isso não seja verdade, então o operador de divergência não
+está definido nos pontos de discontinuidade. Assim, a formulação apresentada precisa tratar
+dos casos de descontinuidade, que são, na prática, as superfícies de fronteiras entre
+materiais. Nessas interfaces, o \textit{milonga} aplica uma condição de
+conservação da corrente de neutrons:
+
+\begin{equation}
+  \label{eq:corrente}
+  D_g^+(\bar{x}).\nabla \phi_g^+(\bar{x})=D_g^+(\bar{x}).\nabla \phi_g^-(\bar{x})
+  \end{equation}
+
+Na equação \ref{eq:corrente}, os sinais de mais e menos representam os lados da
+interface. Como os coeficientes de difusão são diferentes, a distribuição de
+fluxo $\phi_g(\bar{x})$ resultante deve ter um gradiente descontínuo na
+interface de modo a conservar a corrente. Na formulação de volumes finitos,
+no caso de células vizinhas compostas por materiais diferentes, espera-se que
+o coeficiente de difusão $\phi_g(\bar{x})$ não seja contínuo na interface
+entre as células. O que se aplica, neste caso, é outro estimador do módulo
+do gradiente, de modo que o fluxo na superfície seja o mesmo visto de um volume
+da interface quanto do outro. Esta estimativa leva em consideração os volumes e
+a geometria das células envolvidas. Uma explicação elegante com o formalismo
+matemático utilizado na implementação do método de volumes finitos no
+\textit{milonga} pode ser encontrada no trabalho de Theler \cite[Seção 3.5.2]{Theler2016}.
+
+
+%Com base na corrente, é implementada
+%uma condição de contorno de \textit{albedo}. Sendo as correntes em cada lado
+%da interface, respectivamente,
+
+%\begin{equation}
+%  \label{eq:corrente-albedo+}
+%  J_g^+(\bar{x})=D_g^+(\bar{x}).\nabla \phi_g^+(\bar{x})
+%\end{equation}
+
+%\begin{equation}
+%  \label{eq:corrente-albedo-}
+%  J_g^-(\bar{x})=D_g^-(\bar{x}).\nabla \phi_g^-(\bar{x})
+%\end{equation}
+
+%O albedo em $(\bar{x})$ é definido pela relação
+
+%\begin{equation}
+%  \label{eq:albedo}
+%\beta_g(\bar{x})=\frac{J_g^-(\bar{x})}{J_g^+(\bar{x})}
+%\end{equation}
+
+%Com base no \textit{albedo}, é implementada uma condição de contorno capaz de lidar
+%com a descontinuidade entre regiões com diferentes propriedades. A implementação
+%das condições de contorno, bem como detalhes das formulações de volumes e elementos
+%finitos utilizados no milonga são elegantemente explicados por Theler \cite{Theler2013b}.
+%Detalhes sobre a continuidade de condições de contorno e a suas formas de implementação
+%na equação de difusão em estado estacionário são cuidadosamente apresentados por Hébert
+%\cite{Hebert2009}.
 
 De forma padrão, o \textit{milonga} funciona lendo um arquivo de entrada que modela o
 problema a ser resolvido. Um dos casos mais simples em que se resolve o fluxo de nêutrons
 num sistema crítico, com seções de choque constantes, é apresentado na figura \ref{fig:inputmilonga}.
+Pode-se observar a definição da formulação, esquema de solução e número de grupos na linha 7.
+Os coeficientes da equação de difusão para um material são apresentadas nas linhas 10-16.
+Condições de contorno baseadas na malha estão definidas nas linhas 19-21 e, na linha 24,
+está o comando utilizado para iniciar os cálculos.
+
 Além dos comandos apresentados, o \textit{milonga} possui um vasto conjunto de comandos e primitivas
 que vão desde pré-processamento da malha até primitivas de saída para visualização gráfica da
 solução.
 
 \begin{figure}[htb]
-  \caption{Arquivo de entrada básico do milonga. A definição da formulação,
-    esquema de solução e número de grupos é apresentada na linha 7. Os coeficientes
-    da equação de difusão para um material são apresentadas nas linhas 10-16.
-    Condições de contorno baseadas na malha estão definidas nas linhas 19-21 e na linha 24
-  está o comando utilizado para iniciar os cálculos.}
+  \caption{Arquivo de entrada básico do milonga. }
   \centering\includegraphics[scale=0.19]{figuras/milonga_example2.png}
   \label{fig:inputmilonga}
 %  \legend{Fonte: autor}
@@ -389,13 +455,13 @@ apresentar o algoritmo, como feito para a implementação do termo-fonte na seç
 esta forma é um pouco árida. Sendo assim, os algoritmos de acoplamento, para ambos os códigos,
 serão descritos por meio de pseudo-código.
 
-A figura \ref{fig:algo_th} apresenta o algoritmo de acoplamento para o \textit{OpenFOAM}. Nela é
-possível notar três principais divisões:
+A Figura \ref{fig:algo_th} apresenta o algoritmo de acoplamento para o \textit{OpenFOAM}.
+As expressões em azul escuro mostram as instruções relativas ao uso de memória compartilhada,
+enquanto em vermelho estão as instruções relativas ao controle de acesso aos dados (semáforos).
+É possível notar, em relação à Figura \ref{fig:algo_th}, três principais divisões:
 
 \begin{figure}[htb]
-  \caption{Algoritmo termo-hidráulica. As expressões em azul escuro mostram as instruções relativas
-    ao uso de memória compartilhada, enquanto em vermelho estão as instruções relativas ao
-  controle de acesso aos dados (semáforos).}
+  \caption{Algoritmo termo-hidráulica.}
   \centering\includegraphics[scale=0.5]{figuras/algoritmo_openfoam.png}
   \label{fig:algo_th}
 %  \legend{Fonte: autor}
@@ -436,13 +502,14 @@ todo o controle do algoritmo de acoplamento é feito no arquivo de entrada. Na v
 \textit{milonga} utilizada (0.4.65) as opções de utilização iterativa ainda são limitadas. Estruturas
 de repetição utilizando condicionais não estão disponíveis. Com isso, optou-se por definir um laço com número
 de execuções fixa. A partir dessa restrição, foi desenvolvido o algoritmo de execução. A figura
-\ref{fig:algo_neutronica} mostra o algoritmo e suas etapas. Cabe ressaltar que, como mencionado anteriormente,
+\ref{fig:algo_neutronica} mostra o algoritmo e suas etapas. As expressões em azul escuro mostram as instru-
+ções relativas ao uso de memória compartilhada, enquanto em vermelho estão
+as instruções relativas ao controle de acesso aos dados (semáforos). Cabe ressaltar que,
+como mencionado anteriormente,
 o \textit{milonga} é iniciado \textbf{antes} do \textit{OpenFOAM}.
 
 \begin{figure}[htb]
-  \caption{Algoritmo neutrônica. As expressões em azul escuro mostram as instru-
-ções relativas ao uso de memória compartilhada, enquanto em vermelho estão
-as instruções relativas ao controle de acesso aos dados (semáforos)}
+  \caption{Algoritmo neutrônica.}
   \centering\includegraphics[scale=0.5]{figuras/algoritmos_milonga.png}
   \label{fig:algo_neutronica}
   %  \legend{Fonte: autor}
@@ -497,9 +564,9 @@ A principal alteração feita no \textit{solver} originalmente implementado foi 
 Esta alteração permite a geração de calor no sólido, útil tanto no problema acoplado
 quanto numa eventual simulação isolada em que se deseje geração de
 calor\footnote{A partir da versão 2.2, o \textit{OpenFOAM} introduziu em alguns dos seus
-\textit{solvers}, incluindo o \texttt{chtMultiRegionSimpleFoam} a possibilidade de definição
+\textit{solvers}, incluindo o \texttt{chtMultiRegionSimpleFoam}, a possibilidade de definição
 de termo-fonte via \texttt{fvOptions}. Isso permite alteração da física do problema em
-tempo de execução. Infelizmente, a forma de implementação desta funcionalidade não atendia uma
+tempo de execução. Infelizmente, a forma de implementação desta funcionalidade não atendia a uma
 utilização do \textit{solver} de forma acoplada.}. Isso foi feito acrescentando-se uma estrutura
 do tipo campo escalar volumétrico, estrutura de dados utilizada pelo \textit{OpenFOAM},
 para armazenar os valores de potência a serem usados. Sendo assim, na sua inicialização,
