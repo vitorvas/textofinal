@@ -532,9 +532,9 @@ complexa, que envolve cálculo de potência, queima, e utiliza um mapeamento rob
 a representação nodal da maioria dos programas de cálculo termo-hidráulico e a geometria
 do código MCNP. Também faz uso de \textit{scripts} em linguagem \textit{Python} para
 tratamento do mapeamento além de estruturas de dados próprias dessa linguagem de programação
-para conseguir inserções e remoções em memórias a custo $O(1)$
-\footnote{Sobre a notação $O(n)$, amplamente utilizada em Ciência da Computação, uma
-  referência é o livro Concrete Mathematics \cite[Seção~9.2]{Graham1994}}.
+para conseguir inserções e remoções em memórias a custo $O(1)$\footnote{Sobre a notação $O(n)$, amplamente utilizada em Ciência da Computação, uma
+  referência é o livro Concrete Mathematics \cite[Seção~9.2]{Graham1994}}, o que significa
+que inserções e remoções em memória tem custo computacional constante.
 % Talvez eu devesse citar o livro do Cormen nessa citação big O
 Os primeiros testes do uso do SMITHERS foram feitos para reatores do tipo BWR e
 PWR.
@@ -550,18 +550,19 @@ potencial em caminhos de desenvolvimento de sistemas acoplados.
 Desta lista mencionada, o primeiro trabalho consiste em um sistema neutrônico e termo-hidráulico
 acoplado \cite{Bennett2016}. Neste acoplamento, são usados um código
 de Monte Carlo (\textit{MCNP6}) para os cálculos neutrônicos e um código de sub-canais (\textit{CTF}). Apesar de não apresentarem
-inovações grandes em relações a acoplamentos anteriores, há duas coisas para as quais deve ser chamada a atenção.
+inovações grandes em relações a acoplamentos anteriores, há dois fatores para os quais deve ser chamada a atenção.
 O \textit{MCNP6} é capaz de gerar seções de choque \textit{on-the-fly}, uma característica desenvolvida com objetivo
 de oferecer suporte ao acoplamento termo-hidráulico. Há alguns anos, o uso de códigos de Monte Carlo para
-acoplamento era impensável. Entretanto, nove anos depois do principal trabalho referência em acoplamento \cite{Ivanov2007}, não só temos
+acoplamento era impensável. Entretanto, nove anos depois da publicação do principal trabalho
+de referência em acoplamento neutrônico e termo-hidráulico \cite{Ivanov2007}, não só temos
 diversos exemplos do uso de códigos de Monte Carlo acoplados, como dois dos principais deles (\textit{MCNP} e \textit{Serpent})
-já possuem por definição de projeto, formas de serem acoplados. A segunda razão que vale mencionar neste
-trabalho, pode passar despercebida: como já mencionado, são nove anos entre dois trabalhos no mesmo tema.
+já oferecem, por definição de projeto, formas de serem acoplados. A segunda razão que vale mencionar neste
+trabalho pode passar despercebida: como já mencionado, são nove anos entre dois trabalhos no mesmo tema.
 Isso serve como exemplo do que é hoje a execução de cálculos acoplados e a insistência em
 investigar formas de fazê-la cada vez mais robusta. A multi-física é hoje uma realidade.
 
 Outro trabalho que merece uma atenção especial é o de Bryan Herman \cite{Herman2015}. Neste caso, novamente
-é usada um código de Monte Carlo para o acoplamento com a termo-hidráulica. A razão de apresentar este trabalho
+é usado um código de Monte Carlo para o acoplamento com a termo-hidráulica. A razão de apresentar este trabalho
 não reside na tentativa de demonstrar a importância dos cálculos multi física - espera-se que, neste ponto,
 o leitor já esteja convencido. O trabalho consiste principalmente em formas da aceleração da
 convergência das fontes de fissão, de modo a acelerar a obtenção do resultado final enquanto

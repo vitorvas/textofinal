@@ -4,8 +4,76 @@
 \chapter{Conclusões}
 \label{chap:conclusoes}
 
+Nesta tese foi desenvolvido um sistema livre, aberto e gratuito para
+cálculos neutrônicos e termo-hidráulicos de forma acoplada utilizando
+malhas idênticas. Além do sistema propriamente dito, foi também desenvolvida
+uma metodologia para a construção deste sistema acoplado baseada em sistemas
+já existentes livres e utilizando memória compartilhada como forma de
+intercâmbio de dados.
+
+Este sistema é inovador ao utilizar o \textit{framework OpenFOAM}, baseado
+em volumes finitos, como ferramenta de cálculos termo-hidráulicos e o
+código de cálculos de física de reatores aberto \textit{milonga} como ferramenta
+para cálculos neutrônicos. A utilização de memória compartilhada como
+espaço de intercâmbio de dados, apesar de conhecida \cite{Maciel2011, Theler2013},
+é praticamente ignorada pela comunidade de Engenharia Nuclear Computacional na
+implementação de sistemas acoplados. Tal situação é de se estranhar, já que o
+uso de memória compartilhada permite a comunicação entre os sistemas acoplados
+de forma confiável, robusta e tão rápida quanto qualquer acesso a memória
+do computador.
+
+O sistema desenvolvido, por acoplar dois sistemas de cálculos que utilizam
+a formulação de volumes finitos para solução de sistemas de equações diferenciais,
+explora a característica de domínio idêntico para os dois sistemas. Em outras palavras,
+os domínios de solução, ou malhas, são os mesmos para ambos o que evita a utilização
+de funções de mapeamento, ou seja, de todo o \textit{overhead} mapeamento geométrico.
+
+Há, naturalmente, vantagens e desvantagens no uso de malha idêntica. Uma desvantagem
+é o custo computacional para malhas refinadas. Além disso, o fluxo neutrônico geralmente
+não precisa ser conhecido em detalhes na maioria dos cálculos de núcleo de reatores,
+sendo esta uma crítica bem fundada. Entretanto, o objetivo dos cálculos por volumes
+finitos é, também geralmente, permitir identificar pequenas ocorrências imperceptíveis
+em cálculos por métodos menos granulares. O sistema desenvolvido nesta tese, cuja
+prova conceitual foi feita com uma malha relativamente pobre, permite conhecer fenômenos
+locais calculados a partir de elementos da multi-física envolvida, e não apenas
+de perfis de potência genéricos ou temperaturas médias, por exemplo.
+
+O desenvolvimento desta tese levou também a contribuições fora do seu escopo principal mas,
+certamente, profundamente relacionadas à metodologia de desenvolvimento. Foram encontradas
+falhas de implementação em ambos os sistemas utilizados para neutrônica e termo-hidráulica,
+sendo os erros no \textit{OpenFOAM} reportados para a comunidade (e eventualmente
+corrigidos em outras versões) e os erros no \textit{milonga} não só reportados ao seu autor como,
+em um caso crítico, feita a correção diretamente e enviado o \textit{patch}. Estas contribuições
+incidentais, se dão devido à própria natureza do desenvolvimento baseado
+em \textit{software} livre, que prevê e se baseia na contribuição e troca entre a comunidade
+de usuários.
+
+É dessa corrente de desenvolvimento que surge outra, e talvez a principal, característica inovadora
+do sistema desenvolvido nesta tese: ele é construído exclusivamente a partir
+de sistemas abertos e livres\footnote{A metodologia utilizada
+  na geração de seções de choque utiliza um \textit{software} restrito. Entretanto, a geração
+  de seções de choque, apesar de fundamental para os cálculos neutrônicos, não é, propriamente dita,
+  parte do sistema acoplado, já que qualquer ferramenta pode ser utilizada para este propósito. Neste tema, começam também a surgir opções em \textit{software} livre
+  para a geração de seções de choque em multi-grupos a partir de bibliotecas contínuas \cite{pyne2014}.}.
+Esta característica e suas implicações merecem uma seção exclusiva.
+
 
 \section{Discussão sobre \textit{software} livre}
+
+A princípio, o fato de um \textit{software} ser distribuído de forma livre ou restrita pode soar indiferente.
+Entretanto, numa visão mais cuidadosa, é fácil
+perceber que a liberdade na utilização, modificação e distribuição de um \textit{software} trás imediatamente
+diversos benefícios ao seu utilizador e, consequentemente, à comunidade de usuários. O primeiro
+benefício é financeiro. Não é necessário dispender dinheiro em licenças de uso, autorizações de uso ou
+qualquer outro aspecto do uso de \textit{software}. A independência financeira é, em último caso,
+ainda mais importante para países em desenvolvimento que, nem sempre, conseguem garantir um fluxo constante
+no aporte de financiamento a instituições de pesquisa e acadêmicas. O Brasil entra, obviamente, nesta lista.
+
+A liberdade de utilização está também no acesso ao código-fonte. A capacidade de estudar, entender, modificar e experimentar
+com o \textit{software} está totalmente ligada ao acesso a como se dá seu funcionamento. É novamente fácil perceber que,
+do ponto de vista tecnológico, o acesso ao código-fonte funciona como uma transferência de tecnologia. Além disso, no
+aspecto educacional, é uma forma de colocar as novas e futuras gerações de profissionais em contato com a tecnologia na
+prática, para além das abordagens didáticas (e por vezes limitadas) teóricas. 
 
 
 %\begin{figure}[htb]

@@ -70,7 +70,8 @@ sub-canal número $6$, mas a geometria foi modelada como um único pino cercado 
 % Separo th de neutronica em seções para colocar as seções de choque antes da neutrônica?
 % Ou coloco logo as seções de choque antes de tudo?
 
-Nesta seção é descrito o modelo físico e numérico utilizado nos testes do sistema acoplado.
+Nesta seção são descrito o modelo, tanto nas suas características físicas quanto numéricas, utilizado
+nos testes do sistema acoplado.
 O desenvolvimento deste modelo se deu de modo a balancear as características termo-hidráulicas
 e neutrônicas desejáveis para um sistema de prova de conceito de cálculos acoplados
 e as limitações técnicas impostas, tanto em relação à capacidade computacional disponível quanto
@@ -130,7 +131,7 @@ combustível\footnote{Durante a execução desta tese, alguns \textit{bugs} enco
 
 
 
-\subsection{Modelo físico e numérico}
+\subsection{Modelo: características físicas e numéricas}
 \label{ssec:mod_fis_num}
 
 O modelo escolhido, de acordo com as limitações impostas já descritas,
@@ -145,8 +146,8 @@ o que torna este modelo interessante para avaliação do acoplamento.
 % Colocar figura do modelo completo
 
 \begin{figure}[htb]
-  \caption{Modelo: regiões e materiais. Em vermelho, combustível. Em amarelo, revestimento.
-  em ciano, o refrigerante/moderador (água)}
+  \caption{Modelo: regiões e materiais.}% Em vermelho, combustível. Em amarelo, revestimento.
+  %Em ciano, o refrigerante/moderador (água)}
   \centering\includegraphics[scale=0.5]{figuras/regioes_surface2.png}
   \label{fig:regions}
 %  \legend{Fonte: autor}
@@ -516,14 +517,16 @@ Revestimento                  & Al                                              
 
 
 As temperaturas utilizadas na geração das seções de choque
-e as seções de choque resultantes são apresentadas nas tabelas \ref{tab:temp-fuel},
+e as seções de choque resultantes são apresentadas nas tabelas
+\footnote{Os parâmetros da equação de difusão são apresentados na notação utilizada
+  pelo \textit{milonga}, diferindo do usual em relação a maiúsculas, minúsculas e sobrescrito.} \ref{tab:temp-fuel},
 \ref{tab:temp-cladding} e \ref{tab:temp-coolant} respectivamente para o combustível, revestimento
 e moderador.
 
 
 \begin{table}[htb]
   \centering
-  \caption[Temperaturas para combustível.]{Temperaturas para o combustível}.
+  \caption[Temperaturas para combustível.]{Temperaturas para o combustível.}
   \label{tab:temp-fuel}
   \begin{tabular}{r r r r r}
   \multicolumn{5}{c}{Combustível} \\

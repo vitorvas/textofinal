@@ -236,6 +236,33 @@ As próximas sub-seções exploram as características destes programas que perm
 a metodologia neste acoplamento. São também apresentados os principais desenvolvimentos técnicos
 relacionados a metodologia desenvolvida.
 
+\subsection{Geração de malhas: \textbf{Gmsh}}
+\label{subsection:gmsh}
+
+O software \textbf{Gmsh} \cite{Geuzane2009} é um sistema gerador de malhas tridimensionais
+para elementos finitos com ferramentas de pré e pós processamento. Foi desenvolvido com o objetivo
+de oferecer uma ferramenta de geração de malhas rápida, leve e amigável para o usuário oferecendo,
+ao mesmo tempo, capacidade de entrada de dados paramétrica e visualização. O Gmsh permite
+a criação de geometrias e malhas a partir de uma interface gráfica interativa, apresentada
+na Figura \ref{fig:gui-gmsh} com a malha gerada do modelo utilizado nesta tese. Outra opção
+para criação de geometrias, esta mais robusta que a interface gráfica, já que permite
+automatização através do uso de variáveis e estruturas simples de programação, é a leitura
+de arquivos textos em formato ASCII usando sua própria linguagem interna de \textit{script}.
+
+Assim como as outras ferramentas utilizadas no desenvolvimento do sistema acoplado desta tese,
+o Gmsh é distribuído nos termos da licença GPL \cite{gplv3}. Isso equivale a dizer que
+qualquer pessoa é livre para utilizar, modificar e distribuir o Gmsh, desde que não o utilize
+em sistemas fechados e/ou comerciais.
+
+% Colocar um screenshot to gmsh?
+\begin{figure}[htb]
+  \caption{Interface gráfica do Gmsh. }
+  \centering\includegraphics[scale=0.45]{figuras/gmsh_celula.png}
+  \label{fig:gui-gmsh}
+%  \legend{Fonte: autor}
+\end{figure}
+
+
 \subsection{Termo-hidráulica: \textbf{OpenFOAM}}
 \label{subsection:openfoam}
 
@@ -295,7 +322,7 @@ liberado sob licença to tipo GNU \cite{gplv3}. Ele é construído utilizando-se
 conhecidas como a \textit{GNU Scientific Library} \cite{Galassi2009}, a biblioteca
 PETSc \cite{Balay2016} e na biblioteca para solução de problemas da autovalores e autovetores
 SLEPc \cite{Hernandez2005}. A re-utilização de bibliotecas consagradas traz robustez para
-o \textit{milonga} enquanto segue os princípios do desenvolvimento de \textit{software} livre.
+o \textit{milonga}, ao mesmo tempo seguindo os princípios do desenvolvimento de \textit{software} livre.
 
 O \textit{milonga} resolve a equação de transporte de nêutrons multi-grupos em estado estacionário,
 utilizando a aproximação por difusão ou o método de ordenadas discretas. Oferece dois esquemas
