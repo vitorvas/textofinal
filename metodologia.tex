@@ -25,7 +25,7 @@ de dois programas de computador independentes de forma conjunta.
 
 O sistema de \textit{software} desenvolvido tem algumas peculiaridades relativas à sua
 implementação. Isso se deve às particularidades do problema que se pretende resolver e ao
-fato não-usual de envolver duas peças de \textit{software} independentes para resolver
+fato não usual de envolver duas peças de \textit{software} independentes para resolver
 um problema complexo, já apresentado como um problema multi-física.
 
 A Figura \ref{metodoetapas} apresenta uma representação gráfica do funcionamento do sistema
@@ -40,10 +40,10 @@ acoplado desenvolvido.
 
 Como apresentado no capítulo \ref{chap:rev}, acoplamento, no contexto desta dessa tese, é a execução
 de cálculos termo-hidráulicos utilizando a potência obtida pelo código de neutrônica que, por sua vez,
-utiliza as temperaturas dos materiais calculadas pela termo-hidráulica para re-calcular seções de choque
+utiliza as temperaturas dos materiais calculadas pela termo-hidráulica para recalcular seções de choque
 e outros parâmetros neutrônicos de modo a calcular o fluxo de nêutrons e potência no combustível.
 
-As características não-usuais desse sistema são listadas abaixo:
+As características não usuais desse sistema são listadas abaixo:
 
 \begin{itemize}
 \item Dois \textit{softwares} independentes interligados;
@@ -63,13 +63,13 @@ O sistema acoplado, ou multi-física, apresentado nesta tese possui algumas cara
 particulares já citadas. Nesta seção, serão brevemente apresentados os conceitos sobre os quais
 foi possível desenhar e construir um sistema multi-física inovador com tais características.
 
-\subsection{Multi-tarefa}
+\subsection{Multitarefa}
 \label{subsec:mt}
 
-Multi-tarefa é a capacidade dos sistemas operacionais de executar distintas tarefas ao mesmo tempo.
+Multitarefa é a capacidade dos sistemas operacionais de executar distintas tarefas ao mesmo tempo.
 Talvez possa parecer corriqueira tal observação nos dias de hoje. Entretanto, há pouco mais de vinte
 anos, a maioria dos sistemas operacionais usados em computadores pessoais não ofereciam esta
-possibilidade. Em alguns casos, o que se chamou de multi-tarefa preemptiva, o usuário era capaz de
+possibilidade. Em alguns casos, o que se chamou de multitarefa preemptiva, o usuário era capaz de
 carregas distintas tarefas em memória. Contudo, apenas uma era executada por vez.
 
 Nos sistemas computacionais atuais, em especial no sistema Linux, utilizado para o desenvolvimento
@@ -100,7 +100,7 @@ a compatibilidade entre diferentes sistemas operacionais na implementação
 das formas de utilização da memória compartilhada. Para isso, é definida
 uma API (\textit{Application programming interface}) que explicita as funções
 e métodos de utilização da memória compartilhada. O padrão e a API disponibilizada
-garatem a compatibilidade no uso dos recursos entre diferentes programas ou \textit{threads}
+garantem a compatibilidade no uso dos recursos entre diferentes programas ou \textit{threads}
 \cite{Atlidakis2016}.
 
 Com mais de um programa acessando uma mesma área de memória, é necessário garantir a atomicidade
@@ -116,7 +116,7 @@ verifica se esta está livre para ser acessada. Se sim, altera o valor do semáf
 memória, voltando a alterá-lo para ``livre'' ao terminar. Caso outro programa ou \textit{thread}
 necessite acessar a mesma porção de memória, encontrará o semáforo em condição negativa e aguardará
 um determinado tempo (definido pelo sistema operacional ou pelo próprio usuário) até tentar novamente.
-Com isso, fica garantida a não-corrupção dos dados.
+Com isso, fica garantida a não corrupção dos dados.
 
 Deve-se dizer que há implicações negativas no uso de semáforos para controle de acesso à memória,
 como por exemplo, queda de desempenho dos sistemas, em especial quando há um número grande
@@ -131,7 +131,7 @@ através de memória compartilhada \cite{Theler2013}.
 \label{subsec:sl}
 
 Muito já se disse sobre \textit{software} livre, suas características e suas licenças, como na
-seção \ref{sec:intsl}. Nesta sub-seção, o objetivo se restringe às vantagens do acesso ao
+seção \ref{sec:intsl}. Nesta subseção, o objetivo se restringe às vantagens do acesso ao
 código-fonte.
 
 Ambos os códigos usados no sistema acoplado, possuem a capacidade de serem acoplados sem alterações
@@ -232,7 +232,7 @@ com um mesmo formato aberto de arquivos de descrição de malhas, por exemplo.
 
 %São dedicadas subseções a cada característica deste acoplamento definida anteriormente como não-usual.
 
-As próximas sub-seções exploram as características destes programas que permitiram desenvolver
+As próximas subseções exploram as características destes programas que permitiram desenvolver
 a metodologia neste acoplamento. São também apresentados os principais desenvolvimentos técnicos
 relacionados a metodologia desenvolvida.
 
@@ -273,7 +273,7 @@ em relação a outros códigos monolíticos  \cite{Jasak2007}. Sua implementaç�
 à solução de sistemas lineares, operadores de discretização e modelos físicos em forma de bibliotecas o tornam
 um sistema CFD completo, aberto e gratuito. É utilizado em uma grande variedade
 de aplicações, desde a solução de escoamentos complexos envolvendo reações químicas, turbulência e
-transferência de calor até acústica, mecânica dos sólidos e eletromagnetismo. 
+transferência de calor até acústica, mecânica dos sólidos e eletro-magnetismo. 
 
 \textit{OpenFOAM} implementa um manipulador de malhas poliédrico, no qual células são descritas a partir
 de um conjunto de faces fechando um volume. As faces, por sua vez, são formadas por uma lista de pontos
@@ -293,7 +293,7 @@ fluidos distintos. Um dos \textit{solvers} que o \textit{OpenFOAM} possui com es
 Este \textit{solver} funciona para problemas em estado estacionário e para
 fluidos compressíveis. A modularidade do \textit{OpenFOAM}
 fica clara na forma como o \textit{solver} interage com os outros módulos: para regiões sólidas,
-são utilizados modulos de propriedades termo-físicas específicos para sólidos. Por sua vez, para
+são utilizados módulos de propriedades termo-físicas específicos para sólidos. Por sua vez, para
 fluidos são oferecidos outros módulos com implementações relativas a propriedades de fluidos.
 Outro exemplo é a utilização de turbulência: caso o usuário estabeleça que seu escoamento é laminar,
 o módulo para escoamentos laminares é utilizado. Caso o escoamento seja turbulento, o usuário pode
@@ -321,14 +321,14 @@ O \textit{milonga} é um \textit{software} aberto e livre para cálculo de físi
 liberado sob licença to tipo GNU \cite{gplv3}. Ele é construído utilizando-se de bibliotecas
 conhecidas como a \textit{GNU Scientific Library} \cite{Galassi2009}, a biblioteca
 PETSc \cite{Balay2016} e na biblioteca para solução de problemas da autovalores e autovetores
-SLEPc \cite{Hernandez2005}. A re-utilização de bibliotecas consagradas traz robustez para
+SLEPc \cite{Hernandez2005}. A reutilização de bibliotecas consagradas traz robustez para
 o \textit{milonga}, ao mesmo tempo seguindo os princípios do desenvolvimento de \textit{software} livre.
 
 O \textit{milonga} resolve a equação de transporte de nêutrons multi-grupos em estado estacionário,
 utilizando a aproximação por difusão ou o método de ordenadas discretas. Oferece dois esquemas
 de discretização, elementos e volumes finitos. A capacidade de utilizar volumes finitos em malhas
 não-estruturadas permite sua utilização de forma acoplada com o \textit{ÒpenFOAM}. O formato
-de leitura de malhas não-estruturados utilizado pelo \textit{milonga} é o \textbf{gmsh}, formato
+de leitura de malhas não-estruturadas utilizado pelo \textit{milonga} é o \textbf{gmsh}, formato
 este que o \textit{OpenFOAM} é capaz de importar, como mencionado anteriormente.
 
 Dentre as distintas formas de resolver a equação de transporte oferecidas pelo \textit{milonga},
@@ -366,10 +366,10 @@ pelo mesmo material, é possível estimar o módulo do gradiente do fluxo
 utilizando o teorema do valor médio \cite{Theler2013b}.
 
 Caso isso não seja verdade, então o operador de divergência não
-está definido nos pontos de discontinuidade. Assim, a formulação apresentada precisa tratar
+está definido nos pontos de descontinuidade. Assim, a formulação apresentada precisa tratar
 dos casos de descontinuidade, que são, na prática, as superfícies de fronteiras entre
 materiais. Nessas interfaces, o \textit{milonga} aplica uma condição de
-conservação da corrente de neutrons:
+conservação da corrente de nêutrons:
 
 \begin{equation}
   \label{eq:corrente}
@@ -387,7 +387,7 @@ do gradiente, de modo que o fluxo na superfície seja o mesmo visto de um volume
 da interface quanto do outro. Esta estimativa leva em consideração os volumes e
 a geometria das células envolvidas. Uma explicação elegante com o formalismo
 matemático utilizado na implementação do método de volumes finitos no
-\textit{milonga} pode ser encontrada no trabalho de Theler \cite[Seção 3.5.2]{Theler2016}.
+\textit{milonga} pode ser encontrada no trabalho de Treler \cite[Seção 3.5.2]{Theler2016}.
 
 
 %Com base na corrente, é implementada
@@ -428,7 +428,7 @@ Condições de contorno baseadas na malha estão definidas nas linhas 19-21 e, n
 está o comando utilizado para iniciar os cálculos.
 
 Além dos comandos apresentados, o \textit{milonga} possui um vasto conjunto de comandos e primitivas
-que vão desde pré-processamento da malha até primitivas de saída para visualização gráfica da
+que vão desde preprocessamento da malha até primitivas de saída para visualização gráfica da
 solução.
 
 \begin{figure}[htb]
@@ -445,7 +445,7 @@ ou como combinação de ambos os métodos. Para o acoplamento, em especial, a de
 de funções geometricamente permite estabelecer valores para os coeficientes de
 acordo com a posição da célula na malha. A aplicação é ainda mais extensa, já que
 uma vez que é possível utilizar expressões pela posição na malha, é também
-possível definir concetração de veneno ou fração de vazio por elemento da malha.
+possível definir concentração de veneno ou fração de vazio por elemento da malha.
 
 Além disso, o \textit{milonga} pode ser dados em tempo de execução de arquivos de
 entrada, arquivos binários e, em especial no contexto desta tese, de memória compartilhada.
@@ -458,7 +458,7 @@ forma acoplada.
 
 Sabe-se, neste ponto, que os dois programas, \textit{milonga} e \textit{OpenFOAM} funcionam
 independentemente e utilizam uma parte da memória do computador de forma compartilhada.
-Nesta seção, são apresentados os detalhes algoritmicos desta comunicação entre neutrônica e
+Nesta seção, são apresentados os detalhes algorítmicos desta comunicação entre neutrônica e
 termo-hidráulica.
 
 Como funcionam separadamente, é necessário estabelecer, além dos dados a serem compartilhados
@@ -480,7 +480,7 @@ O algoritmo de acoplamento do \textit{solver} \texttt{thesisCoupledFoam} está i
 via código-fonte. Apesar de ser possível utilizar de referências ao código-fonte para
 apresentar o algoritmo, como feito para a implementação do termo-fonte na seção \ref{subsec:detth},
 esta forma é um pouco árida. Sendo assim, os algoritmos de acoplamento, para ambos os códigos,
-serão descritos por meio de pseudo-código.
+serão descritos por meio de pseudocódigo.
 
 A Figura \ref{fig:algo_th} apresenta o algoritmo de acoplamento para o \textit{OpenFOAM}.
 As expressões em azul escuro mostram as instruções relativas ao uso de memória compartilhada,
@@ -498,7 +498,7 @@ enquanto em vermelho estão as instruções relativas ao controle de acesso aos 
 \item \textbf{Inicialização:} Na inicialização do \textit{OpenFOAM}, é lido o valor inicial da potência para
   a simulação caso o arquivo de definição de potência esteja disponível. Caso contrário, a potência é inicializado
   com zero. Os espaços em memória compartilhada são verificados. Caso não estejam corretamente alocados, o sistema
-  assume que o sistema executará de forma não-acoplada. Cabe lembrar, como dito no início da seção \ref{sec:acoplamento},
+  assume que o sistema executará de forma não acoplada. Cabe lembrar, como dito no início da seção \ref{sec:acoplamento},
   o \textit{milonga} é iniciado antes do \textit{OpenFOAM} e, conforme será descrito no algoritmo da neutrônica, é
   ele o encarregado da alocação da memória compartilhada.
 
@@ -529,8 +529,8 @@ todo o controle do algoritmo de acoplamento é feito no arquivo de entrada. Na v
 \textit{milonga} utilizada (0.4.65) as opções de utilização iterativa ainda são limitadas. Estruturas
 de repetição utilizando condicionais não estão disponíveis. Com isso, optou-se por definir um laço com número
 de execuções fixa. A partir dessa restrição, foi desenvolvido o algoritmo de execução. A figura
-\ref{fig:algo_neutronica} mostra o algoritmo e suas etapas. As expressões em azul escuro mostram as instru-
-ções relativas ao uso de memória compartilhada, enquanto em vermelho estão
+\ref{fig:algo_neutronica} mostra o algoritmo e suas etapas. As expressões em azul escuro mostram as instruções
+relativas ao uso de memória compartilhada, enquanto em vermelho estão
 as instruções relativas ao controle de acesso aos dados (semáforos). Cabe ressaltar que,
 como mencionado anteriormente,
 o \textit{milonga} é iniciado \textbf{antes} do \textit{OpenFOAM}.
@@ -547,7 +547,7 @@ o \textit{milonga} é iniciado \textbf{antes} do \textit{OpenFOAM}.
   de vezes que o \textit{OpenFOAM} fará chamadas ao \textit{milonga}. Caso seja o primeiro passo, o \textit{milonga}
   lê a malha, estabelece a formulação matemática, o esquema de discretização e o número de grupos de energia, exatamente
   como apresentado na figura \ref{fig:inputmilonga}. A seguir, através das primitivas de utilização de memória compartilhada
-  presentes no \textit{milonga}, são criadas areas em memória compartilhada para armazenar temperaturas e potência. Os tamanhos
+  presentes no \textit{milonga}, são criadas áreas em memória compartilhada para armazenar temperaturas e potência. Os tamanhos
   destas áreas são obtidos do tamanho da malha carregada anteriormente. A inicialização, como é de se esperar, é feita uma única
   vez durante toda a simulação acoplada.
 \end{itemize}
@@ -583,7 +583,7 @@ de entrada, sem necessidade de alteração do código-fonte e compilação, semp
 \subsection{Implementação: uma olhada no código-fonte.}
 \label{subsec:detth}
 Na seção \ref{sec:th} foram apresentadas as bases teóricas do problema termo-hidráulico.
-Nesta sub-seção, são
+Nesta subseção, são
 descritas as alterações diversas promovidas no \textit{solver} original do \textit{OpenFOAM}
 que foi chamado \texttt{thesisCoupledFoam}.
 
@@ -651,7 +651,7 @@ aceitável dentro das condições de parada. Lembrando que este procedimento é 
 a solução do escoamento. O \textit{solver} resolve separadamente cada região de acordo com seu
 tipo, fluida ou sólida, tudo isso dentro da iteração do algoritmo SIMPLE.
 
-Um fragmento do laço de iterações do algortimo SIMPLE é apresentado na listagem \ref{lst:simple}.
+Um fragmento do laço de iterações do algoritmo SIMPLE é apresentado na listagem \ref{lst:simple}.
 
 \begin{lstlisting}[caption={Fragmento do laço do algoritmo SIMPLE.}\label{lst:simple}]
   while (runTime.loop())
@@ -678,7 +678,7 @@ e outras condições de parada. As regiões definidas como fluidas são resolvid
 e então são resolvidas as equações para as regiões sólidas (linha $10$). O \textit{OpenFOAM} utiliza-se
 de uma diretiva de inclusão (linhas $12$ a $14$) para adicionar ao código-fonte o conteúdo de outros
 arquivos definidos pelos nomes. Isso é feito com o objetivo de deixar o código-fonte mais legível como
-também de evitar re-escrita de código, já que muitos dos arquivos incluídos são comuns a outros
+também de evitar reescrita de código, já que muitos dos arquivos incluídos são comuns a outros
 \textit{solvers}. Um desses arquivos (linha $14$) é o que contém as equações a serem resolvidas para
 a região sólida. É nele que o campos escalar volumétrico \textbf{``Q''} é utilizado. Um fragmento
 do arquivo de solução de sólidos é apresentado na listagem \ref{lst:solvesolid}.
@@ -715,7 +715,7 @@ incluído no sistema completo.
 Na listagem \ref{lst:createshm} são criadas as estruturas POSIX utilizadas para manipulação
 de memória compartilhada. Nas linhas 2 e 3 são declaradas as estruturas que serão utilizadas para
 acesso aos dados. Nas linhas 5 e 6 são declaradas as estruturas que serão utilizadas no mapeamento
-entre os dados em memória compartilhada e as estruturas de acesso aos dados. Apesar de contra-intuitiva,
+entre os dados em memória compartilhada e as estruturas de acesso aos dados. Apesar de contra intuitiva,
 deve-se lembrar que esta é a forma definida como padrão de utilização de memória compartilhada. Nas linhas
 8 e 9 são declarados as estruturas que representam os arquivos em memória compartilhada. Há, portanto, três
 estruturas para cada arquivo em memória compartilhada, sendo um arquivo para temperaturas e outro para potências.

@@ -253,7 +253,7 @@ e interpolação de malhas \cite{Beaudoin2008} são implementados em alguns dos 
 Há, na literatura, algumas soluções elegantes para o mapeamento entre malhas em problemas de acoplamento neutrônico
 e termo-hidráulico \cite{Jareteg2015, Richard2015, Schmidt2015}. O uso de esquemas de mapeamento de malhas trazem
 implicações, tais como arredondamento e truncamentos no pareamento
-entre céluas, além de custo computacional relativo a percorrer as malhas ou armazenamento de estruturas de mapeamento
+entre células, além de custo computacional relativo a percorrer as malhas ou armazenamento de estruturas de mapeamento
 em memória. 
 \item \textbf{Algoritmos de controle de \textit{time-step}}: os transientes neutrônicos são geralmente muito mais rápidos que 
 os transientes termo-hidráulicos. A utilização de um único \textit{time-step} longo pode levar à não detecção de transientes 
@@ -332,6 +332,13 @@ foco está além da descrição de conceitos de acoplamento
 neutrônico e termo-hidráulico. O autor propõe o uso de redes neuronais treinadas com dados de
 outras simulações para a solução do fluxo neutrônico em reatores do tipo LWR.
 
+Um dos raros trabalhos de acoplamento neutrônico e termo-hidráulico que pode ser classificado
+como acoplamento interno, de acordo com a nomenclatura proposta por Ivanov \cite{Ivanov2007},
+resolve todas as equações de forma totalmente implícita. Neste abordagem \cite{Pope2008}, é desenvolvida
+toda a metodologia matemática e sua implementação correspondente e modelado um reator do tipo placa
+simplificado. De acordo com os autores, trata-se de um projeto piloto, fundamentalmente
+conceitual, mas os resultados mostram que esta abordagem é promissora.
+
 Talvez o mais completo trabalho relativo ao acoplamento neutrônico e termo-hidráulico com uso do 
 \textit{CFD} \textit{OpenFOAM} seja a tese de Klas Jareteg \cite{Jareteg2012}. Nela, o acoplamento é feito usando o mesmo 
 software para a simulação termo-hidráulica e neutrônica. A metodologia utilizada pode ser brevemente 
@@ -401,7 +408,7 @@ para cálculo neutrônico do núcleo e validação do código PARCS \cite{PARCS2
 a ser feito para a simulação tridimensional completa desse tipo de reator.
 
 Uma das mais utilizadas ferramentas para estudo de segurança de reatores nucleares é o
-código de sistemas thermo-hidráulicos RELAP \cite{Relap2003}. Sua utilização para simulação
+código de sistemas termo-hidráulicos RELAP \cite{Relap2003}. Sua utilização para simulação
 de cenários de transientes severos e acidentes é ampla, podendo ser considerado a
 ferramenta \textit{de facto} para análise de acidentes termo-hidráulicos em centrais nucleares.
 Como consequência de seu alcance em número de usuários, não é de se espantar que esta ferramenta
