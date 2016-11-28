@@ -7,10 +7,11 @@
 O trabalho desenvolvido nesta tese tem como base métodos de
 solução numérica de equações diferenciais parciais. Neste capítulo, são
 apresentadas as bases teóricas da modelagem matemática
-dos problemas e dos métodos de solução utilizados, bem como uma
-breve descrição da física por trás do funcionamento de reatores
-nucleares.
+dos problemas e dos métodos de solução utilizados.
 
+%, bem como uma
+%breve descrição da física por trás do funcionamento de reatores
+%nucleares.
 
 %\begin{figure}[htb]
 %  \caption{Teoria: o sistema acoplado.}
@@ -30,13 +31,50 @@ convecção, transferência de calor por radiação, mudanças de fase e escoame
 monofásicos e multifásicos.
 
 A análise termo-hidráulica de sistemas de conversão de energia envolve a solução
-das equações de transporte de massa, momento e energia \cite{Todreas2012}. Nesta seção serão apresentadas
-as equações utilizadas na modelagem de um sistema termo-hidráulico monofásico e
-estacionário.
+das equações de transporte de massa, momento e energia \cite{Todreas2012}. Nesta
+tese, a análise deste tipo de sistema é feita utilizando-se o a mecânica
+de fluidos computacional (CFD). O CFD é, grosso modo, uma forma de se resolver
+problemas físicos complexos pelo uso de métodos numéricos em sistemas
+computacionais. Tais métodos numéricos, funcionam descrevendo equações diferenciais
+definidas em domínios contínuos em sistemas de equações algébricas, de modo que
+sejam resolvidos numericamente. Para transformar o sistema contínuo num sistema
+discreto o domínio contínuo é discretizado em um conjunto de subdomínios menores
+e conectados que formam uma malha de pequenos elementos (volumes ou células), Figura \ref{fig:dom},
+para os quais a solução discreta pode ser obtida \cite{dosSantos2012}.
+
+\begin{figure}[htb]
+  \caption[Domínio contínuo e discretizado.]{Domínio contínuo (à esquerda) e discretizado (à direita).}
+  \centering\includegraphics[scale=1.3]{figuras/dom.png}
+  \label{fig:dom}
+  \legend{Fonte: \cite{Theler2013b}}
+\end{figure}
+
+A análise por CFD envolve, geralmente, 5 etapas distintas:
+
+\begin{itemize}
+\item Modelagem matemática: Equivale a definir, com base no conhecimento
+  físico do problema, as hipóteses válidas, eventuais simplificações e
+  seus impactos na solução final. A partir das definições, é necessário
+  descrever as condições iniciais e de contorno de problema, as propriedades
+  termofísicas, químicas, fenômenos modelados e quaisquer outras características
+  necessárias à solução do problema.
+\item Geração da malha: A partir da geometria do sistema, que equivale ao
+  domínio contínuo, é necessário gerar uma malha. Essa malha pode ser refinada
+  em pontos estratégicos, ser estruturada ou não-estruturada e possuir elementos
+  de diferentes formatos. A malha utilizada na solução de um problema tem impacto
+  direto no tempo de simulação, na qualidade da solução e até mesmo no alcance
+  da solução. Em um projeto de CFD, aproximadamente 50\% do tempo é dedicado a geração
+  da geometria e da malha \cite{Versteeg2007}.
+\item Solução: Nesta etapa são resolvidos os sistemas lineares obtidos pela
+  discretização do domínio.
+\end{itemize}
+%Nesta seção serão apresentadas
+%as equações utilizadas na modelagem de um sistema termo-hidráulico monofásico e
+%estacionário.
 
 % **********************************************
-\subsection{Equações governantes}
-\label{subsec:eq}
+%\subsection{Equações governantes}
+%\label{subsec:eq}
 
 
 % **********************************************
