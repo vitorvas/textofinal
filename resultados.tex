@@ -87,7 +87,7 @@ As distribuições de potências obtidas para os volumes de combustível podem s
 
 \begin{figure}[htb]
   \caption[Distribuição de potência para os três casos simulados.]{Distribuição de potência para os três casos simulados.}
-  \centering\includegraphics[scale=0.6]{figuras/Q_fuel_all_NC.png}
+  \centering\includegraphics[scale=0.5]{figuras/Q_fuel_all_NC.png}
   \label{fig:pot-nc}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -95,7 +95,7 @@ As distribuições de potências obtidas para os volumes de combustível podem s
 As distribuições de potência axial obedeceram, para os três casos, a perfis
 cossenoidais, como pode ser visto na Figura \ref{fig:perf-nac-axial}. Estes são os perfis esperados para
 os combustíveis modelados \cite{Veloso2005}. As distribuições de potência radiais -
-obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes \ref{fig:perf-Q-nac-radial}
+obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes, na Figura \ref{fig:perf-Q-nac-radial},
 dos obtidos axialmente. A primeira e principal diferença está na abruta subida a partir da potência nula
 no início e fim da curva. A razão para este comportamento é simples: apenas o combustível gera potência, sendo
 zero para as regiões de revestimento e água (não apresentadas na curva). O achatamento na posição central
@@ -105,14 +105,14 @@ Esse perfil é esperado em combustíveis do tipo TRIGA \cite{Ravnik1990}.
 
 \begin{figure}[htb]
   \caption{Perfil de potência axial para os três casos simulados.}
-  \centering\includegraphics[scale=0.6]{figuras/Q_all_NC_port.png}
+  \centering\includegraphics[scale=0.5]{figuras/Q_all_NC_port.png}
   \label{fig:perf-nac-axial}
 %  \legend{Fonte: autor}
 \end{figure}
 
 \begin{figure}[htb]
   \caption[Perfil de potência radial para os três casos simulados.]{Perfil de potência radial para os três casos simulados.}
-  \centering\includegraphics[scale=0.7]{figuras/Q_x_NC_square_port.png}
+  \centering\includegraphics[scale=0.5]{figuras/Q_x_NC_square_port.png}
   \label{fig:perf-Q-nac-radial}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -127,7 +127,7 @@ ocorre em todos os casos, apenas com diferença nas temperaturas de cada materia
 
 \begin{figure}[htb]
   \caption{Perfil de temperaturas axial para os três casos simulados.}
-  \centering\includegraphics[scale=0.6]{figuras/T_z_NC_square_port.png}
+  \centering\includegraphics[scale=0.5]{figuras/T_z_NC_square_port.png}
   \label{fig:perf-t-nac-axial}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -145,7 +145,7 @@ se os resultados acoplados se diferenciam destes e em que medida ocorrem estas d
 \begin{figure}[htb]
   \caption[Perfil de temperaturas radial para os três casos simulados.]
           {Perfil de temperaturas radial para os três casos simulados. No detalhe o perfil de temperatura nas interfaces entre os três materiais.}
-  \centering\includegraphics[scale=0.6]{figuras/T_x_NC_square_port_detalhado.png}
+  \centering\includegraphics[scale=0.5]{figuras/T_x_NC_square_port_detalhado.png}
   \label{fig:perf-t-nac-radial}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -180,7 +180,7 @@ captar mais detalhes do fluxo neutrônico.
 \begin{figure}[htb]
   \caption{Fluxos relativos axiais entre simulação acoplada e não acoplada para
     potência de 1,98 kW.}
-  \centering\includegraphics[scale=0.6]{figuras/Flux_rel_z_50_port_trabalhado.png}
+  \centering\includegraphics[scale=0.5]{figuras/Flux_rel_z_50_port_trabalhado.png}
   \label{fig:flux_z_50}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -188,7 +188,7 @@ captar mais detalhes do fluxo neutrônico.
 \begin{figure}[htb]
   \caption{Fluxos relativos radiais entre simulação acoplada e não acoplada para
     potência de 1,98 kW.}
-  \centering\includegraphics[scale=0.7]{figuras/Flux_rel_x_50_port.png}
+  \centering\includegraphics[scale=0.5]{figuras/Flux_rel_x_50_port.png}
   \label{fig:flux_x_50}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -204,7 +204,7 @@ os fluxos relativos radiais para a mesma potência podem ser observados na Figur
 \begin{figure}[htb]
   \caption{Fluxos relativos axiais entre simulação acoplada e não acoplada para
     potência de 3,97 kW.}
-  \centering\includegraphics[scale=0.6]{figuras/Flux_rel_z_100_port_trabalhado.png}
+  \centering\includegraphics[scale=0.5]{figuras/Flux_rel_z_100_port_trabalhado.png}
   \label{fig:flux_z_100}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -212,7 +212,69 @@ os fluxos relativos radiais para a mesma potência podem ser observados na Figur
 \begin{figure}[htb]
   \caption{Fluxos relativos radiais entre simulação acoplada e não acoplada para
     potência de 3,97 kW.}
-  \centering\includegraphics[scale=0.7]{figuras/Flux_rel_x_100_port.png}
+  \centering\includegraphics[scale=0.5]{figuras/Flux_rel_x_100_port.png}
   \label{fig:flux_x_100}
 %  \legend{Fonte: autor}
 \end{figure}
+
+As diferenças entre os fluxos relativos em ambas as simulações passa a ser melhor
+vista nas simulações de maior potência, a $7,93 kW$. Novamente, a variação nas temperaturas
+impacta nos cálculos acoplados, uma vez que as seções de choque são periodicamente
+recalculadas. É possível observar na Figura \ref{fig:flux_z_200}, que apresenta o perfil axial,
+uma sutil sobreposição entre as curvas, demonstrando um achatamento na curva
+referente as cálculos acoplados. Isso se explica pelas propriedades do combustível modelado,
+que diminui sua capacidade de absorção de nêutrons térmicos com o aumento da temperatura.
+Ao mesmo tempo, nas extremidades da curva, as temperaturas são menores que no caso não-acoplado,
+levando a um relativo aumento no fluxo. O fluxo acoplado reflete tais mudanças no seu perfil.
+
+As diferenças entre os fluxos relativos radiais, para a potência de $7,93 kW$, são facilmente
+visíveis na Figura \ref{fig:flux_x_200}.
+
+\begin{figure}[htb]
+  \caption{Fluxos relativos axiais entre simulação acoplada e não acoplada para
+    potência de 7,93 kW.}
+  \centering\includegraphics[scale=0.5]{figuras/Flux_rel_z_200_port_trabalhado.png}
+  \label{fig:flux_z_200}
+%  \legend{Fonte: autor}
+\end{figure}
+
+\begin{figure}[htb]
+  \caption{Fluxos relativos radiais entre simulação acoplada e não acoplada para
+    potência de 7,93 kW.}
+  \centering\includegraphics[scale=0.5]{figuras/Flux_rel_x_200_port.png}
+  \label{fig:flux_x_200}
+%  \legend{Fonte: autor}
+\end{figure}
+
+As diferenças entre os fluxos calculados de forma acoplada e não-acoplada ocorrem,
+como é de se esperar, nos perfis de potência. A potência não é calculada pela
+neutrônica. A solução da aproximação por difusão é o fluxo neutrônico e, a partir
+dele, é calculada a potência volumétrica a partir de um valor de referência para
+a potência.
+
+É a potência\footnote{A palavra potência é indistintamente utilizada neste capítulo como potência
+  propriamente dita, em $W$ ou como sinônimo de potência volumétrica, dada em $W/m^3$, de acordo
+com o contexto em que é usada.} que leva ao aquecimento dos materiais que, por sua vez, impactam
+no cálculos de seções de choque. As diferenças entre os perfis de potência obtidos nos dois conjuntos
+de simulações, acopladas e não-acopladas, são apresentados nas Figuras \ref{fig:Q_all_z} e
+\ref{fig:Q_all_x} respectivamente nas direções axial e radial. Observando estas Figuras,
+é possível perceber que as diferenças em potência entre os casos acoplados e
+não acoplados aumenta de acordo com o aumento da potência.
+
+Cabe comentar que, além das diferenças em valores, há mudanças no formato das curvas.
+
+
+\begin{figure}[htb]
+  \caption{Curvas de potência axiais para os casos acoplados e não acoplados.}
+  \centering\includegraphics[scale=0.5]{figuras/Q_all_z_square_port.png}
+  \label{fig:Q_all_z}
+%  \legend{Fonte: autor}
+\end{figure}
+
+\begin{figure}[htb]
+  \caption{Curvas de potência axiais para os casos acoplados e não acoplados.}
+  \centering\includegraphics[scale=0.5]{figuras/Q_all_x_square_port.png}
+  \label{fig:Q_all_x}
+%  \legend{Fonte: autor}
+\end{figure}
+  
