@@ -5,13 +5,12 @@
 \label{chap:teoria}
 
 O trabalho desenvolvido nesta tese tem como base métodos de
-solução numérica de equações diferenciais parciais. Neste capítulo, são
-apresentadas as bases teóricas da modelagem matemática
-dos problemas e dos métodos de solução utilizados.
-
-%, bem como uma
-%breve descrição da física por trás do funcionamento de reatores
-%nucleares.
+solução numérica de equações diferenciais parciais. Não é objetivo,
+tamanha seria a ousadia, discorrer sobre as bases teóricas da neutrônica ou
+da termo-hidráulica. Neste capítulo, são, portanto, apresentados, de forma simplificada,
+o funcionamento dos cálculos de mecânica dos fluidos computacional (CFD) e dos
+cálculos neutrônicos, baseados aproximação por difusão da equação de transporte
+de nêutrons.
 
 %\begin{figure}[htb]
 %  \caption{Teoria: o sistema acoplado.}
@@ -36,11 +35,12 @@ tese, a análise deste tipo de sistema é feita utilizando-se o a mecânica
 de fluidos computacional (CFD). O CFD é, grosso modo, uma forma de se resolver
 problemas físicos complexos pelo uso de métodos numéricos em sistemas
 computacionais. Tais métodos numéricos, funcionam descrevendo equações diferenciais
-definidas em domínios contínuos em sistemas de equações algébricas, de modo que
+válidas em domínios contínuos em sistemas de equações algébricas, de modo que
 sejam resolvidos numericamente. Para transformar o sistema contínuo num sistema
-discreto o domínio contínuo é discretizado em um conjunto de subdomínios menores
-e conectados que formam uma malha de pequenos elementos (volumes ou células), Figura \ref{fig:dom},
-para os quais a solução discreta pode ser obtida \cite{dosSantos2012}.
+discreto, o domínio contínuo é discretizado em um conjunto de subdomínios menores
+e conectados que formam uma malha de pequenos elementos, chamados
+alternativamente de volumes ou células \cite{dosSantos2012}. 
+A partir deste domínio discreto, Figura \ref{fig:dom}, a solução numérica é ser obtida.
 
 \begin{figure}[htb]
   \caption[Domínio contínuo e discretizado.]{Domínio contínuo (à esquerda) e discretizado (à direita).}
@@ -49,25 +49,61 @@ para os quais a solução discreta pode ser obtida \cite{dosSantos2012}.
   \legend{Fonte: \cite{Theler2013b}}
 \end{figure}
 
-A análise por CFD envolve, geralmente, 5 etapas distintas:
+A análise por CFD envolve, geralmente, quatro etapas distintas:
 
 \begin{itemize}
-\item Modelagem matemática: Equivale a definir, com base no conhecimento
-  físico do problema, as hipóteses válidas, eventuais simplificações e
-  seus impactos na solução final. A partir das definições, é necessário
-  descrever as condições iniciais e de contorno de problema, as propriedades
-  termo-físicas, químicas, fenômenos modelados e quaisquer outras características
-  necessárias à solução do problema.
-\item Geração da malha: A partir da geometria do sistema, que equivale ao
+\item Geração da malha (ou pré-processamento): A partir da geometria do sistema, que equivale ao
   domínio contínuo, é necessário gerar uma malha. Essa malha pode ser refinada
   em pontos estratégicos, ser estruturada ou não-estruturada e possuir elementos
   de diferentes formatos. A malha utilizada na solução de um problema tem impacto
   direto no tempo de simulação, na qualidade da solução e até mesmo no alcance
   da solução. Em um projeto de CFD, aproximadamente 50\% do tempo é dedicado a geração
   da geometria e da malha \cite{Versteeg2007}.
+\item Modelagem matemática: Equivale a definir, com base no conhecimento
+  físico do problema, as hipóteses válidas, eventuais simplificações e
+  seus impactos na solução final. A partir das definições, é necessário
+  descrever as condições iniciais e de contorno de problema, as propriedades
+  termo-físicas, químicas, fenômenos modelados e quaisquer outras características
+  necessárias à solução do problema.
 \item Solução: Nesta etapa são resolvidos os sistemas lineares obtidos pela
-  discretização do domínio.
+  discretização do domínio. Um dos métodos de discretização mais utilizados
+  em problemas envolvendo comportamento de fluidos é o de volumes finitos. Além dos
+  métodos de discretização, há diversos metodos para a solução dos sistemas
+  lineares resultantes da discretização, com melhor ou pior desempenho de
+  acordo com características do sistema linear a ser resolvido \cite{Barrett1994}.
+\item Análise dos resultados (ou pós-processamento): Após a finalização
+  com sucesso da simulação, os usuário deve tratar a grande quantidade de
+  dados obtidos. Esta etapa consiste em extrair os resultados qualitativos
+  e quantitativos, através do uso de ferramentas de visualização, estatística,
+  matemáticas dentre outras \cite{Maric2014}.
 \end{itemize}
+
+Nos cálculos por CFD são resolvidas as equações fundamentais de transporte de massa (Equação \ref{eq:massa}),
+momento (Equação \ref{eq:momento}) e energia (Equação \ref{eq:energia}), apresentadas abaixo em notação tensorial compacta \cite{dosSantos2012}.
+
+\begin{equation}
+%  \centering
+  \label{eq:massa}
+  \frac{\partial \rho}{\partial t}+\frac{\partial}{\partial x_j}(\rho u_j)=0
+\end{equation}
+
+\begin{equation}
+%  \centering
+  \label{eq:momento}
+  \frac{\partial \rho u_i}{\partial t}+\frac{\partial}{\partial x_j}(\rho u_i u_j)=
+  -\frac{\partial p}{\partial x_i} + \frac{\partial}{\partial x_j}\bigg[ \mu \bigg( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\bigg)\bigg]+S_{Mi}
+\end{equation}
+
+\begin{equation}
+%  \centering
+  \label{eq:energia}
+  \frac{\partial \rho h_{tot}}{\partial t}-\frac{\partial \rho}{\partial t}+\frac{\partial}{\partial x_j}(\rho u_i h_{tot})=
+  \frac{\partial p}{\partial x_j}\bigg( \lambda \frac{\partial T}{\partial x_i}\bigg) + \frac{\partial}{\partial x_j}\bigg[ u_i\mu \bigg( \frac{\partial u_i}{\partial x_j} + \frac{\partial u_j}{\partial x_i}\bigg)\bigg]+S_{E}
+\end{equation}
+
+Sendo $h_{tot} = h_{(T,p)} + \frac{u_i^{2}}{2}$ a entalpia total e $S_{Mi}$ e $S_E$, respectivamente, os termos
+fonte das equações de momento e energia.
+
 %Nesta seção serão apresentadas
 %as equações utilizadas na modelagem de um sistema termo-hidráulico monofásico e
 %estacionário.
@@ -82,12 +118,13 @@ A análise por CFD envolve, geralmente, 5 etapas distintas:
 %\label{ssubsec:fluid}
 
 % **********************************************
-\subsection{Turbulência}
-\label{subsec:}
+%\subsection{Turbulência}
+%\label{subsec:turb}
 
+%A modelagem da turbulência 
 % **********************************************
-\subsection{Modelo termo-hidráulico discretizado}
-\label{subsec:modeloth}
+%\subsection{Modelo termo-hidráulico discretizado}
+%\label{subsec:modeloth}
 
 
 % **********************************************
@@ -129,13 +166,13 @@ do material. Sua unidade é dada em $cm^{-1}$.
 \label{subsec:det}
 
 % **********************************************
-\subsubsection{Equação de Transporte}
-\label{ssubsec:transp}
+%\subsubsection{Equação de Transporte}
+%\label{ssubsec:transp}
 
 % **********************************************
 \subsubsection{Aproximação por Difusão}
 \label{ssubsec:difusao}
 
 % **********************************************
-\subsection{Modelo neutrônico discretizado}
-\label{subsec:modelon}
+%\subsection{Modelo neutrônico discretizado}
+%\label{subsec:modelon}
