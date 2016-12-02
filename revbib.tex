@@ -138,8 +138,11 @@ orientada a objetos para simulações numéricas escrita em linguagem C++ e, mai
 licenciada como \textit{software} livre \cite{Jasak2007} chamada \textit{OpenFOAM}.
 Nesse trabalho o autor também desfaz as polêmicas sobre o desempenho de códigos escritos
 em C++ e demonstra como as equações são modeladas dentro do \textit{OpenFOAM}. Um
-exemplo é a equação da energia cinética turbulenta no modelo RANS
+exemplo é a equação da energia cinética turbulenta no modelo RANS\footnote{Os símbolos
+  são apresentados com o único objetivo de descrição em relação à notação utilizado pelo
+  \textit{OpenFOAM}. O significado dos símbolos presentes na equação \ref{eq:exemplo} é dado em \cite{Jasak2007}}:
 \begin{equation}
+  \label{eq:exemplo}
   \frac{\delta k}{\delta t} + \nabla . (\mathbf{u}k) - \nabla . [(\nu + \nu_{t})
     \nabla k] = \nu_t \left[ \frac{1}{2}(\nabla \mathbf{u} + \nabla \mathbf{u}^T)\right]^2 - \frac{\epsilon_0}{k_0}k
 \end{equation}

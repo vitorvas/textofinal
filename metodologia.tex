@@ -336,19 +336,21 @@ optou-se por utilizar a aproximação por difusão. Apesar de resultados inacura
 na sua utilização em algumas circunstâncias \cite{Trahan2014}, a aproximação por difusão
 foi o modelo escolhido devido à sua execução mais rápida e menor consumo de memória.
 A aproximação por difusão é apresentada na equação \ref{eq:difusao} já na sua forma discretizada
-para $G$ grupos:
+para $G$ grupos\footnote{A equação \ref{eq:difusao} é a mesma equação \ref{eq:dif} anteriormente
+  indroduzida, de modo
+  que os símbolos, se diferentes em alguns casos, são equivalentes}:
 
 \begin{equation}
   \label{eq:difusao}
   \begin{split}
-  & 0 = \nabla . \big[D_g({\bar{x}}) \nabla \phi_g(\bar{x})\big] 
-- \Sigma_{tg}(\bar{x}).\phi(\bar{x}) \\
-& + \sum_{g'=1}^{G} \Sigma_{sg'\rightarrow g}(\bar{x}) . \phi_{g'}(\bar{x})
-+ \chi(g)  \sum_{g'=1}^{G} \frac{\nu \Sigma_{fg'}(\bar{x})}{k_{eff}} . \phi_{g'}(\bar{x}) \\
+  & 0 = \nabla . \big[D_g({\mathbf{x}}) \nabla \phi_g(\mathbf{x})\big] 
+- \Sigma_{tg}(\mathbf{x}).\phi(\mathbf{x}) \\
+& + \sum_{g'=1}^{G} \Sigma_{sg'\rightarrow g}(\mathbf{x}) . \phi_{g'}(\mathbf{x})
++ \chi(g)  \sum_{g'=1}^{G} \frac{\nu \Sigma_{fg'}(\mathbf{x})}{k_{eff}} . \phi_{g'}(\mathbf{x}) \\
   \end{split}
   \end{equation}
 
-(Inserir a tabela de grandezas)
+
 
 % -----------------------------------------------------
 % Adicionado depois da conversa com a Cláubia dia 24/11
@@ -373,15 +375,15 @@ conservação da corrente de nêutrons:
 
 \begin{equation}
   \label{eq:corrente}
-  D_g^+(\bar{x}).\nabla \phi_g^+(\bar{x})=D_g^+(\bar{x}).\nabla \phi_g^-(\bar{x})
+  D_g^+(\mathbf{x}).\nabla \phi_g^+(\mathbf{x})=D_g^+(\mathbf{x}).\nabla \phi_g^-(\mathbf{x})
   \end{equation}
 
 Na equação \ref{eq:corrente}, os sinais de mais e menos representam os lados da
 interface. Como os coeficientes de difusão são diferentes, a distribuição de
-fluxo $\phi_g(\bar{x})$ resultante deve ter um gradiente descontínuo na
+fluxo $\phi_g(\mathbf{x})$ resultante deve ter um gradiente descontínuo na
 interface de modo a conservar a corrente. Na formulação de volumes finitos,
 no caso de células vizinhas compostas por materiais diferentes, espera-se que
-o coeficiente de difusão $\phi_g(\bar{x})$ não seja contínuo na interface
+o coeficiente de difusão $\phi_g(\mathbf{x})$ não seja contínuo na interface
 entre as células. O que se aplica, neste caso, é outro estimador do módulo
 do gradiente, de modo que o fluxo na superfície seja o mesmo visto de um volume
 da interface quanto do outro. Esta estimativa leva em consideração os volumes e
@@ -396,19 +398,19 @@ matemático utilizado na implementação do método de volumes finitos no
 
 %\begin{equation}
 %  \label{eq:corrente-albedo+}
-%  J_g^+(\bar{x})=D_g^+(\bar{x}).\nabla \phi_g^+(\bar{x})
+%  J_g^+(\mathbf{x})=D_g^+(\mathbf{x}).\nabla \phi_g^+(\mathbf{x})
 %\end{equation}
 
 %\begin{equation}
 %  \label{eq:corrente-albedo-}
-%  J_g^-(\bar{x})=D_g^-(\bar{x}).\nabla \phi_g^-(\bar{x})
+%  J_g^-(\mathbf{x})=D_g^-(\mathbf{x}).\nabla \phi_g^-(\mathbf{x})
 %\end{equation}
 
-%O albedo em $(\bar{x})$ é definido pela relação
+%O albedo em $(\mathbf{x})$ é definido pela relação
 
 %\begin{equation}
 %  \label{eq:albedo}
-%\beta_g(\bar{x})=\frac{J_g^-(\bar{x})}{J_g^+(\bar{x})}
+%\beta_g(\mathbf{x})=\frac{J_g^-(\mathbf{x})}{J_g^+(\mathbf{x})}
 %\end{equation}
 
 %Com base no \textit{albedo}, é implementada uma condição de contorno capaz de lidar

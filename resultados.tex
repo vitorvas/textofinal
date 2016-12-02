@@ -352,32 +352,65 @@ de iterações.
 Na Figura \ref{fig:keff_all} estão apresentados três gráficos, para cada simulação
 acoplada. As linhas constantes (em azul) indicam o valor do fator de multiplicação
 calculado na execução separada do \textit{milonga} com o conjunto inicial de seções
-de choque utilizadas no cálculo acoplado.
+de choque utilizadas no cálculo acoplado. As curvas em vermelho apresentam os fatores
+de multiplicação obtidos a cada iteração entre termo-hidráulica e neutrônica (as linhas
+entre pontos são apenas para indicação da diferença entre iterações seguidas, já
+que os resultados são discretos).
 
-É possível ver que, em todos os casos, os fator de multiplicação cai após
-um certo número de iterações do sistema acoplado.
+É possível ver que, em todos os casos, os fator de multiplicação cai imediatamente
+já após a segunda iteração com a neutrônica. Na primeira iteração entre a
+termo-hidráulica e a neutrônica, as temperaturas do sistema vêm subindo devido
+à distribuição de potências previamente calculada. A partir desta primeira iteração,
+a realimentação do campo de potências já impacta na distribuição de temperaturas,
+o que fica claro na segunda iteração. A partir deste ponto, o sistema começa a
+apresentar pequenas oscilações ao redor de um fator de multiplicação de convergência.
 
-Uma análise um pouco mais atenta do terceiro gráfico na Figura \ref{fig:keff_all},
-para a simulação a $7,93 kW$, indica um número maior de iterações que as outras simulações.
-Isso se deve à necessidade de mais iterações do \textit{OpenFOAM} para alcançar a convergência
-numérica.
+% ----------------------------------------------------------------------------------
+%
+% Gráfico de 7,93 em duas simulações. Convergência mais lenta
+%
+%
 
-Os parâmetros utilizados para o cálculo numérico impactam não só na convergência, mas
-nas variações do cálculo acoplado. Isso pode ser visto na maior diferença entre
-fatores de multiplicação obtidos nas execuções do \textit{milonga} entre as
-iterações 13 e 16. Este comportamento é explicado pela variação nos parâmetros
-de resíduos durante a simulação. Ocorre que o \textit{OpenFOAM} permite o ajuste
-de parâmetros de cálculos como resíduos, \textit{timesteps}, etc. durante os cálculos.
-O objetivo desta funcionalidade é permitir que o usuário consiga controlar sua simulação
-tanto em relação ao tempo total mas também um ajuste fino, especialmente necessários
-para evitar a divergência dos resultados devido à oscilações numéricas.
+Foi realizada, ainda, outra simulação acoplada à potência de $7,93 kW$.
+Desta vez, com mudanças nos parâmetros de relaxação para a solução
+da equação de energia no sólido que representa o combustível.
+
+Os resultados desta simulação são apresentados no gráfico da Figura \ref{fig:keff_dist}.
+Esta simulação necessitou de número maior de iterações que as simulações anteriores para
+atingir a convergência. Em outras palavras, foi utilizado inicialmente um parâmetro
+mais conservador para a relaxação. Fazendo uso da funcionalidade do \textit{OpenFOAM}
+que permite o ajuste de parâmetros de simulação em tempo de execução\footnote{O objetivo desta funcionalidade é permitir que o
+usuário controle a simulação tanto em relação ao tempo total mas também
+efetuar um ajuste fino, especialmente útil para evitar a divergência dos
+resultados devido à oscilações numéricas.}, tais como
+valores de resíduos, mudança de \textit{timestep}, fatores de relaxação, dentre
+inúmeros outros, foram alterados os valores de relaxação citados com o objetivo
+de diminuir o tempo de convergência dos cálculos.
+
+Fica visível, entre as iterações 13 e 16, uma variação mais intensa, se comparada
+às anteriores, entre o fator de multiplicação em iterações consecutivas. Após
+este intervalor, as variações passam a ser menores entre iterações consecutivas.
 
 No presente caso, as variações na relaxação dos cálculos da equação da energia para
 o sólido, permitiram o aumento da velocidade da convergência, ao mesmo tempo mantendo
-os resíduos dos cálculos em níveis aceitáveis. Porém, algo que não pode passar despercebido
-é que tais alterações paramétricas em tempo de execução não foram suficientes para
-perturbar o sistema acoplado, mostrando sua robustez a mudanças paramétricas.
+os resíduos dos cálculos em níveis aceitáveis, evitando assim a divergência do cálculo.
+Tal comportamento mostra que alterações paramétricas em tempo de execução não foram
+suficientes para perturbar o sistema acoplado, mostrando sua robustez em relação
+a mudanças paramétricas.
 
-É fato que os resultados aqui apresentados não são suficientes para nenhuma afirmação
-sobre a efetiva capacidade de cálculos deste sistema acoplado. Porém, os resultados
-provam que conceitualmente o acoplamento como proposto é consistente e funcional.
+\begin{figure}[htb]
+  \caption[Variação do fator de multiplicação sobe variação de parâmetros de convergência.]{Variação do fator de multiplicação efetivo ($k_{eff}$) para a simulação a $7,93 kW$ com mudanças em parâmetros de convergência.}
+  \centering\includegraphics[scale=0.5]{figuras/plot200-disturb-port.png}
+  \label{fig:keff_dist}
+%  \legend{Fonte: autor}
+\end{figure}
+
+
+Os resultados aqui apresentados não são suficientes para nenhuma afirmação sobre a
+efetiva capacidade de cálculos deste sistema acoplado para sistemas mais complexos
+do que o modelo utilizado como, por exemplo, uma seção de um núcleo completo de um
+reator do tipo TRIGA ou um elemento combustível reduzido de um reator do tipo PWR.
+Porém, estes mesmos resultados provam que conceitualmente o acoplamento neutrônico
+termo-hidráulico proposto e desenvolvido nesta tese é fisicamente e computacionalmente
+consistente, além de funcional.
+
