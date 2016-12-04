@@ -157,7 +157,15 @@ quando o código-fonte não está disponível \cite{Ivanov2007}.
 A formulação utilizada para a solução da equações diferenciais que modelam o problema multi-física desta
 tese é a de volumes finitos. Uma característica básica desta técnica é a utilização de pequenos volumes
 de modo que as equações diferencias possam ser resolvidas como equações algébricas. A forma de obtenção
-destes pequenos volumes a partir de um domínio contínuo é o que se chama \textbf{discretização de domínio}. 
+destes pequenos volumes a partir de um domínio contínuo, ilustrado na Figura \ref{fig:dom},
+é o que se chama \textbf{discretização de domínio}.
+
+\begin{figure}[htb]
+  \caption[Domínio contínuo e discretizado.]{Domínio contínuo (à esquerda) e discretizado (à direita).}
+  \centering\includegraphics[scale=1.3]{figuras/dom.png}
+  \label{fig:dom}
+  \legend{Fonte: \cite{Theler2013b}}
+\end{figure}
 
 A discretização do domínio significa, na prática, gerar uma malha que represente o domínio contínuo original
 mantendo a conexão entre os pequenos volumes gerados. Se o domínio for tridimensional, será, geralmente,
@@ -280,7 +288,7 @@ de um conjunto de faces fechando um volume. As faces, por sua vez, são formadas
 em suas coordenadas cartesianas e armazenados como vetores. Esta implementação é independente da discretização
 usada \cite{Jasak2009}. Entretanto, as principais classes que herdam as funcionalidades das malhas implementam o método de
 volumes finitos. Sendo assim, pode-se dizer que o \textit{OpenFOAM} é um sistema de CFD baseado em volumes
-finitos.
+finitos \cite{Maric2014}.
 
 Além dos componentes dedicados a operações sobre o domínio, o \textit{OpenFOAM} oferece um conjunto variado
 de programas independentes chamados \textit{solvers}. Estes \textit{solvers} são dedicados à solução de
@@ -320,14 +328,16 @@ formato é o mesmo utilizado pelo \textit{milonga} para leitura de malhas não-e
 O \textit{milonga} é um \textit{software} aberto e livre para cálculo de física de reatores
 liberado sob licença to tipo GNU \cite{gplv3}. Ele é construído utilizando-se de bibliotecas
 conhecidas como a \textit{GNU Scientific Library} \cite{Galassi2009}, a biblioteca
-PETSc \cite{Balay2016} e na biblioteca para solução de problemas da autovalores e autovetores
+PETSc \cite{Balay2016}, que implementa ampla variedade de algoritmos
+para análise numérica, em especial para solução de sistemas lineares.
+O \textit{milonga} utiliza também a biblioteca para solução de problemas da autovalores e autovetores
 SLEPc \cite{Hernandez2005}. A reutilização de bibliotecas consagradas traz robustez para
 o \textit{milonga}, ao mesmo tempo seguindo os princípios do desenvolvimento de \textit{software} livre.
 
 O \textit{milonga} resolve a equação de transporte de nêutrons multi-grupos em estado estacionário,
 utilizando a aproximação por difusão ou o método de ordenadas discretas. Oferece dois esquemas
 de discretização, elementos e volumes finitos. A capacidade de utilizar volumes finitos em malhas
-não-estruturadas permite sua utilização de forma acoplada com o \textit{ÒpenFOAM}. O formato
+não-estruturadas permite sua utilização de forma acoplada com o \textit{OpenFOAM}. O formato
 de leitura de malhas não-estruturadas utilizado pelo \textit{milonga} é o \textbf{gmsh}, formato
 este que o \textit{OpenFOAM} é capaz de importar, como mencionado anteriormente.
 
@@ -336,9 +346,11 @@ optou-se por utilizar a aproximação por difusão. Apesar de resultados inacura
 na sua utilização em algumas circunstâncias \cite{Trahan2014}, a aproximação por difusão
 foi o modelo escolhido devido à sua execução mais rápida e menor consumo de memória.
 A aproximação por difusão é apresentada na equação \ref{eq:difusao} já na sua forma discretizada
-para $G$ grupos\footnote{A equação \ref{eq:difusao} é a mesma equação \ref{eq:dif} anteriormente
-  indroduzida, de modo
-  que os símbolos, se diferentes em alguns casos, são equivalentes}:
+para $G$ grupos:
+
+%\footnote{A equação \ref{eq:difusao} é a mesma equação \ref{eq:dif} anteriormente
+%  indroduzida, de modo
+%  que os símbolos, se diferentes em alguns casos, são equivalentes}:
 
 \begin{equation}
   \label{eq:difusao}
@@ -356,7 +368,7 @@ para $G$ grupos\footnote{A equação \ref{eq:difusao} é a mesma equação \ref{
 % Adicionado depois da conversa com a Cláubia dia 24/11
 % -----------------------------------------------------
 Nessa formulação, espera-se que as seções de choque macroscópicas e os coeficientes de difusão sejam
-previamente computador por códigos de \textit{lattice} para serem usados na formulação por difusão.
+previamente computados por códigos de \textit{lattice} para serem usados na formulação por difusão.
 A dependência das seções de choque da temperatura pode ser considerada linear uma vez que
 os coeficientes são mantidos constantes durantes cada passo do cálculo iterativo utilizado
 pelo \textit{milonga}.
@@ -367,29 +379,31 @@ o fluxo escalar é definido em cada célula. Quando células vizinhas são forma
 pelo mesmo material, é possível estimar o módulo do gradiente do fluxo
 utilizando o teorema do valor médio \cite{Theler2013b}.
 
-Caso isso não seja verdade, então o operador de divergência não
-está definido nos pontos de descontinuidade. Assim, a formulação apresentada precisa tratar
-dos casos de descontinuidade, que são, na prática, as superfícies de fronteiras entre
-materiais. Nessas interfaces, o \textit{milonga} aplica uma condição de
-conservação da corrente de nêutrons:
+%Caso isso não seja verdade, então o operador de divergência não
+%está definido nos pontos de descontinuidade. Assim, a formulação apresentada precisa tratar
+%dos casos de descontinuidade, que são, na prática, as superfícies de fronteiras entre
+%materiais. Nessas interfaces, o \textit{milonga} aplica uma condição de
+%conservação da corrente de nêutrons:
 
-\begin{equation}
-  \label{eq:corrente}
-  D_g^+(\mathbf{x}).\nabla \phi_g^+(\mathbf{x})=D_g^+(\mathbf{x}).\nabla \phi_g^-(\mathbf{x})
-  \end{equation}
+%\begin{equation}
+%  \label{eq:corrente}
+%  D_g^+(\mathbf{x}).\nabla \phi_g^+(\mathbf{x})=D_g^+(\mathbf{x}).\nabla \phi_g^-(\mathbf{x})
+%  \end{equation}
 
-Na equação \ref{eq:corrente}, os sinais de mais e menos representam os lados da
-interface. Como os coeficientes de difusão são diferentes, a distribuição de
-fluxo $\phi_g(\mathbf{x})$ resultante deve ter um gradiente descontínuo na
-interface de modo a conservar a corrente. Na formulação de volumes finitos,
-no caso de células vizinhas compostas por materiais diferentes, espera-se que
-o coeficiente de difusão $\phi_g(\mathbf{x})$ não seja contínuo na interface
-entre as células. O que se aplica, neste caso, é outro estimador do módulo
-do gradiente, de modo que o fluxo na superfície seja o mesmo visto de um volume
-da interface quanto do outro. Esta estimativa leva em consideração os volumes e
-a geometria das células envolvidas. Uma explicação elegante com o formalismo
+%Na equação \ref{eq:corrente}, os sinais de mais e menos representam os lados da
+%interface. Como os coeficientes de difusão são diferentes, a distribuição de
+%fluxo $\phi_g(\mathbf{x})$ resultante deve ter um gradiente descontínuo na
+%interface de modo a conservar a corrente. Na formulação de volumes finitos,
+%no caso de células vizinhas compostas por materiais diferentes, espera-se que
+%o coeficiente de difusão $\phi_g(\mathbf{x})$ não seja contínuo na interface
+%entre as células. O que se aplica, neste caso, é outro estimador do módulo
+%do gradiente, de modo que o fluxo na superfície seja o mesmo visto de um volume
+%da interface quanto do outro. Esta estimativa leva em consideração os volumes e
+%a geometria das células envolvidas.
+
+Uma explicação elegante com o formalismo
 matemático utilizado na implementação do método de volumes finitos no
-\textit{milonga} pode ser encontrada no trabalho de Treler \cite[Seção 3.5.2]{Theler2016}.
+\textit{milonga} pode ser encontrada no trabalho de Theler \cite[Seção 3.5.2]{Theler2016}.
 
 
 %Com base na corrente, é implementada
@@ -429,7 +443,7 @@ Os coeficientes da equação de difusão para um material são apresentadas nas 
 Condições de contorno baseadas na malha estão definidas nas linhas 19-21 e, na linha 24,
 está o comando utilizado para iniciar os cálculos.
 
-Além dos comandos apresentados, o \textit{milonga} possui um vasto conjunto de comandos e primitivas
+Além dos comandos já apresentados, o \textit{milonga} possui um vasto conjunto de comandos e primitivas
 que vão desde preprocessamento da malha até primitivas de saída para visualização gráfica da
 solução.
 
@@ -584,10 +598,10 @@ de entrada, sem necessidade de alteração do código-fonte e compilação, semp
 % -------------------------------------------------------------------------------------------------------
 \subsection{Implementação: uma olhada no código-fonte.}
 \label{subsec:detth}
-Na seção \ref{sec:th} foram apresentadas as bases teóricas do problema termo-hidráulico.
+%Na seção \ref{sec:th} foram apresentadas as bases teóricas do problema termo-hidráulico.
 Nesta subseção, são
-descritas as alterações diversas promovidas no \textit{solver} original do \textit{OpenFOAM}
-que foi chamado \texttt{thesisCoupledFoam}.
+descritas as alterações promovidas no código-fonte do \textit{solver} original do \textit{OpenFOAM}.
+Este novo \textit{solver} adaptado para o acoplamento foi chamado \texttt{thesisCoupledFoam}.
 
 A principal alteração feita no \textit{solver} originalmente implementado foi a adição de um termo-fonte.
 Esta alteração permite a geração de calor no sólido, útil tanto no problema acoplado
