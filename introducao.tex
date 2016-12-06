@@ -17,17 +17,17 @@ experimental correlations to using CFD (...)''.} \cite[p.~655]{Baglietto2011}.
 A frase acima é um exemplo de ganho de importância da técnica de dinâmica dos fluidos 
 computacional (CFD) na indústria nuclear nos últimos anos e da perspectiva da sua aplicação 
 nos próximos. Uma das aplicações em que o uso de CFD tem se estendido é no cálculo termo-hidráulico
-de combustíveis e de elementos combustíveis nucleares. Em boa parte dos trabalhos envolvendo CFD, dentre
-as condições iniciais do problema termo-hidráulico, se define um valor de potência inicial,
-ou mesmo variável, à qual está submetido o sistema \cite{Ustinenko2008}. Apesar de extremamente útil, essa forma de prescrever a
+de combustíveis e de elementos combustíveis nucleares. Em boa parte dos trabalhos envolvendo CFD aplicado
+a problemas termo-hidráulicos, usualmente é definida uma potência inicial, fixa ou variável, à qual
+é submetido o sistema \cite{Ustinenko2008}. Apesar de extremamente útil, essa forma de prescrever a
 potência é uma forma de simplificação. De forma a obter uma potência o mais realista possível, é necessário
 ter em conta um fenômeno particular de um sistema nuclear: a cinética dos nêutrons, ou neutrônica.
 
-O aumento do poder computacional que tem permitido a ampliação do uso de CFD na indústria nuclear chamou a
+O aumento do poder computacional, que tem permitido a ampliação do uso de CFD na indústria nuclear, chamou a
 atenção para um aspecto, até então pouco explorado, dos cálculos termo-hidráulicos: a possibilidade de
-realizar cálculos termo-hidráulicos de forma acoplada com os cálculos neutrônicos Estes últimos, fundamentais para
+realizar cálculos termo-hidráulicos de forma acoplada com os cálculos neutrônicos. Estes últimos, fundamentais para
 uma variedade de aspectos do funcionamento de reatores e combustíveis nucleares. Os cálculos neutrônicos e termo-hidráulicos
-acoplados, são também chamados de multi-física \cite{Leppanen2012}. 
+acoplados, são também chamados cálculos multi-física ou, simplesmente, multi-física \cite{Leppanen2012}. 
 
 Há diversas formas de se acoplar sistemas de cálculo neutrônico e termo-hidráulico. Entretanto, é necessário que tais
 sistemas ofereçam formas de escrever seus resultados e, principalmente, de ler resultados de outros sistemas. Caso contrário,
@@ -35,6 +35,7 @@ resta somente a possibilidade de modificar tais sistemas de modo que sejam capaz
 exterior. Nestes casos, a disponibilidade do código-fonte é condição básica para o desenvolvimento do sistema acoplado.
 Grosso modo, o acoplamento dos dois códigos nada mais é do que fazer com que dois códigos sejam capazes de se comunicar e
 trocar dados para realizar seus cálculos.
+
 
 
 
@@ -58,14 +59,15 @@ mas há alguns pontos a considerar antes de se
 seguir. As licenças que permitem a distribuição de código aberto impõe, geralmente, que
 o código desenvolvido a partir de outro licenciado desta forma deva permanecer aberto.
 Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite[Seção~2.6]{Androutsellis2010},
-é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, a disseminação de programas de forma aberta é crescente.
+é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, a disseminação
+de programas distribuídos de forma aberta é crescente.
 Não apenas para tarefas básicas, mas predominantemente em serviços de rede, internet, cálculo numérico dentre
-inúmeras outras aplicações intensas. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
+inúmeras outras aplicações de uso intensivo. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
 extensivamente usados em aplicações de missão crítica \cite{Norris2004}.
 
 Dada que a utilização de programas de código aberto ainda é relativamente tímida no domínio nuclear
-- e a expressão relativamente talvez seja inapropriada, pois são vários projetos de instituições
-renomadas utilizando código aberto recentemente \cite{Romano2013, Boyd2014, Huff2016} -
+- e a expressão relativamente talvez seja inapropriada, pois começam a surgir projetos de instituições
+renomadas utilizando código aberto \cite{Romano2013, Boyd2014, Huff2016} -
 esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
 aplicação neste domínio. Sendo os dois códigos usados para o acoplamento no âmbito desta tese disponibilizados
 de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
@@ -95,10 +97,10 @@ seja iniciado.
 
 Pode-se dizer que há duas grandes justificativas para a realização deste trabalho. A primeira, de ordem principalmente
 técnica, é o uso de um código do tipo CFD acoplado para cálculo multi-física. O CFD permite o cálculo detalhado do
-comportamento do escoamento em um reator, sub-canal ou ao redor de um elemento. Tal nível de detalhes, permite a
+comportamento do escoamento em um reator, sub-canal ou ao redor de um elemento. Tal nível de detalhes permite a
 investigação de fenômenos físicos não modeláveis de outras formas - no nível de todo o sistema, por exemplo. Além disso,
-o acoplamento entre os fenômenos neutrônico e termo-hidráulico resolve a dependência entre os dois fenômenos de forma
-mais fiel ao que realmente ocorre na prática. Obviamente, há um custo para a obtenção deste nível de detalhamento: a
+o acoplamento entre os fenômenos neutrônico e termo-hidráulico resolve a dependência entre ambos os fenômenos de forma
+fiel ao que realmente ocorre na prática. Obviamente, há um custo para a obtenção deste nível de detalhamento: a
 demanda computacional. Felizmente, os atuais processadores e suas características de multiprocessamento permitem
 a utilização de métodos outrora considerados uma ousadia. Isto posto, é possível afirmar que cálculos multi-física ou
 acoplados já são uma realidade e não se pode abrir mão de conhecer os novos aspectos técnicos, numéricos e teóricos
@@ -109,18 +111,18 @@ O chamado \textit{software livre} consiste em códigos desenvolvidos dentro de u
 comunitário. Essa ideia, que remonta ao início dos anos 80, advoga que um programa ou \textit{software} deve fornecer
 o código-fonte aos usuários. Os usuários têm direito de modificá-lo, melhorá-lo e até mesmo vendê-lo, desde que o novo
 programa seja fornecido também com código aberto. Essa filosofia de desenvolvimento comunitário de \textit{software}
-chocou o mercado de micro computação quando surgiu, mas cerca de 35 anos depois, não só é uma realidade como
+chocou o mercado de micro computação quando surgiu. Cerca de 35 anos depois, não só é uma realidade como
 grande parte do \textit{software} em uso para certos tipos de aplicações hoje é baseado em \textit{software livre}
 \cite{Androutsellis2010}. Não seria de se esperar outra coisa que esta filosofia de desenvolvimento comunitário de
 \textit{software} alcançasse a engenharia nuclear. As discussões sobre quão efetiva será a adoção deste modelo
-para uma área de missão crítica, como boa parte das aplicações em física de reatores, é, por si só, assunto para uma
+para uma área de missão crítica, como boa parte das aplicações em Física de Reatores, é, por si só, assunto para uma
 tese exclusiva sobre o tema. No presente trabalho, a motivação está na possibilidade de junção de forças entre grupos com
 diferentes \textit{backgrounds}, estruturas de pesquisa e investimentos com um objetivo comum: o desenvolvimento
 de sistemas úteis para todo o grupo, revisado por pares - e com isso uma mais ampla rede de detecção de erros
 de implementação - e possíveis de serem modificados e alterados de acordo com as necessidades.
 
-Com o acoplamento entre dois códigos abertos que se apresentará nesta tese, apesar
-de uma iniciativa pequena, espera-se trazer à luz do dia a discussão sobre o uso de \textit{software livre} na
+Com o acoplamento entre dois códigos abertos que se apresenta nesta tese, apesar
+de uma iniciativa ainda inicial, espera-se trazer à luz a discussão sobre o uso de \textit{software livre} na
 indústria e pesquisa nucleares entre especialistas no Brasil. Afinal, a filosofia do uso de \textit{software livre}
 já começou nos centros de ponta espalhados pelo planeta \cite{Romano2013, Boyd2014, Huff2016}.
 
@@ -177,7 +179,7 @@ Uma vez definido o significado da expressão \textit{software} livre, cabe ressa
 vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
 Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
 restrições a ser utilizado em sistemas
-fechados. Desse modo, assim passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
+fechados. Desse modo, assim que passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
 
 Com isto em conta, faz-se necessária uma breve explicação do que são as licenças
 de \textit{software} e como estas licenças definem as formas como devem se dar a utilização, distribuição, cópia, seção, etc. de determinado \textit{software}. Sendo assim,
@@ -185,8 +187,8 @@ já no escopo do projeto GNU \cite{Stallman1985} foi pensada a primeira forma
 de licenciamento de \textit{software}
 GNU. Esta licença é chamada GPL.
 
-A licença GPL é apenas uma dentre várias, seja de \textit{software} livre ou
-não. O objetivo da licença GPL é, ao mesmo tempo permitir liberdade do ponto de vista
+A licença GPL é apenas uma dentre vários tipos de licenças de \textit{software}.
+O objetivo da licença GPL é, ao mesmo tempo, permitir liberdade do ponto de vista
 do usuário do \textit{software}, mas impedir que o código-fonte seja usado em sistemas proprietários. Isso se dá obrigando sistemas que utilizem código
 distribuído sob a licença GPL a serem distribuídos sob a mesma licença.
 
@@ -205,7 +207,7 @@ sendo utilizados no mundo. Destes, 82\% rodando um sistema operacional livre.
 
 Era de se esperar que a penetração do \textit{software} livre chegaria também a outras
 áreas, incluindo aplicações de missão crítica. A agência espacial norte-americana
-utilizou \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
+utiliza \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
 de exploração espacial \cite{Norris2004}.
 
 Entretanto, a utilização de \textit{software} livre na indústria nuclear ainda é tímida.
@@ -217,16 +219,17 @@ não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \tex
 livre na área nuclear seja mais lenta que em outras áreas.
 
 Essas dificuldades, porém, parecem ser inferiores aos possíveis ganhos na utilização de
-\textit{software} livre. Um exemplo dessa afirmativa é a ampla adoção
+\textit{software} livre. Um exemplo parcial\footnote{O \textit{software Serpent} é gratuito
+  e aberto, mas distribuído apenas para organizações licenciadas para uso educacional ou não-comercial.
+Isso não é suficiente para ser classificado como \textit{software} livre.} dessa afirmativa é a ampla adoção
 do \textit{software} Monte Carlo para cálculo de física de reatores \textit{Serpent} \cite{Serpent2013}
 desde a sua disponibilização para a comunidade. Trata-se de um \textit{software}
 de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
-de ter sua distribuição controlada - a aqui cabe dizer que, por isso, não pode ser
-classificado como \textit{software} livre - é distribuído com código-fonte. Em setembro
+de ter sua distribuição controlada, é distribuído com código-fonte. Em setembro
 de 2016, o \textit{Serpent} já era usado por mais de 560 usuários em 162 universidades
 e centros de pesquisa em 37 países. Outra ferramenta, esta ainda pouco difundida,
 desenvolvida tendo em vista as aplicações nucleares é o código \textit{milonga} \cite{Theler2014b}.
-O \textit{milonga} é um código do tipo volumes finitos e elementos finitos que resolve as equações
+O \textit{milonga}, este sim livre nos termos da licença GPL, é um código do tipo volumes finitos e elementos finitos que resolve as equações
 de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
 desenvolvimento, apresenta resultados promissores \cite{Theler2014}, tendo sido
 utilizado em cálculos de transientes da central nuclear de Atucha I, na Argentina.
