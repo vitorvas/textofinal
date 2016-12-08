@@ -38,10 +38,11 @@ acoplado desenvolvido.
 %  \legend{Fonte: autor}
 \end{figure}
 
-Como apresentado no capítulo \ref{chap:rev}, acoplamento, no contexto desta dessa tese, é a execução
+Como apresentado no capítulo \ref{chap:rev}, acoplamento, no contexto dessa tese, é a execução
 de cálculos termo-hidráulicos utilizando a potência obtida pelo código de neutrônica que, por sua vez,
-utiliza as temperaturas dos materiais calculadas pela termo-hidráulica para recalcular seções de choque
-e outros parâmetros neutrônicos de modo a calcular o fluxo de nêutrons e potência no combustível.
+utiliza as temperaturas dos materiais calculadas pela termo-hidráulica. Assim é possível adaptar, por meio
+de interpolações, os valores de seções de choque previamente calculados, de modo a calcular
+o fluxo de nêutrons e potência no combustível.
 
 As características não usuais desse sistema são listadas abaixo:
 
@@ -49,7 +50,7 @@ As características não usuais desse sistema são listadas abaixo:
 \item Dois \textit{softwares} independentes interligados;
 \item Uso de memória compartilhada para comunicação entre dois diferentes códigos;
 \item Natureza aberta das licenças de utilização de ambos os programas (item fundamental para
-  o acesso, modificação e utilização do código-fonte de ambos);
+  o acesso, modificação e utilização do código-fonte);
   \item Uso da mesma malha por ambos os códigos.
 \end{itemize}
 
@@ -70,29 +71,29 @@ Multitarefa é a capacidade dos sistemas operacionais de executar distintas tare
 Talvez possa parecer corriqueira tal observação nos dias de hoje. Entretanto, há pouco mais de vinte
 anos, a maioria dos sistemas operacionais usados em computadores pessoais não ofereciam esta
 possibilidade. Em alguns casos, o que se chamou de multitarefa preemptiva, o usuário era capaz de
-carregas distintas tarefas em memória. Contudo, apenas uma era executada por vez.
+carregar distintas tarefas em memória. Contudo, apenas uma era executada por vez.
 
 Nos sistemas computacionais atuais, em especial no sistema Linux, utilizado para o desenvolvimento
-do sistema multi-física desta tese, é possível executar diversas tarefas ao mesmo tempo. Não só isso,
-como há um sistema padrão de execução que permite a comunicação entre programas distintos. Diferente
+do sistema multi-física desta tese, é possível executar diversas tarefas ao mesmo tempo. O sistema operacional
+Linux implementa também um sistema padrão de execução que permite a comunicação entre programas distintos. Diferente
 de um sistema de \textit{threads} \cite{Walli1995},
 em que todos os programas lançados enxergam a mesma
 porção de memória, no sistema Linux cada programa tem acesso exclusivo à memória alocada para si.
 Tudo isso acontece sob gerenciamento do sistema operacional.
 
-A metodologia utilizada neste acoplamento, prevê a execução separada dos programas de termo-hidráulica
-e neutrônica. Os detalhes e os algoritmos desta comunicação serão apresentados em detalhes oportunamente.
+A metodologia utilizada neste acoplamento prevê a execução separada dos programas de termo-hidráulica
+e neutrônica. Os detalhes e os algoritmos desta comunicação serão apresentados oportunamente (Seção \ref{sec:acoplamento}).
 Por agora, é suficiente saber que os programas são lançados separadamente, cada qual utilizando a memória
-alocada para si separadamente, sem que outros programas possam acessá-la. Dessa forma, era necessário
+alocada para si exclusivamente, sem que outros programas possam acessá-la. Dessa forma, fez-se necessário
 desenvolver um sistema ou forma de comunicação entre os códigos de neutrônica e termo-hidráulica.
 
 \subsection{Memória compartilhada}
 \label{subsec:mc}
 
 Memória compartilhada (ou \textit{Shared-memory}) é a memória de computadores que pode ser
-acessada simultaneamente por múltiplos programas em executados em diferentes
+acessada simultaneamente por múltiplos programas em execução em diferentes
 espaços de usuários com o objetivo de oferecer comunicação entre
-eles evitando cópias redundantes \cite{Robbins2003}. É, ainda, uma forma eficiente
+eles, evitando cópias redundantes \cite{Robbins2003}. É, ainda, uma forma eficiente
 de troca de dados entre programas ou processos. A interface POSIX
 (\textit{Portable Operating System Interface}) \cite{Walli1995} é um
 padrão especificado pela \textit{IEEE Computer Society} para garantir
@@ -110,8 +111,8 @@ programa ou \textit{thread} deve ser completamente encerrada antes que outro pro
 de memória, dá-se o nome de condição de corrida.
 
 Há diferentes técnicas para evitar condições do corrida. Dentre elas, uma das mais simples e
-largamente empregada, é o uso de semáforos, inclusive usada nesta tese.
-Um programa ou \textit{thread}, antes de acessar a memória
+largamente empregada, é o uso de semáforos, usada nesta tese.
+Um programa ou \textit{thread}, antes de acessar a memória,
 verifica se esta está livre para ser acessada. Se sim, altera o valor do semáforo enquanto opera na
 memória, voltando a alterá-lo para ``livre'' ao terminar. Caso outro programa ou \textit{thread}
 necessite acessar a mesma porção de memória, encontrará o semáforo em condição negativa e aguardará
@@ -131,7 +132,7 @@ através de memória compartilhada \cite{Theler2013}.
 \label{subsec:sl}
 
 Muito já se disse sobre \textit{software} livre, suas características e suas licenças, como na
-seção \ref{sec:intsl}. Nesta subseção, o objetivo se restringe às vantagens do acesso ao
+seção \ref{sec:intsl}. Nesta subseção, a análise se restringe às vantagens do acesso ao
 código-fonte.
 
 Ambos os códigos usados no sistema acoplado, possuem a capacidade de serem acoplados sem alterações
@@ -141,12 +142,12 @@ arquivos texto, arquivos binários e, inclusive, de forma nativa, uso de memóri
 
 O \textit{OpenFOAM}, entretanto, em um cenário de código fechado, só ofereceria uma forma de
 acoplamento. De acordo com sua implementação, um termo-fonte só pode ser lido a cada início de
-simulação. Seria, portanto necessário fazer com que o \textit{mionga} lesse os dados de temperatura
+simulação. Seria, portanto necessário fazer com que o \textit{milonga} lesse os dados de temperatura
 da saída do \textit{OpenFOAM}, escrevesse uma distribuição de potências em formato de entrada
 para o \textit{OpenFOAM} e que este fosse novamente executado do zero. Todo esse processo, deveria
 ser controlado por um \textit{script} de execução.
 
-Apesar de soar rudimentar, está é a forma de acoplamento mais comumente empregada.
+Apesar de soar rudimentar, esta é a forma de acoplamento mais comumente empregada.
 Mesmo com severo comprometimento de desempenho se comparada ao compartilhamento de
 memória, técnica usada nesta tese, muitas vezes essa é a única forma de acoplamento
 quando o código-fonte não está disponível \cite{Ivanov2007}.
@@ -156,7 +157,7 @@ quando o código-fonte não está disponível \cite{Ivanov2007}.
 
 A formulação utilizada para a solução da equações diferenciais que modelam o problema multi-física desta
 tese é a de volumes finitos. Uma característica básica desta técnica é a utilização de pequenos volumes
-de modo que as equações diferencias possam ser resolvidas como equações algébricas. A forma de obtenção
+de controle de modo que as equações diferencias possam ser resolvidas como equações algébricas. A forma de obtenção
 destes pequenos volumes a partir de um domínio contínuo, ilustrado na Figura \ref{fig:dom},
 é o que se chama \textbf{discretização de domínio}.
 
@@ -200,17 +201,24 @@ em forma de lista:
 \item \textbf{Sistema Operacional}: Ambos \textit{OpenFOAM} e \textit{milonga}, apesar de livremente disponíveis e,
   portanto, passíveis de utilização em diferentes sistemas operacionais são fornecidos especificamente
   para sistemas Linux. Alguns esforços recentes mostram eventuais aplicações do primeiro em sistemas
-  Windows. Já para o \textit{milonga}, não há qualquer previsão de uso em outros sistemas operacionais;
+  Windows\footnote{Em julho de 2016, a \textit{OpenCFD}, detentora da marca \textit{OpenFOAM}, lançou
+    uma versão desta ferramenta para o sistema Windows. Esta versão utiliza uma tecnologia de distribuição
+    similar a de máquinas virtuais. É não-nativa, portanto, não é, tecnicamente, uma distribuição para Windows.}.
+  Já para o \textit{milonga}, não há qualquer previsão de uso em outros sistemas operacionais;
 \item \textbf{Execução em Paralelo}: O \textit{OpenFOAM} oferece de forma nativa a possibilidade de execução em
   paralelo. O \textit{solver} \texttt{thesisCoupledFoam} foi, inclusive, implementado de modo a funcionar em paralelo.
   Entretanto, dada a limitação do \textit{milonga}, até sua versão 0.4.65, em executar em paralelo, o sistema
-  de comunicação do acoplamento está limitado a execução sequencial.
-\item \textbf{Seções de choque}: a geração de seções de choque deve ser feita por algum código externo. Os
-  principais códigos empregados para geração de seções de choque são fechados ou, como no
+  de comunicação do acoplamento está limitado à execução sequencial.
+\item \textbf{Seções de choque macroscópicas}: a geração de seções de choque deve ser feita por algum código externo. Os
+  principais códigos empregados para geração de seções de choque são restritos
+  \footnote{Por restrito, entenda-se que são fornecidos com código-fonte mas não são obtidos livremente
+  nem podem ser assim distribuídos.}
+  ou, como no
   caso do \textit{Serpent} aberto mas restrito. Entretanto, neste campo também há uma recente
   atividade no que diz respeito a \textit{software} livre. O conjunto de ferramentas \textit{PyNE},
   oferecido sob licença BSD (aberto e gratuito), tem como uma de suas propostas, a geração de seções
-  de choque para aplicações de ciências nucleares e engenharia nuclear \cite{Slaybaugh2014}.:
+  de choque para aplicações de ciências nucleares e Engenharia Nuclear \cite{Slaybaugh2014}. A implementação
+  desta funcionalidade ainda é incipiente.
 \item \textbf{Memória}: O \textit{milonga} oferece, além da formulação de solução pela equação de difusão,
   algumas variações do método de ordenadas discretas. Entretanto, o consumo de memória e tempo de execução
   nestas formulações foi proibitivo no \textit{hardware} disponível no momento de desenvolvimento desta tese.
@@ -224,7 +232,7 @@ de novas funcionalidades como, por exemplo, a execução em paralelo do código 
 das ferramentas para outro sistema operacional.
 
 Isto posto, é possível perceber que no mundo do \textit{software} limitações podem ser temporárias, de modo que um
-conceito bem estabelecido pode passar antes do que se imagina, a uma ferramenta de utilização ampla.
+conceito bem estabelecido, mas com aplicação limitada, pode passar antes do que se imagina, a uma ferramenta de utilização ampla.
 
 \section{Ferramentas}
 \label{sec:ferr}
@@ -232,7 +240,7 @@ conceito bem estabelecido pode passar antes do que se imagina, a uma ferramenta 
 Na seção anterior, foram brevemente descritos os conceitos sobre os quais foi construído
 o sistema acoplado desenvolvido nesta tese. Este
 sistema utiliza dois diferentes programas de computador. Cada um deles
-realiza um conjunto de cálculos separadamente e compartilham os dados necessários aos cálculos do outro.
+realiza um conjunto de cálculos separadamente e compartilha os dados necessários aos cálculos do outro.
 
 Apesar de desenvolvidos separadamente e com objetivos diferentes, algumas características comuns - além
 do fato de serem ambos \textit{software} livre - permitiram seu uso acoplado. Ambos possuem a capacidade de lidar
@@ -275,13 +283,13 @@ em sistemas fechados e/ou comerciais.
 \label{subsection:openfoam}
 
 O \textit{OpenFOAM} é um pacote para simulação numérica de Mecânica
-do contínuo desenvolvido com base em orientação a objetos em linguagem $C++$ .
+do Contínuo desenvolvido com base em orientação a objetos em linguagem $C++$ .
 Do ponto de vista de Engenharia de Software, sua modularidade e flexibilidade são vantagens
 em relação a outros códigos monolíticos  \cite{Jasak2007}. Sua implementação em componentes para manipulação de malhas, suporte
 à solução de sistemas lineares, operadores de discretização e modelos físicos em forma de bibliotecas o tornam
 um sistema CFD completo, aberto e gratuito. É utilizado em uma grande variedade
 de aplicações, desde a solução de escoamentos complexos envolvendo reações químicas, turbulência e
-transferência de calor até acústica, mecânica dos sólidos e eletro-magnetismo. 
+transferência de calor até acústica, mecânica dos sólidos e electromagnetismo. 
 
 \textit{OpenFOAM} implementa um manipulador de malhas poliédrico, no qual células são descritas a partir
 de um conjunto de faces fechando um volume. As faces, por sua vez, são formadas por uma lista de pontos
@@ -301,7 +309,7 @@ fluidos distintos. Um dos \textit{solvers} que o \textit{OpenFOAM} possui com es
 Este \textit{solver} funciona para problemas em estado estacionário e para
 fluidos compressíveis. A modularidade do \textit{OpenFOAM}
 fica clara na forma como o \textit{solver} interage com os outros módulos: para regiões sólidas,
-são utilizados módulos de propriedades termo-físicas específicos para sólidos. Por sua vez, para
+são utilizados módulos de propriedades termofísicas específicos para sólidos. Por sua vez, para
 fluidos são oferecidos outros módulos com implementações relativas a propriedades de fluidos.
 Outro exemplo é a utilização de turbulência: caso o usuário estabeleça que seu escoamento é laminar,
 o módulo para escoamentos laminares é utilizado. Caso o escoamento seja turbulento, o usuário pode
@@ -326,7 +334,7 @@ formato é o mesmo utilizado pelo \textit{milonga} para leitura de malhas não-e
 \label{subs:milonga}
 
 O \textit{milonga} é um \textit{software} aberto e livre para cálculo de física de reatores
-liberado sob licença to tipo GNU \cite{gplv3}. Ele é construído utilizando-se de bibliotecas
+liberado sob licença to tipo GPL \cite{gplv3}. Ele é construído utilizando-se de bibliotecas
 conhecidas como a \textit{GNU Scientific Library} \cite{Galassi2009}, a biblioteca
 PETSc \cite{Balay2016}, que implementa ampla variedade de algoritmos
 para análise numérica, em especial para solução de sistemas lineares.
@@ -344,7 +352,8 @@ este que o \textit{OpenFOAM} é capaz de importar, como mencionado anteriormente
 Dentre as distintas formas de resolver a equação de transporte oferecidas pelo \textit{milonga},
 optou-se por utilizar a aproximação por difusão. Apesar de resultados inacurados e das limitações
 na sua utilização em algumas circunstâncias \cite{Trahan2014}, a aproximação por difusão
-foi o modelo escolhido devido à sua execução mais rápida e menor consumo de memória.
+foi o modelo escolhido devido à sua execução mais rápida e menor consumo de memória do que
+os outros modelos disponíveis.
 A aproximação por difusão é apresentada na equação \ref{eq:difusao} já na sua forma discretizada
 para $G$ grupos:
 
@@ -362,15 +371,30 @@ para $G$ grupos:
   \end{split}
   \end{equation}
 
-
-
+\begin{table}[htb]
+\centering
+\caption[Nomenclatura equação de difusão de nêutrons.]{Nomenclatura equação \ref{eq:difusao}.}
+\label{tab:eq-dif}
+\begin{tabular}{ll}
+ $D_g$                       & Coeficiente de difusão para grupo $g$                        \\ \hline
+ $\mathbf{x}$                & Vetor posição                                              \\ \hline
+ $\phi_g$                    & Fluxo para o grupo $g$                                       \\ \hline
+  $\Sigma_{tg}$              & Seção de choque macroscópica total para o grupo $g$          \\ \hline
+  $\Sigma_{sg'\rightarrow g}$  & Seção de choque de espalhamento do grupo $g'$ para o grupo $g$ \\ \hline
+ $\phi_{g'}$                         & Fluxo para o grupo $g'$                                      \\ \hline
+ $\chi$                     & Fração dos nêutrons de fissão oriundos do grupo $g$           \\ \hline
+ $\nu$                      & Número médio de nêutrons de fissão                         \\ \hline
+  $\Sigma_{fg'}$             & Seção de choque macroscópica de fissão para o grupo $g'$     \\ \hline
+ $k_{eff}$                   & Fator de multiplicação efetivo                            
+\end{tabular}
+\end{table}
 % -----------------------------------------------------
 % Adicionado depois da conversa com a Cláubia dia 24/11
 % -----------------------------------------------------
 Nessa formulação, espera-se que as seções de choque macroscópicas e os coeficientes de difusão sejam
-previamente computados por códigos de \textit{lattice} para serem usados na formulação por difusão.
+previamente computados por códigos de célula para serem usados na formulação por difusão.
 A dependência das seções de choque da temperatura pode ser considerada linear uma vez que
-os coeficientes são mantidos constantes durantes cada passo do cálculo iterativo utilizado
+os coeficientes são mantidos constantes durante cada passo do cálculo iterativo utilizado
 pelo \textit{milonga}.
 
 A equação \ref{eq:difusao} assume que todos os coeficientes de difusão utilizados são
@@ -455,15 +479,15 @@ solução.
 \end{figure}
 
 Uma funcionalidade fundamental do \textit{milonga} para o acoplamento neutrônico
-e termo-hidráulico é a possibilidade de definir as seções de choque como expressões
-algébricas de $x$, $y$ e $z$, como funções definidas geometricamente em $x$, $y$ e $z$
+e termo-hidráulico é a possibilidade de definir as seções de choque
+como funções definidas geometricamente em $x$, $y$ e $z$
 ou como combinação de ambos os métodos. Para o acoplamento, em especial, a definição
 de funções geometricamente permite estabelecer valores para os coeficientes de
-acordo com a posição da célula na malha. A aplicação é ainda mais extensa, já que
+acordo com a posição da célula na malha. A aplicabilidade é ainda mais extensa, já que
 uma vez que é possível utilizar expressões pela posição na malha, é também
 possível definir concentração de veneno ou fração de vazio por elemento da malha.
 
-Além disso, o \textit{milonga} pode ser dados em tempo de execução de arquivos de
+Além disso, o \textit{milonga} pode ler dados em tempo de execução de arquivos de
 entrada, arquivos binários e, em especial no contexto desta tese, de memória compartilhada.
 Esta é uma funcionalidade deste \textit{software} que o torna preparado para uso de
 forma acoplada.
@@ -478,14 +502,14 @@ Nesta seção, são apresentados os detalhes algorítmicos desta comunicação e
 termo-hidráulica.
 
 Como funcionam separadamente, é necessário estabelecer, além dos dados a serem compartilhados
-como ambos os códigos irão se comportar. A opção utilizada - e aqui cabe um comentário: há diversas
-formas de definir as bases de execução dos dois programas. Neste trabalho, optou-se por utilizar,
-dentre as propostas, a mais simples. Esta solução consiste em executar o \textit{milonga}, que aguarda
-o a inicialização do \textit{OpenFOAM}. Os programas podem ser lançados em diferentes janelas ou
+como ambos os códigos irão se comportar. A forma de execução utilizada neste trabalho - e aqui cabe um comentário: há diversas
+formas de definir as bases de execução dos dois programas - é simples.
+Consiste em executar o \textit{milonga}, que aguarda
+a inicialização do \textit{OpenFOAM}. Os programas podem ser lançados em diferentes janelas ou
 na mesma janela em \textit{background}, já que o funcionamento da memória compartilhada é independente,
 inclusive, do usuário que lançou o programa.
 
-As próximas seções apresentam o algoritmo de acoplagem para cada código separadamente.
+As próximas seções apresentam o algoritmo de acoplamento para cada código separadamente.
 
 
 % -------------------------------------------------------------------------------------------------------------
@@ -514,8 +538,8 @@ enquanto em vermelho estão as instruções relativas ao controle de acesso aos 
 \item \textbf{Inicialização:} Na inicialização do \textit{OpenFOAM}, é lido o valor inicial da potência para
   a simulação caso o arquivo de definição de potência esteja disponível. Caso contrário, a potência é inicializado
   com zero. Os espaços em memória compartilhada são verificados. Caso não estejam corretamente alocados, o sistema
-  assume que o sistema executará de forma não acoplada. Cabe lembrar, como dito no início da seção \ref{sec:acoplamento},
-  o \textit{milonga} é iniciado antes do \textit{OpenFOAM} e, conforme será descrito no algoritmo da neutrônica, é
+  assume que o sistema executará de forma não acoplada. Cabe lembrar,
+  que  o \textit{milonga} é iniciado antes do \textit{OpenFOAM} e, conforme será descrito no algoritmo da neutrônica, é
   ele o encarregado da alocação da memória compartilhada.
 
 \item \textbf{Laço original:} Este é o laço do \textit{solver} original na sua execução do algoritmo SIMPLE. Este
@@ -524,7 +548,10 @@ enquanto em vermelho estão as instruções relativas ao controle de acesso aos 
   deste laço, os valores de temperatura de cada célula de cada região estão calculados e disponíveis.
 
 \item \textbf{Acoplamento com a neutrônica:} Caso seja o momento de troca de dados (a implementação atual
-  executa uma chamada acoplada para cada 100 iterações da termo-hidráulica), para as regiões fluidas são copiados os valores
+  executa uma chamada acoplada para cada 100 iterações da termo-hidráulica
+  \footnote{O valor fixo é uma forma simples de controle de iterações. O valor 100 utilizado nesta tese
+  é baseado em outra implementação similar na literatura \cite{Jareteg2014}.}.
+  ), para as regiões fluidas são copiados os valores
   de temperaturas para a memória compartilhada nas posições relativas às células das regiões fluidas. Em seguida, o mesmo
   é feito para as regiões sólidas. Com os valores calculados disponíveis na memória compartilhada, o \textit{OpenFOAM}
   avisa (post) no semáforo relativo à termo-hidráulica (th) que a memória compartilhada está liberada para uso. No próximo
@@ -544,7 +571,8 @@ No caso da neutrônica, não há necessidade de alterações no código-fonte do
 todo o controle do algoritmo de acoplamento é feito no arquivo de entrada. Na versão do
 \textit{milonga} utilizada (0.4.65) as opções de utilização iterativa ainda são limitadas. Estruturas
 de repetição utilizando condicionais não estão disponíveis. Com isso, optou-se por definir um laço com número
-de execuções fixa. A partir dessa restrição, foi desenvolvido o algoritmo de execução. A figura
+de execuções fixa, cujo valor é de mil chamadas da termo-hidráulica, suficiente para o caso de prova
+de conceito. A partir dessa restrição, foi desenvolvido o algoritmo de execução. A figura
 \ref{fig:algo_neutronica} mostra o algoritmo e suas etapas. As expressões em azul escuro mostram as instruções
 relativas ao uso de memória compartilhada, enquanto em vermelho estão
 as instruções relativas ao controle de acesso aos dados (semáforos). Cabe ressaltar que,
@@ -581,9 +609,12 @@ descritas na explicação deste.
   Quando recebe a sinalização de que é possível prosseguir, o \textit{milonga} armazena em sua estrutura interna os dados
   de temperatura provenientes da termo-hidráulica disponíveis na memória compartilhada.
 \item Cálculo neutrônico: São lidas as funções que armazenam seções de choque e todos os coeficientes previamente calculados para quatro
-  diferentes temperaturas. Assim, para todos os materiais e para todos os grupos são atribuídos os coeficientes de difusão,
+  diferentes temperaturas. A utilização de quatro temperaturas é uma referência para o teste conceitual. Para cálculos mais elaborados
+  a tabela de temperaturas dever ser detalhada e, neste caso, não pode ser negligenciado o impacto do tamanho de tal tabela
+  no consumo de memória.
+  Assim, para todos os materiais e para todos os grupos são atribuídos os coeficientes de difusão,
   seções de choque de absorção e seções de choque de espalhamento para cada célula, em função da temperatura da célula.
-  Em seguida, são atribuídas as condições de contorno do problema neutrônico e iniciada a solução do problema.
+  Em seguida, são atribuídas as condições de contorno do problema neutrônico e iniciados os cálculos relativos à solução do problema.
 \item \textbf{Acoplamento termo-hidráulico:} Antes do fim do laço, com o problema neutrônico resolvido, fluxos e potência
   calculados, os valores de potência são escritos na memória compartilhada e então o \textit{milonga} avisa (post) no
   semáforo relativo à neutrônica (neut) que a memória compartilhada está disponível para uso.
@@ -653,14 +684,14 @@ presente implementação, apenas a região com nome \textbf{``fuel''} pode ter u
 para o campo de potências. Na linha $4$ cria-se um objeto de entrada e saída de acordo com o
 arquivo \textbf{``Q''}. Se o
 objeto criado tiver o cabeçalho correto (linha $8$) é criada uma entrada na lista de referências com os
-dados do arquivo (linha $11$). Caso contrário, se um arquivo mal-formado for encontrado ou
+dados do arquivo (linha $11$). Caso contrário, se um arquivo malformado for encontrado ou
 não for encontrado o arquivo, é criado um campo volumétrico escalar com valores nulos nas dimensões
 esperadas (linhas $17$ a $23$). A partir deste ponto, o campo escalar volumétrico \textbf{``Q''}
 está disponível para ser usado.
 
-A criação do campo escalar volumétrico de potências é feito na inicialização dos campos dos materiais
+A criação do campo escalar volumétrico de potências é feita na inicialização dos campos dos materiais
 sólidos, anterior ao algoritmo de solução. O algoritmo de solução usado é o SIMPLE
-\textit{(Semi-Implicit Method for Pressur-Linked Equations}). Este algoritmo funciona
+\textit{(Semi-Implicit Method for Pressure-Linked Equations}). Este algoritmo funciona
 estimando um valor inicial para o cálculo da pressão e então fazendo correções no valor
 estimado \cite{Versteeg2007}. Esse procedimento é repetido até que se chegue a um valor
 aceitável dentro das condições de parada. Lembrando que este procedimento é feito para
@@ -707,7 +738,7 @@ do arquivo de solução de sólidos é apresentado na listagem \ref{lst:solvesol
       (
       - fvm::laplacian(betav*alpha, h, "laplacian(alpha,h)")
 
-      // Source-term added to que equation
+      // Source-term added to the equation
       - Q
       );
 
@@ -718,7 +749,7 @@ do arquivo de solução de sólidos é apresentado na listagem \ref{lst:solvesol
 \end{lstlisting}
 
 Dentro de um laço interno para correção de não-ortogonalidade, é definida a matriz de solução
-referente a entalpia (linha $4$). Como argumentos do objeto matriz sendo criado, é adicionado
+referente à entalpia (linha $4$). Aos argumentos do objeto matriz sendo criado é adicionado
 o termo-fonte \textbf{``Q''} (linha $9$). Estas são as principais
 modificações no código-fonte do \textit{solver} para
 acrescentar o termo-fonte à equação do calor no sólido.
@@ -741,7 +772,7 @@ mencionado, o algoritmo implementando no \textit{OpenFOAM} foi feito com vistas 
 Em sistemas paralelos, o mesmo código é executado por diferentes processos ou threads e operações
 de entrada e saída, como, por exemplo, leitura e escrita de arquivos, deve ser feita unicamente por um
 dos processos lançados. Sempre com vistas a manter a consistência. Em geral, este tipo de operação
-é feita pelo programa principal. Como é neste caso, em que no programa principal são executados
+é feita pelo programa principal. É este o caso na implementação do sistema desta tese, em que no programa principal são executados
 comandos de leitura dos arquivos já presentes em memória
 compartilhada. Arquivos estes, criados pelo \textit{milonga} na sua inicialização. Caso sejam encontrados
 os arquivos, o \textit{OpenFOAM} segue em modo acoplado. Caso contrário, executará sem acoplamento.
@@ -780,12 +811,12 @@ if(Pstream::master())
 Já em referência à listagem \ref{lst:checkshm}, estão apresentadas as estruturas de verificação
 de consistência. Em outras palavras, além declarar os dados, é necessário garantir que ao tentar utilizar
 os semáforos e o conteúdo em memória compartilhada, estes estejam disponíveis e em estado consistente.
-Nas linhas 4 e 5, novamente dentro de um teste de programa principal, os arquivos em memória compartilhada
+Nas linhas 4 e 5, dentro de um teste de execução sequencial, os arquivos em memória compartilhada
 são mapeados para as estruturas correspondentes, que guardarão referências para os dados em memória
 compartilhada (armazenados, por sua vez, em forma de arquivos). Na linha 8 são verificados os mapeamentos
 e, caso haja algum problema, o programa é interrompido. Caso contrário, segue normalmente a execução.
 Finalmente, nas linhas 11 e 12 é feita o que se convencionou chamar ``coerção'' em Ciência da Computação.
-A coerção é a mudança do tipo definido para uma variável para outro. Na presente implementação, essa coerção
+A coerção é a mudança do tipo definido de uma variável para outro. Na presente implementação, essa coerção
 é feita para garantir que os dados utilizados para o acesso à memória compartilhada, cuja API é implementada
 em linguagem C, possa ser usada sem riscos pelo \textit{OpenFOAM}, implementado em linguagem C++.
 

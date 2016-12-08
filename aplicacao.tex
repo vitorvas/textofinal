@@ -5,7 +5,7 @@
 \label{chap:aplicacao}
 
 De modo a avaliar o sistema de \textit{software} desenvolvido com base na metodologia apresentada, 
-foi desenvolvido um modelo simplificado \textbf{baseado} em um sistema físico existente, no caso,
+foi desenvolvido um modelo \textbf{simplificado baseado} em um sistema físico existente, no caso,
 o reator TRIGA IPR-R1 do CDTN. A elaboração deste modelo levou em consideração os aspectos físicos
 de um único elemento combustível - envolvido por certa quantidade de água - do reator TRIGA
 em condições de utilização usuais de trabalho.
@@ -70,7 +70,7 @@ sub-canal número $6$, mas a geometria foi modelada como um único pino cercado 
 % Separo th de neutronica em seções para colocar as seções de choque antes da neutrônica?
 % Ou coloco logo as seções de choque antes de tudo?
 
-Nesta seção são descrito o modelo, tanto nas suas características físicas quanto numéricas, utilizado
+Nesta seção é descrito o modelo, tanto nas suas características físicas quanto numéricas, utilizado
 nos testes do sistema acoplado.
 O desenvolvimento deste modelo se deu de modo a balancear as características termo-hidráulicas
 e neutrônicas desejáveis para um sistema de prova de conceito de cálculos acoplados
@@ -103,7 +103,7 @@ de uma malha mais refinada.
 A segunda restrição imposta pelo \textit{milonga}, também em razão de um \textit{bug}, está na função
 de acesso por coordenadas espaciais, fundamental para os cálculos acoplados com variação de seções de choque.
 Este \textit{bug} limita o uso de regiões com o mesmo nome à regiões conectadas por elementos de malha.
-Por exemplo, numa malha para todo o núcleo do reator TRIGA IPR-R1, são várias as regiões a serem definidas
+Por exemplo, numa suposta malha para todo o núcleo do reator TRIGA IPR-R1, são várias as regiões a serem definidas
 como combustível, estando
 tais regiões separadas por elementos de malhas de outras regiões. Neste caso, a função de acesso
 à coordenadas espaciais do \textit{milonga} interrompe sua execução ao percorrer completamente a primeira
@@ -135,7 +135,7 @@ combustível\footnote{Durante a execução desta tese, alguns \textit{bugs} enco
 \label{ssec:mod_fis_num}
 
 O modelo escolhido, de acordo com as limitações impostas já descritas,
-representa um elemento combustível (elemento B6) do reator TRIGA IPR-R1, brevemente
+representa um elemento combustível (baseado no elemento B6) do reator TRIGA IPR-R1, brevemente
 apresentado na seção \ref{sec:triga}. Os combustíveis dos reatores do tipo TRIGA
 possuem uma grande sensibilidade na sua
 reatividade com a temperatura devido à já citada presença do hidreto de zircônio
@@ -155,7 +155,7 @@ o que torna este modelo interessante para avaliação do acoplamento.
 
 \begin{figure}[htb]
   \caption{Vista isométrica do modelo completo.}
-  \centering\includegraphics[scale=0.6]{figuras/all_regions_isometric.png}
+  \centering\includegraphics[scale=0.5]{figuras/all_regions_isometric.png}
   \label{fig:region_isometric}
 %  \legend{Fonte: autor}
 \end{figure}
@@ -168,15 +168,15 @@ o que torna este modelo interessante para avaliação do acoplamento.
 \end{figure}
 
 O modelo consiste num combustível com revestimento de alumínio sem
-o \textit{gap}, de modo que o diâmetro do combustível é mantido como no
+o revestimento, de modo que o diâmetro do combustível é mantido como no
 combustível de referência e o diâmetro do \textit{gap} é estendido para
 ocupar este espaço. Além disso, o modelo considera apenas o comprimento
 ativo do combustível, sendo como um combustível mais curto. O volume
 de água ao redor do combustível foi modelado considerando a razão entre
 material físsil e moderador do núcleo completo do reator. Nenhuma outra
 estrutura sólida, como discos de samário ou elementos estruturais, é
-reapresentada no modelo, sendo este idêntico axialmente em qualquer
-altura, como observável nas Figuras \ref{fig:regions} e  e \ref{fig:region_isometric}.
+representada no modelo, sendo este idêntico axialmente em qualquer
+altura, como observável nas Figuras \ref{fig:regions} e \ref{fig:region_isometric}.
 
 \begin{table}[htb]
   \centering
@@ -194,7 +194,7 @@ altura, como observável nas Figuras \ref{fig:regions} e  e \ref{fig:region_isom
 A malha gerada para o modelo foi construída por extrusão. Isso significa que
 os elementos de malha foram gerados para uma superfície e a dimensão espacial
 foi dada por um valor de comprimento e um número de camadas a serem geradas.
-Foram geradas 35 camadas (cada uma com um $cm$), sendo o tamanho relativo
+Foram geradas 35 camadas (cada uma com $1 cm$), sendo o tamanho relativo
 mínimo para elemento de malha de 0,5 e máximo de 4.0. Esses valores controlam
 o quanto o elemento próximo ao ponto com tal tamanho relativo crescerá durante
 a geração da malha. A razão de crescimento entre o refinamento do revestimento
@@ -268,19 +268,19 @@ Refrigerante                  & \textit{coolant\_to\_cladding} &                
 \end{tabular}
 \end{table}
 As condições de contorno devem ser estabelecidas para todas as grandezas sendo calculadas. Algumas
-destas grandezas, como a potência ($Q$), por exemplo, são automaticamente calculadas nas superfícies a partir
+destas grandezas, como a potência, por exemplo, são automaticamente calculadas nas superfícies a partir
 dos campos internos. Entretanto, isto não desobriga o usuário de explicitamente defini-las como \textit{calculated}.
 
 Esta condição de contorno utiliza as
-propriedades termo-físicas dos respectivos materiais, que são previamente definidas na
-modelagem do problema, para o cálculo do fluxo de calor entre as regiões. As propriedades termo-físicas
+propriedades termofísicas dos respectivos materiais, que são previamente definidas na
+modelagem do problema, para o cálculo do fluxo de calor entre as regiões. As propriedades termofísicas
 dos materiais utilizados por este modelo são dadas na tabela \ref{tab:termofisica}.
 
 
 
 \begin{table}[htb]
 \centering
-\caption{Propriedades termo-físicas dos materiais em função da temperatura ($T$)}
+\caption{Propriedades termofísicas dos materiais em função da temperatura ($T$)}
 \label{tab:termofisica}
 \begin{tabular}{lllll}
 Material     & \begin{tabular}[c]{@{}l@{}}Densidade\\ {[}$kg/m^3${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Calor específico\\ {[}$kJ/kg.K${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Condutividade\\ {[}$W/m.K${]}\end{tabular}      & \begin{tabular}[c]{@{}l@{}}Viscosidade\\ {[}$\mu Pa.s${]}\end{tabular} \\
@@ -300,12 +300,15 @@ As principais condições de contorno e iniciais do problema apresentado estão 
 Estas condições descrevem as características iniciais do problema sendo resolvido. Alguns comentários sobre sobre
 a tabela \ref{tab:cc-init}: o velocidade na entrada do sistema se baseia na velocidade média do escoamento na
 entrada do núcleo do reator \cite{Veloso2005}. A região do revestimento, por ser sólida, herda a implementação
-do termo-fonte. Entretanto, este é mantido nulo já que não há geração de energia no revestimento. A campo
-interno inicial de potência é \textbf{não-uniforme} e definido como variável. A campo não-uniforme permite estabelecer
+do termo-fonte feita no \textit{solver}. Ou seja, como trata-se de uma região sólida, a região equivalente ao
+revestimento também espera e necessita da definição de um campo volumétrico de potências.
+Entretanto, este é mantido nulo já que não há geração de energia no revestimento. O campo
+interno inicial de potências é \textbf{não-uniforme} e definido como variável. O campo não-uniforme permite estabelecer
 uma condição inicial de campo heterogêneo, tal como uma distribuição volumétrica de potência. O valor para este
 campo é definido como \textbf{variável}, já que esta distribuição de potências varia para cada diferente simulação.
 
-Vale ressaltar que a potência, tal qual implementada no \textit{solver}, é dada em $W$ por $m^3$.
+Vale ressaltar que o que se convencionou chamar no texto de potência, tal qual implementada no \textit{solver}, é dada em $W$ por $m^3$,
+ou seja, é uma densidade de potências.
 
 \begin{table}[htb]
 \centering
@@ -314,7 +317,7 @@ Vale ressaltar que a potência, tal qual implementada no \textit{solver}, é dad
 \begin{tabular}{llllc}
 Região                    & Campo                   & Fronteira      & Tipo         & Valor                 \\
 \hline
-\multirow{6}{*}{coolant}  & \multirow{2}{*}{T}      & inlet         & fixedValue   & $300K$                  \\
+\multirow{6}{*}{coolant}  & \multirow{2}{*}{T}      & inlet         & fixedValue   & 300 [$K$]                  \\
                           &                         & outlet        & zeroGradient & -                     \\
                           & \multirow{2}{*}{U}      & inlet         & fixedValue   & 0.1 {[}$m/s${]}         \\
                           &                         & outlet        & zeroGradient & -                     \\
@@ -341,10 +344,11 @@ o problema está fechado e é possível iniciar os cálculos propriamente ditos.
 
 Entretanto, para isso, são necessárias, além das configurações relativas
 ao problema físico, as definições relativas aos esquemas de discretização a serem utilizados e aos
-algoritmos numéricos a serem utilizados. Entenda-se por esquemas de discretização, 
+algoritmos numéricos a serem utilizados. Entenda-se por esquemas de discretização, os algoritmos
+utilizados na transformação dos operadores matemáticos sobre grandezas contínuas em
+equações algébricas operando sobre grandezas discretas.
 
-Complementando a breve introdução ao método de volumes finitos
-dada no capítulo \ref{chap:teoria} desta tese, são apresentados na tabela \ref{tab:discretizacao}
+São apresentados na tabela \ref{tab:discretizacao}
 os esquemas de discretização utilizados nos cálculos acoplados e não acoplados. O manual
 do programador do \textit{OpenFOAM} \cite[Seção 2.4]{OpenFOAM2015b} descreve com detalhes alguns
 dos métodos de discretização de equações disponíveis na ferramenta.
@@ -375,7 +379,7 @@ adicionado não impactasse negativamente o processo de obtenção da solução n
 \subsection{Condições de contorno e parâmetros numéricos: neutrônica}
 \label{ssec:neutro}
 
-O \textit{milonga} convenientemente trata internamento as condições de contorno
+O \textit{milonga} convenientemente trata internamente as condições de contorno
 entre as diferentes regiões, ou materiais, do ponto de vista dos cálculos neutrônicos,
 poupando o usuário de certa quantidade de trabalho extra e evitando introdução
 de erros de modelagem. Desse modo, é suficiente definir as condições de contorno
@@ -401,7 +405,9 @@ a palavra-chave \textit{vacuum} dentro do \textit{milonga}, enquanto a condiçã
 de corrente deve ter derivada zero na direção da normal à fronteira e é utilizada
 pela palavra-chave \textit{mirror}. Caso se deseje utilizar a condição mista, deve
 ser utilizada a palavra-chave \textit{robin} seguida do um argumento de ponto
-flutuante entre zero e um.
+flutuante entre zero e um. Uma explicação objetiva sobre quais são e como estão
+implementadas as condições de contorno no \textit{milonga} está disponível
+no trabalho de Theler \cite{Theler2013b}.
 
 As condições de contorno utilizadas no modelo utilizado estão listadas na Tabela
 \ref{tab:cc-neut}. Na figura \ref{fig:cc-neut} podem ser vistas na metade à esquerda
@@ -428,15 +434,13 @@ regiões correspondentes a cada material.
 A fim de verificar o impacto das variações de temperatura obtidas nos cálculos
 termo-hidráulicos no fluxo
 neutrônico e, portanto, na potência volumétrica, é necessário utilizar seções de choque
-fisicamente compatíveis com o problema a ser resolvido. A breve introdução dada sobre
-neutrônica na seção \ref{sec:neutronica} desta tese descreve a importância das seções
-de choque no cálculo neutrônico. As seções de choque surgem no cálculo neutrônico
+fisicamente compatíveis com o problema a ser resolvido. As seções de choque são utilizadas no cálculo neutrônico
 pela aproximação por difusão como coeficientes dos distintos termos da equação
 diferencial que resolve o fluxo de nêutrons.
 
 O \textit{milonga} utiliza mnemônicos específicos para cada coeficiente, de modo
 que estes possam ser representados, tanto como valores constantes, como por funções
-de temperatura, por exemplo, assim utilizados na modelagem nesta tese. Na tabela
+de temperatura, abordagem utilizada na modelagem nesta tese. Na tabela
 \ref{tab:coeff-dif} estão apresentados os mnemônicos utilizados pelo \textit{milonga}
 no modelo utilizado bem como a divisão de grupos em energias.
 
@@ -461,7 +465,7 @@ no modelo utilizado bem como a divisão de grupos em energias.
 \end{tabular}
 \end{table}
 
-Para a geração das seções de choque, um modelo bidimensional com propriedades
+Para a geração das seções de choque, um modelo com propriedades
 equivalentes ao modelo tridimensional a ser simulado
 foi definido. Esta equivalência foi garantida mantendo-se a proporção entre material
 físsil e moderador em ambos os modelos. Com base nessa proporção,
@@ -494,7 +498,7 @@ para materiais específicos e para variado número de grupos de energia. No pres
 trabalho, foram utilizados dois grupos de energia separados em 0,625 MeV como
 apresentado na tabela \ref{tab:coeff-dif}. A composição dos materiais utilizados,
 em especial o combustível, que contem mais isótopos, se baseou na composição
-isotópica do reator TRIGA IPR-R1 no ano de 2004. Estas composições, massa e código
+isotópica do reator TRIGA IPR-R1 no seu início de vida (BOL). Estas composições, massa e código
 de material utilizados na geração de seções
 de choque pelo WIMSD-5B estão na Tabela \ref{tab:composicao}.
 
@@ -598,6 +602,6 @@ das células em relação à malha, a temperatura de cada célula é argumento d
 função de uma variável dependente da temperatura. Se a temperatura não está
 exatamente tabulada, o \textit{milonga} provê interpolação linear por padrão.
 
-É exatamente esta característica do \textit{milonga} que permite o cálculo neutrônico
+Esta característica do \textit{milonga} permite o cálculo neutrônico
 independente por elemento de volume, sendo possível obter variações detalhadas
 de acordo com a granularidade da malha utilizada pelo modelo.
