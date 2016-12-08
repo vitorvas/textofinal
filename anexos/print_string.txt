@@ -1,0 +1,2 @@
+[vitors@diablo anexos]$ a2ps --left-footer='' --pro=color --pretty-print='c++' --left-title='' --footer='' *.C *.H milonga.mil -o codigo.ps; ps2pdf codigo.ps codigo.pdf 
+

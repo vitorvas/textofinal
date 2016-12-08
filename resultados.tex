@@ -59,11 +59,11 @@ para o sistema:
   de referência (Tabela \ref{tab:temp} do Capítulo \ref{chap:aplicacao});
 \item Execução do \textit{milonga} com as seções de choque correspondentes a cada temperatura média;
 \item Pós-processamento destas simulações para adaptação das distribuições de potência obtidas pelo \textit{milonga}
-  para condição inicial do problema no \textit{OpenFOAM};
+  no formato para condição inicial do problema no \textit{OpenFOAM};
 \end{enumerate}
 
 As temperaturas médias utilizadas e os fatores de multiplicação obtidos na geração da distribuição inicial
-de potências são apresentados na tabela \ref{tab:temp-keff}.
+de potências, de acordo com as etapas listadas anteriormente, são apresentados na tabela \ref{tab:temp-keff}.
 
 \begin{table}[htb]
   \centering
@@ -95,8 +95,9 @@ As distribuições de potências obtidas para os volumes de combustível podem s
 As distribuições de potência axial obedeceram, para os três casos, a perfis
 cossenoidais, como pode ser visto na Figura \ref{fig:perf-nac-axial}. Estes são os perfis esperados para
 os combustíveis modelados \cite{Veloso2005}. As distribuições de potência radiais -
-obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes, na Figura \ref{fig:perf-Q-nac-radial},
-dos obtidos axialmente. A primeira e principal diferença está na abruta subida a partir da potência nula
+obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes
+dos obtidos axialmente, como pode ser visto na Figura \ref{fig:perf-Q-nac-radial}.
+A primeira e principal diferença está na abruta subida a partir da potência nula
 no início e fim da curva. A razão para este comportamento é simples: apenas o combustível gera potência, sendo
 zero para as regiões de revestimento e água (não apresentadas na curva). O achatamento na posição central
 da curva em relação aos picos é devido ao menor fluxo térmico no centro do combustível. Nas regiões limite
@@ -136,7 +137,6 @@ Radialmente, os perfis de temperatura, seguindo o mesmo padrão para os três ca
 possuem descontinuidades, como pode ser visto na Figura \ref{fig:perf-t-nac-radial} (entre
 $0 m$ e $0,005 m$ e $0,04 m$ e $0,045 m$). Estes degraus indicam mudança no gradiente de temperaturas na
 interface entre diferentes materiais, devido às diferentes condutividades térmicas de cada um.
-que ocorre no fluxo de calor entre dois materiais com propriedades físicas distintas.
 
 Os resultados das simulações apresentadas para os três casos não-acoplados formam o conjunto de resultados
 de referência. Eles servem de base de comparação para as simulações acopladas, com objetivo de verificar
@@ -156,7 +156,7 @@ se os resultados acoplados se diferenciam destes e em que medida ocorrem estas d
 \label{sec:cp}
 
 As simulações acopladas foram realizadas exatamente nas mesmas condições das suas homólogas não-acopladas.
-Os resultados destas são apresentados em comparação com os resultados anteriores para visualização
+Os resultados destas são apresentados em comparação com os resultados de referência para visualização
 das diferenças entre elas.
 
 Diferentemente dos cálculos não-acoplados, na simulação acoplada ocorre a variação do fluxo neutrônico.
@@ -172,7 +172,7 @@ da malha na direção axial (apenas 35 camadas de elementos, como apresentado na
 Na Figura \ref{fig:flux_z_50} são apresentados os fluxos axiais acoplados e não acoplados nas simulações
 à potência mais baixa, de $1,98 kW$. A diferença entre os fluxos é melhor percebida no corte radial,
 apresentado na Figura \ref{fig:flux_x_50}. Além de uma maior variação radial devido à moderação de nêutrons
-nas paredes, e consequente aumento do fluxo térmico, a malha é radialmente mais refinada. Com isso, é possível
+nas paredes, e consequente aumento do fluxo térmico, a malha é mais refinada radialmente. Com isso, é possível
 captar mais detalhes do fluxo neutrônico.
 
 %Ver se dá pra colocar tempo e parâmetros de convergência.
@@ -220,7 +220,7 @@ os fluxos relativos radiais para a mesma potência podem ser observados na Figur
 As diferenças entre os fluxos relativos em ambas as simulações passa a ser melhor
 vista nas simulações de maior potência, a $7,93 kW$. Novamente, a variação nas temperaturas
 impacta nos cálculos acoplados, uma vez que as seções de choque são periodicamente
-recalculadas. É possível observar na Figura \ref{fig:flux_z_200}, que apresenta o perfil axial,
+ajustadas. É possível observar na Figura \ref{fig:flux_z_200}, que apresenta o perfil axial,
 uma sutil sobreposição entre as curvas, demonstrando um achatamento na curva
 referente as cálculos acoplados. Isso se explica pelas propriedades do combustível modelado,
 que diminui sua capacidade de absorção de nêutrons térmicos com o aumento da temperatura.
@@ -252,14 +252,16 @@ equação de difusão é o fluxo neutrônico e, a partir
 dele, é calculada a potência volumétrica baseada em um valor de referência para
 a potência.
 
-É a potência\footnote{A palavra potência é indistintamente utilizada neste capítulo como potência
-  propriamente dita, em $W$ ou como sinônimo de potência volumétrica, dada em $W/m^3$, de acordo
-  com o contexto em que é usada.}, que entra como termo fonte na equação na energia
+É a potência
+\footnote{A palavra potência é indistintamente utilizada neste capítulo como potência
+  propriamente dita, em $W$ ou como sinônimo de densidade de potência, dada em $W/m^3$, de acordo
+  com o contexto em que é usada.}
+, que entra como termo fonte na equação na energia
 resolvida pela termo-hidráulica, que leva ao aquecimento dos materiais que, por sua vez, impactam
 no cálculos de seções de choque. As diferenças entre os perfis de potência obtidos nos dois conjuntos
 de simulações, acopladas e não-acopladas, são apresentados nas Figuras \ref{fig:Q_all_z} e
 \ref{fig:Q_all_x}, respectivamente nas direções axial e radial. Observando estas Figuras,
-é possível perceber que as diferenças em potência entre os casos acoplados e
+é possível perceber que as diferenças entre os casos acoplados e
 não acoplados aumenta de acordo com o aumento da potência.
 
 Além da diferença em valores absolutos - sutil, para potências mais baixas - entre as curvas obtidas pelos
@@ -271,13 +273,13 @@ não acoplada, enquanto nas extremidades da curva, os perfis estão sobrepostos\
 
 A referida diferença no formato das curvas referentes às simulações acopladas e não acopladas é melhor vista no
 perfil radial de potências, Figura \ref{fig:Q_all_x}. O fenômeno ocorre para todas as potências, mas é melhor
-visto para a potência de $7,93 kW$. É possível perceber que nos picos, que correspondem a interface entre o
-revestimento e o combustível, os valores para a simulação acoplada são maiores. Já, no centro do combustível
+visto para a potência de $7,93 kW$. É possível perceber que nos picos, que correspondem à interface entre o
+revestimento e o combustível, os valores para a simulação acoplada são maiores. No centro do combustível
 ocorre o inverso, sendo menores os valores de potência para a simulação acoplada. Isso se dá devido à realimentação
 regular da neutrônica pela temperatura em cada posição. Com o aumento progressivo da temperatura, a reatividade
 cai no centro do combustível, levando também a uma diminuição da potência local. Já, nas extremidades, a moderação
 de nêutrons que ocorre na água, mais próxima dessa região, leva a mais fissões nessa região. O aumento de temperatura
-causados por este aumento é compensado pelo efeito de troca de calor com o cladding, que está em contato com fluido
+causado por este aumento na potência é compensado pelo efeito de troca de calor com o revestimento, que está em contato com fluido
 a temperaturas mais baixas. Este comportamento é o mesmo que o descrito por Ravnik \cite{Ravnik1990}
 para combustíveis do tipo TRIGA, tal qual apresentado anteriormente para o fluxo de nêutrons.
 
@@ -289,7 +291,7 @@ para combustíveis do tipo TRIGA, tal qual apresentado anteriormente para o flux
 \end{figure}
 
 \begin{figure}[htb]
-  \caption{Curvas de potência axiais para os casos acoplados e não acoplados.}
+  \caption{Curvas de potência radiais para os casos acoplados e não acoplados.}
   \centering\includegraphics[scale=0.5]{figuras/Q_all_x_square_port.png}
   \label{fig:Q_all_x}
 %  \legend{Fonte: autor}
@@ -300,14 +302,14 @@ Figuras \ref{fig:T_all_z} e \ref{fig:T_all_x}, respectivamente para as
 distribuições radial e axial.
 
 As diferenças entre temperaturas para simulações acopladas e não acopladas são
-esperadas, uma vez que há variações na potência. As curvas apresentadas nas Figuras
+esperadas, uma vez que há variações na distribuição  de potências. As curvas apresentadas nas Figuras
 \ref{fig:Q_all_z} e \ref{fig:Q_all_x}, \ref{fig:T_all_z} e \ref{fig:T_all_x} são
 as mesmas apresentadas para os casos não acoplados acompanhadas das curvas do
 caso acoplado. Os fenômenos físicos e suas explicações para o formato das curvas
 são os mesmos, já que as simulações são iguais a menos das potências e do fato
 de serem ou não acopladas.
 
-O representativo destes resultados em relação à esta tese está nas diferenças,
+O representativo destes resultados em relação a esta tese está nas diferenças,
 pequenas em casos de baixa potência, entre as curvas acopladas e não acopladas.
 Em suma, com a retroalimentação devida ao acoplamento, a relação entre os fenômenos
 físicos termo-hidráulicos e neutrônicos é representada e, como apresentado,
@@ -328,7 +330,7 @@ gera resultados diferentes dos cálculos realizados separadamente.
 \end{figure}
 
 Nos cálculos acoplados, a cada execução do \textit{milonga} são utilizadas
-novas seções de choque a partir de tabelas previamente geradas e da interpolação
+novas seções de choque ajustadas a partir de tabelas previamente geradas e da interpolação
 destes dados em função das temperaturas de cada célula. Em cada uma destas
 execuções, além do fluxo neutrônico, são calculados os fatores de multiplicação
 ($k_{eff}$) efetivos daquele, digamos, ``estado'' do sistema.
@@ -343,13 +345,13 @@ execuções, além do fluxo neutrônico, são calculados os fatores de multiplic
 À medida em que as iterações com o \textit{milonga} ocorrem, o fator de multiplicação
 calculado para o sistema varia, oscilando. Esta oscilação ocorre devido à iteração
 entre o sistema neutrônico e termo-hidráulico. Intuitivamente, percebe-se que a partir
-de uma potência, as temperaturas aumentas na interação seguinte, que leva, por sua vez,
+de uma potência, as temperaturas aumentam na interação seguinte, que leva, por sua vez,
 a uma diminuição na reatividade (propriedade deste tipo de elemento combustível),
 que leva a uma diminuição na potência, que faz variar a temperatura, que afeta
 a reatividade e assim por diante. O fim da simulação se dá por número fixo
 de iterações.
 
-Na Figura \ref{fig:keff_all} estão apresentados três gráficos, para cada simulação
+Na Figura \ref{fig:keff_all} estão apresentados três gráficos, um para cada simulação
 acoplada. As linhas constantes (em azul) indicam o valor do fator de multiplicação
 calculado na execução separada do \textit{milonga} com o conjunto inicial de seções
 de choque utilizadas no cálculo acoplado. As curvas em vermelho apresentam os fatores
@@ -379,23 +381,23 @@ Os resultados desta simulação são apresentados no gráfico da Figura \ref{fig
 Esta simulação necessitou de número maior de iterações que as simulações anteriores para
 atingir a convergência. Em outras palavras, foi utilizado inicialmente um parâmetro
 mais conservador para a relaxação. Fazendo uso da funcionalidade do \textit{OpenFOAM}
-que permite o ajuste de parâmetros de simulação em tempo de execução\footnote{O objetivo desta funcionalidade é permitir que o
-usuário controle a simulação tanto em relação ao tempo total mas também
-efetuar um ajuste fino, especialmente útil para evitar a divergência dos
-resultados devido à oscilações numéricas.}, tais como
+que permite o ajuste de parâmetros de simulação em tempo de execução, tais como
 valores de resíduos, mudança de \textit{timestep}, fatores de relaxação, dentre
 inúmeros outros, foram alterados os valores de relaxação citados com o objetivo
-de diminuir o tempo de convergência dos cálculos.
+de diminuir o tempo de convergência dos cálculos\footnote{O objetivo desta funcionalidade é permitir que o
+usuário controle a simulação tanto em relação ao tempo total mas também
+efetuar um ajuste fino, especialmente útil para evitar a divergência dos
+resultados devido à oscilações numéricas.}.
 
 Fica visível, entre as iterações 13 e 16, uma variação mais intensa, se comparada
-às anteriores, entre o fator de multiplicação em iterações consecutivas. Após
+às anteriores, entre o fator de multiplicação entre iterações consecutivas. Após
 este intervalor, as variações passam a ser menores entre iterações consecutivas.
 
 No presente caso, as variações na relaxação dos cálculos da equação da energia para
 o sólido, permitiram o aumento da velocidade da convergência, ao mesmo tempo mantendo
 os resíduos dos cálculos em níveis aceitáveis, evitando assim a divergência do cálculo.
 Tal comportamento mostra que alterações paramétricas em tempo de execução não foram
-suficientes para perturbar o sistema acoplado, mostrando sua robustez em relação
+suficientes para perturbar o sistema acoplado, mostrando certa robustez em relação
 a mudanças paramétricas.
 
 \begin{figure}[htb]

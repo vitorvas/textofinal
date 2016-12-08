@@ -16,7 +16,7 @@ em volumes finitos, como ferramenta de cálculos termo-hidráulicos e o
 código de cálculos de física de reatores aberto \textit{milonga} como ferramenta
 para cálculos neutrônicos. A utilização de memória compartilhada como
 espaço de intercâmbio de dados, apesar de conhecida \cite{Maciel2011, Theler2013},
-é praticamente ignorada pela comunidade de engenharia nuclear computacional na
+é praticamente ignorada pela comunidade de Engenharia Nuclear Computacional na
 implementação de sistemas acoplados. Tal situação é de se estranhar, já que o
 uso de memória compartilhada permite a comunicação entre os sistemas acoplados
 de forma confiável, robusta e tão rápida quanto qualquer acesso à memória
@@ -45,7 +45,7 @@ O desenvolvimento desta tese levou também a contribuições fora do seu escopo 
 Incidentalmente, ao acessar o código-fonte dos sistemas utilizados para permitir seu
 uso acoplado, foram encontradas
 falhas de implementação em ambos os sistemas utilizados para neutrônica e termo-hidráulica.
-Os erros encontrados no \textit{OpenFOAM} foram reportados para a comunidade.
+Os erros encontrados no \textit{OpenFOAM} foram reportados à comunidade.
 Os erros encontrados no \textit{milonga} não só foram reportados ao seu autor como,
 em um caso crítico, foi feita a correção diretamente e então enviado o \textit{patch} ao autor.
 Essa correção foi incorporada numa versão posterior do \textit{milonga}.
@@ -53,13 +53,13 @@ Estas contribuições incidentais se dão devido à própria natureza do desenvo
 em \textit{software} livre, que prevê e se baseia em contribuições e trocas entre a comunidade
 de usuários, desenvolvedores e autores.
 
-É dessa corrente de desenvolvimento que surge outra e talvez a principal característica inovadora
+É dessa corrente de desenvolvimento que surge outra característica inovadora
 do sistema desenvolvido nesta tese: ele é construído exclusivamente a partir
 de sistemas abertos e livres\footnote{A metodologia utilizada
   na geração de seções de choque utiliza um \textit{software} restrito. Entretanto, a geração
   de seções de choque, apesar de fundamental para os cálculos neutrônicos, não é, propriamente dita,
   parte do sistema acoplado, já que qualquer ferramenta pode ser utilizada para este propósito. Neste tema, começam também a surgir opções em \textit{software} livre
-  para a geração de seções de choque em multi-grupos a partir de bibliotecas contínuas \cite{Slaybaugh2014}.}.
+  visando a geração de seções de choque em multi-grupos a partir de bibliotecas contínuas \cite{Slaybaugh2014}.}.
 Esta característica e suas implicações merecem uma seção exclusiva.
 
 
@@ -94,7 +94,7 @@ Complementando os aspectos financeiro e de liberdade de utilização, há ainda,
 o aspecto de distribuição do conhecimento. Se não explicitamente, já que um código sem comentários e sem manual oferece
 pouca oportunidade de aprendizado se tomarmos o pior caso, um código medianamente comentado e com um manual de utilização mesmo
 simples oferece uma oportunidade para se conhecer novas técnicas de desenvolvimento, linguagens, padrões de desenvolvimento, ferramentas,
-métodos e algoritmos. E esta lista é não-exaustiva. Além disso, baseado nas contribuições comunitárias, a lista de possibilidades
+métodos e algoritmos. E esta lista é não-exaustiva. Além disso, baseada nas contribuições comunitárias, a lista de possibilidades
 de aprendizado cresce de acordo com o número de contribuintes e a intensidade com que contribuem. Deve-se ainda mencionar
 a autoverificação. Um código aberto é amplamente auditável e, quanto mais usuários o leem, maior a possibilidade de se
 encontrar falhas ou, em alguns casos, código malicioso. Talvez seja este aspecto, o alicerce que sustenta a forma de desenvolvimento
@@ -105,9 +105,9 @@ livre. E aparentemente, essa forma de desenvolvimento, ainda que de forma tardia
 Cabe, antes de finalizar esta seção, uma observação. Não se pretende nesta breve discussão advogar em favor do \textit{software}
 livre como a solução mágica para todos os problemas do conhecimento humano. Há uma infinidade de situações em que pode ser desejável
 que detalhes de implementação ou que o código-fonte seja preservado, por exemplo. A razão pode ser financeira, estratégica ou de segurança.
-O que se pretende, não sem certa ousadia, é trazer à luz a discussão do uso de \textit{software} livre na e pela indústria nuclear. Há sólidos
+O que se pretende, não sem certa ousadia, é trazer à luz a discussão do uso e desenvolvimento de \textit{software} livre na e pela indústria nuclear. Há sólidos
 argumentos favoráveis e contrários à sua utilização. O que não se pode é ignorar sua existência e abrir mão de investigar e discutir como
-esta filosofia, se se pode utilizar esta palavra, de desenvolvimento de sistemas de computação pode vir a contribuir no desenvolvimento
+esta filosofia, se se pode utilizar esta palavra, de desenvolvimento de Sistemas de Computação pode vir a contribuir no desenvolvimento
 da Engenharia Nuclear.
 
 \section{Trabalhos Futuros}
@@ -126,8 +126,8 @@ operacional Linux \cite{LinuxBritannica}. Para fazer com que sejam utilizados em
 modificações em seus códigos-fonte e em seus sistemas de compilação e instalação. O \textit{OpenFOAM}, dada sua
 ampla rede de usuários, já possui iniciativas neste sentido. O \textit{milonga}, entretanto, possui apenas pequenas partes
 adaptadas à compilação multiplataforma. De forma a expandir o alcance de ambos, é necessário fazer com que ambos
-sejam passíveis de compilação multiplataforma. Há disponíveis ferramentas com esse intuito \cite{Martin2008}. Com ambos os
-sistemas disponíveis em multiplataforma, as modificações no sistema acoplado seriam pequenas e factíveis.
+sejam passíveis de compilação multiplataforma. Há, disponíveis, ferramentas com esse intuito \cite{Martin2008}. Com ambos os
+sistemas funcionais em multiplataforma, as modificações no sistema acoplado seriam pequenas e factíveis.
 
 Um trabalho futuro que traria enormes impactos na capacidade de atacar grandes problemas em relação malhas refinadas
 com muitos elementos é a implementação de uma versão paralela do \textit{milonga}. A implementação em paralelo dos
@@ -144,7 +144,7 @@ Neste caso, seriam necessárias adaptações no sistema acoplado dependendo da f
 um certo grau de complexidade. Entretanto, a implementação do sistema acoplado já foi feita com vistas à execução em paralelo,
 de modo que laços e elementos de programação paralela estão implementados para distintos núcleos utilizando MPI \cite{Quinn2004}.
 
-De carona na implementação em paralelo, outra candidata para melhorias é a função de percurso de células atualmente
+De carona na implementação em paralelo, outra candidata a melhorias é a função de percurso de células atualmente
 implementada no \textit{milonga}. Levantamentos preliminares mostraram que a atual implementação do \textit{milonga}
 gasta grande parte do tempo de execução nesta função, devido à interpolação de temperaturas por célula. A otimização
 desta função levaria a ganhos no tempo total de execução. A otimização desta função não está diretamente ligada à
@@ -159,14 +159,14 @@ otimizar o uso de memória pode ser um caminho para a solução mais precisa do 
 de aproximação por difusão. Além disso, está em curso a implementação do método de características \cite{Hebert2009} no \textit{milonga}
 por membros da comunidade argentina de Física de Reatores.
 
-A expansão do \textit{solver OpenFOAM} para o cálculo de transientes além de estado estacionário, também é possível.
+A expansão do \textit{solver OpenFOAM} para o cálculo de transientes além de estado estacionário também é possível.
 Para isso, uma abordagem é adaptar um novo \textit{solver OpenFOAM} já existente capaz de lidar com variações em relação
 ao tempo utilizando os arquivos e modificações já feitas no sistema atual. Este seria um trabalho mais elaborado.
 
 Outra linha de trabalho consiste em alterar a utilização de malhas em ambos os códigos, otimizando o uso de memória
 compartilhada. Neste caso, as classes utilizadas no \textit{OpenFOAM} na implementação da utilização de malhas podem
-ser estendidas - servindo-se do conceito de herança, existente no paradigma de programação orientada a objetos e
-do qual o \textit{OpenFOAM} se baseia - para que o armazenamento de toda a estrutura de dados se dê em memória compartilhada.
+ser estendidas - servindo-se do conceito de herança existente no paradigma de programação orientada a objetos e
+no qual o \textit{OpenFOAM} se baseia - para que o armazenamento de toda a estrutura de dados se dê em memória compartilhada.
 Isso exigiria ainda que toda a implementação do \textit{milonga} no tratamento de malhas, fosse também modificada de acordo.
 Esta abordagem já consiste num grande trabalho de projeto e implementação de software. A consequência deste trabalho seria
 a utilização de uma única macroestrutura de dados para representação do domínio em memória, utilizando, a grosso modo,
@@ -186,6 +186,6 @@ simulações em nível de licenciamento ou aplicações de missão crítica.
 Os possíveis caminhos de desenvolvimento futuro e aplicações não estão limitados aos apresentados neste capítulo.
 A expectativa ao fim deste trabalho de tese é continuar contribuindo para o desenvolvimento do ecossistema de
 ferramentas computacionais com foco nas vantagens do desenvolvimento baseado em \textit{software} livre para todos
-os envolvidos e interessados em computação científica aplicada à engenharia nuclear.
+os envolvidos e interessados em Computação Científica aplicada à Engenharia Nuclear.
 
 

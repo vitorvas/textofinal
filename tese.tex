@@ -63,7 +63,9 @@
 \usepackage{svg}                % Permite usar imagens vetorias formato svg
 \usepackage{algorithm}          % Para incluir pseudo código
 \usepackage{algorithmicx}       % Para incluir pseudo código
-\usepackage[noend]{algpseudocode} % Não sei porque o algoritm precisa disso... 
+\usepackage[noend]{algpseudocode} % Não sei porque o algoritm precisa disso...
+\usepackage{pdflscape}          % Para rotacionar o código fonte
+\usepackage{pdfpages}           % Complemento do anterior
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 
@@ -130,7 +132,7 @@
 abordagem com \textit{software} livre}
 \autor{Vitor Vasconcelos Araújo Silva}
 \local{Belo Horizonte, MG}
-\data{19 de dezembro de 2016}
+\data{Dezembro de 2016}
 %\data{\today}
 \orientador{Cláubia Pereira Bezerra Lima}
 \coorientador{André Augusto Campagnole dos Santos}
@@ -144,7 +146,11 @@ abordagem com \textit{software} livre}
 % O preambulo deve conter o tipo do trabalho, o objetivo, 
 % o nome da instituição e a área de concentração 
 \preambulo{Tese apresentada ao Programa de Pós-Graduação em Ciências e Técnicas
-  Nucleares da Universidade Federal de Minas Gerais, como requisito parcial à obtenção do título de Doutor em Ciências e Técnicas Nucleares.}
+  Nucleares do Departamento de Engenharia Nuclear da Universidade Federal de Minas Gerais,
+  como requisito parcial à obtenção do título de Doutor em Ciências e Técnicas Nucleares.
+  \vspace{10px}
+  \newline
+  \textbf{Área de concentração:} Engenharia Nuclear e da Energia.}
 % ---
 
 
@@ -189,6 +195,7 @@ abordagem com \textit{software} livre}
 \makeindex
 % ---
 
+
 % ----
 % Início do documento
 % ----
@@ -205,10 +212,9 @@ abordagem com \textit{software} livre}
 % ---
 % Capa
 % ---
-\imprimircapa
-% ---
+%\imprimircapa
 
-% ---
+
 % Folha de rosto
 % (o * indica que haverá a ficha bibliográfica)
 % ---
@@ -257,7 +263,7 @@ abordagem com \textit{software} livre}
 		IV. Desenvolvimento do Acoplamento Neutrônico e Termo-hidráulico 
                 usando os códigos PARCS e OpenFOAM Aplicação à Segurança de Reatores\\ 			
 	
-	\hspace{8.75cm} CDU 02:141:005.7\\
+	\hspace{8.75cm} CDU 621.039(043)\\
 	
 	\end{minipage}
 	\end{center}
@@ -681,7 +687,8 @@ abordagem com \textit{software} livre}
 %% Imprime uma página indicando o início dos anexos
 \partanexos
 
-%\chapter{Lista das publicações e registro de programa de computador}
+%\chapter{Lista das publicações e registro de programa de computador e
+%código-fonte desenvolvido}
 %\label{ane}
 %\includepdf[pages={-}]{anexos/inac2013.pdf}
 
@@ -708,8 +715,9 @@ Lista das publicações e registro de programa de computador:
 
 %\chapter{Paper RRFM 2013}
 %\label{ane:RRFM2013}
-%\includepdf[pages={-}]{anexos/RRFM2013}
-
+\begin{landscape}
+  \includepdf[landscape=true, pages={-}]{anexos/codigo.pdf}
+\end{landscape}
 
 %\chapter{Pedido do registro de Produto Tecnológico INPI}
 %\label{ane:trigafuel}

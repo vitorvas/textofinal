@@ -1,0 +1,123 @@
+MILONGA_DEBUG
+
+# Set transient time to infinite, so milonga will
+# wait for OpenFOAM until it ends.
+#end_time = infinite
+static_steps = 1000
+
+# Make dt = 1. This does not affect milonga calculations
+# since it solves a steady-state problem.
+# Set for making time-steps named files.
+# dt = 1
+
+IF step_static=1
+
+   MESH NAME boa FILE_PATH ../malhas/celula.msh
+
+   MILONGA_PROBLEM FORMULATION diffusion SCHEME volumes DIMENSIONS 3 GROUPS 2
+
+   PRINT "\# Number of cells: " %.0f cells
+
+   VECTOR vec_d SIZE cells
+
+   FUNCTION T(x,y,z) MESH boa CELLS VECTOR vec_T
+   FUNCTION Q(x,y,z) MESH boa CELLS VECTOR vec_Q
+
+   WRITE SHM_OBJECT potencias vec_Q
+   WRITE SHM_OBJECT temperaturas vec_T
+   WRITE SHM_OBJECT densidades vec_d
+
+   SEM calcMil POST
+   SEM calcMil WAIT
+   
+ELSE
+
+# Não se pode dar valores para os vetores neste ponto
+# ou serão re-escritos nas outras iterações.
+# Na primeira vez, o OpenFOAM tem que passar os
+# perfis ou o OpenFOAM é quem deve escrever os arquivos
+# de memória compartilhada.
+
+
+SEM calcOf WAIT
+
+READ SHM_OBJECT temperaturas vec_T
+
+PRINT TEXT "\# temperatures correctly read from OpenFOAM."
+
+# Inclusao das funcoes de interpolacao
+INCLUDE functions.was
+
+MATERIAL fuel {
+D1	     d_1_fuel(T(x,y,z))
+SigmaA1      SigmaA_1_fuel(T(x,y,z))
+nuSigmaF1    SigmanuF_1_fuel(T(x,y,z))
+eSigmaF1     1
+SigmaS1.1    SigmaS1.1_fuel(T(x,y,z))
+SigmaS1.2    SigmaS1.2_fuel(T(x,y,z))
+D2           d_2_fuel(T(x,y,z))
+SigmaA2      SigmaA_2_fuel(T(x,y,z))
+nuSigmaF2    SigmanuF_2_fuel(T(x,y,z))(T(x,y,z))
+eSigmaF2     1
+SigmaS2.1    SigmaS2.1_fuel(T(x,y,z))
+SigmaS2.2    SigmaS1.2_fuel(T(x,y,z))
+}
+
+MATERIAL cladding {
+D1	     d_1_cladding(T(x,y,z))
+SigmaA1      SigmaA_1_cladding(T(x,y,z))
+SigmaS1.1    SigmaS1.1_cladding(T(x,y,z))
+SigmaS1.2    SigmaS1.2_cladding(T(x,y,z))
+D2           d_2_cladding(T(x,y,z))
+SigmaA2      SigmaA_2_cladding(T(x,y,z))
+SigmaS2.1    SigmaS2.1_cladding(T(x,y,z))
+SigmaS2.2    SigmaS1.2_cladding(T(x,y,z))
+}
+
+MATERIAL coolant {
+D1	     d_1_coolant(T(x,y,z))
+SigmaA1      SigmaA_1_coolant(T(x,y,z))
+SigmaS1.1    SigmaS1.1_coolant(T(x,y,z))
+SigmaS1.2    SigmaS1.2_coolant(T(x,y,z))
+D2           d_2_coolant(T(x,y,z))
+SigmaA2      SigmaA_2_coolant(T(x,y,z))
+SigmaS2.1    SigmaS2.1_coolant(T(x,y,z))
+SigmaS2.2    SigmaS1.2_coolant(T(x,y,z))
+}
+
+PHYSICAL_ENTITY NAME walls BC mirror
+PHYSICAL_ENTITY NAME extremes BC vacuum
+PHYSICAL_ENTITY NAME inlet BC vacuum
+PHYSICAL_ENTITY NAME outlet BC vacuum
+
+# O mesmo do OpenFOAM
+# Q/m^3
+
+power = [x]
+
+# PRINT TEXT "These two should be equal: " SigmaT1(0,0,0) SigmaA_1_fuel(T(0,0,0))
+# PRINT TEXT "This cannot be negative: " SigmaT1(0,0,0)-SigmaS1.1(0,0,0)-SigmaS1.2(0,0,0)
+
+PRINT TEXT "\# building..." NONEWLINE
+MILONGA_STEP JUST_BUILD
+PRINT TEXT " done."
+
+PRINT "\# solving..." NONEWLINE
+MILONGA_STEP JUST_SOLVE
+PRINT TEXT " done."
+
+PRINT "\# cpu time [sec] = "  %.2f time_cpu_build "(build) "  %.2f time_cpu_solve "(solve)"  SEP " "
+
+MESH_FILL_VECTOR MESH boa CELLS VECTOR vec_Q FUNCTION pow
+
+WRITE SHM_OBJECT potencias vec_Q
+
+SEM calcMil POST
+
+MESH_POST FILE_PATH milonga.vtk pow phi1
+
+ENDIF
+
+
+
+
