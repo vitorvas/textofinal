@@ -1,0 +1,132 @@
+% The University of Tennessee, Knoxville theme
+% Made by Enda Hargaden, July 2016
+% Theme mimicks the PPT format provided by UT
+
+\mode<presentation>
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{listings}           % Permite uso de controle de listagem de código e algoritmos
+
+\renewcommand{\lstlistingname}{Listagem} % Modifica para escrever listagem em português
+
+\usepackage{cmap}		% Mapear caracteres especiais no PDF
+\usepackage{lmodern}		% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}	% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}	% Codificacao do documento (conversão automática dos acentos)
+\usepackage{lastpage}		% Usado pela Ficha catalográfica
+\usepackage{indentfirst}	% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}		% Controle das cores
+\usepackage{graphicx}		% Inclusão de gráficos
+\usepackage{amsmath}            % Permite uso de \dddot e split
+\usepackage{pdfpages}           % Permite a inserção de pdfs inteiros no documento
+\usepackage{multirow}           % Para uso de tabelas complexas
+\usepackage[table]{xcolor}      % Para uso de cores nas tabelas
+
+\usepackage{svg}                % Permite usar imagens vetorias formato svg
+\usepackage{algorithm}          % Para incluir pseudo código
+\usepackage{algorithmicx}       % Para incluir pseudo código
+\usepackage[noend]{algpseudocode} % Não sei porque o algoritm precisa disso...
+\usepackage{pdflscape}          % Para rotacionar o código fonte
+\usepackage{pdfpages}           % Complemento do anterior
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+
+% Configura o listings
+\lstset{
+  language=C++,
+  %  basicstyle=\footnotesize,\small,...\tiny
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\color{mygreen},
+  numbers=left,
+  stepnumber=1,
+  showstringspaces=false,
+  tabsize=2,
+  breaklines=true,
+  breakatwhitespace=false
+ columns=fixed,
+ fontadjust=true,
+ basewidth=0.5em
+}
+
+% Use Helvetica, as requested
+\usepackage[scaled]{helvet}
+\usepackage[T1]{fontenc}
+\renewcommand\familydefault{\sfdefault}
+
+% Turn off those navigation symbols nobody uses
+\setbeamertemplate{navigation symbols}{}
+
+% The new \br command creates a linebreak
+\newcommand{\br}{\vspace{\baselineskip}}
+
+%% Tennessee Orange and UFMGred Gray
+\definecolor{UFMGblack}{RGB}{35, 31, 32}
+\definecolor{UFMGred}{RGB}{0, 0, 255}
+
+\setbeamercolor{frametitle}{fg = UFMGblack}
+\setbeamercolor{title}{fg = UFMGblack}
+
+% In case you choose to display the Table of Contents, or the Outline slide.
+\setbeamercolor{section in toc}{fg = UFMGred}
+\setbeamercolor{section in toc shaded}{fg = UFMGblack}
+
+% The colour of all the items, subitems and and subsubitems
+\setbeamercolor{item}{fg = UFMGred}
+\setbeamercolor{subitem}{fg = UFMGblack}
+\setbeamercolor{subsubitem}{fg = UFMGred}
+\setbeamercolor{normal text}{fg = UFMGred}
+
+\setbeamercolor{postit}{fg=white,bg=UFMGblack}
+\setbeamercolor{postthat}{fg=UFMGblack,bg=UFMGblack}
+\useinnertheme{rounded}
+
+
+\setbeamerfont{block title}{size={}}
+
+\setbeamertemplate{title page}{
+\begin{center}\vspace{0.5\baselineskip}
+{\Large \textcolor{UFMGblack}{\inserttitle}}
+
+\insertsubtitle
+
+\br
+
+{\large \insertauthor}
+
+\br
+{\small \insertinstitute}
+
+\br
+\insertdate
+
+\br
+
+\includegraphics[width=1.3in,keepaspectratio]{logo_capa_ufmg}
+
+\end{center}
+}
+
+
+
+
+
+\defbeamertemplate*{footline}{}
+{
+\ifnum \insertpagenumber>1
+\vspace{-0.9cm}\begin{beamercolorbox}[sep=0em,ht=0.4cm,dp=0.3cm,wd=\paperwidth,leftskip=0cm,center]{postit}\parbox{0.333333\paperwidth}{{\tiny \insertshorttitle{} \insertframenumber{}} / \inserttotalframenumber}\parbox{0.333333\paperwidth}{ \hspace{0.01cm} }\parbox{0.31\paperwidth}{\hfill\includegraphics[width=2.2cm]{logo_ufmg_invertido_notext}}\parbox{0.034\paperwidth}{ }\end{beamercolorbox}
+\else
+\vspace{-0.9cm}\begin{beamercolorbox}[sep=0em,ht=0.4cm,dp=0.3cm,wd=\paperwidth,leftskip=0cm,center]{postthat}\parbox{0.333333\paperwidth}{\hfill}\parbox{0.333333\paperwidth}{ \hspace{0.01cm} }\parbox{0.31\paperwidth}{\hfill}\parbox{0.034\paperwidth}{ }\end{beamercolorbox}
+
+\fi
+}
+\addtocounter{framenumber}{-1}
+
+
+\mode
+<all>
