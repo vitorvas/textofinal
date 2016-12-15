@@ -15,6 +15,8 @@
 
 \renewcommand{\lstlistingname}{Listagem} % Modifica para escrever listagem em português
 
+\usepackage{multirow}           % Para uso de tabelas complexas
+%\usepackage{xcolor}      % Para uso de cores nas tabelas
 \usepackage{cmap}		% Mapear caracteres especiais no PDF
 \usepackage{lmodern}		% Usa a fonte Latin Modern			
 \usepackage[T1]{fontenc}	% Selecao de codigos de fonte.
@@ -25,8 +27,6 @@
 \usepackage{graphicx}		% Inclusão de gráficos
 \usepackage{amsmath}            % Permite uso de \dddot e split
 \usepackage{pdfpages}           % Permite a inserção de pdfs inteiros no documento
-\usepackage{multirow}           % Para uso de tabelas complexas
-\usepackage[table]{xcolor}      % Para uso de cores nas tabelas
 
 \usepackage{svg}                % Permite usar imagens vetorias formato svg
 \usepackage{algorithm}          % Para incluir pseudo código
@@ -61,6 +61,10 @@
 
 % Turn off those navigation symbols nobody uses
 \setbeamertemplate{navigation symbols}{}
+
+% Coloca a cor default do texto
+\setbeamercolor{normal text}{fg=black}
+%\usebeamercolor{normal text}
 
 % The new \br command creates a linebreak
 \newcommand{\br}{\vspace{\baselineskip}}
