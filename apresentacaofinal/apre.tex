@@ -32,10 +32,78 @@
   \tableofcontents%[pausesections]
 \end{frame}
 
+
+\section{O que é isso?}
 %-------------------------------------------------
-\section{Resultados}
 \begin{frame}
-  \frametitle{Resultados}
+  \frametitle{O que é isso?}
+  \framesubtitle{Definições}
+  \begin{itemize}
+  \item \textbf{Neutrônica:} Estudo do transporte de nêutrons.
+  \item \pause \textbf{Termo-hidráulica:} Estudo da transferência de calor e massa, processos fluido-mecânicos com transporte
+    de energia e massa em sistemas nucleares \cite{Todreas2012}.
+  \item \pause \textbf{Acoplamento (ou multifísica):} Análise de fenômenos físicos distintos de forma combinada \cite{Lethbridge2005}.
+  \end{itemize}
+  E por que acoplar?
+  
+\end{frame}
+
+\subsection{Justificativa}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Justificativa}
+%  \framesubtitle{}
+  
+\end{frame}
+
+\subsection{Exemplo}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Exemplo}
+  \framesubtitle{Exemplo1}
+  
+\end{frame}
+
+\section{Percurso}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Percurso}
+  \framesubtitle{O caminho é tortuoso...}
+  \textbf{Inicialmente:} \textit{Desenvolvimento do Acoplamento
+Neutrônico e Termo-hidráulico usando os códigos PARCS
+e OpenFOAM: Aplicação à Segurança de Reatores} \cite{PARCS2006}
+
+  \begin{itemize}
+    \item Trabalho \cite{Silva2013} e registro de \textit{software} \cite{TrigaFuel2013}.
+  \end{itemize}
+   \textbf{Doutorado sanduíche:} Universidade Politécnica de Valência.
+    Acoplamento com código da UPV, dessa vez aplicado a reatores
+    de potência (PWR).
+  \begin{itemize}
+    \item Trabalho \cite{Silva2015}.
+  \end{itemize}
+  \textbf{Finalmente:} \textit{Acoplamento neutrônico termo-hidráulico usando
+    os códigos milonga e OpenFOAM: uma abordagem com sotware livre}.
+  \begin{itemize}
+    \item Artigo (aceito).
+  \end{itemize}
+  \centering
+  \pause \alert{Esta tese!}
+
+\end{frame}
+
+\subsection{Ferramentas}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Ferramentas}
+  \framesubtitle{Neutrônica}
+  
+\end{frame}
+
+%-------------------------------------------------
+\section{Aplicação}
+\begin{frame}
+  \frametitle{Como provar o conceito?}
   \begin{itemize}
   \item Sistema acoplado funcional
   \item Malha idêntica
@@ -44,17 +112,44 @@
 \end{frame}
 
 %-------------------------------------------------
+\subsection{Condições iniciais}
+\begin{frame}
+  \frametitle{Condições iniciais}
+  \framesubtitle{Temperaturas médias iniciais}
+  
+    \centering
+    Temperaturas médias iniciais de referência.
+    \label{tab:temp-keff}
+    \begin{tabular}{cccc}
+      \multicolumn{1}{l}{}         & \multicolumn{3}{c}{Temperaturas [K]}                                                                        \\ \cline{2-4}
+      \multicolumn{1}{c}{Potência [kW]} & \multicolumn{1}{c}{Refrigerante} & \multicolumn{1}{c}{Revestimento} & \multicolumn{1}{c}{Combustível}  \\ \hline
+      1.98                      & 303,56                         & 327,20                         & 339,80                           \\ \hline
+      3.97                      & 307,15                         & 354,54                         & 379,77                           \\ \hline
+      7,93                      & 310,09                         & 375,42                         & 422,94                                         
+    \end{tabular}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Condições iniciais}
+  \framesubtitle{Distribuição de potências iniciais}
+  %  Fluxo [$\phi/phi_{avg}$].
+%  \centering\includegraphics[width=\textwidth, height=7.0cm]{../figuras/Q_fuel_all_NC.png}
+  \centering\includegraphics[scale=0.4]{../figuras/Q_fuel_all_NC.png}
+\end{frame}
+
+%-------------------------------------------------
 \subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Fluxo neutrônico: distribuição axial ($7,93 kW$)}
   %  Fluxo [$\phi/phi_{avg}$].
-  \centering\includegraphics[width=\textwidth, height=7.0cm]{../figuras/Flux_rel_z_200_port.png}
+  \centering\includegraphics[width=\textwidth, height=7.0cm]{../figuras/Flux_rel_z_200_port_trabalhado.png}
   \label{fig:flux200z}
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Gráficos}
+%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Fluxo neutrônico: distribuição radial ($7,93 kW$)}
@@ -64,7 +159,7 @@
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Gráficos}
+%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Potência: distribuição axial}
@@ -74,7 +169,7 @@
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Gráficos}
+%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Potência: distribuição radial}
@@ -84,7 +179,7 @@
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Gráficos}
+%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Temperatura: distribuição axial}
@@ -94,7 +189,7 @@
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Gráficos}
+%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Temperatura: distribuição radial}
@@ -104,7 +199,7 @@
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Gráficos}
+%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Convergência}
@@ -171,6 +266,14 @@
 \end{frame}
 
 %-------------------------------------------------
+\begin{frame}[allowframebreaks]
+        \frametitle{Referências}
+        \bibliographystyle{amsalpha}
+        \bibliography{apre.bib}
+\end{frame}
+
+
+%-------------------------------------------------
 % Frame escondido
 \begin{frame}[noframenumbering]
   \frametitle{Respostas}
@@ -179,5 +282,5 @@
 \end{frame}
 
 
-
 \end{document}
+
