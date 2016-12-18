@@ -478,47 +478,195 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 
 
 %-------------------------------------------------
+\begin{frame}
+  \frametitle{Algoritmo de controle da comunicação}
+  \framesubtitle{Termo-hidráulica}
+  \centering\includegraphics[scale=0.3]{../figuras/algoritmo_openfoam.png}  
+\end{frame}
+
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Algoritmo de controle de comunicação}
+  \framesubtitle{Neutrônica}
+  \centering\includegraphics[scale=0.4]{../figuras/algo-mil-apre1.png}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Algoritmo de controle de comunicação}
+  \framesubtitle{Neutrônica}
+  \centering\includegraphics[scale=0.4]{../figuras/algo-mil-apre2.png}
+\end{frame}
+
+\subsection{Atualização das seções de choque}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Atualização das seções de choque}
+  \framesubtitle{Antes de atualizar, é preciso \textbf{gerá-las}}
+  Seções de choques para 2 grupos de nêutrons.\\
+  \vspace{0.2cm}
+  Utilização de uma metodologia estabelecida \cite{Reis2015}.\\
+  \vspace{0.2cm}
+  Utilização de um código específico: WIMSD-5B (\alert{restrito}).\\
+  \vspace{0.2cm}
+  \begin{itemize}
+  \item modelo de célula mantendo a razão $\frac{material\quad físsil}{moderador}$;
+  \item seções de choque geradas para 4 conjuntos de temperaturas;
+  \item cada conjunto com as temperaturas dos 3 materiais;
+  \end{itemize}
+  \centering
+  \vspace{0.2cm}
+  \begin{tabular}{lrrrr}
+    \multicolumn{5}{c}{Temperaturas dos materiais}                                                                                                       \\ \hline
+    & \multicolumn{1}{l}{$T_1${[}K{]}} & \multicolumn{1}{l}{$T_2${[}K{]}} & \multicolumn{1}{l}{$T_3${[}K{]}} & \multicolumn{1}{l}{$T_4${[}K{]}}      \\ \hline
+    Combustível  & 300                             & 400                             & 500                             & 600                             \\ \hline
+    Revestimento & 300                             & 396                             & 403                             & 410                             \\ \hline
+    Refrigerante & 300                             & 308,5                           & 317                             & 341                            
+  \end{tabular}
+
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Atualização das seções de choque}
+  \framesubtitle{Uma vez geradas, são apenas \textit{atualizadas}}
+  A atualização é feita por interpolação linear simples.
+  \\
+  \vspace{0.2cm}
+  Supondo que a temperatura em um material qualquer é de $350K$:
+  \\
+  \vspace{0.2cm}
+  \texttt{assign = sigma abs[t]} é na prática:
+  \centering
+  \\
+  \vspace{0.2cm}
+  \begin{tabular}{llll}
+                 & T=300  & \textcolor{red}{T=350} & T=400 \\ \hline
+    $\Sigma_{A1}(T)$ & 0,771135       & \textcolor{red}{0,777381}         & 0,783626      
+  \end{tabular}
+  \\
+  \vspace{0.2cm}
+  Tem-se então:
+  \\
+  \vspace{0.2cm}
+  $\Sigma_{A1}(350)$ = 0,777381.
+  \\
+  \vspace{0.2cm}
+  Isso é feito para \textbf{cada} coeficiente de \textbf{cada} material para \textbf{cada} célula.
+\end{frame}
+
+
+
+%-------------------------------------------------
 {\setbeamercolor{background canvas}{bg=black}
   \setbeamercolor{frametitle}{fg=red}
+  \setbeamercolor{normal text}{fg=red}
   \usebeamercolor[fg]{normal text}
+
 \begin{frame}
-  \frametitle{Exemplo}
-  \framesubtitle{Exemplo1}
-  
+  \frametitle{O que significa o asterisco?}
+  \framesubtitle{Mais um pouco de \textit{software} livre}
+  \centering
+  \includegraphics[scale=1.0]{../figuras/mil-asterisco-neg.png}
+  $\rightarrow$ correção no \textit{milonga}
+  \\
+  \vspace{0.5cm}
+  Correção (\textit{patch}) submetida diretamente ao autor.
+  \\
+  Correção incorporada ao código.
+  \\
+  \vspace{0.5cm}
+  \Large{$\rightarrow$ Contribuição para a comunidade.}
 \end{frame}
 }
 
 
-\subsection{Exemplo}
+
+\section{Aplicação}
 %-------------------------------------------------
 \begin{frame}
-  \frametitle{Exemplo}
-  \framesubtitle{Exemplo1}
-  
+  \frametitle{Aplicação}
+  \framesubtitle{Modelo \textbf{simplificado} de combustível do reator TRIGA IPR-R1}
+  \vspace{0.2cm}
+  \raggedright
+%  \\
+  Um modelo simplificado é útil para verificar o funcionamento do sistema desenvolvido.
+  \\
+  \vspace{0.2cm}
+  \textbf{Prova de conceito}: do inglês ``proof of concept''.
+  \\
+  \vspace{0.2cm}
+  Definição do dicionário \textit{Oxford:[mass noun] Evidence, typically deriving from an experiment or pilot project, which demonstrates that a design concept, business proposal, etc. is feasible: ``In academia, he says, a narrowly focused solution is acceptable as a proof of concept.''}
 \end{frame}
 
-
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Aplicação}
+  \framesubtitle{Modelo \textbf{simplificado} de combustível do reator TRIGA IPR-R1}
+  \centering\includegraphics[scale=0.4]{../figuras/all_regions_isometric.png}
+  \vspace{0.2cm}
+  \raggedright
+  \\
+  Combustível: hidreto de zircônio e urânio (vermelho).
+  \\
+  Revestimento: alumínio (azul).
+  \\
+  Moderador/Refrigerante: água (cinza).
+\end{frame}
 
 %-------------------------------------------------
-\section{Aplicação}
 \begin{frame}
-  \frametitle{Como provar o conceito?}
+  \frametitle{Aplicação}
+  \framesubtitle{Modelo \textbf{simplificado} de combustível do reator TRIGA IPR-R1: discretizado}
+  \centering\includegraphics[scale=0.32]{../figuras/regioes_edges_com_legenda_ingles.png}
+  \centering
+  \vspace{0.2cm}
+  $\sim$ 376 mil células.
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Aplicação}
+  \framesubtitle{Algumas condições iniciais}
+  \centering\includegraphics[scale=0.32]{../figuras/inlet_paredes_extremos_wireframe2.png}
+  \vspace{0.2cm}
+  \raggedright
+  \\
+  Temperatura de entrada da água: 300 [K] ($\sim27^{\circ}C$).
+  \\
+  Velocidade do escoamente: $0,1 m/s$.
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Aplicação}
+  \framesubtitle{Como provar o conceito?}
+  Três potências diferentes.
+  \\
+  \vspace{0.2cm}
+  Dois conjuntos de simulações:
+%  \\
+  \vspace{0.2cm}
   \begin{itemize}
-  \item Sistema acoplado funcional
-  \item Malha idêntica
-  \item Baseado em \textit{software} livre
+  \item Conjunto 1: simulações \textbf{não-acopladas} em três potências; 
+  \item Conjunto 2: simulações \textbf{acopladas} em três potências; 
   \end{itemize}
+  \vspace{0.2cm}
+  Total de seis simulações.
+  
 \end{frame}
 
 %-------------------------------------------------
 \subsection{Condições iniciais}
 \begin{frame}
   \frametitle{Condições iniciais}
-  \framesubtitle{Temperaturas médias iniciais}
+  \framesubtitle{Temperaturas médias obtidas da execução do \textit{OpenFOAM} com distribuição homogênea de potência.}
   
     \centering
-    Temperaturas médias iniciais de referência.
+    Temperaturas médias iniciais.
     \\
+    \vspace{0.5cm}
     \label{tab:temp-keff}
     \begin{tabular}{cccc}
       \multicolumn{1}{l}{}         & \multicolumn{3}{c}{Temperaturas [K]}                                                                        \\ \cline{2-4}
@@ -527,7 +675,11 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
       3.97                      & 307,15                         & 354,54                         & 379,77                           \\ \hline
       7,93                      & 310,09                         & 375,42                         & 422,94                                         
     \end{tabular}
-\end{frame}
+    \vspace{0.5cm}
+    \begin{figure}[htb]
+    \centering\includegraphics[scale=0.6]{../figuras/initial-condition.png}
+    \end{figure}
+    \end{frame}
 
 %-------------------------------------------------
 \begin{frame}
@@ -663,7 +815,39 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \begin{frame}
   \frametitle{Conclusões}
   \framesubtitle{}
+  \begin{itemize}
+  \item Desenvolvido um sistema livre, aberto e gratuito para cálculos neutrônicos e termo-hidráulicos acoplados utilizado a mesma malha;
+  \item Desenvolvida uma metodologia para a construção do sistema acoplado baseado em sistemas já existentes e utilizando memória compartilhada
+    para intercâmbio de dados;
+  \item O sistema desenvolvido é inovador nas suas caracteríticas;
+  \end{itemize}
 \end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusões}
+  \framesubtitle{}
+  \begin{columns}
+    \column{0.5\textwidth}
+    Vantagens:
+    \column{0.5\textwidth}
+    Desvantagens:
+  \end{columns}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusões}
+  \framesubtitle{Discussão sobre \textit{software} livre}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Conclusões}
+  \framesubtitle{Trabalhos futuros} livre}
+\end{frame}
+
+
 
 %-------------------------------------------------
 \begin{frame}[allowframebreaks]
