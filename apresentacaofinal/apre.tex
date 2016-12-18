@@ -1,11 +1,32 @@
 \documentclass[svgnames,smaller,table]{beamer}
 \usepackage{multirow}
+\usepackage{tikz}
+\usefonttheme[onlymath]{serif}
+
+\usepackage{listings}
+% Configura o listings
+\lstset{
+  language=C++,
+  %  basicstyle=\footnotesize,\small,...\tiny
+  basicstyle=\ttfamily\scriptsize,
+  commentstyle=\color{mygreen},
+  numbers=left,
+  stepnumber=1,
+  showstringspaces=false,
+  tabsize=2,
+  breaklines=true,
+  breakatwhitespace=false
+ columns=fixed,
+ fontadjust=true,
+ basewidth=0.5em
+}
+
 
 \usetheme{ufmg}
 \setbeamercolor*{normal text}{fg=black}
 % -----------------------------------------------------------------------------------------------------------------
 
-\title[Defesa de tese]{Acoplamento neutrônico e termo-hidráulico usando os
+\title[Transparência]{Acoplamento neutrônico e termo-hidráulico usando os
   códigos milonga e OpenFOAM: uma abordagem com \textit{software} livre}
 \author{Vitor Vasconcelos Araújo Silva}
 \date{19 de dezembro de 2016}
@@ -33,28 +54,440 @@
 \end{frame}
 
 
-\section{O que é isso?}
+\section{Do que se trata este trabalho?}
 %-------------------------------------------------
 \begin{frame}
   \frametitle{O que é isso?}
   \framesubtitle{Definições}
   \begin{itemize}
   \item \textbf{Neutrônica:} Estudo do transporte de nêutrons.
-  \item \pause \textbf{Termo-hidráulica:} Estudo da transferência de calor e massa, processos fluido-mecânicos com transporte
+    \begin{itemize}
+      \item \textbf{Seções de choque:} [Aguarde].
+      \end{itemize}
+  \item \textbf{Termo-hidráulica:} Estudo da transferência de calor e massa, processos fluido-mecânicos com transporte
     de energia e massa em sistemas nucleares \cite{Todreas2012}.
-  \item \pause \textbf{Acoplamento (ou multifísica):} Análise de fenômenos físicos distintos de forma combinada \cite{Lethbridge2005}.
+  \item \textbf{\textit{Software} Livre:} O usuário tem liberdade de executar, modificar e redistribuir versões, modificadas ou não,
+    de um programa \cite{Stallman2002}.
+%  \item \textbf{Memória compartilhada:} Forma padrão de utilização do mesmo espaço de memória pois dois ou mais programas de computador.
+  \item \textbf{Acoplamento (ou multi-física):} Análise de fenômenos físicos distintos de forma combinada \cite{Lethbridge2005}.
   \end{itemize}
-  E por que acoplar?
+  \centering
+  \alert{E por que acoplar?}
   
 \end{frame}
 
 \subsection{Justificativa}
 %-------------------------------------------------
+%{\setbeamercolor{background canvas}{bg=black}
+%  \setbeamercolor{frametitle}{fg=red}
+%  \setbeamercolor{normal text}{fg=red}
+
+  \begin{frame}
+    \frametitle{Justificativa}
+    \framesubtitle{Relações entre os fenômenos físicos}
+    \centering\includegraphics[scale=0.9]{../figuras/justificativa.png}
+%    \centering\includegraphics[scale=0.9]{../figuras/justificativa-neg.png}
+\end{frame}
+%}
+
+%-------------------------------------------------
 \begin{frame}
   \frametitle{Justificativa}
-%  \framesubtitle{}
+  \framesubtitle{Fenômenos físicos dependentes}
+  %  Importante: falamos de reatores à água leve
+  \centering
+  \alert{Seções de choque}
+  \\
+  \vspace{0.5cm}
+  O conceito de seção de choque é usado para descrever a probabilidade de cada
+  tipo de reação nuclear.
+  \\
+  \vspace{0.5cm}
+  Por hora, basta saber sobre as seções de choque que:
+  \begin{itemize}
+  \item são definidas para vários tipos de reações nucleares: fissão, espalhamento, absorção...
+  \item dependem da velocidade (energia) dos nêutrons incidentes.
+  \item dependem da densidade do alvo.
+  \item \alert{não} são facilmente descritas em função da energia dos nêutrons.
+  \end{itemize}
   
 \end{frame}
+%}
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \setbeamercolor{normal text}{fg=red}
+
+  \begin{frame}
+  \frametitle{Seção de choque total para o $^{235}U$}
+  \centering\includegraphics[scale=0.15]{../figuras/cu-neg.png}
+  \\
+  \centering
+  \scriptsize{(Fonte: Projeto \textit{Multi-platform EXFOR-CINDA-ENDF}, V.Zerkin, IAEA-NDS, 1999-2016)}
+\end{frame}
+}
+%-------------------------------------------------
+%\begin{frame}
+%  \frametitle{Justificativa}
+%  \framesubtitle{A dependência no sistema acoplado}
+%
+%  \centering
+%  Temperatura e densidade da água e do combustível $\rightarrow$ Seções de choque;
+%  \\
+%  \vspace{0.5cm}
+%  Variações na seção de choque $\rightarrow$ fluxo neutrônico $\rightarrow$ potência gerada;
+%  \\
+%  \vspace{0.5cm}
+%  Potência gerada $\rightarrow$ temperatura e densidade da água e do combustível.
+%  \\
+%  \vspace{0.5cm}
+%
+%  \alert{Acoplamento (ou multi-física)}
+%  \\
+%  \vspace{0.5cm}
+%  Modelagem do fenômeno completo
+%\end{frame}
+%
+\section{Metodologia}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
+  \framesubtitle{Como acoplar neutrônica e termo-hidráulica?}
+  \includegraphics[scale=0.8]{../figuras/th-neu-1.png}
+%  \begin{tikzpicture}
+%    \node(img1) {\includegraphics[scale=0.8]{../figuras/th-neu-1.png}};
+%    \pause
+%    \node(img2) {\includegraphics[scale=0.8]{../figuras/th-neu-2.png}};
+%  \end{tikzpicture}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[noframenumbering]
+  \frametitle{Metodologia}
+  \framesubtitle{Como acoplar neutrônica e termo-hidráulica?}
+  \includegraphics[scale=0.8]{../figuras/th-neu-4.png}
+\end{frame}
+
+%-------------------------------------------------
+%{\setbeamercolor{background canvas}{bg=black}
+%  \setbeamercolor{frametitle}{fg=red}
+%  \setbeamercolor{framesubtitle}{fg=red}
+%  \setbeamercolor{normal text}{fg=red}
+%  \setbeamercolor{itemize item}{fg=white}
+%\begin{frame}
+%  \frametitle{Percurso}
+%  \framesubtitle{O caminho é tortuoso...}
+%  \textbf{Inicialmente:} \textit{Desenvolvimento do Acoplamento
+%Neutrônico e Termo-hidráulico usando os códigos PARCS
+%e OpenFOAM: Aplicação à Segurança de Reatores} \cite{PARCS2006}
+%
+%  \begin{itemize}
+%    \item Trabalho \cite{Silva2013} e registro de \textit{software} \cite{TrigaFuel2013}.
+%  \end{itemize}
+%   \textbf{Doutorado sanduíche:} Universidade Politécnica de Valência.
+%    Acoplamento com código da UPV, dessa vez aplicado a reatores
+%    de potência (PWR).
+%  \begin{itemize}
+%    \item Trabalho \cite{Silva2015}.
+%  \end{itemize}
+%  \textbf{Finalmente:} \textit{Acoplamento neutrônico termo-hidráulico usando
+%    os códigos milonga e OpenFOAM: uma abordagem com sotware livre}.
+%  \begin{itemize}
+%    \item Artigo (aceito).
+%  \end{itemize}
+%  \centering
+%  \Large{Esta tese!}
+%
+%\end{frame}
+%}
+%  
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
+  \framesubtitle{Ferramentas usadas}
+  CFD $\rightarrow$ \textit{Computational Fluid Dynamics}
+  \\
+  \vspace{0.5cm}
+  É o estudo da Mecânica dos Fluidos utilizando análise numérica e
+  algoritmos na solução e análise de problemas envolvendo escoamentos
+  de fluidos.
+  \\
+  \vspace{0.5cm}
+  Etapas comuns:
+  \begin{itemize}
+  \item Definição da geometria;
+  \item \textbf{Discretização do domínio};
+  \item Modelagem física;
+  \item Definição de condições iniciais e condições de contorno;
+  \end{itemize}
+  \centering
+  \vspace{0.5cm}
+  \textit{Software} utilizado: \textit{OpenFOAM}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
+  \framesubtitle{Ferramentas usadas}
+  Método Determinístico utilizado $\rightarrow$ Aproximação por difusão
+  \\
+  \vspace{0.5cm}
+  Assume que os nêutrons se comportam como moléculas de um gás,
+  se difundindo aleatoriamente de regiões de maior concentração
+  para regiões de menor concentração.
+  \\
+  \vspace{0.5cm}
+  É uma simplificação.
+  \begin{itemize}
+  \item Apesar disso, útil e aplicável em situações práticas
+  \item Resolvida por métodos numéricos utilizando \textbf{discretização de domínio};
+  \end{itemize}
+\end{frame}
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \setbeamercolor{normal text}{fg=red}
+  \usebeamercolor[fg]{normal text}
+  
+\begin{frame}
+  \frametitle{Discretização de domínio}
+  \framesubtitle{O que é?}
+\centering
+Domínio contínuo e discretizado.
+\\
+\vspace{0.5cm}
+  \centering
+  \includegraphics[scale=1.1]{../figuras/dom-neg.png}
+  \vspace{0.5cm}
+  \scriptsize(Fonte: Germán Theler)
+\end{frame}
+}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
+  \framesubtitle{Equação de difusão discretizada}
+  \textit{milonga} $\rightarrow$ Resolve a equação de difusão para nêutrons
+  \\
+  \vspace{0.5cm}
+\begin{equation*}
+  \label{eq:difusao}
+  \begin{split}
+  & 0 = \nabla . \big[\textcolor{blue}{-D_g({\mathbf{x}})} \nabla \phi_g(\mathbf{x})\big] 
+- \textcolor{blue}{\Sigma_{tg}(\mathbf{x})}.\phi(\mathbf{x}) \\
+& + \sum_{g'\neq g}^{G} \textcolor{blue}{\Sigma_{sg'\rightarrow g}(\mathbf{x})} . \phi_{g'}(\mathbf{x})
++ \chi(g)  \sum_{g'=1}^{G} \frac{\nu \textcolor{blue}{\Sigma_{fg'}(\mathbf{x})}}{k_{eff}} . \phi_{g'}(\mathbf{x}) \\
+  \end{split}
+  \end{equation*}
+  
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
+  \framesubtitle{O acoplamento desenvolvido}
+  Equações da termo-hidráulica e da neutrônica $\rightarrow$ resolvidas por volumes finitos
+  \begin{itemize}
+  \item o domínio discretizado é representado por uma malha tridimensional;
+  \item \textbf{a mesma malha é usada pelos dois códigos};
+  \item \textbf{os dois códigos são livres $\rightarrow$ o sistema acoplado também};
+  \item \textbf{trocam dados utilizando memória compartilhada};
+  \end{itemize}
+  \centering
+  \vspace{0.5cm}
+  \Large{Objetivo: obtenção de detalhes no escoamento e na neutrônica}
+  
+\end{frame}
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \usebeamercolor[fg]{normal text}
+\begin{frame}
+  \frametitle{Memória Compartilhada (\textit{Shared memory})}
+  \framesubtitle{O que é?}
+  \centering\includegraphics[scale=0.9]{../figuras/shm-neg.png}
+\end{frame}
+}
+
+\subsection{Sistema acoplado}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{O sistema acoplado}
+  \framesubtitle{Visão Geral}
+  \centering\includegraphics[scale=0.5]{../figuras/metodologia2.png}
+\end{frame}
+
+
+%-------------------------------------------------
+%\begin{frame}
+%  \frametitle{Metodologia}
+%  \framesubtitle{Ferramentas usadas}
+%  FVM $\rightarrow$ \textit{Finite Volume Method}
+%  \\
+%  \vspace{0.5cm}
+%  Método para representar e calcular equações diferenciais parciais na forma
+%  de equações algébricas.
+%  \\
+%  \vspace{0.5cm}
+%  Como funciona?
+%  \begin{itemize}
+%  \item Valores são calculados em um \textbf{domínio discretizado};
+%  \end{itemize}
+%
+%\end{frame}
+%
+
+\subsection{Implementação}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Desenvolvimento}
+  \framesubtitle{Implementação}
+  \centering\includegraphics[scale=0.9]{../figuras/metod-2.png}
+\end{frame}
+
+
+
+%-------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Acesso à memória compartilhada - Criação}
+%  \framesubtitle{Exemplo1}
+ \begin{lstlisting}%[caption={Fragmento do código-fonte da criação das estruturas de memória compartilhada.}\label{lst:createshm}]
+   // Three C standard arrays are created to shared data with milonga
+   double *shmTarray = NULL;
+   double *shmQarray = NULL;
+   
+   void *shmT;
+   void *shmQ;
+
+   int shmTfile = 0;
+   int shmQfile = 0;
+   
+   // Posix C semaphores
+   sem_t *calcOf;
+   sem_t *calcMil;
+   
+   // Posix structures initialization
+   calcOf = sem_open("calcOf", O_CREAT, 0666);
+   calcMil = sem_open("calcMil", O_CREAT, 0666);
+   
+   if(Pstream::master())
+   {
+     // Semaphores and shared memory files are tested at this point.
+     // If milonga is not running, OpenFOAM runs uncoupled.
+     shmTfile = shm_open("temperaturas", O_RDWR, 0666);
+     shmQfile = shm_open("potencias", O_RDWR, 0666);
+    
+     if(shmTfile == -1 || shmQfile == -1) coupling = false; // Error finding shared memory
+   }
+ \end{lstlisting}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Acesso à memória compartilhada - Verificação}
+ \begin{lstlisting}%[caption={Fragmento do código-fonte da criação das estruturas de memória compartilhada.}\label{lst:createshm}]
+if(Pstream::master())
+{
+// After reading the shared memory files, they must be mapped to data
+    shmT = mmap(NULL, totalNumberOfCells*sizeof(double), PROT_WRITE, MAP_SHARED, shmTfile, 0);
+    shmQ = mmap(NULL, totalNumberOfCells*sizeof(double), PROT_WRITE, MAP_SHARED, shmQfile, 0);
+
+// Check if all files were properly mapped
+if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Error mapping shared memory
+
+// Make a C++ cast
+    shmTarray = reinterpret_cast<double*>(shmT);
+    shmQarray = reinterpret_cast<double*>(shmQ);
+}
+ \end{lstlisting}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Criação/Leitura do campo volumétrico de potências}
+ \begin{lstlisting}
+  PtrList<volScalarField> qVol(solidRegions.size());
+
+  // Read Q if it exists. If not, create a null (zero) volScalarField
+  IOobject Qfile("Q", runTime.timeName(), solidRegions[i],
+                 IOobject::READ_IF_PRESENT, IOobject::AUTO_WRITE);
+
+  // Must check it before creating the field
+  if(Qfile.headerOk())
+  {
+    // Create a qvol field from dictionary
+    qVol.set(i, new volScalarField (Qfile, solidRegions[i]));
+  }
+  else
+  {
+    // If file is not there, create a new IOobject
+    // setting the dimensions of the field
+    qVol.set(i,
+    new volScalarField(IOobject
+        ("Q", runTime.path(), solidRegions[i], IOobject::NO_READ,
+          IOobject::AUTO_WRITE), solidRegions[i], dimensionedScalar
+            ("2", dimensionSet(1, -1, -3, 0, 0), scalar(0.0))
+        )
+    );
+  }
+ \end{lstlisting}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}[fragile]
+  \frametitle{Adição do termo-fonte à equação de energia do sólido}
+ \begin{lstlisting}
+  {
+    for (int nonOrth=0; nonOrth<=nNonOrthCorr; nonOrth++)
+    {
+      fvScalarMatrix hEqn
+      (
+      - fvm::laplacian(betav*alpha, h, "laplacian(alpha,h)")
+
+      // Source-term added to the equation
+      - Q
+      );
+
+      hEqn.relax();
+      hEqn.solve();
+    }
+  }
+ \end{lstlisting}
+\end{frame}
+
+
+\subsection{Algoritmos}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Algoritmos}
+  \framesubtitle{Controle da comunicação entre os códigos.}
+  A memória é compartilhada $\rightarrow$ quem acessa quando?  
+  \\
+  \vspace{0.5cm}
+  São usados semáforos:
+  \begin{itemize}
+  \item Evitam a ocorrência de condição de corrida;
+  \item Mantém a atomicidade das operações;
+  \item Garantem a não corrupção dos dados;
+  \end{itemize}
+  \vspace{0.5cm}
+  O controle da comunicação é diferente para a neutrônica e termo-hidráulica.
+\end{frame}
+
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \usebeamercolor[fg]{normal text}
+\begin{frame}
+  \frametitle{Exemplo}
+  \framesubtitle{Exemplo1}
+  
+\end{frame}
+}
+
 
 \subsection{Exemplo}
 %-------------------------------------------------
@@ -64,41 +497,7 @@
   
 \end{frame}
 
-\section{Percurso}
-%-------------------------------------------------
-\begin{frame}
-  \frametitle{Percurso}
-  \framesubtitle{O caminho é tortuoso...}
-  \textbf{Inicialmente:} \textit{Desenvolvimento do Acoplamento
-Neutrônico e Termo-hidráulico usando os códigos PARCS
-e OpenFOAM: Aplicação à Segurança de Reatores} \cite{PARCS2006}
 
-  \begin{itemize}
-    \item Trabalho \cite{Silva2013} e registro de \textit{software} \cite{TrigaFuel2013}.
-  \end{itemize}
-   \textbf{Doutorado sanduíche:} Universidade Politécnica de Valência.
-    Acoplamento com código da UPV, dessa vez aplicado a reatores
-    de potência (PWR).
-  \begin{itemize}
-    \item Trabalho \cite{Silva2015}.
-  \end{itemize}
-  \textbf{Finalmente:} \textit{Acoplamento neutrônico termo-hidráulico usando
-    os códigos milonga e OpenFOAM: uma abordagem com sotware livre}.
-  \begin{itemize}
-    \item Artigo (aceito).
-  \end{itemize}
-  \centering
-  \pause \alert{Esta tese!}
-
-\end{frame}
-
-\subsection{Ferramentas}
-%-------------------------------------------------
-\begin{frame}
-  \frametitle{Ferramentas}
-  \framesubtitle{Neutrônica}
-  
-\end{frame}
 
 %-------------------------------------------------
 \section{Aplicação}
@@ -119,6 +518,7 @@ e OpenFOAM: Aplicação à Segurança de Reatores} \cite{PARCS2006}
   
     \centering
     Temperaturas médias iniciais de referência.
+    \\
     \label{tab:temp-keff}
     \begin{tabular}{cccc}
       \multicolumn{1}{l}{}         & \multicolumn{3}{c}{Temperaturas [K]}                                                                        \\ \cline{2-4}
