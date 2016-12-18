@@ -54,34 +54,43 @@
 \end{frame}
 
 
-\section{Do que se trata este trabalho?}
+\section{Introdução}
 %-------------------------------------------------
 \begin{frame}
-  \frametitle{O que é isso?}
-  \framesubtitle{Definições}
-  \begin{itemize}
-  \item \textbf{Neutrônica:} Estudo do transporte de nêutrons.
-    \begin{itemize}
-      \item \textbf{Seções de choque:} [Aguarde].
-      \end{itemize}
-  \item \textbf{Termo-hidráulica:} Estudo da transferência de calor e massa, processos fluido-mecânicos com transporte
-    de energia e massa em sistemas nucleares \cite{Todreas2012}.
-  \item \textbf{\textit{Software} Livre:} O usuário tem liberdade de executar, modificar e redistribuir versões, modificadas ou não,
-    de um programa \cite{Stallman2002}.
-%  \item \textbf{Memória compartilhada:} Forma padrão de utilização do mesmo espaço de memória pois dois ou mais programas de computador.
-  \item \textbf{Acoplamento (ou multi-física):} Análise de fenômenos físicos distintos de forma combinada \cite{Lethbridge2005}.
-  \end{itemize}
-  \centering
-  \alert{E por que acoplar?}
-  
+  \frametitle{Introdução}
+  Reator nuclear do tipo TRIGA
+  \centering\includegraphics[scale=0.25]{../figuras/triga-thcoax-2.jpg}
+  \\
+  \vspace{0.2cm}
+  \scriptsize{(Fonte: Thermocoax, França)}
 \end{frame}
 
-\subsection{Justificativa}
+%\begin{frame}
+%  \frametitle{O que é isso?}
+%  \framesubtitle{Definições}
+%  \begin{itemize}
+%  \item \textbf{Neutrônica:} Estudo do transporte de nêutrons.
+%    \begin{itemize}
+%      \item \textbf{Seções de choque:} [Aguarde].
+%      \end{itemize}
+%  \item \textbf{Termo-hidráulica:} Estudo da transferência de calor e massa, processos fluido-mecânicos com transporte
+%    de energia e massa em sistemas nucleares \cite{Todreas2012}.
+%  \item \textbf{\textit{Software} Livre:} O usuário tem liberdade de executar, modificar e redistribuir versões, modificadas ou não,
+%    de um programa \cite{Stallman2002}.
+%%  \item \textbf{Memória compartilhada:} Forma padrão de utilização do mesmo espaço de memória pois dois ou mais programas de computador.
+%  \item \textbf{Acoplamento (ou multi-física):} Análise de fenômenos físicos distintos de forma combinada \cite{Lethbridge2005}.
+%  \end{itemize}
+%  \centering
+%  \alert{E por que acoplar?}
+%  
+%\end{frame}
+%
+%\subsection{Justificativa}
 %-------------------------------------------------
 %{\setbeamercolor{background canvas}{bg=black}
 %  \setbeamercolor{frametitle}{fg=red}
 %  \setbeamercolor{normal text}{fg=red}
-
+\subsection{Justificativa}
   \begin{frame}
     \frametitle{Justificativa}
     \framesubtitle{Relações entre os fenômenos físicos}
@@ -90,65 +99,18 @@
 \end{frame}
 %}
 
+\subsection{Objetivo}
 %-------------------------------------------------
 \begin{frame}
-  \frametitle{Justificativa}
-  \framesubtitle{Fenômenos físicos dependentes}
-  %  Importante: falamos de reatores à água leve
-  \centering
-  \alert{Seções de choque}
-  \\
-  \vspace{0.5cm}
-  O conceito de seção de choque é usado para descrever a probabilidade de cada
-  tipo de reação nuclear.
-  \\
-  \vspace{0.5cm}
-  Por hora, basta saber sobre as seções de choque que:
-  \begin{itemize}
-  \item são definidas para vários tipos de reações nucleares: fissão, espalhamento, absorção...
-  \item dependem da velocidade (energia) dos nêutrons incidentes.
-  \item dependem da densidade do alvo.
-  \item \alert{não} são facilmente descritas em função da energia dos nêutrons.
-  \end{itemize}
+  \frametitle{Objetivo}
+%  \framesubtitle{Qual a razão de um sistema acoplado?}
+
+\Large{Desenvolvimento de um sistema acoplado para cálculos neutrônicos e
+  termo-hidráulicos aberto e gratuito basedo em \textit{CFD} e
+  volumes finitos utilizando o mesmo domínio de solução.}
   
 \end{frame}
-%}
 
-%-------------------------------------------------
-{\setbeamercolor{background canvas}{bg=black}
-  \setbeamercolor{frametitle}{fg=red}
-  \setbeamercolor{normal text}{fg=red}
-
-  \begin{frame}
-  \frametitle{Seção de choque total para o $^{235}U$}
-  \centering\includegraphics[scale=0.15]{../figuras/cu-neg.png}
-  \\
-  \centering
-  \scriptsize{(Fonte: Projeto \textit{Multi-platform EXFOR-CINDA-ENDF}, V.Zerkin, IAEA-NDS, 1999-2016)}
-\end{frame}
-}
-%-------------------------------------------------
-%\begin{frame}
-%  \frametitle{Justificativa}
-%  \framesubtitle{A dependência no sistema acoplado}
-%
-%  \centering
-%  Temperatura e densidade da água e do combustível $\rightarrow$ Seções de choque;
-%  \\
-%  \vspace{0.5cm}
-%  Variações na seção de choque $\rightarrow$ fluxo neutrônico $\rightarrow$ potência gerada;
-%  \\
-%  \vspace{0.5cm}
-%  Potência gerada $\rightarrow$ temperatura e densidade da água e do combustível.
-%  \\
-%  \vspace{0.5cm}
-%
-%  \alert{Acoplamento (ou multi-física)}
-%  \\
-%  \vspace{0.5cm}
-%  Modelagem do fenômeno completo
-%\end{frame}
-%
 \section{Metodologia}
 %-------------------------------------------------
 \begin{frame}
@@ -209,9 +171,7 @@
   CFD $\rightarrow$ \textit{Computational Fluid Dynamics}
   \\
   \vspace{0.5cm}
-  É o estudo da Mecânica dos Fluidos utilizando análise numérica e
-  algoritmos na solução e análise de problemas envolvendo escoamentos
-  de fluidos.
+  É o estudo da Mecânica dos Fluidos e Transferência de Calor utilizando análise numérica.
   \\
   \vspace{0.5cm}
   Etapas comuns:
@@ -220,6 +180,8 @@
   \item \textbf{Discretização do domínio};
   \item Modelagem física;
   \item Definição de condições iniciais e condições de contorno;
+  \item Solução propriamente dita;
+  \item Pós-processamento;
   \end{itemize}
   \centering
   \vspace{0.5cm}
@@ -286,17 +248,58 @@ Domínio contínuo e discretizado.
 %-------------------------------------------------
 \begin{frame}
   \frametitle{Metodologia}
+  \framesubtitle{Fenômenos físicos dependentes}
+  %  Importante: falamos de reatores à água leve
+  \centering
+  \alert{Seções de choque}
+  \\
+  \vspace{0.5cm}
+  O conceito de seção de choque é usado para descrever a probabilidade de cada
+  tipo de reação nuclear.
+  \\
+  \vspace{0.5cm}
+  Por hora, basta saber sobre as seções de choque que:
+  \begin{itemize}
+  \item são definidas para vários tipos de reações nucleares: fissão, espalhamento, absorção...
+  \item dependem da velocidade (energia) dos nêutrons incidentes.
+  \item dependem da densidade do alvo.
+  \item \alert{não} são facilmente descritas em função da energia dos nêutrons.
+  \end{itemize}
+  
+\end{frame}
+%}
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \setbeamercolor{normal text}{fg=red}
+
+  \begin{frame}
+  \frametitle{Seção de choque total para o $^{235}U$}
+  \centering\includegraphics[scale=0.15]{../figuras/cu-neg.png}
+  \\
+  \centering
+  \scriptsize{(Fonte: Projeto \textit{Multi-platform EXFOR-CINDA-ENDF}, V.Zerkin, IAEA-NDS, 1999-2016)}
+\end{frame}
+}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
   \framesubtitle{O acoplamento desenvolvido}
-  Equações da termo-hidráulica e da neutrônica $\rightarrow$ resolvidas por volumes finitos
+  %Equações da termo-hidráulica e da neutrônica $\rightarrow$ resolvidas por volumes finitos
+  O sistema acoplado desenvolvido tem as seguintes características:
+  \\
+  \vspace{0.2cm}
   \begin{itemize}
   \item o domínio discretizado é representado por uma malha tridimensional;
   \item \textbf{a mesma malha é usada pelos dois códigos};
   \item \textbf{os dois códigos são livres $\rightarrow$ o sistema acoplado também};
   \item \textbf{trocam dados utilizando memória compartilhada};
   \end{itemize}
-  \centering
-  \vspace{0.5cm}
-  \Large{Objetivo: obtenção de detalhes no escoamento e na neutrônica}
+%  \centering
+%  \vspace{0.5cm}
+%  \Large{Objetivo: obtenção de detalhes no escoamento e na neutrônica}
   
 \end{frame}
 
@@ -428,7 +431,7 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
     new volScalarField(IOobject
         ("Q", runTime.path(), solidRegions[i], IOobject::NO_READ,
           IOobject::AUTO_WRITE), solidRegions[i], dimensionedScalar
-            ("2", dimensionSet(1, -1, -3, 0, 0), scalar(0.0))
+            ("dimension", dimensionSet(1, -1, -3, 0, 0), scalar(0.0))
         )
     );
   }
@@ -690,6 +693,7 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
   \centering\includegraphics[scale=0.4]{../figuras/Q_fuel_all_NC.png}
 \end{frame}
 
+\section{Resultados}
 %-------------------------------------------------
 \subsection{Gráficos}
 \begin{frame}
