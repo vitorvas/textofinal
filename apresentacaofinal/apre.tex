@@ -59,10 +59,10 @@
 \begin{frame}
   \frametitle{Introdução}
   Reator nuclear do tipo TRIGA
-  \centering\includegraphics[scale=0.25]{../figuras/triga-thcoax-2.jpg}
+  \centering\includegraphics[scale=0.20]{../figuras/triga-two.jpg}
   \\
   \vspace{0.2cm}
-  \scriptsize{(Fonte: Thermocoax, França)}
+  \scriptsize{(Fontes: Thermocoax, França e Veloso (2005))}
 \end{frame}
 
 %\begin{frame}
@@ -227,61 +227,24 @@ Domínio contínuo e discretizado.
 \end{frame}
 }
 %-------------------------------------------------
-\begin{frame}
-  \frametitle{Metodologia}
-  \framesubtitle{Equação de difusão discretizada}
-  \textit{milonga} $\rightarrow$ Resolve a equação de difusão para nêutrons
-  \\
-  \vspace{0.5cm}
-\begin{equation*}
-  \label{eq:difusao}
-  \begin{split}
-  & 0 = \nabla . \big[\textcolor{blue}{-D_g({\mathbf{x}})} \nabla \phi_g(\mathbf{x})\big] 
-- \textcolor{blue}{\Sigma_{tg}(\mathbf{x})}.\phi(\mathbf{x}) \\
-& + \sum_{g'\neq g}^{G} \textcolor{blue}{\Sigma_{sg'\rightarrow g}(\mathbf{x})} . \phi_{g'}(\mathbf{x})
-+ \chi(g)  \sum_{g'=1}^{G} \frac{\nu \textcolor{blue}{\Sigma_{fg'}(\mathbf{x})}}{k_{eff}} . \phi_{g'}(\mathbf{x}) \\
-  \end{split}
-  \end{equation*}
-  
-\end{frame}
-
-%-------------------------------------------------
-\begin{frame}
-  \frametitle{Metodologia}
-  \framesubtitle{Fenômenos físicos dependentes}
-  %  Importante: falamos de reatores à água leve
-  \centering
-  \alert{Seções de choque}
-  \\
-  \vspace{0.5cm}
-  O conceito de seção de choque é usado para descrever a probabilidade de cada
-  tipo de reação nuclear.
-  \\
-  \vspace{0.5cm}
-  Por hora, basta saber sobre as seções de choque que:
-  \begin{itemize}
-  \item são definidas para vários tipos de reações nucleares: fissão, espalhamento, absorção...
-  \item dependem da velocidade (energia) dos nêutrons incidentes.
-  \item dependem da densidade do alvo.
-  \item \alert{não} são facilmente descritas em função da energia dos nêutrons.
-  \end{itemize}
-  
-\end{frame}
-%}
-
-%-------------------------------------------------
-{\setbeamercolor{background canvas}{bg=black}
-  \setbeamercolor{frametitle}{fg=red}
-  \setbeamercolor{normal text}{fg=red}
-
-  \begin{frame}
-  \frametitle{Seção de choque total para o $^{235}U$}
-  \centering\includegraphics[scale=0.15]{../figuras/cu-neg.png}
-  \\
-  \centering
-  \scriptsize{(Fonte: Projeto \textit{Multi-platform EXFOR-CINDA-ENDF}, V.Zerkin, IAEA-NDS, 1999-2016)}
-\end{frame}
-}
+%\begin{frame}
+%  \frametitle{Metodologia}
+%  \framesubtitle{Equação de difusão discretizada}
+%  \textit{milonga} $\rightarrow$ Resolve a equação de difusão para nêutrons
+%  \\
+%  \vspace{0.5cm}
+%\begin{equation*}
+%  \label{eq:difusao}
+%  \begin{split}
+%  & 0 = \nabla . \big[\textcolor{blue}{-D_g({\mathbf{x}})} \nabla \phi_g(\mathbf{x})\big] 
+%- \textcolor{blue}{\Sigma_{tg}(\mathbf{x})}.\phi(\mathbf{x}) \\
+%& + \sum_{g'\neq g}^{G} \textcolor{blue}{\Sigma_{sg'\rightarrow g}(\mathbf{x})} . \phi_{g'}(\mathbf{x})
+%+ \chi(g)  \sum_{g'=1}^{G} \frac{\nu \textcolor{blue}{\Sigma_{fg'}(\mathbf{x})}}{k_{eff}} . \phi_{g'}(\mathbf{x}) \\
+%  \end{split}
+%  \end{equation*}
+%  
+%\end{frame}
+%
 
 %-------------------------------------------------
 \begin{frame}
@@ -349,6 +312,30 @@ Domínio contínuo e discretizado.
   \framesubtitle{Implementação}
   \centering\includegraphics[scale=0.9]{../figuras/metod-2.png}
 \end{frame}
+
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \setbeamercolor{normal text}{fg=red}
+  \usebeamercolor[fg]{normal text}
+
+\begin{frame}
+  \frametitle{O que significa o asterisco?}
+  \framesubtitle{Mais um pouco de \textit{software} livre}
+  \centering
+  \includegraphics[scale=1.0]{../figuras/mil-asterisco-neg.png}
+  $\rightarrow$ correção no \textit{milonga}
+  \\
+  \vspace{0.5cm}
+  Correção (\textit{patch}) submetida diretamente ao autor.
+  \\
+  Correção incorporada ao código.
+  \\
+  \vspace{0.5cm}
+  \Large{$\rightarrow$ Contribuição para a comunidade.}
+\end{frame}
+}
 
 
 
@@ -502,7 +489,43 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
   \centering\includegraphics[scale=0.4]{../figuras/algo-mil-apre2.png}
 \end{frame}
 
-\subsection{Atualização das seções de choque}
+\subsection{Seções de choque}
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Metodologia}
+  \framesubtitle{Fenômenos físicos dependentes}
+  %  Importante: falamos de reatores à água leve
+  \centering
+  \alert{Seções de choque}
+  \\
+  \vspace{0.5cm}
+  O conceito de seção de choque é usado para descrever a probabilidade de cada
+  tipo de reação nuclear.
+  \\
+  \vspace{0.5cm}
+  \begin{itemize}
+  \item são definidas para vários tipos de reações nucleares: fissão, espalhamento, absorção...
+  \item dependem da velocidade (energia) dos nêutrons incidentes.
+  \item dependem da densidade do alvo.
+  \item \alert{não} são facilmente descritas em função da energia dos nêutrons.
+  \end{itemize}
+  
+\end{frame}
+%}
+
+%-------------------------------------------------
+{\setbeamercolor{background canvas}{bg=black}
+  \setbeamercolor{frametitle}{fg=red}
+  \setbeamercolor{normal text}{fg=red}
+
+  \begin{frame}
+  \frametitle{Seção de choque total para o $^{235}U$}
+  \centering\includegraphics[scale=0.15]{../figuras/cu-neg.png}
+  \\
+  \centering
+  \scriptsize{(Fonte: Projeto \textit{Multi-platform EXFOR-CINDA-ENDF}, V.Zerkin, IAEA-NDS, 1999-2016)}
+\end{frame}
+}
 %-------------------------------------------------
 \begin{frame}
   \frametitle{Atualização das seções de choque}
@@ -559,30 +582,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
   Isso é feito para \textbf{cada} coeficiente de \textbf{cada} material para \textbf{cada} célula.
 \end{frame}
 
-
-
-%-------------------------------------------------
-{\setbeamercolor{background canvas}{bg=black}
-  \setbeamercolor{frametitle}{fg=red}
-  \setbeamercolor{normal text}{fg=red}
-  \usebeamercolor[fg]{normal text}
-
-\begin{frame}
-  \frametitle{O que significa o asterisco?}
-  \framesubtitle{Mais um pouco de \textit{software} livre}
-  \centering
-  \includegraphics[scale=1.0]{../figuras/mil-asterisco-neg.png}
-  $\rightarrow$ correção no \textit{milonga}
-  \\
-  \vspace{0.5cm}
-  Correção (\textit{patch}) submetida diretamente ao autor.
-  \\
-  Correção incorporada ao código.
-  \\
-  \vspace{0.5cm}
-  \Large{$\rightarrow$ Contribuição para a comunidade.}
-\end{frame}
-}
 
 
 
@@ -661,7 +660,7 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \end{frame}
 
 %-------------------------------------------------
-\subsection{Condições iniciais}
+\subsection{Condições iniciais e de contorno}
 \begin{frame}
   \frametitle{Condições iniciais}
   \framesubtitle{Temperaturas médias obtidas da execução do \textit{OpenFOAM} com distribuição homogênea de potência.}
@@ -695,7 +694,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 
 \section{Resultados}
 %-------------------------------------------------
-\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Fluxo neutrônico: distribuição axial ($7,93 kW$)}
@@ -705,7 +703,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \end{frame}
 
 %-------------------------------------------------
-%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Fluxo neutrônico: distribuição radial ($7,93 kW$)}
@@ -715,7 +712,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \end{frame}
 
 %-------------------------------------------------
-%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Potência: distribuição axial}
@@ -725,7 +721,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \end{frame}
 
 %-------------------------------------------------
-%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Potência: distribuição radial}
@@ -735,7 +730,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \end{frame}
 
 %-------------------------------------------------
-%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Temperatura: distribuição axial}
@@ -745,7 +739,6 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \end{frame}
 
 %-------------------------------------------------
-%\subsection{Gráficos}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Temperatura: distribuição radial}
@@ -754,8 +747,50 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
   \label{fig:keff50}
 \end{frame}
 
+%-FLUX------------------------------------------------
+\begin{frame}
+  \frametitle{Resultados}
+  \framesubtitle{Diferença de fluxo entre o cálculo acoplado e não acoplado ($7,93 kW$): corte axial}
+  \centering\includegraphics[scale=0.5]{../figuras/diff-flux-axial.png}
+\end{frame}
+
 %-------------------------------------------------
-%\subsection{Gráficos}
+\begin{frame}
+  \frametitle{Resultados}
+  \framesubtitle{Diferença de fluxo entre o cálculo acoplado e não acoplado ($7,93 kW$): corte radial}
+  \centering\includegraphics[scale=0.45]{../figuras/diff-flux-radial.png}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Resultados}
+  \framesubtitle{Diferença de fluxo entre o cálculo acoplado e não acoplado ($7,93 kW$): vista isométrica}
+  \centering\includegraphics[scale=0.4]{../figuras/diff-flux-isometrico.png}
+\end{frame}
+
+%-Q------------------------------------------------
+\begin{frame}
+  \frametitle{Resultados}
+  \framesubtitle{Diferença de potência entre o cálculo acoplado e não acoplado ($7,93 kW$): corte axial}
+  \centering\includegraphics[scale=0.5]{../figuras/diff-q-axial.png}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Resultados}
+  \framesubtitle{Diferença de potência entre o cálculo acoplado e não acoplado ($7,93 kW$): corte radial}
+  \centering\includegraphics[scale=0.5]{../figuras/diff-q-radial.png}
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}
+  \frametitle{Resultados}
+  \framesubtitle{Diferença de potência entre o cálculo acoplado e não acoplado ($7,93 kW$): vista isométrica}
+  \centering\includegraphics[scale=0.4]{../figuras/diff-q-isometrico.png}
+\end{frame}
+
+
+%-------------------------------------------------
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Convergência}
@@ -785,8 +820,9 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 
 
 
+
 %-------------------------------------------------
-\subsection{Fator de multiplicação}
+%\subsection{Fator de multiplicação}
 \begin{frame}
   \frametitle{Resultados}
   \framesubtitle{Fator de multiplicação}
@@ -820,7 +856,7 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
   \frametitle{Conclusões}
   \framesubtitle{}
   \begin{itemize}
-  \item Desenvolvido um sistema livre, aberto e gratuito para cálculos neutrônicos e termo-hidráulicos acoplados utilizado a mesma malha;
+  \item Desenvolvido um sistema livre, aberto e gratuito para cálculos neutrônicos e termo-hidráulicos acoplados utilizando a mesma malha;
   \item Desenvolvida uma metodologia para a construção do sistema acoplado baseado em sistemas já existentes e utilizando memória compartilhada
     para intercâmbio de dados;
   \item O sistema desenvolvido é inovador nas suas caracteríticas;
@@ -834,24 +870,71 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
   \begin{columns}
     \column{0.5\textwidth}
     Vantagens:
+    \\
+    \begin{itemize}
+    \item capacidade de investigar detalhes dos fenômenos;
+    \item sistema gratuito e livre;
+    \item potencial aplicação educativa/acadêmica;
+    \item potencial de evolução.
+    \end{itemize}
+    \vspace{0.5cm}
     \column{0.5\textwidth}
     Desvantagens:
+    \\
+    \begin{itemize}
+    \item custo computacional para malhas refinadas;
+    \item limite de utilização imposto pelos \textit{softwares} utilizados.
+    \end{itemize}
+    \vspace{0.5cm}
   \end{columns}
 \end{frame}
 
 %-------------------------------------------------
 \begin{frame}
   \frametitle{Conclusões}
-  \framesubtitle{Discussão sobre \textit{software} livre}
+  \framesubtitle{\textit{Software} livre}
+  Benefícios imediatos:
+  \\
+  \vspace{0.2cm}
+  \begin{itemize}
+  \item Gratuidade (de especial interesse para países em desenvolvimento);
+  \item Liberdade de utilização e experimentação;
+  \item Distribuição do conhecimento: aprendizado prático;
+  \item Amplamente auditável.
+  \end{itemize}
+  \vspace{0.2cm}
+  Algumas instituições desenvolvendo neste modelo: \textit{MIT} \cite{Romano2013, Boyd2014} e
+  Universidade do Winsconsin-Madison \cite{Huff2016}.
 \end{frame}
 
+\subsection{Trabalhos futuros}
 %-------------------------------------------------
 \begin{frame}
   \frametitle{Conclusões}
   \framesubtitle{Trabalhos futuros}
+  Inúmeras possibilidades:
+  \\
+  \vspace{0.5cm}
+  \begin{itemize}
+  \item Paralelização do \textit{milonga} (particão de domínio e/ou solução do problema de autovalor);
+  \item Extensão de ambos os sistemas, nativos do Linux, para Windows\textsuperscript{TM};
+  \item Melhoria na função de percurso de células da malha em relação a tempo de execução;
+  \item Expansão do \textit{solver OpenFOAM} para cálculos de transientes;
+  \item Armazenamento de toda a estrutura de malha em memória compartilhada;
+  \item Simulação de sistemas de \textit{benchmarks} com vistas à validação do sistema acoplado;
+  \item Etc.
+  \end{itemize}
 \end{frame}
 
+%-------------------------------------------------
+\begin{frame}[allowframebreaks]
+ \vfill
+  \begin{beamercolorbox}[center]{title}
+     \Huge{Muito obrigado!}
+  \end{beamercolorbox}
+  \vfill
 
+\end{frame}
 
 %-------------------------------------------------
 \begin{frame}[allowframebreaks]
@@ -866,7 +949,7 @@ if((shmT == MAP_FAILED || shmQ == MAP_FAILED) && (coupling)) exit(errno); // Err
 \begin{frame}[noframenumbering]
   \frametitle{Respostas}
   \framesubtitle{Seções de choque}
-  Teste
+  Tratamento complexo.
 \end{frame}
 
 
