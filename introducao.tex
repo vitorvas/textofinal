@@ -18,23 +18,23 @@ experimental correlations to using CFD (...)''.} \cite[p.~655]{Baglietto2011}.
 A frase acima é um exemplo de ganho de importância da técnica de dinâmica dos fluidos 
 computacional (CFD) na indústria nuclear nos últimos anos e da perspectiva da sua aplicação 
 nos próximos. Uma das aplicações em que o uso de CFD tem se estendido é no cálculo termo-hidráulico
-de combustíveis e de elementos combustíveis nucleares. Em boa parte dos trabalhos envolvendo CFD aplicado
+de elementos combustíveis nucleares. Em boa parte dos trabalhos envolvendo CFD aplicado
 a problemas termo-hidráulicos, usualmente é definida uma potência inicial, fixa ou variável, à qual
 é submetido o sistema \cite{Ustinenko2008}. Apesar de extremamente útil, essa forma de prescrever a
-potência é uma forma de simplificação. De forma a obter uma potência o mais realista possível, é necessário
+potência é uma forma de simplificação. Para obter uma potência o mais realista possível, é necessário
 ter em conta um fenômeno particular de um sistema nuclear: a cinética dos nêutrons, ou neutrônica.
 
 O aumento do poder computacional, que tem permitido a ampliação do uso de CFD na indústria nuclear, chamou a
-atenção para um aspecto, até então pouco explorado, dos cálculos termo-hidráulicos: a possibilidade de
-realizar cálculos termo-hidráulicos de forma acoplada com os cálculos neutrônicos. Estes últimos, fundamentais para
-uma variedade de aspectos do funcionamento de reatores e combustíveis nucleares. Os cálculos neutrônicos e termo-hidráulicos
+atenção para um aspecto, até então pouco explorado dos cálculos termo-hidráulicos: a possibilidade de
+realizar cálculos termo-hidráulicos de forma acoplada com os cálculos neutrônicos (estes últimos, fundamentais para
+uma variedade de aspectos do funcionamento de reatores e combustíveis nucleares). Os cálculos neutrônicos e termo-hidráulicos
 acoplados, são também chamados cálculos multi-física ou, simplesmente, multi-física \cite{Leppanen2012}. 
 
 Há diversas formas de se acoplar sistemas de cálculo neutrônico e termo-hidráulico. Entretanto, é necessário que tais
 sistemas ofereçam formas de escrever seus resultados e, principalmente, de ler resultados de outros sistemas. Caso contrário,
 resta somente a possibilidade de modificar tais sistemas de modo que sejam capazes de alguma forma de comunicação com o
 exterior. Nestes casos, a disponibilidade do código-fonte é condição básica para o desenvolvimento do sistema acoplado.
-Grosso modo, o acoplamento dos dois códigos nada mais é do que fazer com que dois códigos sejam capazes de se comunicar e
+Simplificadamente, o acoplamento dos dois códigos nada mais é do que fazer com que dois códigos sejam capazes de se comunicar e
 trocar dados para realizar seus cálculos.
 
 
@@ -49,24 +49,24 @@ o mesmo domínio de solução. Este sistema é construído utilizando-se de dois
 abertos e gratuitos, para os cálculos termo-hidráulicos e neutrônicos. 
 
 Apesar de desenvolvidos separadamente - inclusive
-em linguagens de programação diferentes - ambos os códigos usados fazem uso do método de volumes
-finitos \cite{Eymard2003} (FVM em inglês) na solução do seu conjunto particular de equações.
+em linguagens de programação diferentes - ambos os códigos usados fazem uso do Método de Volumes
+Finitos (FVM em inglês) \cite{Eymard2003} na solução do seu conjunto particular de equações.
 Cabe ressaltar que, neste primeiro momento, apenas cálculos em estado estacionário
 são previstos.
 
-Entenda-se como abertos \cite[Capítulo~3]{Stallman2002}, e com perdão da simplificação, programas, códigos ou sistemas
+Entenda-se como abertos \cite{Stallman2002}, simplificadamente, programas, códigos ou sistemas
 que oferecem pleno acesso ao seu código-fonte. Essa informação poderia passar despercebida,
 mas há alguns pontos a considerar antes de se
-seguir. As licenças que permitem a distribuição de código aberto impõe, geralmente, que
+seguir. As licenças que permitem a distribuição de código aberto impõem, geralmente, que
 o código desenvolvido a partir de outro licenciado desta forma deva permanecer aberto.
-Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite[Seção~2.6]{Androutsellis2010},
+Apesar do grande debate sobre a segurança dos códigos abertos e suas vantagens e desvantagens \cite{Androutsellis2010},
 é fato que desde o crescimento no uso do sistema operacional Linux \cite{LinuxBritannica}, a disseminação
 de programas distribuídos de forma aberta é crescente.
 Não apenas para tarefas básicas, mas predominantemente em serviços de rede, internet, cálculo numérico dentre
 inúmeras outras aplicações de uso intensivo. Sistemas, códigos ou \textit{frameworks} baseados em códigos abertos são
 extensivamente usados em aplicações de missão crítica \cite{Norris2004}.
 
-Dada que a utilização de programas de código aberto ainda é relativamente tímida no domínio nuclear
+Dado que a utilização de programas de código aberto ainda é relativamente tímida no domínio nuclear
 - e a expressão relativamente talvez seja inapropriada, pois começam a surgir projetos de instituições
 renomadas utilizando código aberto \cite{Romano2013, Boyd2014, Huff2016} -
 esta tese tem também por objetivo iniciar a discussão sobre as possibilidades de sua
@@ -74,8 +74,8 @@ aplicação neste domínio. Sendo os dois códigos usados para o acoplamento no 
 de forma aberta, temos, portanto, um sistema também aberto. Sistema este, facilmente auditável
 por qualquer interessado, seja ele desenvolvedor, engenheiro, pesquisador ou regulador.
 Se essa forma de desenvolvimento de sistemas de \textit{software} é adequada para as especificidades
-e restrições dos sistemas nucleares, não é possível dizer. Não antes que esse debate
-seja iniciado.
+e restrições dos sistemas nucleares, não é possível dizer. %Não antes que esse debate
+%seja iniciado.
 
 %------------------------------------------------------------------------------------
 %A simulação computacional de fenômenos 
@@ -98,8 +98,8 @@ seja iniciado.
 
 Pode-se dizer que há duas grandes justificativas para a realização deste trabalho. A primeira, de ordem principalmente
 técnica, é o uso de um código do tipo CFD acoplado para cálculo multi-física. O CFD permite o cálculo detalhado do
-comportamento do escoamento em um reator, sub-canal ou ao redor de um elemento. Tal nível de detalhes permite a
-investigação de fenômenos físicos não modeláveis de outras formas - no nível de todo o sistema, por exemplo. Além disso,
+comportamento do escoamento em um reator, subcanal ou ao redor de um elemento. Tal nível de detalhes permite a
+investigação de fenômenos físicos não modeláveis de outras formas. Além disso,
 o acoplamento entre os fenômenos neutrônico e termo-hidráulico resolve a dependência entre ambos os fenômenos de forma
 fiel ao que realmente ocorre na prática. Obviamente, há um custo para a obtenção deste nível de detalhamento: a
 demanda computacional. Felizmente, os atuais processadores e suas características de multiprocessamento permitem
@@ -110,9 +110,9 @@ envolvidos nesta nova forma de investigar a física de reatores.
 A segunda justificativa, que pode também ser considerada uma motivação, vai além dos aspectos puramente técnicos.
 O chamado \textit{software livre} consiste em códigos desenvolvidos dentro de uma filosofia de liberdade e de uso
 comunitário. Essa ideia, que remonta ao início dos anos 80, advoga que um programa ou \textit{software} deve fornecer
-o código-fonte aos usuários. Os usuários têm direito de modificá-lo, melhorá-lo e até mesmo vendê-lo, desde que o novo
+o código-fonte aos usuários. Os usuários podem modificá-lo, melhorá-lo e até mesmo vendê-lo, desde que o novo
 programa seja fornecido também com código aberto. Essa filosofia de desenvolvimento comunitário de \textit{software}
-chocou o mercado de micro computação quando surgiu. Cerca de 35 anos depois, não só é uma realidade como
+chocou o mercado de micro-computação quando surgiu. Cerca de 35 anos depois, não só é uma realidade como
 grande parte do \textit{software} em uso para certos tipos de aplicações hoje é baseado em \textit{software livre}
 \cite{Androutsellis2010}. Não seria de se esperar outra coisa que esta filosofia de desenvolvimento comunitário de
 \textit{software} alcançasse a engenharia nuclear. As discussões sobre quão efetiva será a adoção deste modelo
@@ -122,8 +122,7 @@ diferentes \textit{backgrounds}, estruturas de pesquisa e investimentos com um o
 de sistemas úteis para todo o grupo, revisado por pares - e com isso uma mais ampla rede de detecção de erros
 de implementação - e possíveis de serem modificados e alterados de acordo com as necessidades.
 
-Com o acoplamento entre dois códigos abertos que se apresenta nesta tese, apesar
-de uma iniciativa ainda inicial, espera-se trazer à luz a discussão sobre o uso de \textit{software livre} na
+Com o acoplamento entre dois códigos abertos que se apresenta nesta tese espera-se trazer à luz a discussão sobre o uso de \textit{software livre} na
 indústria e pesquisa nucleares entre especialistas no Brasil. Afinal, a filosofia do uso de \textit{software livre}
 já começou nos centros de ponta espalhados pelo planeta \cite{Romano2013, Boyd2014, Huff2016}.
 
@@ -150,107 +149,114 @@ já começou nos centros de ponta espalhados pelo planeta \cite{Romano2013, Boyd
 
 %E a aplicação não se restringe à simulação do reator, podendo ser, no futuro, adicionados elementos como queima de combustível, envenenamento por xenônio e outros fatores que permitam não só a simulação de um estado transiente curto, como também da evolução da utilização do reator no tempo.
 
-\section{\textit{Software} livre: algumas palavras}
-\label{sec:intsl}
 
-Usualmente, o termo \textit{software} livre aparece apenas incidentalmente nos trabalhos
-técnicos envolvendo códigos, programas ou sistemas computacionais. Nesta tese, entretanto,
-o \textit{software} livre (ou aberto) não é apenas a ferramenta principal para atingir o objetivo
-mas também parte da razão pelo qual é possível atingi-lo. Com isso em mente, nesta seção é
-feita uma breve exposição do que é de como se deu a evolução desta forma de criar e pensar
-\textit{software}.
 
-A primeira utilização do termo \textit{software} livre (do inglês \textit{free software})
-foi feita por Richard Stallmann. Não se sabe precisar quando o termo foi utilizado pela
-primeira vez, mas tornou-se usual no início da década de 80 do século passado.
-Apesar do significado ambíguo na língua inglesa - o próprio Stallmann faz questão
-de explicar seu significado \cite{Stallman2002} - \textit{software} livre não deve
-ser confundido com preço ou custo. Em definição do criador do termo, um \textit{software}
-é livre para um usuário em particular se:
-\begin{itemize}
-\item O usuário tem liberdade de executar o programa, para qualquer propósito.
-\item O usuário tem liberdade de modificar o programa para atender às suas necessidades
-  (que para tornar-se efetiva, deve contar com o código-fonte disponível).
-\item O usuário tem liberdade de redistribuir cópias, gratuitamente ou não.
-\item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
-  que a comunidade possa beneficiar-se das melhorias.
-\end{itemize}
-
-Uma vez definido o significado da expressão \textit{software} livre, cabe ressaltar que, do ponto de
-vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
-Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
-restrições a ser utilizado em sistemas
-fechados. Desse modo, assim que passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
-
-Com isto em conta, faz-se necessária uma breve explicação do que são as licenças
-de \textit{software} e como estas licenças definem as formas como devem se dar a utilização, distribuição, cópia, seção, etc. de determinado \textit{software}. Sendo assim,
-já no escopo do projeto GNU \cite{Stallman1985} foi pensada a primeira forma
-de licenciamento de \textit{software}
-GNU. Esta licença é chamada GPL.
-
-A licença GPL é apenas uma dentre vários tipos de licenças de \textit{software}.
-O objetivo da licença GPL é, ao mesmo tempo, permitir liberdade do ponto de vista
-do usuário do \textit{software}, mas impedir que o código-fonte seja usado em sistemas proprietários. Isso se dá obrigando sistemas que utilizem código
-distribuído sob a licença GPL a serem distribuídos sob a mesma licença.
-
-Cabe ressaltar que um \textit{software} distribuído sob licença GPL é mais restritivo do
-que um \textit{software} de domínio público, já que este último pode ser incorporado
-a sistemas proprietários fechados, por exemplo. O \textit{software} GPL, por sua vez,
-deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos nos
-os diversos aspectos do \textit{software} de código aberto encontrarão sólidas informações
-no trabalho de Androutsellis \cite{Androutsellis2010}.
-
-Mais de trinta anos depois do surgimento do movimento \textit{software} livre,
-sua penetração no mundo da computação é completa. A maior parte tráfego de correio
-eletrônico no planeta é feita por \textit{software} livre, por exemplo.  A título
-de ilustração, em 2015, eram mais de 1 bilhão e 800 milhões de \textit{smartphones}
-sendo utilizados no mundo. Destes, 82\% rodando um sistema operacional livre.
-
-Era de se esperar que a penetração do \textit{software} livre chegaria também a outras
-áreas, incluindo aplicações de missão crítica. A agência espacial norte-americana
-utiliza \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
-de exploração espacial \cite{Norris2004}.
-
-Entretanto, a utilização de \textit{software} livre na indústria nuclear ainda é tímida.
-Uma das razões é facilmente compreensível: o impacto de uma falha de \textit{software}
-em uma aplicação nuclear pode ter resultados devastadores. Desse modo, o processo de
-verificação e validação de sistemas de \textit{software} nessa indústria é extremamente
-conservador. Somado-se a isso, o custo de verificação e validação de um novo \textit{software}
-não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \textit{software}
-livre na área nuclear seja mais lenta que em outras áreas.
-
-Essas dificuldades, porém, parecem ser inferiores aos possíveis ganhos na utilização de
-\textit{software} livre. Um exemplo parcial\footnote{O \textit{software Serpent} é gratuito
-  e aberto, mas distribuído apenas para organizações licenciadas para uso educacional ou não-comercial.
-Isso não é suficiente para ser classificado como \textit{software} livre.} dessa afirmativa é a ampla adoção
-do \textit{software} Monte Carlo para cálculo de física de reatores \textit{Serpent} \cite{Serpent2013}
-desde a sua disponibilização para a comunidade. Trata-se de um \textit{software}
-de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
-de ter sua distribuição controlada, é distribuído com código-fonte. Em setembro
-de 2016, o \textit{Serpent} já era usado por mais de 560 usuários em 162 universidades
-e centros de pesquisa em 37 países. Outra ferramenta, esta ainda pouco difundida,
-desenvolvida tendo em vista as aplicações nucleares é o código \textit{milonga} \cite{Theler2014b}.
-O \textit{milonga}, este sim livre nos termos da licença GPL, é um código do tipo volumes finitos e elementos finitos que resolve as equações
-de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
-desenvolvimento, apresenta resultados promissores \cite{Theler2014}, tendo sido
-utilizado em cálculos de transientes da central nuclear de Atucha I, na Argentina.
-
-Outra aplicação do \textit{software} livre na área nuclear é na educação. Seguindo na
-mesma linha da afirmação de Jaakko Leppänen, da importância do desenvolvimento de
-códigos na formação dos próximos especialistas na área nuclear \cite{Leppanen2015}, Benoit
-Forget, do MIT, em uma avaliação da evolução do ensino física de reatores na sua instituição \cite{Forget2014}, é explícito ao observar os aspectos didáticos da
-utilização de \textit{software} livre na educação. Dois dos códigos utilizados
-no ensino de física de reatores no MIT após reformulação do currículo são o \textit{OpenMC}
-\cite{Romano2013}, para cálculo de transporte de partículas pelo método de Monte Carlo e
-o código \textit{OpenMOC}, que faz cálculos de transporte em 2D baseado
-no método de características \cite{Boyd2014}.
-
-Essas são considerações muito breves sobre o que se convencionou chamar
-de \textit{software} livre. Este é, por si só, um tema que é assunto de estudos, pesquisas
-e controvérsias. Entretanto, o fundamental neste ponto é perceber que esta ``nova'' forma
-de desenvolvimento de software existe e, mesmo que timidamente, tem chegado à temática
-nuclear. Este é muito provavelmente um caminho sem volta.
-
+%
+%
+%  REMOVIDO DA VERSÃO FINAL. A BANCA NÃO GOSTOU
+%
+%
+%\section{\textit{Software} livre: algumas palavras}
+%\label{sec:intsl}
+%
+%Usualmente, o termo \textit{software} livre aparece apenas incidentalmente nos trabalhos
+%técnicos envolvendo códigos, programas ou sistemas computacionais. Nesta tese, entretanto,
+%o \textit{software} livre (ou aberto) não é apenas a ferramenta principal para atingir o objetivo
+%mas também parte da razão pelo qual é possível atingi-lo. Com isso em mente, nesta seção é
+%feita uma breve exposição do que é de como se deu a evolução desta forma de criar e pensar
+%\textit{software}.
+%
+%A primeira utilização do termo \textit{software} livre (do inglês \textit{free software})
+%foi feita por Richard Stallmann. Não se sabe precisar quando o termo foi utilizado pela
+%primeira vez, mas tornou-se usual no início da década de 80 do século passado.
+%Apesar do significado ambíguo na língua inglesa - o próprio Stallmann faz questão
+%de explicar seu significado \cite{Stallman2002} - \textit{software} livre não deve
+%ser confundido com preço ou custo. Em definição do criador do termo, um \textit{software}
+%é livre para um usuário em particular se:
+%\begin{itemize}
+%\item O usuário tem liberdade de executar o programa, para qualquer propósito.
+%\item O usuário tem liberdade de modificar o programa para atender às suas necessidades
+%  (que para tornar-se efetiva, deve contar com o código-fonte disponível).
+%\item O usuário tem liberdade de redistribuir cópias, gratuitamente ou não.
+%\item O usuário tem liberdade de distribuir versões modificadas do programa, de modo
+%  que a comunidade possa beneficiar-se das melhorias.
+%\end{itemize}
+%
+%Uma vez definido o significado da expressão \textit{software} livre, cabe ressaltar que, do ponto de
+%vista do usuário, um \textit{software} definido com tal, pode não ser, na prática, livre.
+%Eventualmente, um determinado \textit{software} definido como livre pode ser distribuído sem
+%restrições a ser utilizado em sistemas
+%fechados. Desse modo, assim que passa a integrar um sistema fechado, a parte livre do código não será mais livre do ponto de vista do usuário. Este é o caso de um \textit{software} em domínio público: pode ser utilizado sem restrições, inclusive ser incorporado a sistemas fechados.
+%
+%Com isto em conta, faz-se necessária uma breve explicação do que são as licenças
+%de \textit{software} e como estas licenças definem as formas como devem se dar a utilização, distribuição, cópia, seção, etc. de determinado \textit{software}. Sendo assim,
+%já no escopo do projeto GNU \cite{Stallman1985} foi pensada a primeira forma
+%de licenciamento de \textit{software}
+%GNU. Esta licença é chamada GPL.
+%
+%A licença GPL é apenas uma dentre vários tipos de licenças de \textit{software}.
+%O objetivo da licença GPL é, ao mesmo tempo, permitir liberdade do ponto de vista
+%do usuário do \textit{software}, mas impedir que o código-fonte seja usado em sistemas proprietários. Isso se dá obrigando sistemas que utilizem código
+%distribuído sob a licença GPL a serem distribuídos sob a mesma licença.
+%
+%Cabe ressaltar que um \textit{software} distribuído sob licença GPL é mais restritivo do
+%que um \textit{software} de domínio público, já que este último pode ser incorporado
+%a sistemas proprietários fechados, por exemplo. O \textit{software} GPL, por sua vez,
+%deve permanecer sempre livre. Os interessados em aprofundar os conhecimentos nos
+%os diversos aspectos do \textit{software} de código aberto encontrarão sólidas informações
+%no trabalho de Androutsellis \cite{Androutsellis2010}.
+%
+%Mais de trinta anos depois do surgimento do movimento \textit{software} livre,
+%sua penetração no mundo da computação é completa. A maior parte tráfego de correio
+%eletrônico no planeta é feita por \textit{software} livre, por exemplo.  A título
+%de ilustração, em 2015, eram mais de 1 bilhão e 800 milhões de \textit{smartphones}
+%sendo utilizados no mundo. Destes, 82\% rodando um sistema operacional livre.
+%
+%Era de se esperar que a penetração do \textit{software} livre chegaria também a outras
+%áreas, incluindo aplicações de missão crítica. A agência espacial norte-americana
+%utiliza \textit{software} livre no desenvolvimento de sistemas nos seus dispositivos
+%de exploração espacial \cite{Norris2004}.
+%
+%Entretanto, a utilização de \textit{software} livre na indústria nuclear ainda é tímida.
+%Uma das razões é facilmente compreensível: o impacto de uma falha de \textit{software}
+%em uma aplicação nuclear pode ter resultados devastadores. Desse modo, o processo de
+%verificação e validação de sistemas de \textit{software} nessa indústria é extremamente
+%conservador. Somado-se a isso, o custo de verificação e validação de um novo \textit{software}
+%não é negligenciável. Tudo isso faz com que a adoção de ferramentas de \textit{software}
+%livre na área nuclear seja mais lenta que em outras áreas.
+%
+%Essas dificuldades, porém, parecem ser inferiores aos possíveis ganhos na utilização de
+%\textit{software} livre. Um exemplo parcial\footnote{O \textit{software Serpent} é gratuito
+%  e aberto, mas distribuído apenas para organizações licenciadas para uso educacional ou não-comercial.
+%Isso não é suficiente para ser classificado como \textit{software} livre.} dessa afirmativa é a ampla adoção
+%do \textit{software} Monte Carlo para cálculo de física de reatores \textit{Serpent} \cite{Serpent2013}
+%desde a sua disponibilização para a comunidade. Trata-se de um \textit{software}
+%de cálculos de física de reatores que utiliza o método de Monte Carlo. Apesar
+%de ter sua distribuição controlada, é distribuído com código-fonte. Em setembro
+%de 2016, o \textit{Serpent} já era usado por mais de 560 usuários em 162 universidades
+%e centros de pesquisa em 37 países. Outra ferramenta, esta ainda pouco difundida,
+%desenvolvida tendo em vista as aplicações nucleares é o código \textit{milonga} \cite{Theler2014b}.
+%O \textit{milonga}, este sim livre nos termos da licença GPL, é um código do tipo volumes finitos e elementos finitos que resolve as equações
+%de difusão e transporte de nêutrons. Apesar de ainda estar em estágio inicial de
+%desenvolvimento, apresenta resultados promissores \cite{Theler2014}, tendo sido
+%utilizado em cálculos de transientes da central nuclear de Atucha I, na Argentina.
+%
+%Outra aplicação do \textit{software} livre na área nuclear é na educação. Seguindo na
+%mesma linha da afirmação de Jaakko Leppänen, da importância do desenvolvimento de
+%códigos na formação dos próximos especialistas na área nuclear \cite{Leppanen2015}, Benoit
+%Forget, do MIT, em uma avaliação da evolução do ensino física de reatores na sua instituição \cite{Forget2014}, é explícito ao observar os aspectos didáticos da
+%utilização de \textit{software} livre na educação. Dois dos códigos utilizados
+%no ensino de física de reatores no MIT após reformulação do currículo são o \textit{OpenMC}
+%\cite{Romano2013}, para cálculo de transporte de partículas pelo método de Monte Carlo e
+%o código \textit{OpenMOC}, que faz cálculos de transporte em 2D baseado
+%no método de características \cite{Boyd2014}.
+%
+%Essas são considerações muito breves sobre o que se convencionou chamar
+%de \textit{software} livre. Este é, por si só, um tema que é assunto de estudos, pesquisas
+%e controvérsias. Entretanto, o fundamental neste ponto é perceber que esta ``nova'' forma
+%de desenvolvimento de software existe e, mesmo que timidamente, tem chegado à temática
+%nuclear. Este é muito provavelmente um caminho sem volta.
+%
 %E apesar da abordagem
 %superficial ao tema, passemos agora a outro conceito fundamental neste trabalho
 %de tese: o acoplamento neutrônico e termo-hidráulico.
