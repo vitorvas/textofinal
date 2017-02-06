@@ -17,12 +17,13 @@ em condições de utilização usuais de trabalho.
 %construção do modelo simplificado utilizado na avaliação do sistema acoplado implementado nesta
 %tese.
 
-Os reatores do tipo TRIGA\textregistered (\textit{Training, Research and Isotopes}),
+Os reatores de pesquisa do tipo TRIGA\textregistered (\textit{Training, Research and Isotopes}),
 desenvolvidos pela \textit{General Atomics} (GA), são os mais utilizados
-reatores de pesquisa no mundo (66 instalações em 24 países). Seu projeto, que data dos anos 50,
+no mundo (66 instalações em 24 países). Seu projeto, que data dos anos 50,
 objetivou simplicidade de operação e manutenção. Devido ao uso inovador de combustíveis de hidreto
-de zircônio e urânio, tem como característica um amplo coeficiente negativo
-de reatividade-temperatura \cite[Capítulo~1]{Veloso2005}. Isso faz com os reatores do tipo TRIGA sejam
+de zircônio e urânio, o reator TRIGA tem como característica um amplo coeficiente negativo
+de reatividade. %-temperatura. %\cite[Capítulo~1]{Veloso2005}.
+Isso faz com que os reatores do tipo TRIGA Mark I sejam
 intrinsecamente seguros, tornando-os excelentes opções para uso em atividades de treinamento
 e pesquisa.
 
@@ -30,38 +31,38 @@ e pesquisa.
 % Uma figura dele (foto?)
 % Falar do elemento mais quente e qual foi escolhido
 
-O reator TRIGA IPR-R1 é do tipo piscina, ou seja, fica localizado no fundo de um tanque revestido por uma
-camisa de alumínio, coberto por água e visível da superfície, como apresentado na Figura \ref{fig:poco_triga}.
-A refrigeração dos combustíveis presentes no núcleo do reator se dá por convecção natural. Devido à não homogeneidade
-do fluxo neutrônico no núcleo, alguns combustíveis são mais aquecidos que outros, levando a variações
+O reator TRIGA IPR-R1 é do tipo piscina aberta, ou seja, fica localizado no fundo de um tanque revestido de alumínio,
+coberto por água e visível da superfície, como apresentado na Figura \ref{fig:poco_triga}.
+A refrigeração dos combustíveis presentes no núcleo do reator se dá por convecção natural. Devido à variação espacial
+no fluxo neutrônico no núcleo, alguns combustíveis são mais aquecidos que outros, levando a variações
 no aquecimento também na água nos volumes compreendidos entre os combustíveis. Estes ``espaços'' entre
-combustíveis por onde escoa água são chamados de sub-canais.
+combustíveis por onde escoa água são chamados de subcanais.
 
 \begin{figure}[htb]
-  \caption{Vista da lateral do poço do reator TRIGA IPR-R1.}
+  \caption{Corte vertical do poço do reator TRIGA IPR-R1.}
   \centering\includegraphics[scale=0.35]{figuras/poco_triga.png}
   \label{fig:poco_triga}
   \legend{Fonte: \cite{Veloso2005}}
 \end{figure}
 
 \begin{figure}[htb]
-  \caption[Divisão do núcleo do reator TRIGA para cálculos de sub-canais.]{Divisão do núcleo do reator TRIGA para cálculos de sub-canais \cite{Veloso2005}.}
+  \caption[Divisão do núcleo do reator TRIGA para cálculos de subcanais.]{Divisão do núcleo do reator TRIGA para cálculos de subcanais \cite{Veloso2005}.}
   \centering\includegraphics[scale=0.6]{figuras/subcanais_veloso.png}
   \label{fig:subcanais_veloso}
   \legend{Fonte: \cite{Veloso2005}}
 \end{figure}
 
-A temperatura média nos sub-canais foi calculada por Veloso \cite[Capítulo~8]{Veloso2005} com vistas ao licenciamento
-do reator TRIGA IPR-R1 para operação a maior potência junto ao órgão fiscalizador. Sua metodologia
-classificou cada um destes sub-canais, realizando cálculos levando
+A temperatura média nos subcanais foi calculada por Veloso \cite[Capítulo~8]{Veloso2005} com vistas ao licenciamento
+do reator TRIGA IPR-R1 para operação a maior potência, junto ao órgão fiscalizador. Sua metodologia
+classificou cada um destes subcanais, realizando cálculos levando
 em consideração as propriedades físicas de cada um destes separadamente. Uma detalhada
-explicação sobre métodos de cálculos por sub-canais com aplicação no reator TRIGA IPR-R1
+explicação sobre métodos de cálculos por subcanais com aplicação no reator TRIGA IPR-R1
 pode ser encontrada na tese de Veloso \cite{Veloso2004}. Os resultados obtidos neste
-trabalho, bem como as propriedades dos sub-canais e do núcleo do reator completo, são utilizados
+trabalho, bem como as propriedades dos subcanais e do núcleo do reator completo, são utilizados
 como referência no desenvolvimento do modelo simplificado criado para a realização dos testes na
-presente tese. A divisão original em sub-canais pode ser vista na Figura \ref{fig:subcanais_veloso}. Cabe
+presente tese. A divisão original em subcanais pode ser vista na Figura \ref{fig:subcanais_veloso}. Cabe
 ressaltar que na modelagem simplificada foram utilizadas as características do escoamento do
-sub-canal número $6$, mas a geometria foi modelada como um único pino cercado por água.
+subcanal número $6$, mas a geometria foi modelada como um único pino cercado por água.
 
 \section{Modelo}
 %
@@ -87,11 +88,11 @@ restrições ao problema em termos de tamanho de malha a ser utilizada. Entretan
 do \textit{OpenFOAM} utilizada,
 apresenta um erro (\textit{bug}, no jargão da Ciência da Computação) na implementação da resistência
 de contato, o que inviabilizou a simulação do \textit{gap} existente no combustível. Essa foi a
-primeira simplificação necessária no modelo em relação ao combustível do reator TRIGA IPR-R1.
+primeira simplificação imposta ao modelo em relação ao combustível do reator TRIGA IPR-R1.
 
 No tocante ao \textit{milonga}, as restrições foram maiores. Foram duas as grandes limitações impostas
 pelo \textit{milonga} na definição de um modelo mais complexo e computacionalmente exigente. A primeira
-é relativa a execução de forma sequencial. Como o \textit{milonga} não é ainda capaz de executar de
+é relativa à execução de forma sequencial. Como o código \textit{milonga} não é ainda capaz de executar de
 forma paralela, o tamanho da malha a ser utilizada fica restrito à memória disponível.
 O tamanho da malha também implica diretamente no tempo de execução.
 Além disso, o \textit{milonga} ainda não é capaz de lidar com elementos prismáticos de forma confiável, limitando a
@@ -102,16 +103,16 @@ de uma malha mais refinada.
 
 A segunda restrição imposta pelo \textit{milonga}, também em razão de um \textit{bug}, está na função
 de acesso por coordenadas espaciais, fundamental para os cálculos acoplados com variação de seções de choque.
-Este \textit{bug} limita o uso de regiões com o mesmo nome à regiões conectadas por elementos de malha.
+Este \textit{bug} limita o uso de regiões com o mesmo nome a regiões conectadas por elementos de malha.
 Por exemplo, numa suposta malha para todo o núcleo do reator TRIGA IPR-R1, são várias as regiões a serem definidas
 como combustível, estando
 tais regiões separadas por elementos de malhas de outras regiões. Neste caso, a função de acesso
 à coordenadas espaciais do \textit{milonga} interrompe sua execução ao percorrer completamente a primeira
 região encontrada com determinado nome, ignorando outras regiões com o mesmo nome.
-Com isso, não é possível simular modelos de sub-canais
+Com isso, não é possível simular modelos de subcanais
 nem modelos do núcleo completo utilizando funções de coordenadas espaciais para cálculo de seções de choque.
 Como o acoplamento, como previsto, necessita da atualização em todas as regiões definidas como combustível,
-este \textit{bug} limitou o modelo a ser utilizado a um modelo com uma única região de
+este erro limitou o modelo a ser utilizado a um modelo com uma única região de
 combustível\footnote{Durante a execução desta tese, alguns \textit{bugs} encontrados
   no \textit{milonga} foram corrigidos e
   reportados ao seu autor. Uma das correções acabou com um vazamento em memória que impedia que o \textit{milonga}
@@ -135,8 +136,9 @@ combustível\footnote{Durante a execução desta tese, alguns \textit{bugs} enco
 \label{ssec:mod_fis_num}
 
 O modelo escolhido, de acordo com as limitações impostas já descritas,
-representa um elemento combustível (baseado no elemento B6) do reator TRIGA IPR-R1, brevemente
-apresentado na seção \ref{sec:triga}. Os combustíveis dos reatores do tipo TRIGA
+representa um elemento combustível (baseado no elemento B6) do reator TRIGA IPR-R1 \ref{fig:subcanais_veloso}.
+%brevemente apresentado na seção \ref{sec:triga}.
+Os combustíveis dos reatores do tipo TRIGA
 possuem uma grande sensibilidade na sua
 reatividade com a temperatura devido à já citada presença do hidreto de zircônio
 em sua constituição. Essa característica intrínseca permite que pequenas
@@ -162,18 +164,18 @@ o que torna este modelo interessante para avaliação do acoplamento.
 
 \begin{figure}[htb]
   \caption{Discretização do modelo: regiões e materiais.}
-  \centering\includegraphics[scale=0.5]{figuras/regioes_edges_com_legenda_ingles.png}
+  \centering\includegraphics[scale=0.5]{figuras/regioes_edges_com_legenda_portugues.png}
   \label{fig:modelo_exploded}
 %  \legend{Fonte: autor}
 \end{figure}
 
 O modelo consiste num combustível com revestimento de alumínio sem
-o revestimento, de modo que o diâmetro do combustível é mantido como no
+o \textit{gap}, de modo que o diâmetro do combustível é mantido como no
 combustível de referência e o diâmetro do \textit{gap} é estendido para
 ocupar este espaço. Além disso, o modelo considera apenas o comprimento
-ativo do combustível, sendo como um combustível mais curto. O volume
+ativo do elemento combustível. O volume
 de água ao redor do combustível foi modelado considerando a razão entre
-material físsil e moderador do núcleo completo do reator. Nenhuma outra
+moderador e material físsil no núcleo completo do reator (razão $Vm/Vf$). Nenhuma outra
 estrutura sólida, como discos de samário ou elementos estruturais, é
 representada no modelo, sendo este idêntico axialmente em qualquer
 altura, como observável nas Figuras \ref{fig:regions} e \ref{fig:region_isometric}.
@@ -194,11 +196,15 @@ altura, como observável nas Figuras \ref{fig:regions} e \ref{fig:region_isometr
 A malha gerada para o modelo foi construída por extrusão. Isso significa que
 os elementos de malha foram gerados para uma superfície e a dimensão espacial
 foi dada por um valor de comprimento e um número de camadas a serem geradas.
-Foram geradas 35 camadas (cada uma com $1 cm$), sendo o tamanho relativo
-mínimo para elemento de malha de 0,5 e máximo de 4.0. Esses valores controlam
+Foram geradas 35 camadas (cada uma com 1 cm), sendo o tamanho relativo
+mínimo para elemento de malha de 0,5 cm e máximo de 4.0 cm. O tamanho relativo
+mínino é usado próximo a arestas em interfaces de regiões para
+captura de camada limite e detalhes, enquanto o tamanho relativo máximo é utilizado
+em regiões de esperada baixa variação em propriedades e grandezas calculadas.
+Esses valores controlam
 o quanto o elemento próximo ao ponto com tal tamanho relativo crescerá durante
 a geração da malha. A razão de crescimento entre o refinamento do revestimento
-e as áreas restantes foi estabelecido em 1,2. Com isso, foi possível conseguir
+e as áreas restantes foi estabelecida em 1,2. Com isso, foi possível conseguir
 elementos suficientemente pequenos para realizar os cálculos na região
 do revestimento e ainda obter uma malha com tamanho tratável pelo \textit{milonga}.
 A malha gerada tem 346.675 elementos.
@@ -232,13 +238,13 @@ combustível e revestimento, ambos com condições de contorno adiabáticas nas 
 \begin{figure}[htb]
   \caption{Modelo: condições de contorno da simulação termo-hidráulica e regiões
     correspondentes.}
-  \centering\includegraphics[scale=0.5]{figuras/inlet_paredes_extremos_wireframe2.png}
+  \centering\includegraphics[scale=0.5]{figuras/inlet_paredes_extremos_wireframe_portugues.png}
   \label{fig:ccth}
 %  \legend{Fonte: autor}
 \end{figure}
 
 As superfícies entre regiões têm suas condições de contorno definidas automaticamente
-num dos passos da etapa de preprocessamento. Por definição, o \textit{OpenFOAM} importa
+num dos passos da etapa de pré-processamento. Por definição, o \textit{OpenFOAM} importa
 a malha num único conjunto de elementos, armazenando as definições de regiões
 contidas na malha. Um dos utilitários disponibilizados pelo \textit{OpenFOAM} separa
 as regiões, gerando condições de contorno em cada uma das regiões que representam
@@ -285,20 +291,20 @@ dos materiais utilizados por este modelo são dadas na tabela \ref{tab:termofisi
 \begin{tabular}{lllll}
 Material     & \begin{tabular}[c]{@{}l@{}}Densidade\\ {[}$kg/m^3${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Calor específico\\ {[}$kJ/kg.K${]}\end{tabular} & \begin{tabular}[c]{@{}l@{}}Condutividade\\ {[}$W/m.K${]}\end{tabular}      & \begin{tabular}[c]{@{}l@{}}Viscosidade\\ {[}$\mu Pa.s${]}\end{tabular} \\
 \hline
-Combustível  & 6280                                                               & \begin{tabular}[c]{@{}l@{}}$0,294$+\\ 6.,196 x $10^{-4} T-$\\2,748 x $10^{-9} T^2+$\\1,354 x $10^{-11} T^3$\end{tabular}              & \begin{tabular}[c]{@{}l@{}}22,872-\\ 4,3131 x $10^{-2} T +$ \\1,124 x $10^{-4} T^2-$\\1,0039 x $10^{-11} T^3$\end{tabular}              & -                                                                     \\
+\begin{tabular}[l]{@{}l@{}}Combustível\\$UZrH$\end{tabular}  & 6280,0                                                               & \begin{tabular}[c]{@{}l@{}}$0,294$+\\ 6,196 x $10^{-4} T-$\\2,748 x $10^{-9} T^2+$\\1,354 x $10^{-11} T^3$\end{tabular}              & \begin{tabular}[c]{@{}l@{}}22,872-\\ 4,3131 x $10^{-2} T +$ \\1,124 x $10^{-4} T^2-$\\1,0039 x $10^{-11} T^3$\end{tabular}              & -                                                                     \\
 \hline
-Revestimento & 2705                                                               & \begin{tabular}[c]{@{}l@{}}$0,892$+\\4,44361 x $10^{-4} T+$\\3,632 x $10^{-8} T^2$\end{tabular}                & \begin{tabular}[c]{@{}l@{}}223,7+\\ 4.756 x $10^{-2}T+$\\ 1,0215 x $10^{-5} T^2-$\\ 1,8887 x $10^{-11} T^3$
+\begin{tabular}[l]{@{}l@{}}Revestimento\\Alumínio 110\end{tabular} & 2705,0                                                               & \begin{tabular}[c]{@{}l@{}}$0,892$+\\4,44361 x $10^{-4} T+$\\3,632 x $10^{-8} T^2$\end{tabular}                & \begin{tabular}[c]{@{}l@{}}223,7+\\ 4.756 x $10^{-2}T+$\\ 1,0215 x $10^{-5} T^2-$\\ 1,8887 x $10^{-11} T^3$
   \end{tabular} & -                                                                     \\
 \hline
-        Refrigerante & 995                                                                & 4,18                                                                       & 0,62                                                                       & 797                                                                  
+\begin{tabular}[l]{@{}l@{}}Refrigerante\\Água ($20^\circ$C)\end{tabular}        & 995,0                                                                & 4,18                                                                       & 0,62                                                                       & 797                                                                  
 \end{tabular}
 \end{table}
 
 
 
 As principais condições de contorno e iniciais do problema apresentado estão definidas na tabela \ref{tab:cc-init}.
-Estas condições descrevem as características iniciais do problema sendo resolvido. Alguns comentários sobre sobre
-a tabela \ref{tab:cc-init}: o velocidade na entrada do sistema se baseia na velocidade média do escoamento na
+Estas condições descrevem as características iniciais do problema a ser resolvido. Alguns comentários sobre
+a tabela \ref{tab:cc-init}: a velocidade na entrada do sistema se baseia na velocidade média do escoamento na
 entrada do núcleo do reator \cite{Veloso2005}. A região do revestimento, por ser sólida, herda a implementação
 do termo-fonte feita no \textit{solver}. Ou seja, como trata-se de uma região sólida, a região equivalente ao
 revestimento também espera e necessita da definição de um campo volumétrico de potências.
@@ -307,8 +313,8 @@ interno inicial de potências é \textbf{não-uniforme} e definido como variáve
 uma condição inicial de campo heterogêneo, tal como uma distribuição volumétrica de potência. O valor para este
 campo é definido como \textbf{variável}, já que esta distribuição de potências varia para cada diferente simulação.
 
-Vale ressaltar que o que se convencionou chamar no texto de potência, tal qual implementada no \textit{solver}, é dada em $W$ por $m^3$,
-ou seja, é uma densidade de potências.
+Vale ressaltar que o que se convencionou chamar no texto de potência, tal qual implementada no \textit{solver}, é dada em $W/m^3$,
+ou seja, é uma densidade de potências volumétrica.
 
 \begin{table}[htb]
 \centering
@@ -321,7 +327,7 @@ Região                    & Campo                   & Fronteira      & Tipo    
                           &                         & outlet        & zeroGradient & -                     \\
                           & \multirow{2}{*}{U}      & inlet         & fixedValue   & 0.1 {[}$m/s${]}         \\
                           &                         & outlet        & zeroGradient & -                     \\
-                          & \multirow{2}{*}{p\_rgh} & inlet         & zeroGradient & -                     \\
+                          & \multirow{2}{*}{p     } & inlet         & zeroGradient & -                     \\
                           &                         & outlet        & fixedValue   & 0 {[}$kg/m.s^2 = Pa${]}  \\
 \hline
 \multirow{3}{*}{cladding} & T                       & wall          & zeroGradient & -                     \\
@@ -334,7 +340,7 @@ Região                    & Campo                   & Fronteira      & Tipo    
 \end{tabular}
 \end{table}
 
-O escoamento do fluido no modelo é considerado turbulento, baseado nas condições usuais de operação
+O escoamento do fluido no modelo é turbulento, baseado nas condições usuais de operação
 do reator TRIGA IPR-R1 \cite{Veloso2005}. A turbulência foi modelada utilizando-se o modelo
 $\kappa-\epsilon$ \cite{Launder1974}, que assume que a viscosidade turbulenta está relacionada
 à energia cinética ($\kappa$) e dissipação ($\epsilon$).
@@ -404,7 +410,7 @@ fluxo se limita a fluxo zero na fronteira. Esta condição é aplicada utilizand
 a palavra-chave \textit{vacuum} dentro do \textit{milonga}, enquanto a condição
 de corrente deve ter derivada zero na direção da normal à fronteira e é utilizada
 pela palavra-chave \textit{mirror}. Caso se deseje utilizar a condição mista, deve
-ser utilizada a palavra-chave \textit{robin} seguida do um argumento de ponto
+ser utilizada a palavra-chave \textit{robin} seguida de um argumento de ponto
 flutuante entre zero e um. Uma explicação objetiva sobre quais são e como estão
 implementadas as condições de contorno no \textit{milonga} está disponível
 no trabalho de Theler \cite{Theler2013b}.
@@ -442,7 +448,7 @@ O \textit{milonga} utiliza mnemônicos específicos para cada coeficiente, de mo
 que estes possam ser representados, tanto como valores constantes, como por funções
 de temperatura, abordagem utilizada na modelagem nesta tese. Na tabela
 \ref{tab:coeff-dif} estão apresentados os mnemônicos utilizados pelo \textit{milonga}
-no modelo utilizado bem como a divisão de grupos em energias.
+no modelo utilizado, bem como a divisão de grupos em energias.
 
 % Tabela para os valores
 \begin{table}[htb]
