@@ -21,7 +21,7 @@ implementação de sistemas acoplados. Tal situação é de se estranhar, já qu
 uso de memória compartilhada permite a comunicação entre os sistemas acoplados
 de forma confiável, robusta e tão rápida quanto qualquer acesso à memória
 do computador. O sistema desenvolvido nesta tese faz uso de memória compartilhada,
-sendo o único sistema conhecido de cálculos acoplados baseados em volumes finitos. 
+sendo o único sistema, no melhor conhecimento do autor desta tese, de cálculos acoplados baseados em volumes finitos. 
 
 O sistema desenvolvido, por acoplar dois sistemas de cálculos que utilizam
 a formulação de volumes finitos para solução de sistemas de equações diferenciais,
@@ -41,7 +41,8 @@ prova conceitual foi feita com uma malha relativamente pobre, permite conhecer f
 locais calculados a partir de elementos da multi-física envolvida, e não apenas
 de perfis de potência genéricos ou temperaturas médias, por exemplo. 
 
-O desenvolvimento desta tese levou também a contribuições fora do seu escopo principal.
+O desenvolvimento desta tese levou também a contribuições fora do seu escopo principal,
+ou seja, para além do sistema acoplado propriamente dito.
 Incidentalmente, ao acessar o código-fonte dos sistemas utilizados para permitir seu
 uso acoplado, foram encontradas
 falhas de implementação em ambos os sistemas utilizados para neutrônica e termo-hidráulica.
@@ -59,28 +60,28 @@ de sistemas abertos e livres\footnote{A metodologia utilizada
   na geração de seções de choque utiliza um \textit{software} restrito. Entretanto, a geração
   de seções de choque, apesar de fundamental para os cálculos neutrônicos, não é, propriamente dita,
   parte do sistema acoplado, já que qualquer ferramenta pode ser utilizada para este propósito. Neste tema, começam também a surgir opções em \textit{software} livre
-  visando a geração de seções de choque em multi-grupos a partir de bibliotecas contínuas \cite{Slaybaugh2014}.}.
-Esta característica e suas implicações merecem uma seção exclusiva.
+  visando a geração de seções de choque em multi-grupos a partir de bibliotecas contínuas \cite{NJOY2016}.}.
+%Esta característica e suas implicações merecem uma seção exclusiva.
 
 
-\section{Discussão sobre \textit{software} livre}
+%\section{Discussão sobre \textit{software} livre}
 
-A princípio, o fato de um \textit{software} ser distribuído de forma livre ou restrita pode soar indiferente.
-Entretanto, numa avaliação mais cuidadosa, é fácil
-perceber que a liberdade na utilização, modificação e distribuição de um \textit{software} trás imediatamente
-diversos benefícios ao seu usuário. O primeiro
-benefício é financeiro. Não é necessário dispender dinheiro em licenças de uso, autorizações de uso ou
-qualquer outro aspecto do uso de \textit{software}. Essa independência financeira na relação com o \textit{software} é, em último caso,
-ainda mais importante para países em desenvolvimento que, nem sempre, conseguem garantir um fluxo constante
-no aporte de financiamento a instituições de pesquisa e acadêmicas. O Brasil entra, obviamente, nesta lista.
+%A princípio, o fato de um \textit{software} ser distribuído de forma livre ou restrita pode soar indiferente.
+%Entretanto, numa avaliação mais cuidadosa, é fácil
+%perceber que a liberdade na utilização, modificação e distribuição de um \textit{software} trás imediatamente
+%diversos benefícios ao seu usuário. O primeiro
+%benefício é financeiro. Não é necessário dispender dinheiro em licenças de uso, autorizações de uso ou
+%qualquer outro aspecto do uso de \textit{software}. Essa independência financeira na relação com o \textit{software} é, em último caso,
+%ainda mais importante para países em desenvolvimento que, nem sempre, conseguem garantir um fluxo constante
+%no aporte de financiamento a instituições de pesquisa e acadêmicas. O Brasil entra, obviamente, nesta lista.
 
-A liberdade de utilização está intimamente ligada ao acesso ao código-fonte, que, como anteriormente apresentado,
-é obrigatoriamente distribuído com a versão binária ou executável do \textit{software} no caso de sistemas
-livres. A capacidade de estudar, entender, modificar e experimentar
-com o \textit{software} está totalmente ligada ao acesso a como se dá seu funcionamento. É novamente fácil perceber que,
-do ponto de vista tecnológico, o acesso ao código-fonte funciona como uma transferência de tecnologia. Além disso, no
-aspecto educacional, é uma forma de colocar as novas e futuras gerações de profissionais em contato com a tecnologia na
-prática, para além das abordagens didáticas e teóricas, por vezes limitadas a casos canônicos ou simplificações. 
+%A liberdade de utilização está intimamente ligada ao acesso ao código-fonte, que, como anteriormente apresentado,
+%é obrigatoriamente distribuído com a versão binária ou executável do \textit{software} no caso de sistemas
+%livres. A capacidade de estudar, entender, modificar e experimentar
+%com o \textit{software} está totalmente ligada ao acesso a como se dá seu funcionamento. É novamente fácil perceber que,
+%do ponto de vista tecnológico, o acesso ao código-fonte funciona como uma transferência de tecnologia. Além disso, no
+%aspecto educacional, é uma forma de colocar as novas e futuras gerações de profissionais em contato com a tecnologia na
+%prática, para além das abordagens didáticas e teóricas, por vezes limitadas a casos canônicos ou simplificações. 
 
 
 %\begin{figure}[htb]
@@ -90,25 +91,25 @@ prática, para além das abordagens didáticas e teóricas, por vezes limitadas 
 %  \legend{Fonte: autor}
 %\end{figure}
 
-Complementando os aspectos financeiro e de liberdade de utilização, há ainda, no tocante ao \textit{software} livre,
-o aspecto de distribuição do conhecimento. Se não explicitamente, já que um código sem comentários e sem manual oferece
-pouca oportunidade de aprendizado se tomarmos o pior caso, um código medianamente comentado e com um manual de utilização mesmo
-simples oferece uma oportunidade para se conhecer novas técnicas de desenvolvimento, linguagens, padrões de desenvolvimento, ferramentas,
-métodos e algoritmos. E esta lista é não-exaustiva. Além disso, baseada nas contribuições comunitárias, a lista de possibilidades
-de aprendizado cresce de acordo com o número de contribuintes e a intensidade com que contribuem. Deve-se ainda mencionar
-a autoverificação. Um código aberto é amplamente auditável e, quanto mais usuários o leem, maior a possibilidade de se
-encontrar falhas ou, em alguns casos, código malicioso. Talvez seja este aspecto, o alicerce que sustenta a forma de desenvolvimento
-livre. E aparentemente, essa forma de desenvolvimento, ainda que de forma tardia, começa a atingir a indústria nuclear
-\cite{Romano2013, Boyd2014, Theler2014b, Huff2016}.
+%Complementando os aspectos financeiro e de liberdade de utilização, há ainda, no tocante ao \textit{software} livre,
+%o aspecto de distribuição do conhecimento. Se não explicitamente, já que um código sem comentários e sem manual oferece
+%pouca oportunidade de aprendizado se tomarmos o pior caso, um código medianamente comentado e com um manual de utilização mesmo
+%simples oferece uma oportunidade para se conhecer novas técnicas de desenvolvimento, linguagens, padrões de desenvolvimento, ferramentas,
+%métodos e algoritmos. E esta lista é não-exaustiva. Além disso, baseada nas contribuições comunitárias, a lista de possibilidades
+%de aprendizado cresce de acordo com o número de contribuintes e a intensidade com que contribuem. Deve-se ainda mencionar
+%a autoverificação. Um código aberto é amplamente auditável e, quanto mais usuários o leem, maior a possibilidade de se
+%encontrar falhas ou, em alguns casos, código malicioso. Talvez seja este aspecto, o alicerce que sustenta a forma de desenvolvimento
+%livre. E aparentemente, essa forma de desenvolvimento, ainda que de forma tardia, começa a atingir a indústria nuclear
+%\cite{Romano2013, Boyd2014, Theler2014b, Huff2016}.
 
 
-Cabe, antes de finalizar esta seção, uma observação. Não se pretende nesta breve discussão advogar em favor do \textit{software}
-livre como a solução mágica para todos os problemas do conhecimento humano. Há uma infinidade de situações em que pode ser desejável
-que detalhes de implementação ou que o código-fonte seja preservado, por exemplo. A razão pode ser financeira, estratégica ou de segurança.
-O que se pretende, não sem certa ousadia, é trazer à luz a discussão do uso e desenvolvimento de \textit{software} livre na e pela indústria nuclear. Há sólidos
-argumentos favoráveis e contrários à sua utilização. O que não se pode é ignorar sua existência e abrir mão de investigar e discutir como
-esta filosofia, se se pode utilizar esta palavra, de desenvolvimento de Sistemas de Computação pode vir a contribuir no desenvolvimento
-da Engenharia Nuclear.
+%Cabe, antes de finalizar esta seção, uma observação. Não se pretende nesta breve discussão advogar em favor do \textit{software}
+%livre como a solução mágica para todos os problemas do conhecimento humano. Há uma infinidade de situações em que pode ser desejável
+%que detalhes de implementação ou que o código-fonte seja preservado, por exemplo. A razão pode ser financeira, estratégica ou de segurança.
+%O que se pretende, não sem certa ousadia, é trazer à luz a discussão do uso e desenvolvimento de \textit{software} livre na e pela indústria nuclear. Há sólidos
+%argumentos favoráveis e contrários à sua utilização. O que não se pode é ignorar sua existência e abrir mão de investigar e discutir como
+%esta filosofia, se se pode utilizar esta palavra, de desenvolvimento de Sistemas de Computação pode vir a contribuir no desenvolvimento
+%da Engenharia Nuclear.
 
 \section{Trabalhos Futuros}
 
@@ -139,12 +140,12 @@ o sistema na matriz. A execução em paralelo permite dividir o domínio em cada
 capacidade de multiprocessamento é inerente a esses processadores.} e resolver paralelamente
 uma escala menor do problema. Isso se aplica tanto ao problema de construção das matrizes a partir dos volumes finitos
 quanto à solução da matriz propriamente dita. Algoritmos de solução de matrizes de vários tipos, amplamente conhecidos
-e utilizados, estão disponíveis sendo, alguns dos mais robustos deles \cite{Hernandez2005, Balay2016}, distribuídos livremente.
+e utilizados, estão disponíveis sendo alguns dos mais robustos deles \cite{Hernandez2005, Balay2016} distribuídos livremente.
 Neste caso, seriam necessárias adaptações no sistema acoplado dependendo da forma de divisão do domínio. Estas adaptações teriam
 um certo grau de complexidade. Entretanto, a implementação do sistema acoplado já foi feita com vistas à execução em paralelo,
 de modo que laços e elementos de programação paralela estão implementados para distintos núcleos utilizando MPI \cite{Quinn2004}.
 
-De carona na implementação em paralelo, outra candidata a melhorias é a função de percurso de células atualmente
+Ainda no tocante à implementação em paralelo, outra candidata a melhorias é a função de percurso de células atualmente
 implementada no \textit{milonga}. Levantamentos preliminares mostraram que a atual implementação do \textit{milonga}
 gasta grande parte do tempo de execução nesta função, devido à interpolação de temperaturas por célula. A otimização
 desta função levaria a ganhos no tempo total de execução. A otimização desta função não está diretamente ligada à
@@ -160,14 +161,14 @@ de aproximação por difusão. Além disso, está em curso a implementação do 
 por membros da comunidade argentina de Física de Reatores.
 
 A expansão do \textit{solver OpenFOAM} para o cálculo de transientes além de estado estacionário também é possível.
-Para isso, uma abordagem é adaptar um novo \textit{solver OpenFOAM} já existente capaz de lidar com variações em relação
+Para isso, uma abordagem é adaptar um novo \textit{solver OpenFOAM} já existente, capaz de lidar com variações em relação
 ao tempo utilizando os arquivos e modificações já feitas no sistema atual. Este seria um trabalho mais elaborado.
 
 Outra linha de trabalho consiste em alterar a utilização de malhas em ambos os códigos, otimizando o uso de memória
 compartilhada. Neste caso, as classes utilizadas no \textit{OpenFOAM} na implementação da utilização de malhas podem
 ser estendidas - servindo-se do conceito de herança existente no paradigma de programação orientada a objetos e
 no qual o \textit{OpenFOAM} se baseia - para que o armazenamento de toda a estrutura de dados se dê em memória compartilhada.
-Isso exigiria ainda que toda a implementação do \textit{milonga} no tratamento de malhas, fosse também modificada de acordo.
+Isso exigiria ainda que toda a implementação do \textit{milonga} no tratamento de malhas fosse, também, modificada de acordo.
 Esta abordagem já consiste num grande trabalho de projeto e implementação de software. A consequência deste trabalho seria
 a utilização de uma única macroestrutura de dados para representação do domínio em memória, utilizando, a grosso modo,
 metade da memória utilizada na implementação atual. Essa nova implementação poderia, ainda, ser projetada para
@@ -185,7 +186,7 @@ simulações em nível de licenciamento ou aplicações de missão crítica.
 
 Os possíveis caminhos de desenvolvimento futuro e aplicações não estão limitados aos apresentados neste capítulo.
 A expectativa ao fim deste trabalho de tese é continuar contribuindo para o desenvolvimento do ecossistema de
-ferramentas computacionais com foco nas vantagens do desenvolvimento baseado em \textit{software} livre para todos
+ferramentas computacionais com foco nas vantagens do desenvolvimento baseado em \textit{software} livre, para todos
 os envolvidos e interessados em Computação Científica aplicada à Engenharia Nuclear.
 
 
