@@ -198,7 +198,7 @@ os elementos de malha foram gerados para uma superfície e a dimensão espacial
 foi dada por um valor de comprimento e um número de camadas a serem geradas.
 Foram geradas 35 camadas (cada uma com 1 cm), sendo o tamanho relativo
 mínimo para elemento de malha de 0,5 cm e máximo de 4.0 cm. O tamanho relativo
-mínino é usado próximo a arestas em interfaces de regiões para
+mínimo é usado próximo a arestas em interfaces de regiões para
 captura de camada limite e detalhes, enquanto o tamanho relativo máximo é utilizado
 em regiões de esperada baixa variação em propriedades e grandezas calculadas.
 Esses valores controlam
@@ -405,13 +405,20 @@ Fronteira         & Tipo                             & Região correspondente   
 \end{table}
 
 As condições de contorno que podem ser usadas são de um fluxo imposto (Dirichlet),
-uma corrente imposta (Neumann) ou uma combinação linear destas (Robin). A condição de
-fluxo se limita a fluxo zero na fronteira. Esta condição é aplicada utilizando-se
-a palavra-chave \textit{vacuum} dentro do \textit{milonga}, enquanto a condição
-de corrente deve ter derivada zero na direção da normal à fronteira e é utilizada
-pela palavra-chave \textit{mirror}. Caso se deseje utilizar a condição mista, deve
+uma corrente imposta (Neumann) ou uma combinação linear destas (Robin). A aplicação
+de fluxo nulo na fronteira é feita definindo-se a condição de contorno nessa fronteira
+como 
+%A condição de
+%fluxo se limita a fluxo zero na fronteira.
+%Esta condição é aplicada utilizando-se
+%a palavra-chave
+\textit{vacuum} dentro do \textit{milonga}. Já a condição
+de corrente deve ter derivada zero na direção da normal à fronteira e é aplicada
+utilizando-se a palavra-chave \textit{mirror}. Caso se deseje utilizar uma condição mista, deve
 ser utilizada a palavra-chave \textit{robin} seguida de um argumento de ponto
-flutuante entre zero e um. Uma explicação objetiva sobre quais são e como estão
+flutuante entre zero e um.
+
+Uma explicação objetiva sobre quais são e como estão
 implementadas as condições de contorno no \textit{milonga} está disponível
 no trabalho de Theler \cite{Theler2013b}.
 
@@ -425,7 +432,7 @@ regiões correspondentes a cada material.
 \begin{figure}[htb]
   \caption{Vista superior do modelo de combustível apresentando as distintas regiões e condições de contorno
     sobre a malha bidimensional.}
-  \centering\includegraphics[scale=0.52]{figuras/regions_neutronica_malha_e_sem.png}
+  \centering\includegraphics[scale=0.52]{figuras/regions_neutronica_malha_e_sem_portugues.png}
   \label{fig:cc-neut}
 %  \legend{Fonte: \cite{Veloso2005}}
 \end{figure}
@@ -440,7 +447,9 @@ regiões correspondentes a cada material.
 A fim de verificar o impacto das variações de temperatura obtidas nos cálculos
 termo-hidráulicos no fluxo
 neutrônico e, portanto, na potência volumétrica, é necessário utilizar seções de choque
-fisicamente compatíveis com o problema a ser resolvido. As seções de choque são utilizadas no cálculo neutrônico
+fisicamente compatíveis com o problema a ser resolvido. A correta obtenção de seções
+de choque compatíveis com o problema a ser resolvido é fundamental para a solução
+do sistema físico proposto. As seções de choque são utilizadas no cálculo neutrônico
 pela aproximação por difusão como coeficientes dos distintos termos da equação
 diferencial que resolve o fluxo de nêutrons.
 
@@ -448,7 +457,8 @@ O \textit{milonga} utiliza mnemônicos específicos para cada coeficiente, de mo
 que estes possam ser representados, tanto como valores constantes, como por funções
 de temperatura, abordagem utilizada na modelagem nesta tese. Na tabela
 \ref{tab:coeff-dif} estão apresentados os mnemônicos utilizados pelo \textit{milonga}
-no modelo utilizado, bem como a divisão de grupos em energias.
+no modelo utilizado, bem como a divisão de grupos em energias\footnote{O valor limiar de 0,625 $MeV$ para separação de nêutrons entre
+    os grupos térmico e rápido é típico \cite{Sher1976}}.
 
 % Tabela para os valores
 \begin{table}[htb]
@@ -459,14 +469,14 @@ no modelo utilizado, bem como a divisão de grupos em energias.
   \hline
   \multicolumn{3}{ c }{Coeficientes Mnemônicos} \\
   \hline
-  \multirow{4}{*}{Grupo 1: > 0,625 MeV} & Coeficiente de Difusão & $D1$\\
-& Seção de choque de absorção & $\Sigma A1$\\
-& Seção de choque de espalhamento & $\Sigma S1.2$\\
-  & Nêutrons por fissão * Seção de choque de fissão & $\nu \Sigma F1$\\
+  \multirow{4}{*}{Grupo 1: > 0,625 MeV} & Coeficiente de Difusão & $D_1$\\
+& Seção de choque de absorção & $\Sigma_{A1}$\\
+& Seção de choque de espalhamento & $\Sigma_{S1.2}$\\
+  & Nêutrons por fissão * Seção de choque de fissão & $\nu \Sigma_{F1}$\\
   \hline
-\multirow{3}{*}{Grupo 2: < 0,625 MeV} & Coeficiente de difusão & $D2$\\
-& Seção de choque de absorção & $\Sigma A2$\\
-& Nêutrons por fissão * Seção de choque de fissão & $\nu \Sigma F2$ \\
+\multirow{3}{*}{Grupo 2: < 0,625 MeV} & Coeficiente de difusão & $D_2$\\
+& Seção de choque de absorção & $\Sigma_{A2}$\\
+& Nêutrons por fissão * Seção de choque de fissão & $\nu \Sigma_{F2}$ \\
 \hline
 \end{tabular}
 \end{table}
@@ -480,8 +490,8 @@ todos os materiais foram definidos como anéis concêntricos.
 Uma vez definida a geometria,
 foram definidas quatro diferentes temperaturas cobrindo a faixa de operação
 do reator TRIGA IPR-R1. A menor temperatura sendo a temperatura ambiente até
-a temperatura próxima a máxima do combustível do TRIGA IPR-R1 em operação
-a $250 kW$ \cite{Veloso2005}, num grupo de quatro, apresentado na tabela
+a temperatura próxima à máxima do combustível do TRIGA IPR-R1 em operação
+a 250 $kW$ \cite{Veloso2005}, num grupo de quatro, apresentado na tabela
 \ref{tab:temp}.
 
 \begin{table}[htb]
@@ -513,26 +523,89 @@ de choque pelo WIMSD-5B estão na Tabela \ref{tab:composicao}.
   \centering
   \caption[Composição dos materiais para geração de seções de choque com o WIMSD-5B.]{Composição dos materiais para geração de seções de choque com o WIMSD-5B \cite{Halsall1986, Reis2015}.}
   \label{tab:composicao}
-\begin{tabular}{rlcr}
-                              & \multicolumn{1}{c}{Material}                                         & Código & \multicolumn{1}{c}{Massa} \\ \cline{2-4} 
-\multirow{4}{*}{Combustível}  & \begin{tabular}[c]{@{}l@{}}H (no hidreto\\ de zircônio)\end{tabular} & 5001   & $3,7525e^{-02}$           \\
-                              & Zr                                                                   & 91     & $3,7727e^{-02}$           \\
-                              & U$^{235}$                                            & 2235   & $2,5744e^{-04}$           \\
-                              & U$^{238}$                                            & 8238   & $1,0167e^{-03}$           \\ \hline
-Revestimento                  & Al                                                                   & 27     & $6,0261e^{-02}$           \\ \hline
-\multirow{2}{*}{Refrigerante} & H                                                                    & 3001   & $6,6653e^{-02}$           \\
-                              & O                                                                    & 6016   & $3,3327e^{-02}$          
+\begin{tabular}{rlcc}
+                              & \multicolumn{1}{c}{Material}                                         & Código & \multicolumn{1}{c}{Densidade atômica} \\ \cline{2-4} 
+\multirow{4}{*}{Combustível}  & \begin{tabular}[c]{@{}l@{}}H (no hidreto\\ de zircônio)\end{tabular} & 5001   & 3,7525$\times10^{-02}$           \\
+                              & Zr                                                                   & 91     & 3,7727$\times10^{-02}$           \\
+                              & U$^{235}$                                            & 2235   & 2,5744$\times10^{-04}$           \\
+                              & U$^{238}$                                            & 8238   & 1,0167$\times10^{-03}$           \\ \hline
+Revestimento                  & Al                                                                   & 27     & 6,0261$\times10^{-02}$           \\ \hline
+\multirow{2}{*}{Refrigerante} & H                                                                    & 3001   & 6,6653$\times10^{-02}$           \\
+                              & O                                                                    & 6016   & 3,3327$\times10^{-02}$          
 \end{tabular}
 \end{table}
 
 
 As temperaturas utilizadas na geração das seções de choque
 e as seções de choque resultantes são apresentadas nas tabelas
-\footnote{Os parâmetros da equação de difusão são apresentados na notação utilizada
-  pelo \textit{milonga}, diferindo do usual em relação a maiúsculas, minúsculas e sobrescrito.} \ref{tab:temp-fuel},
+%\footnote{Os parâmetros da equação de difusão são apresentados na notação utilizada
+%  pelo \textit{milonga}, diferindo do usual em relação a maiúsculas, minúsculas e sobrescrito.}
+\footnote{Os valores tabelados estão fora das grandezas típicas por terem sido multiplicados por $cm$ ($10^{-2}m$) em razão da malha utilizada
+  para os cálculos ter sido definida nesta unidade.}
+ \ref{tab:temp-fuel},
 \ref{tab:temp-cladding} e \ref{tab:temp-coolant} respectivamente para o combustível, revestimento
 e moderador.
 
+
+%\begin{table}[htb]
+%  \centering
+%  \caption[Temperaturas para combustível.]{Temperaturas para o combustível.}
+%  \label{tab:temp-fuel}
+%  \begin{tabular}{r r r r r}
+%  \multicolumn{5}{c}{Combustível} \\
+%  \hline
+%  Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
+%  \hline
+%  $D_1$ & 0,0108349 & 0,0108521 & 0,0108489 & 0,010846\\
+%  $\Sigma_{A1}$ & 0,771135 & 0,783626 & 0,795686 & 0,806567\\
+%  $\Sigma_{S1.2}$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+%  $\nu \Sigma_{F1}$ & 0,500982 & 0,500304 & 0,500377 & 0,500441\\
+%  \hline
+%  $D_2$ & 0,00314942 & 0,0031682 & 0, 0032163 & 0,0032743 \\
+%  $\Sigma_{A2}$ & 11,0389 & 10,8142 & 10,4004 & 9,90199\\
+%  $\nu \Sigma_{F2}$ & 20,1943 & 19,7703 & 18,9898 & 18,0499\\
+%  \hline
+%\end{tabular}
+%\end{table}
+%
+%\begin{table}[htb]
+%  \centering
+%  \caption[Temperaturas para o revestimento.]{Temperaturas para o revestimento}.
+%  \label{tab:temp-cladding}
+%  \begin{tabular}{r r r r r}
+%    \multicolumn{5}{c}{Revestimento} \\
+%    \hline
+%    Parâmetro & $300K$ & $396K$ & $403K$ & $410K$ \\
+%    \hline
+%    $D_1$ & 0,0299644 & 0,0299699 & 0,0299678 & 0,0299659 \\
+%    $\Sigma_{A1}$ & 0,0288617 & 0,028926 & 0,0289199 & 0,0289143 \\
+%    $\Sigma_{S1.2}$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+%    \hline
+%    $D_2$ & 0,0376276 & 0,0376721 & 0,0377696 & 0,0379140\\
+%    $\Sigma_{A2}$ & 0,874322 & 0,865956 & 0,846858 & 0,818690\\
+%    \hline
+%  \end{tabular}
+%\end{table}
+%
+%\begin{table}[htb]
+%  \centering
+%  \caption[Temperaturas para o refrigerante.]{Temperaturas para o refrigerante}.
+%  \label{tab:temp-coolant}
+%  \begin{tabular}{r r r r r}
+%    \multicolumn{5}{c}{Moderador} \\
+%    \hline
+%    Parâmetro & $300K$ & $308,5K$ & $317K$ & $341K$ \\
+%    \hline
+%    $D_1$ & 0,0126587 & 0,0126685 & 0,0126696 & 0,0126705\\
+%    $\Sigma_{A1}$ & 0,0290925 & 0,0292130 & 0,0292018 & 0,0291917\\
+%    $\Sigma_{S1.2}$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+%    \hline
+%    $D_2$ & 0,00213616 & 0,0021262 & 0021368 & 0021589\\
+%    $\Sigma_{A2}$ & 1,42651 & 1,41891 & 1,39505 & 1,35409\\
+%    \hline
+%  \end{tabular}
+%\end{table}
+%
 
 \begin{table}[htb]
   \centering
@@ -543,14 +616,14 @@ e moderador.
   \hline
   Parâmetro & $300K$ & $400K$ & $500K$ & $600K$ \\
   \hline
-  $D1$ & 0,0108349 & 0,0108521 & 0,0108489 & 0,010846\\
-  $\Sigma A1$ & 0,771135 & 0,783626 & 0,795686 & 0,806567\\
-  $\Sigma S1.2$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
-  $\nu \Sigma F1$ & 0,500982 & 0,500304 & 0,500377 & 0,500441\\
+  $D_1$ & 0,0108467 & 0,0108430 & 0,0108398 & 0,0108396\\
+  $\Sigma_{A1}$ & 0,771195 & 0,784938 & 0,797017 & 0,807916\\
+  $\Sigma_{S1.2}$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+  $\nu \Sigma_{F1}$ & 0,500640 & 0,500722 & 0,500791 & 0,500853\\
   \hline
-  $D2$ & 0,00314942 & 0,0031682 & 0, 0032163 & 0,0032743 \\
-  $\Sigma A2$ & 11,0389 & 10,8142 & 10,4004 & 9,90199\\
-  $\nu \Sigma F2$ & 20,1943 & 19,7703 & 18,9898 & 18,0499\\
+  $D_2$ & 0,0031356 & 0,0031729 & 0, 0032211 & 0,0032789 \\
+  $\Sigma_{A2}$ & 11,1031 & 10,7948 & 10,3798 & 9,88378\\
+  $\nu \Sigma_{F2}$ & 20,3145 & 19,7339 & 18,9512 & 18,0157\\
   \hline
 \end{tabular}
 \end{table}
@@ -564,12 +637,12 @@ e moderador.
     \hline
     Parâmetro & $300K$ & $396K$ & $403K$ & $410K$ \\
     \hline
-    $D1$ & 0,0299644 & 0,0299699 & 0,0299678 & 0,0299659 \\
-    $\Sigma A1$ & 0,0288617 & 0,028926 & 0,0289199 & 0,0289143 \\
-    $\Sigma S1.2$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+    $D_1$ & 0,0299762 & 0,0299738 & 0,0299717 & 0,0299698 \\
+    $\Sigma_{A1}$ & 0,0289086 & 0,0289016 & 0,0288954 & 0,0288899 \\
+    $\Sigma_{S1.2}$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
     \hline
-    $D2$ & 0,0376276 & 0,0376721 & 0,0377696 & 0,0379140\\
-    $\Sigma A2$ & 0,874322 & 0,865956 & 0,846858 & 0,818690\\
+    $D_2$ & 0,0376009 & 0,0376759 & 0,0377742 & 0,0379175\\
+    $\Sigma_{A2}$ & 0,879749 & 0,865116 & 0,845895 & 0,817942\\
     \hline
   \end{tabular}
 \end{table}
@@ -583,16 +656,15 @@ e moderador.
     \hline
     Parâmetro & $300K$ & $308,5K$ & $317K$ & $341K$ \\
     \hline
-    $D1$ & 0,0126587 & 0,0126685 & 0,0126696 & 0,0126705\\
-    $\Sigma A1$ & 0,0290925 & 0,0292130 & 0,0292018 & 0,0291917\\
-    $\Sigma S1.2$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
+    $D_1$ & 0,0126618 & 0,0126631 & 0,0126642 & 0,0126652\\
+    $\Sigma_{A1}$ & 0,0291631 & 0,0291502 & 0,0291388 & 0,0291285\\
+    $\Sigma_{S1.2}$ & 3,3991 & 3,4329 & 3,4264 & 3,4206\\
     \hline
-    $D2$ & 0,00213616 & 0,0021262 & 0021368 & 0021589\\
-    $\Sigma A2$ & 1,42651 & 1,41891 & 1,39505 & 1,35409\\
+    $D_2$ & 0,0021242 & 0,0021317 & 0021428 & 0021649\\
+    $\Sigma_{A2}$ & 1,43474 & 1,41539 & 1,39081 & 1,34991\\
     \hline
   \end{tabular}
 \end{table}
-
 
 Devido a uma limitação do código WIMSD-5B na geração de seções de choque de espalhamento
 para cada material separadamente, as seções de choque de
@@ -603,7 +675,7 @@ sendo esta a razão dos valores serem os mesmos para todos os materiais.
 % IMPORTANTE: Talvez este próximo parágrafo não deva ficar aqui, mas no modelo da neutrônica.
 %
 As seções de choque obtidas foram então escritas no formato \textit{milonga} como
-funções de uma variável dependentes da temperatura. Como o milonga tem informação
+funções de uma variável dependente da temperatura. Como o milonga tem informação
 das células em relação à malha, a temperatura de cada célula é argumento da
 função de uma variável dependente da temperatura. Se a temperatura não está
 exatamente tabulada, o \textit{milonga} provê interpolação linear por padrão.
