@@ -17,7 +17,7 @@
 A utilização da expressão ``prova de conceito''\footnote{Do inglês ``proof of concept''. Definição do dicionário
   \textit{Oxford:[mass noun] Evidence, typically deriving from an experiment or pilot project, which demonstrates that a design concept,
     business proposal, etc. is feasible:‘In academia, he says, a narrowly focused solution is acceptable as a proof of concept.’}}
-no título deste capítulo não é arbitraria.
+no título deste capítulo não é arbitrária.
 Muito pelo contrário. ``prova de conceito'' significa a execução (ou implementação) de
 certa ideia ou método de forma a demonstrar que tal ideia ou método funcionam. Melhor dizendo,
 é a demonstração de um princípio com o objetivo de verificar seu potencial prático.
@@ -26,7 +26,10 @@ Sendo assim, de forma a testar a implementação desenvolvida, foram feitos dois
 separados de simulações, seguindo as modelagens físicas e numéricas apresentadas no Capítulo \ref{chap:aplicacao}
 desta tese. De modo a capturar os efeitos da variação da temperatura dos distintos materiais
 no fluxo neutrônico e, consequentemente, na potência gerada, foram feitas simulações
-para três diferentes potências nominais. Estas simulações, foram feitas para dois casos
+para três diferentes potências nominais. Os valores de potência utilizados equivalem ao elemento
+com maior fator de potência \cite{Veloso2005} do núcleo do reator TRIGA Mark I IPR-R1 (elemento B6),
+considerando todo o núcleo do reator em operação à potência de 50 $kW$, 100 $kW$ e 200 $kW$.
+Estas simulações foram feitas para dois casos
 distintos: um sistema não-acoplado e para o sistema acoplado desenvolvido, totalizando seis
 simulações. Na tabela
 \ref{tab:setup} estão classificados os conjuntos de simulações realizados.
@@ -37,8 +40,8 @@ simulações. Na tabela
 \label{tab:setup}
 \begin{tabular}{cccc}
 Caso         & \multicolumn{3}{c}{\begin{tabular}[c]{@{}c@{}}Potências\\ (equivalente núcleo)\end{tabular}}                                                                                                                             \\ \hline
-Não-acoplado & \begin{tabular}[c]{@{}c@{}}1.98 kW\\ (50 kW)\end{tabular}              & \begin{tabular}[c]{@{}c@{}}3.97 kW\\ (100 kW)\end{tabular} & \begin{tabular}[c]{@{}c@{}}7.93 kW\\ (200 kW)\end{tabular} \\ \hline
-Acoplado     & \begin{tabular}[c]{@{}c@{}}1.98 kW\\  (50 kW)\end{tabular} & \begin{tabular}[c]{@{}c@{}}3.97 kW\\ (100 kW)\end{tabular} & \begin{tabular}[c]{@{}c@{}}7.93 kW\\ (200 kW)\end{tabular}
+Não-acoplado & \begin{tabular}[c]{@{}c@{}}1,98 kW\\ (50 kW)\end{tabular}              & \begin{tabular}[c]{@{}c@{}}3,97 kW\\ (100 kW)\end{tabular} & \begin{tabular}[c]{@{}c@{}}7,93 kW\\ (200 kW)\end{tabular} \\ \hline
+Acoplado     & \begin{tabular}[c]{@{}c@{}}1,98 kW\\  (50 kW)\end{tabular} & \begin{tabular}[c]{@{}c@{}}3,97 kW\\ (100 kW)\end{tabular} & \begin{tabular}[c]{@{}c@{}}7,93 kW\\ (200 kW)\end{tabular}
 \end{tabular}
 \end{table}
 Cabe lembrar que para esta prova de conceito, foi utilizada apenas uma única malha para todos os casos.
@@ -69,12 +72,12 @@ de potências, de acordo com as etapas listadas anteriormente, são apresentados
   \centering
 \caption{Temperaturas e fator de multiplicação efetivo: cálculo não-acoplado.}
 \label{tab:temp-keff}
-\begin{tabular}{ccccc}
-\multicolumn{1}{l}{}         & \multicolumn{3}{c}{Temperaturas [K]}                                                                      & \multicolumn{1}{l}{}     \\ \cline{2-4}
-\multicolumn{1}{c}{Potência [kW]} & \multicolumn{1}{c}{Refrigerante} & \multicolumn{1}{c}{Revestimento} & \multicolumn{1}{c}{Combustível} & \multicolumn{1}{c}{$k_{eff}$} \\ \hline
-1.98                      & 303,56                         & 327,20                         & 339,80                        & 1,15289                  \\ \hline
-3.97                      & 307,15                         & 354,54                         & 379,77                        & 1,15117                  \\ \hline
-7,93                      & 310,09                         & 375,42                         & 422,94                        & 1,14829                 
+\begin{tabular}{cccc}
+\multicolumn{1}{l}{}         & \multicolumn{2}{c}{Temperaturas [K]}                                                                      & \multicolumn{1}{l}{}     \\ \cline{2-4}
+\multicolumn{1}{c}{Potência [kW]} & \multicolumn{1}{c}{Refrigerante} & \multicolumn{1}{c}{Revestimento} & \multicolumn{1}{c}{Combustível}  \\ \hline
+1,98                      & 303,56                         & 327,20                         & 339,80                                         \\ \hline
+3,97                      & 307,15                         & 354,54                         & 379,77                                          \\ \hline
+7,93                      & 310,09                         & 375,42                         & 422,94                                         
 \end{tabular}
 \end{table}
 
@@ -96,13 +99,12 @@ As distribuições de potência axial obedeceram, para os três casos, a perfis
 cossenoidais, como pode ser visto na Figura \ref{fig:perf-nac-axial}. Estes são os perfis esperados para
 os combustíveis modelados \cite{Veloso2005}. As distribuições de potência radiais -
 obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes
-dos obtidos axialmente, como pode ser visto na Figura \ref{fig:perf-Q-nac-radial}.
-A primeira e principal diferença está na abruta subida a partir da potência nula
-no início e fim da curva. A razão para este comportamento é simples: apenas o combustível gera potência, sendo
-zero para as regiões de revestimento e água (não apresentadas na curva). O achatamento na posição central
-da curva em relação aos picos é devido ao menor fluxo térmico no centro do combustível. Nas regiões limite
+dos obtidos axialmente, como pode ser visto na Figura \ref{fig:perf-Q-nac-radial}. 
+Para a distribuição radial de potências o achatamento na posição central
+da curva em relação aos picos é devido ao menor fluxo de nêutrons térmicos no centro do combustível. Nas regiões limite
 entre o combustível e o revestimento, é maior o fluxo de nêutrons termalizados pela interação com o refrigerante (água).
-Esse perfil é esperado em combustíveis do tipo TRIGA \cite{Ravnik1990}.
+Esse fenômeno é chamado de auto-blindagem é não é percebido quando utilizado apenas um grupo
+de nêutrons nos cálculos. O perfil encontrado é esperado em combustíveis do tipo TRIGA \cite{Ravnik1990}.
 
 \begin{figure}[htb]
   \caption{Perfil de potência axial para os três casos simulados.}
@@ -122,20 +124,20 @@ Os perfis de temperatura obtidos axialmente, Figura \ref{fig:perf-t-nac-axial},
 apresentam, novamente para os três casos, uma diferença entre as extremidades
 do combustível. Essa diferença é provocada pela escoamento do refrigerante (água) no
 modelo. A água entra no sistema à temperatura constante de $300 K$ e, no seu trajeto,
-absorve energia do sistema. Essa absorção é maior no na entrada (\textit{inlet}),
-levando a uma maior resfriamento do sistema neste ponto do escoamento. Esse efeito
+absorve energia do sistema. Essa absorção é maior na entrada (\textit{inlet}),
+levando a um maior resfriamento do sistema neste ponto do escoamento. Esse efeito
 ocorre em todos os casos, apenas com diferença nas temperaturas de cada material.
 
 \begin{figure}[htb]
   \caption{Perfil de temperaturas axial para os três casos simulados.}
   \centering\includegraphics[scale=0.5]{figuras/T_z_NC_square_port.png}
-  \label{fig:perf-t-nac-axial}
+%\label{fig:perf-t-nac-axial}
 %  \legend{Fonte: autor}
 \end{figure}
 
 Radialmente, os perfis de temperatura, seguindo o mesmo padrão para os três casos simulados,
 possuem descontinuidades, como pode ser visto na Figura \ref{fig:perf-t-nac-radial} (entre
-$0 m$ e $0,005 m$ e $0,04 m$ e $0,045 m$). Estes degraus indicam mudança no gradiente de temperaturas na
+0 $m$ e 0,005 $m$ e 0,04 $m$ e 0,045 $m$). Estes degraus indicam mudança no gradiente de temperaturas na
 interface entre diferentes materiais, devido às diferentes condutividades térmicas de cada um.
 
 Os resultados das simulações apresentadas para os três casos não-acoplados formam o conjunto de resultados
@@ -143,8 +145,8 @@ de referência. Eles servem de base de comparação para as simulações acoplad
 se os resultados acoplados se diferenciam destes e em que medida ocorrem estas diferenças.
 
 \begin{figure}[htb]
-  \caption[Perfil de temperaturas radial para os três casos simulados.]
-          {Perfil de temperaturas radial para os três casos simulados. No detalhe o perfil de temperatura nas interfaces entre os três materiais.}
+  \caption[Perfil de temperatura radial para os três casos simulados.]
+          {Perfil de temperatura radial para os três casos simulados. No detalhe o perfil de temperatura nas interfaces entre os três materiais.}
   \centering\includegraphics[scale=0.5]{figuras/T_x_NC_square_port_detalhado.png}
   \label{fig:perf-t-nac-radial}
 %  \legend{Fonte: autor}
@@ -160,17 +162,17 @@ Os resultados destas são apresentados em comparação com os resultados de refe
 das diferenças entre elas.
 
 Diferentemente dos cálculos não-acoplados, na simulação acoplada ocorre a variação do fluxo neutrônico.
-Essa variação, originada da variação de temperaturas no sistema, ocorre nos três casos acoplados, cada
+Essa variação, originada da variação de temperatura no sistema e da realimentação das seções de choque, ocorre nos três casos acoplados, cada
 um simulado numa potência.
 
-Para as simulações a $1,98 kW$, as diferenças no fluxo são as mais sutis. Com potência mais baixa, há menor
+Para as simulações a 1,98 $kW$, as diferenças no fluxo são as mais sutis. Com potência mais baixa, há menor
 diferença nas temperaturas entre o caso acoplado e o não-acoplado. Como as seções de choque variam de
 acordo com a temperatura, é menor a diferença entre seções de choque. Por consequência, menor a diferença
 no fluxo neutrônico. Outro fator que leva à similaridade entre os fluxos é a baixa granularidade
 da malha na direção axial (apenas 35 camadas de elementos, como apresentado na Tabela \ref{tab:size_model}).
 
 Na Figura \ref{fig:flux_z_50} são apresentados os fluxos axiais acoplados e não acoplados nas simulações
-à potência mais baixa, de $1,98 kW$. A diferença entre os fluxos é melhor percebida no corte radial,
+à potência mais baixa, de 1,98 $kW$. A diferença entre os fluxos é melhor percebida no corte radial,
 apresentado na Figura \ref{fig:flux_x_50}. Além de uma maior variação radial devido à moderação de nêutrons
 nas paredes, e consequente aumento do fluxo térmico, a malha é mais refinada radialmente. Com isso, é possível
 captar mais detalhes do fluxo neutrônico.
@@ -194,11 +196,11 @@ captar mais detalhes do fluxo neutrônico.
 \end{figure}
 
 As mesmas observações feitas para os fluxos relativos na menor potência são válidas
-para as simulações feitas à potência de $3,97 kW$. Novamente, as diferenças entre
+para as simulações feitas à potência de 3,97 $kW$. Novamente, as diferenças entre
 os fluxos relativos são melhor observáveis no corte radial do que no corte axial.
-Entretanto, as diferenças entre os fluxo começam a aumentar de acordo com o
+Entretanto, as diferenças entre os fluxos começam a aumentar de acordo com o
 aumento da potência. Os fluxos relativos axiais acoplados e não-acoplados para
-potência de $3,97 kW$ podem ser observados na Figura \ref{fig:flux_z_100}, enquanto
+potência de 3,97 $kW$ podem ser observados na Figura \ref{fig:flux_z_100}, enquanto
 os fluxos relativos radiais para a mesma potência podem ser observados na Figura \ref{fig:flux_x_100}.
 
 \begin{figure}[htb]
@@ -217,17 +219,17 @@ os fluxos relativos radiais para a mesma potência podem ser observados na Figur
 %  \legend{Fonte: autor}
 \end{figure}
 
-As diferenças entre os fluxos relativos em ambas as simulações passa a ser melhor
-vista nas simulações de maior potência, a $7,93 kW$. Novamente, a variação nas temperaturas
+As diferenças entre os fluxos relativos em ambas as simulações passam a ser melhor
+observadas nas simulações de maior potência, a 7,93 $kW$. Novamente, a variação nas temperaturas
 impacta nos cálculos acoplados, uma vez que as seções de choque são periodicamente
-ajustadas. É possível observar na Figura \ref{fig:flux_z_200}, que apresenta o perfil axial,
+realimentadas. É possível observar na Figura \ref{fig:flux_z_200}, que apresenta o perfil axial,
 uma sutil sobreposição entre as curvas, demonstrando um achatamento na curva
-referente as cálculos acoplados. Isso se explica pelas propriedades do combustível modelado,
+referente aos cálculos acoplados. Isso se explica pelas propriedades do combustível modelado,
 que diminui sua capacidade de absorção de nêutrons térmicos com o aumento da temperatura.
 Ao mesmo tempo, nas extremidades da curva, as temperaturas são menores que no caso não-acoplado,
 levando a um relativo aumento no fluxo. O fluxo acoplado reflete tais mudanças no seu perfil.
 
-As diferenças entre os fluxos relativos radiais, para a potência de $7,93 kW$, são facilmente
+As diferenças entre os fluxos relativos radiais, para a potência de 7,93 $kW$, são facilmente
 visíveis na Figura \ref{fig:flux_x_200}.
 
 \begin{figure}[htb]
@@ -252,11 +254,10 @@ equação de difusão é o fluxo neutrônico e, a partir
 dele, é calculada a potência volumétrica baseada em um valor de referência para
 a potência.
 
-É a potência
-\footnote{A palavra potência é indistintamente utilizada neste capítulo como potência
+É a potência\footnote{A palavra potência é indistintamente utilizada neste capítulo como potência
   propriamente dita, em $W$ ou como sinônimo de densidade de potência, dada em $W/m^3$, de acordo
   com o contexto em que é usada.}
-, que entra como termo fonte na equação na energia
+, que entra como termo-fonte na equação na energia
 resolvida pela termo-hidráulica, que leva ao aquecimento dos materiais que, por sua vez, impactam
 no cálculos de seções de choque. As diferenças entre os perfis de potência obtidos nos dois conjuntos
 de simulações, acopladas e não-acopladas, são apresentados nas Figuras \ref{fig:Q_all_z} e
@@ -273,7 +274,7 @@ não acoplada, enquanto nas extremidades da curva, os perfis estão sobrepostos\
 
 A referida diferença no formato das curvas referentes às simulações acopladas e não acopladas é melhor vista no
 perfil radial de potências, Figura \ref{fig:Q_all_x}. O fenômeno ocorre para todas as potências, mas é melhor
-visto para a potência de $7,93 kW$. É possível perceber que nos picos, que correspondem à interface entre o
+visto para a potência de 7,93 $kW$. É possível perceber que nos picos, que correspondem à interface entre o
 revestimento e o combustível, os valores para a simulação acoplada são maiores. No centro do combustível
 ocorre o inverso, sendo menores os valores de potência para a simulação acoplada. Isso se dá devido à realimentação
 regular da neutrônica pela temperatura em cada posição. Com o aumento progressivo da temperatura, a reatividade
@@ -373,7 +374,7 @@ apresentar pequenas oscilações ao redor de um fator de multiplicação de conv
 %
 %
 
-Foi realizada, ainda, outra simulação acoplada à potência de $7,93 kW$.
+Foi realizada, ainda, outra simulação acoplada à potência de 7,93 $kW$.
 Desta vez, com mudanças nos parâmetros de relaxação para a solução
 da equação de energia no sólido que representa o combustível.
 
@@ -401,7 +402,7 @@ suficientes para perturbar o sistema acoplado, mostrando certa robustez em rela�
 a mudanças paramétricas.
 
 \begin{figure}[htb]
-  \caption[Variação do fator de multiplicação sobe variação de parâmetros de convergência.]{Variação do fator de multiplicação efetivo ($k_{eff}$) para a simulação a $7,93 kW$ com mudanças em parâmetros de convergência.}
+  \caption[Variação do fator de multiplicação sobe variação de parâmetros de convergência.]{Variação do fator de multiplicação efetivo ($k_{eff}$) para a simulação a 7,93 $kW$ com mudanças em parâmetros de convergência.}
   \centering\includegraphics[scale=0.5]{figuras/plot200-disturb-port.png}
   \label{fig:keff_dist}
 %  \legend{Fonte: autor}
