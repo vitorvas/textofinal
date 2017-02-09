@@ -70,7 +70,7 @@ de potências, de acordo com as etapas listadas anteriormente, são apresentados
 
 \begin{table}[htb]
   \centering
-\caption{Temperaturas e fator de multiplicação efetivo: cálculo não-acoplado.}
+\caption{Temperaturas de referência para obtenção de seções de choque para o cálculo não-acoplado.}
 \label{tab:temp-keff}
 \begin{tabular}{cccc}
 \multicolumn{1}{l}{}         & \multicolumn{2}{c}{Temperaturas [K]}                                                                      & \multicolumn{1}{l}{}     \\ \cline{2-4}
@@ -80,6 +80,10 @@ de potências, de acordo com as etapas listadas anteriormente, são apresentados
 7,93                      & 310,09                         & 375,42                         & 422,94                                         
 \end{tabular}
 \end{table}
+
+Os valores de fator de multiplicação ($k_{eff}$) nos três cálculos neutrônicos \textit{standalone} são
+de $1,15370$ para condições à potência de 1,98 $kW$, $1,15264$ para condições à potência de 3,97 $kW$ e
+$1,14704$ para condições à potência de 7,93 $kW$.
 
 O caso não-acoplado nada mais é do que uma simulação termo-hidráulica utilizando como distribuição de potência
 inicial o resultado obtido pelos cálculos neutrônicos com seções de choque constantes. Que por sua vez, foram
@@ -279,8 +283,9 @@ revestimento e o combustível, os valores para a simulação acoplada são maior
 ocorre o inverso, sendo menores os valores de potência para a simulação acoplada. Isso se dá devido à realimentação
 regular da neutrônica pela temperatura em cada posição. Com o aumento progressivo da temperatura, a reatividade
 cai no centro do combustível, levando também a uma diminuição da potência local. Já, nas extremidades, a moderação
-de nêutrons que ocorre na água, mais próxima dessa região, leva a mais fissões nessa região. O aumento de temperatura
-causado por este aumento na potência é compensado pelo efeito de troca de calor com o revestimento, que está em contato com fluido
+de nêutrons que ocorre na água, mais próxima dessa região, leva a um aumento no número de nêutrons térmicos e, consequentemente a mais fissões nessa região.
+Além disso, as características do $UZrH$ também levam a um aumento no número de fissões nessa região em comparação com o centro do combustível. O aumento de temperatura
+causado por este aumento na potência é compensado pelo efeito de troca de calor com o revestimento, que está em contato com o fluido
 a temperaturas mais baixas. Este comportamento é o mesmo que o descrito por Ravnik \cite{Ravnik1990}
 para combustíveis do tipo TRIGA, tal qual apresentado anteriormente para o fluxo de nêutrons.
 
@@ -310,47 +315,55 @@ caso acoplado. Os fenômenos físicos e suas explicações para o formato das cu
 são os mesmos, já que as simulações são iguais a menos das potências e do fato
 de serem ou não acopladas.
 
-O representativo destes resultados em relação a esta tese está nas diferenças,
-pequenas em casos de baixa potência, entre as curvas acopladas e não acopladas.
-Em suma, com a retroalimentação devida ao acoplamento, a relação entre os fenômenos
+O principal resultado obtido nesta tese consiste precisamente nas diferenças,
+pequenas em casos de baixa potência e maiores a potências mais elevadas, entre as curvas acopladas e não acopladas.
+Em suma, com retroalimentação devida ao acoplamento, a relação entre os fenômenos
 físicos termo-hidráulicos e neutrônicos é representada e, como apresentado,
 gera resultados diferentes dos cálculos realizados separadamente.
 
+
 \begin{figure}[htb]
-  \caption{Curvas de temperatura axiais para os casos acoplados e não acoplados.}
+  \caption{Curvas de temperatura axiais para os casos acoplados e não acoplados (NC).}
   \centering\includegraphics[scale=0.5]{figuras/T_z_all_square_port.png}
   \label{fig:T_all_z}
 %  \legend{Fonte: autor}
 \end{figure}
 
 \begin{figure}[htb]
-  \caption{Curvas de temperatura axiais para os casos acoplados e não acoplados.}
+  \caption{Curvas de temperatura radiais para os casos acoplados e não acoplados (NC).}
   \centering\includegraphics[scale=0.5]{figuras/T_x_all_square_port.png}
   \label{fig:T_all_x}
 %  \legend{Fonte: autor}
 \end{figure}
 
 Nos cálculos acoplados, a cada execução do \textit{milonga} são utilizadas
-novas seções de choque ajustadas a partir de tabelas previamente geradas e da interpolação
-destes dados em função das temperaturas de cada célula. Em cada uma destas
+novas seções de choque ajustadas a partir de tabelas de seções de choque previamente geradas
+para quatro diferentes temperaturas. As seções de choque utilizadas nos cálculos
+são obtidas da interpolação
+das temperaturas tabeladas em função das temperaturas de cada célula. Em cada uma destas
 execuções, além do fluxo neutrônico, são calculados os fatores de multiplicação
-($k_{eff}$) efetivos daquele, digamos, ``estado'' do sistema.
+($k_{eff}$) efetivos daquele ``estado'' do sistema.
 
 \begin{figure}[htb]
   \caption{Variação dos fatores de multiplicação efetivo ($k_{eff}$) nas três simulações acopladas.}
-  \centering\includegraphics[scale=0.5]{figuras/plot-vertical.png}
+  \centering\includegraphics[scale=0.5]{figuras/plot-demonio-vertical.png}
   \label{fig:keff_all}
 %  \legend{Fonte: autor}
 \end{figure}
 
 À medida em que as iterações com o \textit{milonga} ocorrem, o fator de multiplicação
 calculado para o sistema varia, oscilando. Esta oscilação ocorre devido à iteração
-entre o sistema neutrônico e termo-hidráulico. Intuitivamente, percebe-se que a partir
+entre o sistema neutrônico e termo-hidráulico. É possível perceber que a partir
 de uma potência, as temperaturas aumentam na interação seguinte, que leva, por sua vez,
 a uma diminuição na reatividade (propriedade deste tipo de elemento combustível),
-que leva a uma diminuição na potência, que faz variar a temperatura, que afeta
+que leva a uma diminuição na potência, que implica em variação da temperatura, que afeta
 a reatividade e assim por diante. O fim da simulação se dá por número fixo
-de iterações.
+de iterações. O número de iterações é definido pela simulação termo-hidráulica, sendo
+1500 passos para as simulações a 1,98 $kW$ e 3,97 $kW$ e 2400 passos para a simulação a
+7,93 $kW$. A diferença é simplesmente devida ao número de iterações para convergência.
+Como é fixada em 100 a razão de iterações neutrônicas e termo-hidráulicas, em 1500 iterações
+termo-hidráulicas, são feitos 15 cálculos acoplados para os casos de menos potência e 24
+para o de potência mais alta.
 
 Na Figura \ref{fig:keff_all} estão apresentados três gráficos, um para cada simulação
 acoplada. As linhas constantes (em azul) indicam o valor do fator de multiplicação
@@ -360,13 +373,87 @@ de multiplicação obtidos a cada iteração entre termo-hidráulica e neutrôni
 entre pontos são apenas para indicação da diferença entre iterações seguidas, já
 que os resultados são discretos).
 
-É possível ver que, em todos os casos, os fator de multiplicação cai imediatamente
-já após a segunda iteração com a neutrônica. Na primeira iteração entre a
+É possível ver que, em todos os casos, o fator de multiplicação cai imediatamente
+após a segunda iteração com a neutrônica. Na primeira iteração entre a
 termo-hidráulica e a neutrônica, as temperaturas do sistema vêm subindo devido
 à distribuição de potências previamente calculada. A partir desta primeira iteração,
 a realimentação do campo de potências já impacta na distribuição de temperaturas,
 o que fica claro na segunda iteração. A partir deste ponto, o sistema começa a
 apresentar pequenas oscilações ao redor de um fator de multiplicação de convergência.
+
+Um conjunto similar de seções de choque, isto é, gerado às mesmas condições de temperatura
+da tabela de seções de choque (ver tabela \ref{tab:temp})
+mas para um \textit{cluster} de elementos combustíveis ao invés de um único combustível
+utilizando o código WIMS-5B foi utilizado no código PARCS para efeito de referência. Os valores
+para o fator de multiplicação obtidos neste caso, e apresentados na tabela \ref{tab:PARCS},
+divergem dos obtidos pelos cálculos acoplados em até $13\%$, sendo menores para os cálculos acoplados.
+
+\begin{table}[]
+\centering
+\caption{Fatores de multiplicação obtidos para geometria similar com código PARCS.}
+\label{tab:PARCS}
+\begin{tabular}{cc}
+\begin{tabular}[c]{@{}c@{}}Temperaturas\\ de referência\end{tabular} & \multicolumn{1}{c}{\begin{tabular}[c]{@{}c@{}}Fator de\\ multiplicação ($k_{eff}$)\end{tabular}} \\ \hline
+T1                                                                   & 1,320175                                                                                    \\ \hline
+T2                                                                   & 1,314753                                                                                    \\ \hline
+T3                                                                   & 1,308179                                                                                    \\ \hline
+T4                                                                   & 1,302641                                                                                   
+\end{tabular}
+\end{table}
+
+Tais diferenças podem ser explicadas pela diferença nas seções de choque de espalhamento,
+distintas em ambas as simulações mas, especialmente, pelas diferenças em temperatura.
+Entretanto, esses fatores não são suficientes a magnitude das diferenças nos fatores
+de multiplicação. Sendo assim, fazem-se necessárias mais investigações na forma com
+que o sistema acoplado, em especial o código \textit{milonga} realiza seus cálculos,
+em especial na forma como são tratadas condições de contorno.
+
+%As figuras \ref{fig:f1}, \ref{fig:f2}, \ref{fig:f3}, \ref{fig:q1}, \ref{fig:q2} e \ref{fig:q3} apresentam de forma visual, a partir da geometria utilizada,
+As \crefrange{fig:f1}{fig:q3} apresentam de forma visual, a partir da geometria utilizada,
+as diferenças entre fluxos de nêutrons e potências obtidas para os cálculos
+acoplados e não acoplados.
+
+%-FLUX------------------------------------------------
+\begin{figure}[htb]
+  \caption{Diferença de fluxo entre o cálculo acoplado e não acoplado (7,93 $kW$): corte axial}
+  \centering\includegraphics[scale=0.7]{figuras/diff-flux-axial.png}
+  \label{fig:f1}
+\end{figure}
+
+%-------------------------------------------------
+\begin{figure}[htb]
+  \caption{Diferença de fluxo entre o cálculo acoplado e não acoplado (7,93 $kW$): corte radial}
+  \centering\includegraphics[scale=0.6]{figuras/diff-flux-radial.png}
+  \label{fig:f2}
+\end{figure}
+
+%-------------------------------------------------
+\begin{figure}[htb]
+  \caption{Diferença de fluxo entre o cálculo acoplado e não acoplado (7,93 $kW$): vista isométrica}
+  \centering\includegraphics[scale=0.6]{figuras/diff-flux-isometrico.png}
+  \label{fig:f3}
+\end{figure}
+
+%-Q------------------------------------------------
+\begin{figure}[htb]
+  \caption{Diferença de potência entre o cálculo acoplado e não acoplado (7,93 $kW$): corte axial}
+  \centering\includegraphics[scale=0.6]{figuras/diff-q-axial.png}
+  \label{fig:q1}
+\end{figure}
+
+%-------------------------------------------------
+\begin{figure}[htb]
+  \caption{Diferença de potência entre o cálculo acoplado e não acoplado (7,93 $kW$): corte radial}
+  \centering\includegraphics[scale=0.6]{figuras/diff-q-radial.png}
+  \label{fig:q2}
+\end{figure}
+
+%-------------------------------------------------
+\begin{figure}[htb]
+  \caption{Diferença de potência entre o cálculo acoplado e não acoplado (7,93 $kW$): vista isométrica}
+  \centering\includegraphics[scale=0.5]{figuras/diff-q-isometrico.png}
+  \label{fig:q3}
+\end{figure}
 
 % ----------------------------------------------------------------------------------
 %
@@ -374,40 +461,40 @@ apresentar pequenas oscilações ao redor de um fator de multiplicação de conv
 %
 %
 
-Foi realizada, ainda, outra simulação acoplada à potência de 7,93 $kW$.
-Desta vez, com mudanças nos parâmetros de relaxação para a solução
-da equação de energia no sólido que representa o combustível.
-
-Os resultados desta simulação são apresentados no gráfico da Figura \ref{fig:keff_dist}.
-Esta simulação necessitou de número maior de iterações que as simulações anteriores para
-atingir a convergência. Em outras palavras, foi utilizado inicialmente um parâmetro
-mais conservador para a relaxação. Fazendo uso da funcionalidade do \textit{OpenFOAM}
-que permite o ajuste de parâmetros de simulação em tempo de execução, tais como
-valores de resíduos, mudança de \textit{timestep}, fatores de relaxação, dentre
-inúmeros outros, foram alterados os valores de relaxação citados com o objetivo
-de diminuir o tempo de convergência dos cálculos\footnote{O objetivo desta funcionalidade é permitir que o
-usuário controle a simulação tanto em relação ao tempo total mas também
-efetuar um ajuste fino, especialmente útil para evitar a divergência dos
-resultados devido à oscilações numéricas.}.
-
-Fica visível, entre as iterações 13 e 16, uma variação mais intensa, se comparada
-às anteriores, entre o fator de multiplicação entre iterações consecutivas. Após
-este intervalor, as variações passam a ser menores entre iterações consecutivas.
-
-No presente caso, as variações na relaxação dos cálculos da equação da energia para
-o sólido, permitiram o aumento da velocidade da convergência, ao mesmo tempo mantendo
-os resíduos dos cálculos em níveis aceitáveis, evitando assim a divergência do cálculo.
-Tal comportamento mostra que alterações paramétricas em tempo de execução não foram
-suficientes para perturbar o sistema acoplado, mostrando certa robustez em relação
-a mudanças paramétricas.
-
-\begin{figure}[htb]
-  \caption[Variação do fator de multiplicação sobe variação de parâmetros de convergência.]{Variação do fator de multiplicação efetivo ($k_{eff}$) para a simulação a 7,93 $kW$ com mudanças em parâmetros de convergência.}
-  \centering\includegraphics[scale=0.5]{figuras/plot200-disturb-port.png}
-  \label{fig:keff_dist}
-%  \legend{Fonte: autor}
-\end{figure}
-
+%Foi realizada, ainda, outra simulação acoplada à potência de 7,93 $kW$.
+%Desta vez, com mudanças nos parâmetros de relaxação para a solução
+%da equação de energia no sólido que representa o combustível.
+%
+%Os resultados desta simulação são apresentados no gráfico da Figura \ref{fig:keff_dist}.
+%Esta simulação necessitou de número maior de iterações que as simulações anteriores para
+%atingir a convergência. Em outras palavras, foi utilizado inicialmente um parâmetro
+%mais conservador para a relaxação. Fazendo uso da funcionalidade do \textit{OpenFOAM}
+%que permite o ajuste de parâmetros de simulação em tempo de execução, tais como
+%valores de resíduos, mudança de \textit{timestep}, fatores de relaxação, dentre
+%inúmeros outros, foram alterados os valores de relaxação citados com o objetivo
+%de diminuir o tempo de convergência dos cálculos\footnote{O objetivo desta funcionalidade é permitir que o
+%usuário controle a simulação tanto em relação ao tempo total mas também
+%efetuar um ajuste fino, especialmente útil para evitar a divergência dos
+%resultados devido à oscilações numéricas.}.
+%
+%Fica visível, entre as iterações 13 e 16, uma variação mais intensa, se comparada
+%às anteriores, entre o fator de multiplicação entre iterações consecutivas. Após
+%este intervalor, as variações passam a ser menores entre iterações consecutivas.
+%
+%No presente caso, as variações na relaxação dos cálculos da equação da energia para
+%o sólido, permitiram o aumento da velocidade da convergência, ao mesmo tempo mantendo
+%os resíduos dos cálculos em níveis aceitáveis, evitando assim a divergência do cálculo.
+%Tal comportamento mostra que alterações paramétricas em tempo de execução não foram
+%suficientes para perturbar o sistema acoplado, mostrando certa robustez em relação
+%a mudanças paramétricas.
+%
+%\begin{figure}[htb]
+%  \caption[Variação do fator de multiplicação sobe variação de parâmetros de convergência.]{Variação do fator de multiplicação efetivo ($k_{eff}$) para a simulação a 7,93 $kW$ com mudanças em parâmetros de convergência.}
+%  \centering\includegraphics[scale=0.5]{figuras/plot200-disturb-port.png}
+%  \label{fig:keff_dist}
+%%  \legend{Fonte: autor}
+%\end{figure}
+%
 
 Os resultados aqui apresentados não são suficientes para nenhuma afirmação sobre a
 efetiva capacidade de cálculos deste sistema acoplado para sistemas mais complexos
