@@ -137,12 +137,12 @@ abordagem com \textit{software} livre}
 %\data{\today}
 \orientador{Cláubia Pereira Bezerra Lima}
 \coorientador{André Augusto Campagnole dos Santos}
-\instituicao{%
-  Universidade Federal de Minas Gerais -- UFMG
-  \par
-  Departamento de Engenharia Nuclear
-  \par
-  Programa de Pós-Graduação em Ciências e Técnicas Nucleares}
+%\instituicao{%
+%  Universidade Federal de Minas Gerais -- UFMG
+%  \par
+%  Departamento de Engenharia Nuclear
+%  \par
+%  Programa de Pós-Graduação em Ciências e Técnicas Nucleares}
 \tipotrabalho{Tese (doutorado)}
 % O preambulo deve conter o tipo do trabalho, o objetivo, 
 % o nome da instituição e a área de concentração 
@@ -196,6 +196,35 @@ abordagem com \textit{software} livre}
 \makeindex
 % ---
 
+% -------------------------------------------------
+% Nova macro para capa formato UFMG
+% -------------------------------------------------
+
+\renewcommand{\imprimircapa}{%
+  \begin{capa}%
+    \center
+    \includegraphics[scale=0.5]{brasao.png}\\
+    \ABNTEXchapterfont\normalsize UNIVERSIDADE FEDERAL DE MINAS GERAIS \\
+    \ABNTEXchapterfont\normalsize ESCOLA DE ENGENHARIA \\
+    \ABNTEXchapterfont\normalsize DEPARTAMENTO DE ENGENHARIA NUCLEAR \\
+    \ABNTEXchapterfont\normalsize PÓS-GRADUAÇÃO EM CIÊNCIAS E TÉCNICAS NUCLEARES
+        
+    \vspace*{5cm}
+    
+    {\ABNTEXchapterfont\Large\textsc{\imprimirautor}}
+
+    \vfill
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\large\imprimirtitulo
+    \end{center}
+    \vfill
+    
+    \large\imprimirlocal
+    
+    \large\imprimirdata
+    \vspace*{1cm}
+  \end{capa}
+}
 
 % ----
 % Início do documento
@@ -213,7 +242,7 @@ abordagem com \textit{software} livre}
 % ---
 % Capa
 % ---
-%\imprimircapa
+\imprimircapa
 
 
 % Folha de rosto
@@ -311,9 +340,9 @@ abordagem com \textit{software} livre}
 % do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
 % imagem da página assinada pela banca com o comando abaixo:
 %
-% \includepdf{folhadeaprovacao_final.pdf}
+\includepdf{folha_aprovacao.pdf}
 % ------------------------------------------------------------------------
-\begin{folhadeaprovacao}
+%\begin{folhadeaprovacao}
 
 %  \begin{center}
 %    {\ABNTEXchapterfont\large\imprimirautor}
@@ -346,7 +375,7 @@ abordagem com \textit{software} livre}
 %    \vspace*{1cm}
 %  \end{center}
   
-\end{folhadeaprovacao}
+%\end{folhadeaprovacao}
 % -----------------------------------------------------------------------
 
 % ---
@@ -553,6 +582,7 @@ abordagem com \textit{software} livre}
   \item[\textit{FVM}] \textit{Finite Volumes Method}
   \item[\textit{GNU}] \textit{GNU's Not Unix}
   \item[\textit{GPL}] \textit{GNU Public License}
+  \item[\textit{ISIRYM}] \textit{Instituto de Seguridad Industrial, Radiofísica y Medioambiental}
   \item[\textit{LWR}] \textit{Light Water Reactor}
   \item[\textit{MIT}] \textit{Massachusetts Institute of Technology}
   \item[\textit{MOC}] \textit{Method of Characteristics}
@@ -564,7 +594,6 @@ abordagem com \textit{software} livre}
   \item[\textit{RANS}] \textit{Reynolds Averaged Navier-Stokes}
   \item[\textit{TRIGA}] \textit{Training, Research, Isotopes, General Atomic}
   \item[\textit{UPV}] \textit{Universidad Politècnica de Valencia}
-  \item[\textit{ISIRYM}] \textit{Instituto de Seguridad Industrial, Radiofísica y Medioambiental}
 \end{siglas}
 % ---
 
