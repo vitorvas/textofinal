@@ -101,14 +101,14 @@ As distribuições de potências obtidas para os volumes de combustível podem s
 
 As distribuições de potência axial obedeceram, para os três casos, a perfis
 cossenoidais, como pode ser visto na Figura \ref{fig:perf-nac-axial}. Estes são os perfis esperados para
-os combustíveis modelados \cite{Veloso2005}. As distribuições de potência radiais -
-obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes
-dos obtidos axialmente, como pode ser visto na Figura \ref{fig:perf-Q-nac-radial}. 
-Para a distribuição radial de potências o achatamento na posição central
-da curva em relação aos picos é devido ao menor fluxo de nêutrons térmicos no centro do combustível. Nas regiões limite
-entre o combustível e o revestimento, é maior o fluxo de nêutrons termalizados pela interação com o refrigerante (água).
-Esse fenômeno é chamado de auto-blindagem é não é percebido quando utilizado apenas um grupo
-de nêutrons nos cálculos. O perfil encontrado é esperado em combustíveis do tipo TRIGA \cite{Ravnik1990}.
+os combustíveis modelados \cite{Veloso2005}.% As distribuições de potência radiais -
+%obtidas do corte no ponto médio do modelo do combustível - possuem perfis diferentes
+%dos obtidos axialmente, como pode ser visto na Figura \ref{fig:perf-Q-nac-radial}. 
+%Para a distribuição radial de potências o achatamento na posição central
+%da curva em relação aos picos é devido ao menor fluxo de nêutrons térmicos no centro do combustível. Nas regiões limite
+%entre o combustível e o revestimento, é maior o fluxo de nêutrons termalizados pela interação com o refrigerante (água).
+%Esse fenômeno é chamado de auto-blindagem é não é percebido quando utilizado apenas um grupo
+%de nêutrons nos cálculos. O perfil encontrado é esperado em combustíveis do tipo TRIGA \cite{Ravnik1990}.
 
 \begin{figure}[htb]
   \caption{Perfil de potência axial para os três casos simulados.}
@@ -117,12 +117,11 @@ de nêutrons nos cálculos. O perfil encontrado é esperado em combustíveis do 
 %  \legend{Fonte: autor}
 \end{figure}
 
-\begin{figure}[htb]
-  \caption[Perfil de potência radial para os três casos simulados.]{Perfil de potência radial para os três casos simulados.}
-  \centering\includegraphics[scale=0.5]{figuras/Q_x_NC_square_port.png}
-  \label{fig:perf-Q-nac-radial}
-%  \legend{Fonte: autor}
-\end{figure}
+%\begin{figure}[htb]
+%  \caption[Perfil de potência radial para os três casos simulados.]{Perfil de potência radial para os três casos simulados.}
+%  \centering\includegraphics[scale=0.5]{figuras/Q_x_NC_square_port.png}
+%  \label{fig:perf-Q-nac-radial}
+%\end{figure}
 
 Os perfis de temperatura obtidos axialmente, Figura \ref{fig:perf-t-nac-axial},
 apresentam, novamente para os três casos, uma diferença entre as extremidades
@@ -133,10 +132,9 @@ levando a um maior resfriamento do sistema neste ponto do escoamento. Esse efeit
 ocorre em todos os casos, apenas com diferença nas temperaturas de cada material.
 
 \begin{figure}[htb]
-  \caption{Perfil de temperaturas axial para os três casos simulados.}
+  \caption{Perfil de temperaturas axiais para os três casos simulados.}
   \centering\includegraphics[scale=0.5]{figuras/T_z_NC_square_port.png}
-%\label{fig:perf-t-nac-axial}
-%  \legend{Fonte: autor}
+\label{fig:perf-t-nac-axial}
 \end{figure}
 
 Radialmente, os perfis de temperatura, seguindo o mesmo padrão para os três casos simulados,
@@ -296,12 +294,11 @@ para combustíveis do tipo TRIGA, tal qual apresentado anteriormente para o flux
 %  \legend{Fonte: autor}
 \end{figure}
 
-\begin{figure}[htb]
-  \caption{Curvas de potência radiais para os casos acoplados e não acoplados.}
-  \centering\includegraphics[scale=0.5]{figuras/Q_all_x_square_port.png}
-  \label{fig:Q_all_x}
-%  \legend{Fonte: autor}
-\end{figure}
+%\begin{figure}[htb]
+%  \caption{Curvas de potência radiais para os casos acoplados e não acoplados.}
+%  \centering\includegraphics[scale=0.5]{figuras/Q_all_x_square_port.png}
+%  \label{fig:Q_all_x}
+%\end{figure}
 
 As curvas de temperaturas para as mesmas simulações são apresentadas nas
 Figuras \ref{fig:T_all_z} e \ref{fig:T_all_x}, respectivamente para as
@@ -309,7 +306,8 @@ distribuições radial e axial.
 
 As diferenças entre temperaturas para simulações acopladas e não acopladas são
 esperadas, uma vez que há variações na distribuição  de potências. As curvas apresentadas nas Figuras
-\ref{fig:Q_all_z} e \ref{fig:Q_all_x}, \ref{fig:T_all_z} e \ref{fig:T_all_x} são
+\ref{fig:Q_all_z}%e \ref{fig:Q_all_x}
+, \ref{fig:T_all_z} e \ref{fig:T_all_x} são
 as mesmas apresentadas para os casos não acoplados acompanhadas das curvas do
 caso acoplado. Os fenômenos físicos e suas explicações para o formato das curvas
 são os mesmos, já que as simulações são iguais a menos das potências e do fato
@@ -412,6 +410,20 @@ em especial na forma como são tratadas condições de contorno.
 As \crefrange{fig:f1}{fig:q3} apresentam de forma visual, a partir da geometria utilizada,
 as diferenças entre fluxos de nêutrons e potências obtidas para os cálculos
 acoplados e não acoplados.
+
+As diferenças entre fluxo são apresentadas para toda a geometria, incluindo materiais nos quais
+não ocorrem fissões: revestimento e refrigerante. Nestes casos, os valores apresentados são
+as diferenças entre células equivalentes nas simulações acopladas e não acopladas, sendo
+os dados obtidos pelas simulações feitas com o \textit{milonga}. É possível notar, observando
+as figuras \ref{fig:f1}, \ref{fig:f2} e \ref{fig:f3} que não há interpolação entre células
+adjacentes.
+
+As diferenças entre potências, apresentadas nas figuras \ref{fig:q1}, \ref{fig:q2} e \ref{fig:q3},
+estão, para fins de exibição, apresentadas de forma interpolada entre células equivalentes. Estes valores
+foram obtidos via pós-processamento dos dados utilizados pelo \textit{OpenFOAM}. O único material
+apresentado nestas figuras é o combustível, que possui, em sua constituição, material físsil. Como
+não ocorrem fissões nos outros materiais simulados, a potência gerada nestes é zero, de modo
+que estes materiais são omitidos na representação de potência.
 
 %-FLUX------------------------------------------------
 \begin{figure}[htb]
