@@ -1,0 +1,194 @@
+> Ms. Ref. No.:  ANUCENE-D-17-00862
+> Title: COUPLED UNSTRUCTURED FINE-MESH NEUTRONICS AND THERMAL-HYDRAULICS METHODOLOGY
+> USING OPEN SOFTWARE: A PROOF-OF- CONCEPT
+> Annals of Nuclear Energy
+> 
+> Dear Vitor,
+> 
+> Reviewers have now commented on your paper. You will see that they are advising that
+> you revise your manuscript. If you are prepared to undertake the work required, I
+> would be pleased to reconsider my decision.  
+> 
+> For your guidance, reviewers' comments are appended below.
+> 
+> If you decide to revise the work, please submit a list of changes or a rebuttal
+> against each point which is being raised when you submit the revised manuscript.
+> 
+> To submit a revision, please go to https://ees.elsevier.com/anucene/ and login as an
+> Author. 
+> Your username is: vitors@cdtn.br 
+> 
+> If you need to retrieve password details, please go to:
+> http://ees.elsevier.com/anucene/automail_query.asp
+> 
+> On your Main Menu page is a folder entitled "Submissions Needing Revision". You will
+> find your submission record there. 
+> 
+> Please note that this journal offers a new, free service called AudioSlides: brief,
+> webcast-style presentations that are shown next to published articles on
+> ScienceDirect (see also http://www.elsevier.com/audioslides). If your paper is
+> accepted for publication, you will automatically receive an invitation to create an
+> AudioSlides presentation.
+> 
+> Annals of Nuclear Energy features the Interactive Plot Viewer, see:
+> http://www.elsevier.com/interactiveplots. Interactive Plots provide easy access to
+> the data behind plots. To include one with your article, please prepare a .csv file
+> with your plot data and test it online at
+> http://authortools.elsevier.com/interactiveplots/verification before submission as
+> supplementary material.
+> 
+> The revised version of your submission is due by Mar 06, 2018.
+> 
+> PLEASE NOTE: You can enrich your article with interactive data visualizations such
+> as line and scatter charts, MATLAB files, geospatial data in Google Maps, high
+> resolution images, t- and z-stacks, phylogenetic trees and 3D images. For certain
+> data repositories, we can enrich your article with relevant links and information if
+> you include accession numbers in your manuscript. Instructions are available via
+> https://www.elsevier.com/authors/author-services/enrichments
+> 
+> Yours sincerely,
+> 
+> Lynn Weaver
+> Executive Editor
+> Annals of Nuclear Energy
+> 
+> Reviewers' comments:
+> 
+> 
+> Reviewer #1: Presented is an implementation of a coupled thermal-hydraulic and
+> neutronic calculation sequence based on milonga and OpenFOAM.  The sequence is
+> executed entirely within a shared memory space and is enabled by POSIX threads.  The
+> sequence is demonstrated on a 3-D, TRIGA fuel element using a two-group, diffusion
+> approximation.  Results of the demonstration are consistent with intuition and show
+> that a reasonable level of coupled feedback is required for such problems.
+> 
+> Overall, the manuscript is well written, and the technical work is sound.  My major
+> concern with the manuscript is that it appears to neglect a fairly rich literature
+> on modeling of coupled thermal-hydraulics and neutronics.  Of course, such coupled
+> calculations have been performed for years as part of production-level calculations
+> using nodal-diffusion and subchannel models. Over the past decade, several groups
+> have proposed methodologies that go beyond these limited models, including full
+> neutron transport and/or computational fluid dynamics.  A very quick search suggests
+> at least the following:
+> 
+> Fiorina, Carlo, et al. "GeN-Foam: a novel OpenFOAM® based multi-physics solver for
+> 2D/3D transient analysis of nuclear reactors." Nuclear Engineering and Design 294
+> (2015): 24-37.
+> Fiorina, Carlo, et al. "Development and verification of the neutron diffusion solver
+> for the GeN-Foam multi-physics platform." Annals of Nuclear Energy 96 (2016):
+> 212-222.
+> Aufiero, Manuele, et al. "Serpent-OpenFOAM coupling in transient mode: simulation of
+> a Godiva prompt critical burst." Proceedings of M&C+ SNA+ MC (2015): 19-23.
+> Valtavirta, Ville, Jaakko Leppänen, and Tuomas Viitanen. "Coupled neutronics-fuel
+> behavior calculations in steady state using the Serpent 2 Monte Carlo code." Annals
+> of Nuclear Energy 100 (2017): 50-64.
+> 
+> I understand that the emphasis of the manuscript is on providing a free and
+> open-source tool, which excludes Serpent, but the author's have used data generated
+> by Serpent.  Other frameworks exist, including the MOOSE-related codes and CASL's
+> VERA project.  Again, these aren't FOSS, but some of the underlying technical
+> philosophy is matched.  To leave them out paints an incomplete picture.  Moreover,
+> the technical content of the manuscript should be provided in a way that highlights
+> differences (good or bad) between the work presented and these other efforts.
+> 
+> Other Comments
+> Section 1 - It appears milonga is FOSS, and a quick search finds it at bitbucket. 
+> Although referenced via a publication, it would be useful to include a link to the
+> software and/or its online manual.
+
+  Yes, milonga is FOSS. As suggested, the link to its webpage is added to the its reference.
+
+> Table 1 - Veloso.  Is it 2015 or 2005?  References has 2005.
+
+  It is a typo. The correct year is indeed 2005.
+  
+> Section 2.1 - The acknowledgements note that the Serpent team provided some cross
+> sections.  I assume this was the S(a, b) data for ZrH.  Please indicate exactly
+> which data from JEFF 3.1 was used (and why).
+
+  The assumption is correct. The set of ace files personally provided by Tuomas Viitanen, at the time member
+  of Serpent team, were used internally in VTT for carrying simulations modelling their TRIGA FiR 1 reactor as he
+  personally stated. These files are in acelib format and were generated using NJOY in order to
+  represent zirconium hydride cross-sections. All materials provided in this set are based on ENDF7B.
+
+  The manuscript incorrectly claims, in section 2.1, that JEFF 3.1 was used together with ENDF7B
+  in this specific set. This is wrong since all data kindly provided by the Serpent team is based on ENDF7B.
+  The text in this section is corrected accordingly.
+  
+> 2.4.1. It seems that the iteration scheme is quite arbitrary and is, essentially, an
+> operator split.  For such schemes, the authors may wish to see, e.g., Senecal, Jaron
+> P., and Wei Ji. "Approaches for mitigating over‐solving in multiphysics
+> simulations." International Journal for Numerical Methods in Engineering (2017).  An
+> alternative method, of course, is to cast the problem in residual form and solve it
+> using a Newton method (similar to the MOOSE framework).
+
+  The affirmative is completely right. In our coupled scheme a very basic form of operator
+  splitting is applied to guarantee that both physics to converge, in all cases over-solving.
+  An improved version based on the residuals of OpenFOAM calculations to make the overall
+  calculations faster is already in place. Even so the suggested work is absolutely
+  useful for our applications and future developments.
+  Thank you.
+  
+> 2.4.2.  Although solving the physics on one mesh is useful for ensuring numerical
+> convergence, in practice, the resolutions required differ substantially.  Is there
+> an easy extension in place for using different meshes?
+
+  The use of different meshes forces the use of some form of mesh matching.
+  Before proposing a solution for the problem of mesh matching, a clarification
+  must be made: we must agree that we are talking about unstructured meshes.
+  
+  Structured meshes can be seen as a special case of unstructured meshes were mesh elements and
+  surfaces are regular. In this particular case, even its representation in memory as data structures
+  is usually different of the general case. For structured meshes, an extension for using different
+  meshes is straightforward. An example of coupled neutronics and thermal-hydraulics using different
+  structured meshes showing its advantages and drawbacks can be seen in V. V. A., dos Santos, A. A. C.,
+  Mesquita, A. Z., Bernal, A., Miró, R., Verdú, G. and Pereira, C. (2015) "Finite volume thermal-hydraulics
+  and neutronics coupled calculations." Proceedings of ICAPP 2015, May 03-06,  Nice, France.
+
+  The problem of unstructured meshes matching is a non-trivial computational geometry problem and, although
+  not a "hot topic", there are some studies on how to do it (Chen J., Zhu H., Gao S., Wu H. (2014) An Improved
+  Hexahedral Mesh Matching Algorithm. In: Sarrate J., Staten M. (eds) Proceedings of the 22nd International
+  Meshing Roundtable. Springer, Cham and ). The are specific metrics to classify a matching
+  algorithm and usually there some degree of loss when matching different meshes. Most of the work in this subject
+  is related to surface matching. In the specific case where apart of surfaces elements must also be matched, I
+  would say that the answer to the question is no. Although possible, a solution would
+  not be an easy extension.
+  
+> 4.1. A major limitation of the framework discussed is that it is not parallelized. 
+> To parallelize an existing program is not generally trivial.  Do the authors plan to
+> do this from scratch?  Or will other, existing tools be used?  There exist several,
+> parallel libraries for domain decomposed simulations that leveral PETSc and may be
+> easy to integrate.  Some thought on this would improve the conclusions.
+
+  The actual limitation on running in parallel is not of the framework, which is developed
+  capable to run in parallel making use of OpenFOAM's domain decomposition primitives. The main issue
+  is that the bulk of time spent in coupled calculations is due to milonga running in sequential
+  mode. With a parallel version of milonga, data exchange can be kept using shared memory as a simple
+  parallel gather operation could be used to put together neutronics data to be transmitted. In this
+  approach, no change on the shared memory implementation is necessary.
+
+  There are some very seminal work being made in milonga in order to parallelize it. Since milonga
+  already makes use of PETSc, matrix solutions in parallel is straightforward. However, in order to have
+  the domain partitioned and the matrices assembled is the main task. An initial profiling shows that
+  the main bottleneck when running milonga using finite volumes discretization scheme is related to
+  neighbour cells access. It is worth noting that milonga is able to use finite volumes and finite elements
+  discretization schemes and also works with structured and unstructured meshes so, any further development
+  concerning mesh changes must be tested for all four cases.
+
+  To the best of knowledge of this author, the milonga development is carried on the spare time of
+  less than a handful of developers including its main author, which prevents any commitment on time
+  for corrections and further improvements. Anyway, some improvements to milonga were made in the last
+  months as attested by the commit history in its main repository (https://bitbucket.org/seamplex/milonga/commits/all).
+ 
+> Note: While submitting the revised manuscript, please double check the author names
+> provided in the submission so that authorship related changes are made in the
+> revision stage. If your manuscript is accepted, any authorship change will involve
+> approval from co-authors and respective editor handling the submission and this may
+> cause a significant delay in publishing your manuscript.
+> 
+> For further assistance, please visit our customer support site at
+> http://help.elsevier.com/app/answers/list/p/7923. Here you can search for solutions
+> on a range of topics, find answers to frequently asked questions and learn more
+> about EES via interactive tutorials. You will also find our 24/7 support contact
+> details should you need any further assistance from one of our customer support
+> representatives.
