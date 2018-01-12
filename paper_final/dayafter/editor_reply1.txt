@@ -54,6 +54,7 @@
 > 
 > Reviewers' comments:
 > 
+> -----------------------------------------------------------------------------------------------------------------
 > 
 > Reviewer #1: Presented is an implementation of a coupled thermal-hydraulic and
 > neutronic calculation sequence based on milonga and OpenFOAM.  The sequence is
@@ -90,7 +91,64 @@
 > philosophy is matched.  To leave them out paints an incomplete picture.  Moreover,
 > the technical content of the manuscript should be provided in a way that highlights
 > differences (good or bad) between the work presented and these other efforts.
-> 
+
+  The authors completely agree with the revisor that extensive work has been made in
+  recent year in innovative methods for neutron transport and thermal-hydraulics coupling.
+  It is also a point of agreement that there are innovative work that remained excluded from
+  citations. This fact is due to a simple reason: the rationale behind this work was to focus
+  on FOSS solutions, something that is acknowledge by the revisor in his comments.
+
+  Some of the examples given by the revisor are of knowledge of authors. The work of Fiorina (Fiorina, Carlo,
+  et al. "GeN-Foam: a novel OpenFOAM® based multi-physics solver for 2D/3D transient analysis of
+  nuclear reactors." Nuclear Engineering and Design 294 (2015): 24-37) is way more complex and detailed
+  than the one presented by the authors. It takes advantage of many aspects of OpenFOAM architecture to
+  implement new solvers, make use of built-in parallel capabilities and solves the coupled physical problems
+  in different scales, being effectivelly multi-scale.
+
+  The other work of Fiorina suggested by the revisor (Fiorina, Carlo, et al. "Development and verification
+  of the neutron diffusion solver for the GeN-Foam multi-physics platform." Annals of Nuclear Energy 96 (2016):
+  212-222.) is less related to what is usually referred as neutronics/thermal-hydraulics coupling, but
+  nonetheless perhaps even more innovative in its approach. The implementation of a neutron diffusion solver
+  using OpenFOAM as the sole agent to solve this multi-physics problem was made by Klas Jareteg in his
+  master thesis (Jareteg, Klas. "Development of an integrated deterministic neutronic/thermal-hydraulic
+  model using a CFD solver" Master's Degree Thesis, Chalmers University of Technology, Gothenburg, Sweden, 2012)
+  and was, to the best of authors knowledge at the date of submiting this manuscript, the main work related to
+  using only OpenFOAM to solve the coupled problem. Other coupling work derived from his master thesis were
+  published and two of his papers are cited in our work.
+
+  The work of Aufiero is also of knowledge of the authors and relies on the multiphysics interface provided
+  by Serpent. Despite its importance on extending the Serpent multiphysics interface to be internally linked
+  to OpenFOAM and performing transient calculations, this work was left behind for not being FOSS. The authors
+  recognize the importance of this work and agree that it is worth being mentioned in the manuscript.
+
+  The VTT team work on coupling Serpent to their FINIX code was not of knowledge of the authors at the time
+  of writing the manuscript. Despite presenting two codes which are not FOSS, the use of Serpent's built-in
+  multiphysics inteface is an important remark to the importance that coupled calculations gained in the last
+  years.
+
+  MOOSE-related codes are on authors radars and the main reason to not mention their development in this work
+  is that the authors consider MOOSE and its applications codes as another level of solutions of higher complexity
+  which are not even comparable to the methodology presented in this work. Considering the ammount of personal involved and
+  the financing sources, MOOSE-related codes belong to a generic and top-level suite of solutions while
+  we consider our solution a specific framework for dealing with water cooled reactor aimed to used coupled
+  calculations to catch thermal-hydraulical details provided by a CFD code while having a detailed feedback
+  from neutronics. Allied to that, using standard mechanisms (POSIX) available in most computing system
+  and keeping the ideia of having a FOSS solution. Anyway, a mention to the MOOSE framework laying emphasis
+  on its FOSS characteristics is considered an enrichment to our manuscript.
+
+  That said, the authors agree that the works suggested by the revisor are of relevance for the field of neutronics/
+  thermal-hydraulics coupling and are connected to our work. For this reason, they were added to
+  the section 1 (Introduction) in order to give a better overview of the field extrapolating the FOSS
+  development to provide a broader view of other coupled systems, all of them of higher complexity than
+  the one proposed by the authors.
+
+  The authors would like to make emphasize that the work presented does not want to be a competitive solution
+  for general coupled problems, but to show that simple FOSS solutions can be a way to develop new methodologies
+  in the nuclear engineering field to solve coupled problems taking advantage of source code availability.
+  
+
+> ------------------------------------------------------------------------------------------------------------------
+>
 > Other Comments
 > Section 1 - It appears milonga is FOSS, and a quick search finds it at bitbucket. 
 > Although referenced via a publication, it would be useful to include a link to the
@@ -125,9 +183,9 @@
   The affirmative is completely right. In our coupled scheme a very basic form of operator
   splitting is applied to guarantee that both physics to converge, in all cases over-solving.
   An improved version based on the residuals of OpenFOAM calculations to make the overall
-  calculations faster is already in place. Even so the suggested work is absolutely
-  useful for our applications and future developments.
-  Thank you.
+  calculations faster is envisaged. However, no further development will be made without a
+  careful study of the suggested paper since it is a fundamental reference for this part of
+  our framework development. The author appreciate the suggested reference.
   
 > 2.4.2.  Although solving the physics on one mesh is useful for ensuring numerical
 > convergence, in practice, the resolutions required differ substantially.  Is there
@@ -163,9 +221,9 @@
   The actual limitation on running in parallel is not of the framework, which is developed
   capable to run in parallel making use of OpenFOAM's domain decomposition primitives. The main issue
   is that the bulk of time spent in coupled calculations is due to milonga running in sequential
-  mode. With a parallel version of milonga, data exchange can be kept using shared memory as a simple
-  parallel gather operation could be used to put together neutronics data to be transmitted. In this
-  approach, no change on the shared memory implementation is necessary.
+  mode. With a parallel version of milonga, data exchange can be kept using shared memory as it is since
+  a simple parallel gather operation could be used to put together neutronics data to be transmitted to OpenFOAM.
+  In this approach, no change on the shared memory implementation is necessary.
 
   There are some very seminal work being made in milonga in order to parallelize it. Since milonga
   already makes use of PETSc, matrix solutions in parallel is straightforward. However, in order to have
@@ -179,7 +237,10 @@
   less than a handful of developers including its main author, which prevents any commitment on time
   for corrections and further improvements. Anyway, some improvements to milonga were made in the last
   months as attested by the commit history in its main repository (https://bitbucket.org/seamplex/milonga/commits/all).
- 
+
+  Some comments on future possibilities on milonga parallelization leading to framework parallelization are already
+  made on section 4.1.
+  
 > Note: While submitting the revised manuscript, please double check the author names
 > provided in the submission so that authorship related changes are made in the
 > revision stage. If your manuscript is accepted, any authorship change will involve
