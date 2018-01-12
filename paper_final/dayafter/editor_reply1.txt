@@ -92,27 +92,27 @@
 > the technical content of the manuscript should be provided in a way that highlights
 > differences (good or bad) between the work presented and these other efforts.
 
-  The authors completely agree with the revisor that extensive work has been made in
+  The authors completely agree with the reviser that extensive work has been made in
   recent year in innovative methods for neutron transport and thermal-hydraulics coupling.
   It is also a point of agreement that there are innovative work that remained excluded from
   citations. This fact is due to a simple reason: the rationale behind this work was to focus
-  on FOSS solutions, something that is acknowledge by the revisor in his comments.
+  on FOSS solutions, something that is acknowledge by the reviser in his comments.
 
-  Some of the examples given by the revisor are of knowledge of authors. The work of Fiorina (Fiorina, Carlo,
+  Some of the examples given by the reviser are of knowledge of authors. The work of Fiorina (Fiorina, Carlo,
   et al. "GeN-Foam: a novel OpenFOAM® based multi-physics solver for 2D/3D transient analysis of
   nuclear reactors." Nuclear Engineering and Design 294 (2015): 24-37) is way more complex and detailed
   than the one presented by the authors. It takes advantage of many aspects of OpenFOAM architecture to
   implement new solvers, make use of built-in parallel capabilities and solves the coupled physical problems
-  in different scales, being effectivelly multi-scale.
+  in different scales, being effectively multi-scale.
 
-  The other work of Fiorina suggested by the revisor (Fiorina, Carlo, et al. "Development and verification
+  The other work of Fiorina suggested by the reviser (Fiorina, Carlo, et al. "Development and verification
   of the neutron diffusion solver for the GeN-Foam multi-physics platform." Annals of Nuclear Energy 96 (2016):
   212-222.) is less related to what is usually referred as neutronics/thermal-hydraulics coupling, but
   nonetheless perhaps even more innovative in its approach. The implementation of a neutron diffusion solver
   using OpenFOAM as the sole agent to solve this multi-physics problem was made by Klas Jareteg in his
   master thesis (Jareteg, Klas. "Development of an integrated deterministic neutronic/thermal-hydraulic
   model using a CFD solver" Master's Degree Thesis, Chalmers University of Technology, Gothenburg, Sweden, 2012)
-  and was, to the best of authors knowledge at the date of submiting this manuscript, the main work related to
+  and was, to the best of authors knowledge at the date of submitting this manuscript, the main work related to
   using only OpenFOAM to solve the coupled problem. Other coupling work derived from his master thesis were
   published and two of his papers are cited in our work.
 
@@ -123,20 +123,22 @@
 
   The VTT team work on coupling Serpent to their FINIX code was not of knowledge of the authors at the time
   of writing the manuscript. Despite presenting two codes which are not FOSS, the use of Serpent's built-in
-  multiphysics inteface is an important remark to the importance that coupled calculations gained in the last
+  multiphysics interface is an important remark to the importance that coupled calculations gained in the last
   years.
 
   MOOSE-related codes are on authors radars and the main reason to not mention their development in this work
   is that the authors consider MOOSE and its applications codes as another level of solutions of higher complexity
-  which are not even comparable to the methodology presented in this work. Considering the ammount of personal involved and
+  which are not even comparable to the methodology presented in this work. Considering the amount of personal involved and
   the financing sources, MOOSE-related codes belong to a generic and top-level suite of solutions while
   we consider our solution a specific framework for dealing with water cooled reactor aimed to used coupled
-  calculations to catch thermal-hydraulical details provided by a CFD code while having a detailed feedback
+  calculations to catch thermal-hydraulic details provided by a CFD code while having a detailed feedback
   from neutronics. Allied to that, using standard mechanisms (POSIX) available in most computing system
-  and keeping the ideia of having a FOSS solution. Anyway, a mention to the MOOSE framework laying emphasis
-  on its FOSS characteristics is considered an enrichment to our manuscript.
+  and keeping the idea of having a FOSS solution. In that direction, the authors are convinced that no
+  work on coupled neutronics/thermal-hydraulics nowadays is complete without a citation of MOOSE framework.
+  For this reason, a mention to the MOOSE framework laying emphasis on its design features and to the fact that
+  it is also FOSS were added to the manuscript.
 
-  That said, the authors agree that the works suggested by the revisor are of relevance for the field of neutronics/
+  That said, the authors fully agree that the works suggested by the reviser are of relevance for the field of neutronics/
   thermal-hydraulics coupling and are connected to our work. For this reason, they were added to
   the section 1 (Introduction) in order to give a better overview of the field extrapolating the FOSS
   development to provide a broader view of other coupled systems, all of them of higher complexity than
